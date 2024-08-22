@@ -17,16 +17,16 @@ function HomeHeader() {
                             <h1 className="presentation-title">BlueVisionary</h1>
                         </div>
                         <h2 className="presentation-subtitle text-center">
-                            BlueVisionary [replace text]
+                            Discover. Learn. Protect.
                         </h2>
                     </Container>
                 </div>
-                {/* <div
+                <div
                     className="moving-clouds"
                     style={{
                         backgroundImage: "url(" + require("../../assets/img/clouds.png") + ")",
                     }}
-                /> */}
+                />
             </div>
         </>
     );

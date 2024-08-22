@@ -263,3 +263,82 @@
         }
     }
 }
+
+///////////////////////////////////////
+.homepage-container {
+    padding: 0;
+    margin: 0;
+    background-color: #0a56a2; /* Light gray background */
+}
+
+.hero-section {
+    background-color: #ffffff; /* White background for the hero section */
+    padding: 3rem 5rem;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #343a40; /* Dark text color */
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #6c757d; /* Secondary text color */
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+}
+
+.features-section {
+    padding: 2rem 0;
+    background-color: #e9ecef; /* Slightly darker gray background */
+}
+
+.feature-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for cards */
+    text-align: center;
+    padding: 2rem;
+    background-color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 1rem;
+}
+
+.feature-description {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+
+//////////////// custom css /////////////////
+.image-autofill {
+    object-fit: cover;
+}
+
+.image-border {
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+.features-row {
+    width: 90%; /* Adjust this percentage as needed */
+    margin: 0 auto; /* Center the row */
+}
