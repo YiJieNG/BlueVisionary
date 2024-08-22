@@ -1,0 +1,64 @@
+// /*!
+
+//  =========================================================
+//  * Paper Kit React - v1.3.2 based on Paper Kit - v2.2.0
+//  =========================================================
+
+//  * Product Page: https://www.creative-tim.com/product/bluevisionary-2
+//  * Copyright 2023 Creative Tim (http://www.creative-tim.com)
+
+//  * Designed by www.invisionapp.com Coded by www.creative-tim.com
+
+//  =========================================================
+
+//  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+//  */
+
+@import "bluevisionary/variables";
+@import "bluevisionary/mixins";
+
+// Plugins CSS
+// @import "bluevisionary/plugins/plugin-bootstrap-switch";
+// @import "bluevisionary/plugins/plugin-nouislider";
+// @import "bluevisionary/plugins/plugin-datepicker";
+
+// Core CSS
+// @import "bluevisionary/buttons";
+// @import "bluevisionary/inputs";
+// @import "bluevisionary/checkbox-radio";
+// @import "bluevisionary/progress-bars";
+// @import "bluevisionary/badges";
+// @import "bluevisionary/pagination";
+// @import "bluevisionary/typography";
+@import "bluevisionary/misc";
+// @import "bluevisionary/labels";
+
+// // components
+// @import "bluevisionary/nucleo-icons";
+// @import "bluevisionary/social-buttons";
+@import "bluevisionary/tabs-navs";
+@import "bluevisionary/navbars";
+// @import "bluevisionary/dropdown";
+// @import "bluevisionary/alerts";
+// @import "bluevisionary/images";
+// @import "bluevisionary/tooltips-and-popovers";
+// @import "bluevisionary/modal";
+// @import "bluevisionary/icons";
+// @import "bluevisionary/carousel";
+@import "bluevisionary/footers";
+
+// Cards
+// @import "bluevisionary/cards";
+// @import "bluevisionary/cards/card-plain";
+// @import "bluevisionary/cards/card-register";
+// @import "bluevisionary/cards/card-profile";
+
+// example pages and sections
+@import "bluevisionary/examples";
+@import "bluevisionary/sections";
+
+@import "bluevisionary/responsive";
+
+// React Differences
+// @import "react/react-differences.scss";
