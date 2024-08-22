@@ -7,42 +7,40 @@ import {
     NavLink,
     Nav,
     Container,
-    Button,
 } from 'reactstrap';
 import classnames from 'classnames';
 
 
 
-function BlueNavbar() {
-    const [navbarColor, setNavbarColor] = useState("navbar-transparent");
-    // const [navbarColor, setNavbarColor] = useState("");
+function CommonNavbar() {
+    const [navbarColor, setNavbarColor] = useState("");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
     const toggleNavbarCollapse = () => {
         setNavbarCollapse(!navbarCollapse);
         document.documentElement.classList.toggle("nav-open");
     };
 
-    useEffect(() => {
-        const updateNavbarColor = () => {
-            if (
-                document.documentElement.scrollTop > 299 ||
-                document.body.scrollTop > 299
-            ) {
-                setNavbarColor("");
-            } else if (
-                document.documentElement.scrollTop < 300 ||
-                document.body.scrollTop < 300
-            ) {
-                setNavbarColor("navbar-transparent");
-            }
-        };
+    // useEffect(() => {
+    //     const updateNavbarColor = () => {
+    //         if (
+    //             document.documentElement.scrollTop > 299 ||
+    //             document.body.scrollTop > 299
+    //         ) {
+    //             setNavbarColor("");
+    //         } else if (
+    //             document.documentElement.scrollTop < 300 ||
+    //             document.body.scrollTop < 300
+    //         ) {
+    //             setNavbarColor("navbar-transparent");
+    //         }
+    //     };
 
-        window.addEventListener("scroll", updateNavbarColor);
+    //     window.addEventListener("scroll", updateNavbarColor);
 
-        return function cleanup() {
-            window.removeEventListener("scroll", updateNavbarColor);
-        };
-    });
+    //     return function cleanup() {
+    //         window.removeEventListener("scroll", updateNavbarColor);
+    //     };
+    // });
 
     return (
 
@@ -74,7 +72,7 @@ function BlueNavbar() {
                 >
                     <Nav navbar>
                         <NavItem>
-                            <NavLink href="/"
+                            <NavLink href="/marinelife"
                             // target="_blank"
                             >
                                 Marine Life
@@ -109,4 +107,4 @@ function BlueNavbar() {
     )
 }
 
-export default BlueNavbar;
+export default CommonNavbar;

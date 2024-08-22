@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import BlueNavbar from '../../components/BlueNavbar';
+import BlueNavbar from '../../components/Navbar/BlueNavbar';
 import HomeHeader from './HomeHeader';
 import HomeContent from './HomeContent';
 import HomeFooter from './HomeFooter';
