@@ -23,7 +23,7 @@ function HomeContent() {
             </Col>
             <Col md="6" className="image-section image-autofill">
               <img
-                src="https://picsum.photos/1200/1200"
+                src="https://picsum.photos/1000/1000"
                 alt="Hero Image"
                 className="img-fluid"
               />
