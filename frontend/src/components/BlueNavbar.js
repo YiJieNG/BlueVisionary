@@ -7,16 +7,14 @@ import {
     NavLink,
     Nav,
     Container,
-    Button,
+    NavbarToggler,
 } from 'reactstrap';
 import classnames from 'classnames';
 
-
-
 function BlueNavbar() {
     const [navbarColor, setNavbarColor] = useState("navbar-transparent");
-    // const [navbarColor, setNavbarColor] = useState("");
     const [navbarCollapse, setNavbarCollapse] = useState(false);
+
     const toggleNavbarCollapse = () => {
         setNavbarCollapse(!navbarCollapse);
         document.documentElement.classList.toggle("nav-open");
@@ -24,89 +22,55 @@ function BlueNavbar() {
 
     useEffect(() => {
         const updateNavbarColor = () => {
-            if (
-                document.documentElement.scrollTop > 299 ||
-                document.body.scrollTop > 299
-            ) {
+            if (document.documentElement.scrollTop > 299 || document.body.scrollTop > 299) {
                 setNavbarColor("");
-            } else if (
-                document.documentElement.scrollTop < 300 ||
-                document.body.scrollTop < 300
-            ) {
+            } else if (document.documentElement.scrollTop < 300 || document.body.scrollTop < 300) {
                 setNavbarColor("navbar-transparent");
             }
         };
 
         window.addEventListener("scroll", updateNavbarColor);
 
-        return function cleanup() {
+        return () => {
             window.removeEventListener("scroll", updateNavbarColor);
         };
-    });
+    }, []);
 
     return (
-
-        <Navbar className={classnames("fixed-top", navbarColor)} expand="lg">
+        <Navbar
+            className={classnames("fixed-top", navbarColor)}
+            expand="lg"
+            light
+        >
             <Container>
-                <div className="navbar-translate">
-                    <NavbarBrand
-                        data-placement="bottom"
-                        href="/"
-                    >
-                        BlueVisionary
-                    </NavbarBrand>
-                    <button
-                        aria-expanded={navbarCollapse}
-                        className={classnames("navbar-toggler navbar-toggler", {
-                            toggled: navbarCollapse,
-                        })}
-                        onClick={toggleNavbarCollapse}
-                    >
-                        <span className="navbar-toggler-bar bar1" />
-                        <span className="navbar-toggler-bar bar2" />
-                        <span className="navbar-toggler-bar bar3" />
-                    </button>
-                </div>
+                <NavbarBrand href="/" className="mr-auto">
+                    BlueVisionary
+                </NavbarBrand>
+                <NavbarToggler onClick={toggleNavbarCollapse} aria-controls="navbarCollapse" />
                 <Collapse
+                    id="navbarCollapse"
                     className="justify-content-end"
-                    navbar
                     isOpen={navbarCollapse}
+                    navbar
                 >
-                    <Nav navbar>
+                    <Nav navbar className="ml-auto">
                         <NavItem>
-                            <NavLink href="/"
-                            // target="_blank"
-                            >
-                                Marine Life
-                            </NavLink>
+                            <NavLink href="/">Marine Life</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/"
-                            // target="_blank"
-                            >
-                                Volunteering
-                            </NavLink>
+                            <NavLink href="/">Volunteering</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/"
-                            // target="_blank"
-                            >
-                                Pollution Insights
-                            </NavLink>
+                            <NavLink href="/">Pollution Insights</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/"
-                            // target="_blank"
-                            >
-                                Marine Policies
-                            </NavLink>
+                            <NavLink href="/">Marine Policies</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>
             </Container>
         </Navbar>
-
-    )
+    );
 }
 
 export default BlueNavbar;
