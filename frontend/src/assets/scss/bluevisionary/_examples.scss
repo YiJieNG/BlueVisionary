@@ -303,7 +303,7 @@
 
 .features-section {
     padding: 2rem 0;
-    background-color: #e9ecef; /* Slightly darker gray background */
+    background-color: #dbe9f6; /* background */
 }
 
 .feature-card {
@@ -341,4 +341,9 @@
 .features-row {
     width: 90%; /* Adjust this percentage as needed */
     margin: 0 auto; /* Center the row */
+}
+
+.no-margin {
+    margin-left: 0%;
+    margin-right: 0%; 
 }

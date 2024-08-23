@@ -6,7 +6,7 @@ function HomeContent() {
             <div >
             <Container fluid className="homepage-container">
             {/* Hero Section */}
-            <Row className="hero-section align-items-center">
+            <Row className="hero-section align-items-center no-margin">
                 <Col md="6" className="text-section">
                     <h1 className="hero-title">Our Vision</h1>
                     <p className="hero-subtitle">
@@ -20,13 +20,13 @@ function HomeContent() {
             </Row>
 
             {/* Features Section */}
-            <Row className="features-section">
+            <Row className="features-section no-margin">
                 <Col md="4">
                     <Card className="feature-card features-row custom-border">
                         <CardBody>
                             <h5 className="feature-title">Extent of plastic pollution.</h5>
                             <p className="feature-description">
-                            Explore detailed data and maps that show how plastic pollution is affecting Australia’s oceans, helping you focus your conservation efforts where they’re needed most.
+                            Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you focus your conservation efforts where they’re needed most.
                             </p>
                             <img src="https://picsum.photos/100" alt="Small Icon" className="img-fluid custom-border"/>
                         </CardBody>
@@ -48,7 +48,7 @@ function HomeContent() {
                         <CardBody>
                             <h5 className="feature-title">Educate Yourself</h5>
                             <p className="feature-description">
-                                Dive into a variety of resources to expand your knowledge on marine conservation and become a more effective advocate to protect our oceans.
+                                Dive into a variety of resources to expand and test your knowledge on marine conservation and become a more effective advocate to protect our oceans.
                             </p>
                             <img src="https://picsum.photos/100" alt="Small Icon" className="img-fluid custom-border"/>
                         </CardBody>

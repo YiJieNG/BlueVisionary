@@ -21,12 +21,12 @@ function HomeHeader() {
                         </h2>
                     </Container>
                 </div>
-                <div
+                {/* <div
                     className="moving-clouds"
                     style={{
                         backgroundImage: "url(" + require("../../assets/img/clouds.png") + ")",
                     }}
-                />
+                /> */}
             </div>
         </>
     );

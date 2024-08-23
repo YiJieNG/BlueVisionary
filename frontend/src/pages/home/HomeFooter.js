@@ -35,7 +35,7 @@ function HomeFooter() {
                 </Row>
                 <Row className="footer-bottom-row">
                     <Col md="12" className="text-center">
-                        <p>&copy; 2024, made with by BlueVisionary | <a href="/privacy">Privacy policy</a> | <a href="/advertising">Advertising & partnerships</a></p>
+                        <p>&copy; 2024, made by BlueVisionary | <a href="/copyright">&copy; Copyright</a> | <a href="/advertising">Advertising & partnerships</a></p>
                     </Col>
                 </Row>
             </Container>
