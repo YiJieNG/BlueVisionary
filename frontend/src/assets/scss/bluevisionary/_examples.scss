@@ -173,7 +173,7 @@
 }
 
 .presentation-title {
-  font-size: 8em;
+  font-size: 7em;
   font-weight: 700;
   margin: 0;
   color: #ffffff;
@@ -187,7 +187,7 @@
   -webkit-text-fill-color: transparent;
 }
 .presentation-subtitle {
-  font-size: 1.7em;
+  font-size: 2em;
   color: #ffffff;
 }
 
@@ -275,7 +275,7 @@
 .homepage-container {
   padding: 0;
   margin: 0;
-  background-color: #013c78; /* Light gray background */
+  background-color: #ffffff; /* Light gray background */
 }
 
 .hero-section {
@@ -286,15 +286,15 @@
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: bold;
-  color: #343a40; /* Dark text color */
-  margin-bottom: 1rem;
+  color: #030303; /* Dark text color */
+  margin-bottom: 2rem;
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
-  color: #6c757d; /* Secondary text color */
+  font-size: 2rem;
+  color: #3f4447; /* Secondary text color */
   margin-bottom: 2rem;
 }
 
@@ -310,7 +310,7 @@
 
 .features-section {
   padding: 2rem 0;
-  background-color: #e9ecef; /* Slightly darker gray background */
+  background-color: #ffffff; /* Slightly darker gray background */
 }
 
 .feature-card {
@@ -318,20 +318,22 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for cards */
   text-align: center;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #ebfafd;
   margin-bottom: 1.5rem;
 }
 
 .feature-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #343a40;
+  color: #030303;
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .feature-description {
-  font-size: 1rem;
-  color: #6c757d;
+  font-size: 1.3rem;
+  color: #3f4447;
+  text-align: left;
 }
 
 //////////////// custom css /////////////////
@@ -352,4 +354,62 @@
 .no-margin {
   margin-right: 0;
   margin-left: 0;
+}
+
+.no-padding {
+  padding: 0 0;
+}
+
+.card-margin {
+  margin-right: 0%;
+  margin-left: 0%;
+}
+
+.information-margin {
+  margin-right: 8%;
+  margin-left: 8%;
+  margin-top: 1%;
+}
+
+.icon-margin {
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: 3%;
+}
+
+.card-feature-section {
+  padding: 5rem 10rem 15rem;
+  background-color: #ffffff; /* Slightly darker gray background */
+}
+
+.information-section {
+  padding: 7rem 0;
+  background-color: #eff9ff;
+}
+
+.feature-header {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4e4c4c;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.card-content-padding {
+  padding: 0 1.5rem;
+}
+
+.icon-word-padding {
+  padding: 0.8rem 0 0 0;
+}
+
+.dark-blue-button {
+  background-color: #003366;
+  border-color: #003366;
+  color: #ffffff;
+
+  &:hover {
+    background-color: #185797;
+    border-color: #185797;
+  }
 }

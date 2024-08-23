@@ -1,6 +1,36 @@
 import { Container, Row, Col, Button, Card, CardBody } from "reactstrap";
+import { GiEarthAsiaOceania, GiSeaTurtle } from "react-icons/gi";
+import { TbBottleOff } from "react-icons/tb";
+import { BsSearchHeart } from "react-icons/bs";
 
 function HomeContent() {
+  const cardItems = [
+    {
+      title: "Extent of plastic pollution",
+      description:
+        "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
+      image: "https://picsum.photos/1200/1200",
+    },
+    {
+      title: "Track Your Impact",
+      description:
+        "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
+      image: "https://picsum.photos/1200/1200",
+    },
+    {
+      title: "Educate yourself",
+      description:
+        "Dive into a variety of resources to expand and test your knowledge on marine conservation and become a more effective advocate to protect our oceans.",
+      image: "https://picsum.photos/1200/1200",
+    },
+    {
+      title: "Endangered Marine Species",
+      description:
+        "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
+      image: "https://picsum.photos/1200/1200",
+    },
+  ];
+
   return (
     <>
       <div>
@@ -17,74 +47,77 @@ function HomeContent() {
                 extent of plastic pollution, track your cleanup efforts, and
                 visualize the impact you're making.
               </p>
-              <Button color="info" className="cta-button">
+              <Button className="dark-blue-button cta-button">
                 Getting Started
               </Button>
             </Col>
             <Col md="6" className="image-section image-autofill">
               <img
-                src="https://picsum.photos/1000/1000"
+                src="https://picsum.photos/1000/800"
                 alt="Hero Image"
                 className="img-fluid"
               />
             </Col>
           </Row>
 
+          {/* Header Section */}
+          <Row className="information-section text-center no-margin">
+            <Col>
+              <h1 className="hero-title">Our Goals</h1>
+              <p className="hero-subtitle information-margin">
+                At BlueVisionary, we empower individuals and communities to
+                actively participate in marine conservation. Our platform is
+                designed to help you understand the challenges our oceans face,
+                reduce plastic pollution, and contribute to protect marine life
+                especially reptiles. Through education, actionable insights, and
+                community-driven efforts, we aim to make a lasting impact on our
+                planet's health.
+              </p>
+            </Col>
+            <Row className="icons-row text-center mb-5 justify-content-center">
+              <Col xs="auto" className="icon-margin">
+                <GiEarthAsiaOceania size={80} />
+                <p className="icon-word-padding">Protect Ocean</p>
+              </Col>
+              <Col xs="auto" className="icon-margin">
+                <TbBottleOff size={80} />
+                <p className="icon-word-padding">No Plastic</p>
+              </Col>
+              <Col xs="auto" className="icon-margin">
+                <BsSearchHeart size={80} />
+                <p className="icon-word-padding">Awareness</p>
+              </Col>
+              <Col xs="auto" className="icon-margin">
+                <GiSeaTurtle size={80} />
+                <p className="icon-word-padding">Protect Reptiles</p>
+              </Col>
+            </Row>
+          </Row>
+          {/* Icons Row */}
+
           {/* Features Section */}
-          <Row className="features-section no-margin">
-            <Col md="4">
-              <Card className="feature-card features-row custom-border">
-                <CardBody>
-                  <h5 className="feature-title">
-                    Extent of plastic pollution.
-                  </h5>
-                  <p className="feature-description">
-                    Explore detailed data that show how plastic pollution is
-                    affecting Australia’s oceans, helping you focus your
-                    conservation efforts where they’re needed most.
-                  </p>
-                  <img
-                    src="https://picsum.photos/100"
-                    alt="Small Icon"
-                    className="img-fluid custom-border"
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md="4">
-              <Card className="feature-card features-row custom-border">
-                <CardBody>
-                  <h5 className="feature-title">Track Your Impact</h5>
-                  <p className="feature-description">
-                    Log your conservation activities and visualize your progress
-                    over time, staying motivated by seeing the difference you’re
-                    making in protecting marine life.
-                  </p>
-                  <img
-                    src="https://picsum.photos/100"
-                    alt="Small Icon"
-                    className="img-fluid custom-border"
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md="4">
-              <Card className="feature-card features-row custom-border">
-                <CardBody>
-                  <h5 className="feature-title">Educate Yourself</h5>
-                  <p className="feature-description">
-                    Dive into a variety of resources to expand and test your
-                    knowledge on marine conservation and become a more effective
-                    advocate to protect our oceans.
-                  </p>
-                  <img
-                    src="https://picsum.photos/100"
-                    alt="Small Icon"
-                    className="img-fluid custom-border"
-                  />
-                </CardBody>
-              </Card>
-            </Col>
+          <Row className="card-feature-section card-margin no-margin">
+            <h2 className="feature-header">Key Features</h2>
+            {cardItems.map((cardItem, index) => (
+              <Col md="3" sm="6" xs="12" key={index} className="mb-4 d-flex">
+                <Card
+                  className="feature-card features-row custom-border"
+                  style={{ padding: "1rem 1.5rem" }}
+                >
+                  <CardBody className="d-flex flex-column">
+                    <h5 className="feature-title">{cardItem.title}</h5>
+                    <p className="feature-description">
+                      {cardItem.description}
+                    </p>
+                    <img
+                      src={cardItem.image}
+                      alt="Small Icon"
+                      className="img-fluid custom-border mt-auto"
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            ))}
           </Row>
         </Container>
       </div>
