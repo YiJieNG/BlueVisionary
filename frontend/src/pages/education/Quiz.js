@@ -53,7 +53,7 @@ function Quiz() {
     return (
       <>
         <div className="landing-page">
-          <Container>
+          <Container fluid>
             <Row className="align-items-center">
               <Col md="6" className="content">
                 <h1 className="feature-title">
@@ -122,7 +122,7 @@ function Quiz() {
     };
     return (
       <div className="feedback-page">
-        <Container>
+        <Container fluid>
           <Row className="align-items-center">
             <Col md="6" className="content">
               <h2>{isCorrect ? "Correct!" : "Incorrect!"}</h2>
