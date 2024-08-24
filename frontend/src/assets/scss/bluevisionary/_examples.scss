@@ -513,40 +513,55 @@
 
 .feedback-page {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  text-align: center;
-  background: linear-gradient(45deg, #d9fffa, #e8e5ff);
+  background: linear-gradient(45deg, #eff9ff, #9cd8fd);
+  padding: 8rem 10rem;
+  text-align: left;
 
-  h2 {
-    font-size: 2.5rem;
-    color: #003366;
-    margin-bottom: 2rem;
-    font-weight: bold;
-  }
+  .content {
+    flex: 1;
+    padding-right: 2rem;
 
-  p {
-    font-size: 1.8rem;
-    color: #3f4447;
-    margin-bottom: 2rem;
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
 
-    strong {
-      color: #185797; // Highlight the correct answer
+    p {
+      font-size: 1.5rem;
+      color: #3f4447;
+      margin-bottom: 2rem;
+
+      strong {
+        color: #185797; // Highlight the correct answer
+      }
+    }
+
+    button {
+      background-color: #003366;
+      border-color: #003366;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #185797;
+        border-color: #185797;
+      }
     }
   }
 
-  button {
-    background-color: #003366;
-    border-color: #003366;
-    color: #ffffff;
-    font-size: 1.2rem;
-    padding: 0.75rem 2rem;
+  .chart-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    &:hover {
-      background-color: #185797;
-      border-color: #185797;
+    canvas {
+      max-width: 100%;
+      height: auto;
     }
   }
 }

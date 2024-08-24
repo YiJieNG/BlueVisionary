@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
+import { Pie } from "react-chartjs-2";
+import "chart.js/auto";
 import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
 import QnaData from "./QnaData";
 
@@ -101,18 +103,43 @@ function Quiz() {
   if (step === "feedback") {
     const question = QnaData.questionsData[currentQuestion];
     const isCorrect = selectedAnswer === question.correctAnswer;
-
+    // Prepare data for the pie chart
+    const pieData = {
+      labels: question.options,
+      datasets: [
+        {
+          label: "# of Votes",
+          data: [
+            question.option1,
+            question.option2,
+            question.option3,
+            question.option4,
+          ],
+          backgroundColor: ["#eff9ff", "#36A2EB", "#185797", "#003366"],
+          hoverBackgroundColor: ["#4BC0C0", "#4BC0C0", "#4BC0C0", "#4BC0C0"],
+        },
+      ],
+    };
     return (
       <div className="feedback-page">
-        <h2>{isCorrect ? "Correct!" : "Incorrect!"}</h2>
-        <p>
-          The correct answer is: <strong>{question.correctAnswer}</strong>
-        </p>
-        <Button onClick={nextQuestion} color="primary">
-          {currentQuestion < QnaData.questionsData.length - 1
-            ? "Next Question"
-            : "See Results"}
-        </Button>
+        <Container>
+          <Row className="align-items-center">
+            <Col md="6" className="content">
+              <h2>{isCorrect ? "Correct!" : "Incorrect!"}</h2>
+              <p>
+                The correct answer is: <strong>{question.correctAnswer}</strong>
+              </p>
+              <Button onClick={nextQuestion} className="dark-blue-button">
+                {currentQuestion < QnaData.questionsData.length - 1
+                  ? "Next Question"
+                  : "See Results"}
+              </Button>
+            </Col>
+            <Col md="6" className="chart-section">
+              <Pie data={pieData} />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
