@@ -60,7 +60,7 @@ function BlueNavbar() {
         >
           <Nav navbar className="ml-auto">
             <NavItem>
-              <NavLink href="/">Marine Life</NavLink>
+              <NavLink href="/marinelife">Marine Life</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/">Volunteering</NavLink>
