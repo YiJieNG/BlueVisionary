@@ -325,13 +325,13 @@
 .feature-title {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #030303;
+  color: #003366;
   margin-bottom: 1rem;
   text-align: left;
 }
 
 .feature-description {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #3f4447;
   text-align: left;
 }
@@ -412,6 +412,87 @@
   border-color: #003366;
   color: #ffffff;
 
+  &:hover {
+    background-color: #185797;
+    border-color: #185797;
+  }
+}
+
+///////////////QnA section/////////////////////
+.landing-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(45deg, #eff9ff, #83d0ff);
+  padding: 8rem 10rem;
+  text-align: left;
+}
+
+.landing-page h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1rem;
+}
+
+.landing-page button {
+  background-color: #003366;
+  border-color: #003366;
+  color: #ffffff;
+
+  &:hover {
+    background-color: #185797;
+    border-color: #185797;
+  }
+}
+.question-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(45deg, #eff9ff, #83d0ff);
+}
+
+.question-page h2 {
+  font-size: 2.5rem;
+  color: #003366;
+  margin-bottom: 2rem;
+}
+
+.question-page button {
+  display: block;
+  width: 80%;
+  margin: 0.5rem 0;
+  background-color: #003366;
+  border-color: #003366;
+  color: #ffffff;
+
+  &:hover {
+    background-color: #185797;
+    border-color: #185797;
+  }
+}
+.result-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(45deg, #d9fffa, #e8e5ff);
+}
+
+.result-page h2 {
+  font-size: 2.5rem;
+  color: #003366;
+  margin-bottom: 2rem;
+}
+
+.result-page button {
+  background-color: #003366;
   &:hover {
     background-color: #185797;
     border-color: #185797;

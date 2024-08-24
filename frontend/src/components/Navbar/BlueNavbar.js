@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   Collapse,
@@ -12,6 +13,7 @@ import {
 import classnames from "classnames";
 
 function BlueNavbar() {
+  const location = useLocation();
   const [navbarColor, setNavbarColor] = useState("navbar-transparent");
   const [navbarCollapse, setNavbarCollapse] = useState(false);
 
@@ -23,24 +25,26 @@ function BlueNavbar() {
   useEffect(() => {
     const updateNavbarColor = () => {
       if (
+        !(location.pathname === "/") ||
         document.documentElement.scrollTop > 299 ||
         document.body.scrollTop > 299
       ) {
         setNavbarColor("");
-      } else if (
-        document.documentElement.scrollTop < 300 ||
-        document.body.scrollTop < 300
-      ) {
+      } else {
         setNavbarColor("navbar-transparent");
       }
     };
 
+    // Run the function initially
+    updateNavbarColor();
+
+    // Add scroll event listener
     window.addEventListener("scroll", updateNavbarColor);
 
     return () => {
       window.removeEventListener("scroll", updateNavbarColor);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <Navbar className={classnames("fixed-top", navbarColor)} expand="lg" light>
