@@ -1,0 +1,9 @@
+.svg-map {
+    .state {
+        &:hover {
+            stroke: #ffffff;
+            fill: $purple-color !important;
+            stroke-width: 0.15px;
+          }
+    }
+}

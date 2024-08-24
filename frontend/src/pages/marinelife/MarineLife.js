@@ -6,7 +6,7 @@ function MarineLife() {
     return (
         <>
             <CommonNavbar />
-            <div>
+            <div className="section">
                 <StateMap />
             </div>
             

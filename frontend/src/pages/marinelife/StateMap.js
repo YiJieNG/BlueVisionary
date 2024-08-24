@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import * as d3 from "d3";
-import stateData from "../../data/aust.json"
+import stateData from "../../data/FINAL_STATE_data_rewind.json"
+
+
 
 function StateMap() {
 
@@ -8,7 +10,6 @@ function StateMap() {
         //Width and height
         const w = 1000;
         const h = 800;
-        console.log(stateData.features)
 
         //Define map projection
         const projection = d3.geoMercator()
@@ -19,10 +20,9 @@ function StateMap() {
         //Define path generator
         const path = d3.geoPath()
             .projection(projection);
-
-        const color = d3.scaleOrdinal()
-            .range(['Azure']);
-            console.log(color)
+        
+        var color = d3.scaleLinear().domain([1,20])
+        .range(["white", "blue"])
 
         //Create SVG
         const svg = d3.select(".svg-map");
@@ -31,23 +31,34 @@ function StateMap() {
         //Binding data and creating one path per GeoJSON feature
         svg.selectAll("path")
             .data(stateData.features)
-            .enter()
-            .append("path")
+            .join("path")
             .attr("d", path)
             .attr("stroke", "dimgray")
-            .attr("fill", (d, i) => { return color(i) });
+            .attr("fill", (d, i) => { return color(i) })
+            .attr("class", (state) => {
+                return "state";
+              });
 
-        //States
+        // //States
         svg.selectAll("text")
             .data(stateData.features)
             .enter()
             .append("text")
             .attr("fill", "darkslategray")
-            .attr("transform", (d) => { return "translate(" + path.centroid(d) + ")"; })
+            .attr("x", function(d) {
+                return path.centroid(d)[0];
+              })
+              .attr("y", function(d) {
+                if(d.properties.ste_iso3166_code === "ACT") {
+                    return path.centroid(d)[1]-15;
+                } else {
+                    return path.centroid(d)[1];
+                }
+              })
             .attr("text-anchor", "middle")
             .attr("dy", ".35em")
             .text((d) => {
-                return d.properties.STATE_NAME;
+                return d.properties.ste_iso3166_code;
             });
 
         //Append the name
@@ -66,7 +77,6 @@ function StateMap() {
         <>
             <div id="svganchor">
                 <svg width={1000} height={800} className="svg-map">
-
                 </svg>
             </div>
         </>
