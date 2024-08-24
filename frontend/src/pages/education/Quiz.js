@@ -117,15 +117,40 @@ function Quiz() {
           ],
           backgroundColor: ["#eff9ff", "#36A2EB", "#185797", "#003366"],
           hoverBackgroundColor: ["#4BC0C0", "#4BC0C0", "#4BC0C0", "#4BC0C0"],
+          hoverOffset: 5,
+          borderWidth: 3,
         },
       ],
     };
+    const pieOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: {
+            font: {
+              size: 18,
+            },
+          },
+        },
+        title: {
+          display: true,
+          text: "How others say:",
+          font: {
+            size: 20,
+          },
+          color: "#003366",
+        },
+      },
+    };
     return (
       <div className="feedback-page">
-        <Container fluid>
+        <Container>
           <Row className="align-items-center">
             <Col md="6" className="content">
-              <h2>{isCorrect ? "Correct!" : "Incorrect!"}</h2>
+              <h2>{isCorrect ? "Correct!" : "Incorrect :("}</h2>
               <p>
                 The correct answer is: <strong>{question.correctAnswer}</strong>
               </p>
@@ -136,7 +161,7 @@ function Quiz() {
               </Button>
             </Col>
             <Col md="6" className="chart-section">
-              <Pie data={pieData} />
+              <Pie data={pieData} options={pieOptions} />
             </Col>
           </Row>
         </Container>
