@@ -1,6 +1,6 @@
 import { PieChart } from '@mui/x-charts/PieChart';
 
-function BluePieChart({data, height, width}) {
+function BluePieChart({data, height, width, updateEndangerType}) {
     return (
         <>
             <PieChart
@@ -13,12 +13,13 @@ function BluePieChart({data, height, width}) {
                         cornerRadius: 5,
                         startAngle: -90,
                         endAngle: 360,
-                        cx: 150,
-                        cy: 150,
+                        cx: 0,
+                        cy: height/2,
                     }
                 ]}
                 width={width}
                 height={height}
+                onItemClick={(event, d) => updateEndangerType(data[d.dataIndex].label)}
             />
         </>
     );
