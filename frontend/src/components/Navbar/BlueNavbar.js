@@ -63,13 +63,13 @@ function BlueNavbar() {
               <NavLink href="/marinelife">Marine Life</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/">Volunteering</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink href="/">Pollution Insights</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/">Marine Policies</NavLink>
+              <NavLink href="/">Track Impact</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/quiz">Educate Yourself</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
