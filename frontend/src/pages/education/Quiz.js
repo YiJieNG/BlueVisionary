@@ -1,24 +1,22 @@
-import CommonNavbar from "../../components/Navbar/CommonNavbar";
+import { useState } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-import React, { useState } from "react";
 import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
-import PlasticPollution from "../../assets/img/PlasticPollution.jpg";
-import CleanUp from "../../assets/img/CleanUp.jpg";
-import EndangeredSpecies from "../../assets/img/EndangeredSpecies.jpg";
-import Education from "../../assets/img/Education.jpg";
 import QnaData from "./QnaData";
 
 function Quiz() {
-  const [step, setStep] = useState("landing"); // 'landing', 'question', 'result'
+  const [step, setStep] = useState("landing"); // 'landing', 'question', 'feedback', 'result'
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
 
   const startQuiz = () => {
     setStep("question");
   };
 
   const handleAnswer = (answer) => {
+    setSelectedAnswer(answer);
+
     setUserAnswers({
       ...userAnswers,
       [currentQuestion]: answer,
@@ -28,8 +26,14 @@ function Quiz() {
       setScore(score + 1);
     }
 
+    // Move to feedback step to show correct answer
+    setStep("feedback");
+  };
+
+  const nextQuestion = () => {
     if (currentQuestion < QnaData.questionsData.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+      setStep("question");
     } else {
       setStep("result");
     }
@@ -40,6 +44,7 @@ function Quiz() {
     setCurrentQuestion(0);
     setUserAnswers({});
     setScore(0);
+    setSelectedAnswer("");
   };
 
   if (step === "landing") {
@@ -48,7 +53,7 @@ function Quiz() {
         <div className="landing-page">
           <Container>
             <Row className="align-items-center">
-              <Col md="6">
+              <Col md="6" className="content">
                 <h1 className="feature-title">
                   How much do you know about Reptiles?
                 </h1>
@@ -63,8 +68,8 @@ function Quiz() {
                   Take Quiz
                 </Button>
               </Col>
-              <Col md="6">
-                <img src={SeaTurtle} alt="Sea Turtle" className="img-fluid" />
+              <Col md="6" className="image-section">
+                <img src={SeaTurtle} alt="Sea Turtle" />
               </Col>
             </Row>
           </Container>
@@ -78,15 +83,36 @@ function Quiz() {
     return (
       <div className="question-page">
         <h2>{question.question}</h2>
-        {question.options.map((option, index) => (
-          <Button
-            key={index}
-            onClick={() => handleAnswer(option)}
-            className="d-block w-100 mb-3"
-          >
-            {option}
-          </Button>
-        ))}
+        <div className="options-grid">
+          {question.options.map((option, index) => (
+            <Button
+              key={index}
+              onClick={() => handleAnswer(option)}
+              className="option-button"
+            >
+              {option}
+            </Button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "feedback") {
+    const question = QnaData.questionsData[currentQuestion];
+    const isCorrect = selectedAnswer === question.correctAnswer;
+
+    return (
+      <div className="feedback-page">
+        <h2>{isCorrect ? "Correct!" : "Incorrect!"}</h2>
+        <p>
+          The correct answer is: <strong>{question.correctAnswer}</strong>
+        </p>
+        <Button onClick={nextQuestion} color="primary">
+          {currentQuestion < QnaData.questionsData.length - 1
+            ? "Next Question"
+            : "See Results"}
+        </Button>
       </div>
     );
   }
