@@ -2,32 +2,37 @@ import { Container, Row, Col, Button, Card, CardBody } from "reactstrap";
 import { GiEarthAsiaOceania, GiSeaTurtle } from "react-icons/gi";
 import { TbBottleOff } from "react-icons/tb";
 import { BsSearchHeart } from "react-icons/bs";
+import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
+import PlasticPollution from "../../assets/img/PlasticPollution.jpg";
+import CleanUp from "../../assets/img/CleanUp.jpg";
+import EndangeredSpecies from "../../assets/img/EndangeredSpecies.jpg";
+import Education from "../../assets/img/Education.jpg";
 
 function HomeContent() {
   const cardItems = [
     {
+      title: "Endangered Marine Species",
+      description:
+        "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
+      image: EndangeredSpecies,
+    },
+    {
       title: "Extent of plastic pollution",
       description:
         "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
-      image: "https://picsum.photos/1200/1200",
+      image: PlasticPollution,
     },
     {
       title: "Track Your Impact",
       description:
         "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
-      image: "https://picsum.photos/1200/1200",
+      image: CleanUp,
     },
     {
       title: "Educate yourself",
       description:
         "Dive into a variety of resources to expand and test your knowledge on marine conservation and become a more effective advocate to protect our oceans.",
-      image: "https://picsum.photos/1200/1200",
-    },
-    {
-      title: "Endangered Marine Species",
-      description:
-        "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
-      image: "https://picsum.photos/1200/1200",
+      image: Education,
     },
   ];
 
@@ -41,22 +46,19 @@ function HomeContent() {
               <h1 className="hero-title">Our Vision</h1>
               <p className="hero-subtitle">
                 We envision a world where everyone, regardless of their location
-                or busy schedule, can contribute to the health of our oceans.
-                BlueVisionary bridges the gap between awareness and action,
-                providing a user-friendly platform where you can discover the
-                extent of plastic pollution, track your cleanup efforts, and
-                visualize the impact you're making.
+                or busy schedule, can contribute to the health of our oceans to
+                save marine lifes especially reptiles. BlueVisionary bridges the
+                gap between awareness and action, providing a user-friendly
+                platform where you can discover the extent of plastic pollution,
+                track your cleanup efforts, and visualize the impact you're
+                making.
               </p>
               <Button className="dark-blue-button cta-button">
                 Getting Started
               </Button>
             </Col>
             <Col md="6" className="image-section image-autofill">
-              <img
-                src="https://picsum.photos/1000/800"
-                alt="Hero Image"
-                className="img-fluid"
-              />
+              <img src={SeaTurtle} alt="Sea Turtle" className="img-fluid" />
             </Col>
           </Row>
 
@@ -89,7 +91,7 @@ function HomeContent() {
               </Col>
               <Col xs="auto" className="icon-margin">
                 <GiSeaTurtle size={80} />
-                <p className="icon-word-padding">Protect Reptiles</p>
+                <p className="icon-word-padding">Save Reptiles</p>
               </Col>
             </Row>
           </Row>

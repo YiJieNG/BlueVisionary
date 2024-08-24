@@ -336,6 +336,10 @@
   text-align: left;
 }
 
+.feature-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(39, 74, 230, 0.2);
+}
 //////////////// custom css /////////////////
 .image-autofill {
   object-fit: cover;
