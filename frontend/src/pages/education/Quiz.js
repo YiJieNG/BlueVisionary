@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
-import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
+import SeaTurtle from "../../assets/img/SeaTurtle_v2.jpg";
 import axios from "axios";
 
 function Quiz() {
@@ -22,14 +22,24 @@ function Quiz() {
           ...q,
           options: [q.option1, q.option2, q.option3, q.option4],
         }));
-        setQuestions(formattedQuestions);
+
+        // Shuffle the questions and select 3 random questions
+        const shuffledQuestions = shuffleArray(formattedQuestions).slice(0, 3);
+        setQuestions(shuffledQuestions);
       } catch (error) {
         console.error("Error fetching questions:", error);
       }
     };
 
     fetchQuestions();
-  }, [currentQuestion]);
+  }, []); // Fetch questions only once when the component mounts
+
+  const shuffleArray = (array) => {
+    return array
+      .map((item) => ({ ...item, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map((item) => item);
+  };
 
   const startQuiz = () => {
     setStep("question");
@@ -98,7 +108,7 @@ function Quiz() {
             <Row className="align-items-center">
               <Col md="6" className="content">
                 <h1 className="feature-title">
-                  How much do you know about Reptiles?
+                  How much do you know about Marine Reptiles?
                 </h1>
                 <p className="feature-description">
                   Let's test your knowledge and see how much you really know
@@ -204,7 +214,7 @@ function Quiz() {
                 The correct answer is: <strong>{question.correctOption}</strong>
               </p>
               <p>
-                <subtitle>Explaination: </subtitle>
+                <span className="subtitle">Explanation: </span>
                 {question.explanation}
               </p>
               <Button onClick={nextQuestion} className="dark-blue-button">
