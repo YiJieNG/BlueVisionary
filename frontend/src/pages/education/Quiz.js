@@ -3,7 +3,6 @@ import { Container, Row, Col, Button } from "reactstrap";
 import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
 import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
-import QnaData from "./QnaData";
 import axios from "axios";
 
 function Quiz() {
@@ -13,19 +12,25 @@ function Quiz() {
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
+
   // Fetch questions from backend on component mount
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/questions");
-        setQuestions(response.data);
+        const formattedQuestions = response.data.map((q) => ({
+          ...q,
+          options: [q.option1, q.option2, q.option3, q.option4],
+        }));
+        setQuestions(formattedQuestions);
       } catch (error) {
         console.error("Error fetching questions:", error);
       }
     };
 
     fetchQuestions();
-  }, []);
+  }, [currentQuestion]);
+
   const startQuiz = () => {
     setStep("question");
   };
@@ -40,34 +45,36 @@ function Quiz() {
     });
 
     // Update the score if the answer is correct
-    if (answer === QnaData.questionsData[currentQuestion].correctAnswer) {
+    if (answer === questions[currentQuestion].correctOption) {
       setScore(score + 1);
     }
 
     // Update the selected option count in the database
-    await updateOptionCount(currentQuestion, optionIndex);
+    await updateOptionCount(questions[currentQuestion].questionId, optionIndex);
 
     // Move to feedback step to show correct answer
     setStep("feedback");
   };
 
-  const updateOptionCount = async (questionIndex, optionIndex) => {
+  const updateOptionCount = async (questionId, optionIndex) => {
     try {
-      // Assuming you have an API endpoint to update the option count in the database
-      await axios.post("/api/updateOptionCount", {
-        questionIndex: questionIndex,
+      // Construct the data to send
+      const data = {
+        questionId: questionId,
         optionIndex: optionIndex,
-      });
+      };
 
-      // Optionally, you can update the local QnaData state to reflect the updated count
-      QnaData.questionsData[questionIndex][`option${optionIndex + 1}`]++;
+      console.log(data);
+
+      // Send the data to the backend using POST request
+      await axios.post("http://localhost:5000/api/update_option_count", data);
     } catch (error) {
       console.error("Error updating option count:", error);
     }
   };
 
   const nextQuestion = () => {
-    if (currentQuestion < QnaData.questionsData.length - 1) {
+    if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setStep("question");
     } else {
@@ -115,15 +122,18 @@ function Quiz() {
   }
 
   if (step === "question") {
-    const question = QnaData.questionsData[currentQuestion];
+    if (questions.length === 0) {
+      return <div>Loading...</div>; // Show a loading state while questionsData is being fetched
+    }
+    const question = questions[currentQuestion];
     return (
       <div className="question-page">
-        <h2>{question.question}</h2>
+        <h2>{question.questionText}</h2>
         <div className="options-grid">
           {question.options.map((option, index) => (
             <Button
               key={index}
-              onClick={() => handleAnswer(option)}
+              onClick={() => handleAnswer(option, index)}
               className="option-button"
             >
               {option}
@@ -135,19 +145,24 @@ function Quiz() {
   }
 
   if (step === "feedback") {
-    const question = QnaData.questionsData[currentQuestion];
-    const isCorrect = selectedAnswer === question.correctAnswer;
+    const question = questions[currentQuestion];
+    const isCorrect = selectedAnswer === question.correctOption;
     // Prepare data for the pie chart
     const pieData = {
-      labels: question.options,
+      labels: [
+        question.option1,
+        question.option2,
+        question.option3,
+        question.option4,
+      ],
       datasets: [
         {
           label: "# of Votes",
           data: [
-            question.option1,
-            question.option2,
-            question.option3,
-            question.option4,
+            question.option1Count,
+            question.option2Count,
+            question.option3Count,
+            question.option4Count,
           ],
           backgroundColor: ["#eff9ff", "#36A2EB", "#185797", "#003366"],
           hoverBackgroundColor: ["#4BC0C0", "#4BC0C0", "#4BC0C0", "#4BC0C0"],
@@ -186,10 +201,10 @@ function Quiz() {
             <Col md="6" className="content">
               <h2>{isCorrect ? "Correct!" : "Incorrect :("}</h2>
               <p>
-                The correct answer is: <strong>{question.correctAnswer}</strong>
+                The correct answer is: <strong>{question.correctOption}</strong>
               </p>
               <Button onClick={nextQuestion} className="dark-blue-button">
-                {currentQuestion < QnaData.questionsData.length - 1
+                {currentQuestion < questions.length - 1
                   ? "Next Question"
                   : "See Results"}
               </Button>
@@ -207,7 +222,7 @@ function Quiz() {
     return (
       <div className="result-page">
         <h2>
-          You scored {score}/{QnaData.questionsData.length}!
+          You scored {score}/{questions.length}!
         </h2>
         <Button onClick={restartQuiz} color="primary">
           Let's go again
