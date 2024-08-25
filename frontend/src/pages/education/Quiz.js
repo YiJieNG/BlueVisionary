@@ -13,26 +13,25 @@ function Quiz() {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
-  // Fetch questions from backend on component mount
+  // Function to fetch and shuffle questions
+  const fetchAndShuffleQuestions = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/questions");
+      const formattedQuestions = response.data.map((q) => ({
+        ...q,
+        options: [q.option1, q.option2, q.option3, q.option4],
+      }));
+      // Shuffle the questions and select 3 random questions
+      const shuffledQuestions = shuffleArray(formattedQuestions).slice(0, 3);
+      setQuestions(shuffledQuestions);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/questions");
-        const formattedQuestions = response.data.map((q) => ({
-          ...q,
-          options: [q.option1, q.option2, q.option3, q.option4],
-        }));
-
-        // Shuffle the questions and select 3 random questions
-        const shuffledQuestions = shuffleArray(formattedQuestions).slice(0, 3);
-        setQuestions(shuffledQuestions);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    };
-
-    fetchQuestions();
-  }, []); // Fetch questions only once when the component mounts
+    fetchAndShuffleQuestions(); // Fetch questions on initial component mount
+  }, []);
 
   const shuffleArray = (array) => {
     return array
@@ -93,6 +92,7 @@ function Quiz() {
   };
 
   const restartQuiz = () => {
+    fetchAndShuffleQuestions(); // Re-fetch and shuffle questions when restarting the quiz
     setStep("landing");
     setCurrentQuestion(0);
     setUserAnswers({});
