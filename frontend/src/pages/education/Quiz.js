@@ -1,35 +1,69 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
 import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
 import QnaData from "./QnaData";
+import axios from "axios";
 
 function Quiz() {
   const [step, setStep] = useState("landing"); // 'landing', 'question', 'feedback', 'result'
+  const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
+  // Fetch questions from backend on component mount
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/questions");
+        setQuestions(response.data);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
 
+    fetchQuestions();
+  }, []);
   const startQuiz = () => {
     setStep("question");
   };
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = async (answer, optionIndex) => {
     setSelectedAnswer(answer);
 
+    // Record the user's answer
     setUserAnswers({
       ...userAnswers,
       [currentQuestion]: answer,
     });
 
+    // Update the score if the answer is correct
     if (answer === QnaData.questionsData[currentQuestion].correctAnswer) {
       setScore(score + 1);
     }
 
+    // Update the selected option count in the database
+    await updateOptionCount(currentQuestion, optionIndex);
+
     // Move to feedback step to show correct answer
     setStep("feedback");
+  };
+
+  const updateOptionCount = async (questionIndex, optionIndex) => {
+    try {
+      // Assuming you have an API endpoint to update the option count in the database
+      await axios.post("/api/updateOptionCount", {
+        questionIndex: questionIndex,
+        optionIndex: optionIndex,
+      });
+
+      // Optionally, you can update the local QnaData state to reflect the updated count
+      QnaData.questionsData[questionIndex][`option${optionIndex + 1}`]++;
+    } catch (error) {
+      console.error("Error updating option count:", error);
+    }
   };
 
   const nextQuestion = () => {
