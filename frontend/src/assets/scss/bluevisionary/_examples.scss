@@ -476,10 +476,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   height: 100vh;
   text-align: center;
   background: linear-gradient(45deg, #eff9ff, #83d0ff);
+  margin: 0px auto;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 .question-page h2 {
@@ -487,14 +490,15 @@
   color: #003366;
   margin-bottom: 2rem;
   font-weight: bold;
+  text-align: left;
 }
 
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  grid-template-rows: repeat(2, 1fr); /* 2 rows */
+  grid-template-columns: repeat(1, 1fr); /* 2 columns */
+  grid-template-rows: repeat(1, 1fr); /* 2 rows */
   gap: 1rem; /* Space between buttons */
-  width: 80%; /* Adjust width as necessary */
+  width: 15%; /* Adjust width as necessary */
 }
 
 .option-button {
@@ -513,7 +517,7 @@
 
 .feedback-page {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100vh;
   background: linear-gradient(45deg, #eff9ff, #9cd8fd);
@@ -558,12 +562,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    canvas {
-      max-width: 100%;
-      height: auto;
-    }
+    width: 60%; /* Adjust this width to make the container larger */
+    height: 60vh; /* Use vh to make the height responsive to the viewport */
+    margin: 0 auto; /* Center the container */
   }
+}
+
+.chartjs-render-monitor {
+  width: 75% !important; /* Ensure the chart doesn't exceed this width */
+  height: auto !important;
+}
+
+.chart-legend {
+  font-size: 1.5rem; /* Increase the legend font size */
+  color: #003366; /* Match the legend color with the theme */
 }
 
 .result-page {
