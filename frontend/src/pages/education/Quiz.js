@@ -203,6 +203,10 @@ function Quiz() {
               <p>
                 The correct answer is: <strong>{question.correctOption}</strong>
               </p>
+              <p>
+                <subtitle>Explaination: </subtitle>
+                {question.explanation}
+              </p>
               <Button onClick={nextQuestion} className="dark-blue-button">
                 {currentQuestion < questions.length - 1
                   ? "Next Question"

@@ -408,13 +408,18 @@
 }
 
 .dark-blue-button {
-  background-color: #003366;
-  border-color: #003366;
+  font-size: 1.2rem;
   color: #ffffff;
-
+  background-color: #2776c5;
+  border-color: #2776c5;
+  padding: 0.75rem 2rem;
+  text-align: center;
+  font-weight: bold;
   &:hover {
-    background-color: #185797;
-    border-color: #185797;
+    color: #003366;
+    background-color: #a8caed;
+    border-color: #a8caed;
+    font-weight: bold;
   }
 }
 
@@ -446,13 +451,18 @@
     }
 
     button {
-      background-color: #003366;
-      border-color: #003366;
+      font-size: 1.2rem;
       color: #ffffff;
-
+      background-color: #2776c5;
+      border-color: #2776c5;
+      padding: 0.75rem 2rem;
+      text-align: center;
+      font-weight: bold;
       &:hover {
-        background-color: #185797;
-        border-color: #185797;
+        color: #003366;
+        background-color: #a8caed;
+        border-color: #a8caed;
+        font-weight: bold;
       }
     }
   }
@@ -504,14 +514,16 @@
 .option-button {
   font-size: 1.2rem;
   color: #ffffff;
-  background-color: #003366;
-  border-color: #003366;
-  padding: 1rem;
+  background-color: #2776c5;
+  border-color: #2776c5;
+  padding: 0.75rem 2rem;
   text-align: center;
-
+  font-weight: bold;
   &:hover {
-    background-color: #185797;
-    border-color: #185797;
+    color: #003366;
+    background-color: #a8caed;
+    border-color: #a8caed;
+    font-weight: bold;
   }
 }
 
@@ -542,17 +554,28 @@
 
       strong {
         color: #185797; // Highlight the correct answer
+        font-weight: bold;
+      }
+      subtitle {
+        color: #000000; // Highlight the correct answer
+        font-weight: bold;
       }
     }
 
     button {
-      background-color: #003366;
-      border-color: #003366;
+      font-size: 1.2rem;
+      font-weight: bold;
       color: #ffffff;
+      background-color: #2776c5;
+      border-color: #2776c5;
+      padding: 0.75rem 2rem;
+      text-align: center;
 
       &:hover {
-        background-color: #185797;
-        border-color: #185797;
+        color: #003366;
+        background-color: #a8caed;
+        border-color: #a8caed;
+        font-weight: bold;
       }
     }
   }
@@ -574,8 +597,8 @@
 }
 
 .chart-legend {
-  font-size: 1.5rem; /* Increase the legend font size */
-  color: #003366; /* Match the legend color with the theme */
+  font-size: 1.5rem;
+  color: #003366;
 }
 
 .result-page {
@@ -596,18 +619,20 @@
 }
 
 .result-page button {
-  background-color: #003366;
-  border-color: #003366;
-  color: #ffffff;
   font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #2776c5;
+  border-color: #2776c5;
   padding: 0.75rem 2rem;
-
+  text-align: center;
+  font-weight: bold;
   &:hover {
-    background-color: #185797;
-    border-color: #185797;
+    color: #003366;
+    background-color: #a8caed;
+    border-color: #a8caed;
+    font-weight: bold;
   }
 }
-
 
 // marine life page
 .section-marinelife {
@@ -618,7 +643,7 @@
   color: #003366;
 }
 .Endangered {
-  color: #36A2EB;
+  color: #36a2eb;
 }
 .Vulnerable {
   color: #bbe0f7;
