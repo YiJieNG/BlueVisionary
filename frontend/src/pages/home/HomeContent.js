@@ -1,5 +1,6 @@
 import { Container, Row, Col, Button, Card, CardBody } from "reactstrap";
 import { GiEarthAsiaOceania, GiSeaTurtle } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 import { TbBottleOff } from "react-icons/tb";
 import { BsSearchHeart } from "react-icons/bs";
 import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
@@ -9,30 +10,35 @@ import EndangeredSpecies from "../../assets/img/EndangeredSpecies.jpg";
 import Education from "../../assets/img/Education.jpg";
 
 function HomeContent() {
+  const navigate = useNavigate();
   const cardItems = [
     {
       title: "Endangered Marine Species",
       description:
         "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
       image: EndangeredSpecies,
+      link: "/marinelife",
     },
     {
       title: "Extent of plastic pollution",
       description:
         "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
       image: PlasticPollution,
+      link: "/",
     },
     {
       title: "Track Your Impact",
       description:
         "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
       image: CleanUp,
+      link: "/",
     },
     {
       title: "Educate yourself",
       description:
         "Dive into a variety of resources to expand and test your knowledge on marine conservation and become a more effective advocate to protect our oceans.",
       image: Education,
+      link: "/quiz",
     },
   ];
 
@@ -104,7 +110,8 @@ function HomeContent() {
               <Col md="3" sm="6" xs="12" key={index} className="mb-4 d-flex">
                 <Card
                   className="feature-card features-row custom-border"
-                  style={{ padding: "1rem 1.5rem" }}
+                  style={{ padding: "1rem 1.5rem", cursor: "pointer" }}
+                  onClick={() => navigate(cardItem.link)}
                 >
                   <CardBody className="d-flex flex-column">
                     <h5 className="feature-title">{cardItem.title}</h5>
