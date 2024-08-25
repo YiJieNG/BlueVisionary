@@ -88,5 +88,40 @@ def update_option_count():
 
     return jsonify({"message": "Option count updated"}), 200
 
+@app.route('/api/get_state_stat', methods=['GET'])
+def get_state_stat():
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT State, Critically_Endangered, Endangered, Vulnerable FROM threat_state_count''')
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    stats = {}
+    for item in data:
+        stats[item[0]]={
+            "critically_endangered": item[1],
+            "endangered": item[2],
+            "vulnerable": item[3]
+        }
+    return jsonify(stats)
+
+@app.route('/api/get_state_species/<state>/<status>', methods=['GET'])
+def get_state_species(state, status):
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT TAXON_GROUP, count(*) FROM threat_species
+                WHERE {0}=1
+                AND LOWER(THREATENED_STATUS) = LOWER("{1}")
+                GROUP BY TAXON_GROUP
+                '''.format(state, status))
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    stats = {}
+    for item in data:
+        stats[item[0]] = item[1]
+    
+    return jsonify(stats)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -57,7 +57,7 @@ function StateMap({ w, h, stateSelected, updateStateSelected }) {
             })
             .on("click", function (event, d) {
                 //update selected state
-                updateStateSelected(d.properties.ste_name[0]);
+                updateStateSelected([d.properties.ste_name[0], d.properties.ste_iso3166_code]);
                 // update all state color
                 svg.selectAll("path").attr("fill", (dd, i) => { 
                     if(dd.properties.ste_name[0] === d.properties.ste_name[0]) {
