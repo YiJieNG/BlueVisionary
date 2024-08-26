@@ -17,7 +17,7 @@ function Quiz() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/questions");
+        const response = await axios.get("http://13.73.202.192/api/questions");
         const formattedQuestions = response.data.map((q) => ({
           ...q,
           options: [q.option1, q.option2, q.option3, q.option4],
@@ -67,7 +67,7 @@ function Quiz() {
       console.log(data);
 
       // Send the data to the backend using POST request
-      await axios.post("http://localhost:5000/api/update_option_count", data);
+      await axios.post("http://13.73.202.192/api/update_option_count", data);
     } catch (error) {
       console.error("Error updating option count:", error);
     }

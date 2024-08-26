@@ -111,6 +111,7 @@ def get_state_species(state, status):
     cur.execute('''SELECT TAXON_GROUP, count(*) FROM threat_species
                 WHERE {0}=1
                 AND LOWER(THREATENED_STATUS) = LOWER("{1}")
+                AND TAXON_GROUP != "birds"
                 GROUP BY TAXON_GROUP
                 '''.format(state, status))
     data = cur.fetchall()
