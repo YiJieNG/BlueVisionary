@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 
-function BlueBarChart({ xAxis, data, height, width }) {
+function BlueBarChart({ xAxis, data, height, width, updateSpeciesSelected, updateModalStatus }) {
+    // const [itemData, setItemData] = useState();
+    // const [axisData, setAxisData] = useState();
     return (
         <>
             <BarChart
@@ -14,6 +17,10 @@ function BlueBarChart({ xAxis, data, height, width }) {
                     left: 0,
                     right: 0,
                   }}
+                //   onItemClick={(event, d) => setItemData(d)}
+                  onAxisClick={(event, d) => {
+                    updateSpeciesSelected(d.axisValue);
+                }}
                 
             />
         </>
