@@ -69,7 +69,7 @@ function MarineLife() {
     // Fetch state statistic from backend
     useEffect(() => {
         axios
-            .get("http://127.0.0.1:5000/api/get_state_stat")
+            .get("http://13.73.202.192/api/get_state_stat")
             .then((res) => {
                 let stateSpecies = {}
                 for (let key in res.data) {
@@ -89,7 +89,7 @@ function MarineLife() {
     // fetch state species threat status data from backend
     useEffect(() => {
         axios
-            .get(`http://127.0.0.1:5000/api/get_state_species/${stateSelected[1]}/${endangerType}`)
+            .get(`http://13.73.202.192/api/get_state_species/${stateSelected[1]}/${endangerType}`)
             .then((res) => {
                 let endangerSpecies = { data: [] }
                 let x = { scaleType: 'band', data: [] }
