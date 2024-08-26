@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, Button, Collapse, Card, CardBody, CardHeader } from 'reactstrap';
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import CollapsedCard from '../../components/CollapsedCard';
 
 const descriptions = [
@@ -37,8 +36,8 @@ function BlueModal({isOpen, speciesType, stateName, threatStatus, updateIsOpen})
 
     const toggleModal = () => updateIsOpen(!isOpen);
 
-    const listCards = descriptions.map(description => 
-        <CollapsedCard data={description}/>
+    const listCards = descriptions.map((description, i) => 
+        <CollapsedCard key={i} data={description}/>
     );
     return (
         <>

@@ -82,7 +82,7 @@ function MarineLife() {
     // Fetch state statistic from backend
     useEffect(() => {
         axios
-            .get("http://13.73.202.192/api/get_state_stat")
+            .get("https://www.bluevisionary.studio/api/get_state_stat")
             .then((res) => {
                 let stateSpecies = {}
                 for (let key in res.data) {
@@ -102,9 +102,8 @@ function MarineLife() {
     // fetch state species threat status data from backend
     useEffect(() => {
         axios
-            .get(`http://13.73.202.192/api/get_state_species/${stateSelected[1]}/${endangerType}`)
+            .get(`https://www.bluevisionary.studio/api/get_state_species/${stateSelected[1]}/${endangerType}`)
             .then((res) => {
-                console.log(res.data)
                 let endangerSpecies = { data: [] }
                 let x = { scaleType: 'band', data: [] }
                 for (let key in res.data) {

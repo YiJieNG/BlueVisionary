@@ -76,7 +76,7 @@ function Quiz() {
       console.log(data);
 
       // Send the data to the backend using POST request
-      await axios.post("http://13.73.202.192/api/update_option_count", data);
+      await axios.post("https://www.bluevisionary.studio/api/update_option_count", data);
     } catch (error) {
       console.error("Error updating option count:", error);
     }
