@@ -29,7 +29,7 @@ const descriptions = [
                 "content": "The major threat to Hippocampus whitei is loss of essential marine habitats across its range. This species is known to occur along some of the most heavily populated and impacted estuaries in Australia (NSW EPA 2012). As the species displays strong site fidelity and has specific habitat preferences (Vincent et al. 2005, Harasti et al. 2014a), the further loss of key habitats through anthropogenic effects would result in a negative effect on species abundance and distribution; as occurred in Port Stephens (Harasti 2016). Whilst the Port Stephens estuary was previously considered a ‘stronghold’ for populations of H. whitei, the recent population declines as a result of habitat loss indicates that its long-term conservation within the Port Stephens waterway is at risk if essential marine habitats continue to be lost.Within Sydney Harbour, it has been shown that H. whitei are very susceptible to councils cleaning the nets as removal of epibiota caused a decrease in abundance and that the species showed significant avoidance of areas devoid of epibiotic growth (Harasti et al. 2010). Guidelines for cleaning of the nets to minimise harm to the seahorses were developed and provided to councils in 2009 (Harasti et al. 2010); however, councils rarely implement these guidelines."
             }
         ]
-    },
+    }
 ]
 
 function BlueModal({isOpen, speciesType, stateName, threatStatus, updateIsOpen}) {
@@ -42,10 +42,10 @@ function BlueModal({isOpen, speciesType, stateName, threatStatus, updateIsOpen})
     );
     return (
         <>
-            <Button color="primary" onClick={toggleModal}>
+            {/* <Button color="primary" onClick={toggleModal}>
                 Open Modal
-            </Button>
-            <Modal isOpen={isOpen} toggle={toggleModal} size='xl' is>
+            </Button> */}
+            <Modal isOpen={isOpen} toggle={toggleModal} size='xl'>
                 <ModalHeader toggle={toggleModal}>{threatStatus} {speciesType} - {stateName}</ModalHeader>
                 <ModalBody>
                     {listCards}
