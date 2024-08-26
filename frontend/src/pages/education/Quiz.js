@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
-import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
+import SeaTurtle from "../../assets/img/SeaTurtle_v2.jpg";
 import axios from "axios";
 
 function Quiz() {
@@ -13,23 +13,32 @@ function Quiz() {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
-  // Fetch questions from backend on component mount
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get("http://13.73.202.192/api/questions");
-        const formattedQuestions = response.data.map((q) => ({
-          ...q,
-          options: [q.option1, q.option2, q.option3, q.option4],
-        }));
-        setQuestions(formattedQuestions);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    };
+  // Function to fetch and shuffle questions
+  const fetchAndShuffleQuestions = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/questions");
+      const formattedQuestions = response.data.map((q) => ({
+        ...q,
+        options: [q.option1, q.option2, q.option3, q.option4],
+      }));
+      // Shuffle the questions and select 3 random questions
+      const shuffledQuestions = shuffleArray(formattedQuestions).slice(0, 3);
+      setQuestions(shuffledQuestions);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
 
-    fetchQuestions();
-  }, [currentQuestion]);
+  useEffect(() => {
+    fetchAndShuffleQuestions(); // Fetch questions on initial component mount
+  }, []);
+
+  const shuffleArray = (array) => {
+    return array
+      .map((item) => ({ ...item, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map((item) => item);
+  };
 
   const startQuiz = () => {
     setStep("question");
@@ -83,6 +92,7 @@ function Quiz() {
   };
 
   const restartQuiz = () => {
+    fetchAndShuffleQuestions(); // Re-fetch and shuffle questions when restarting the quiz
     setStep("landing");
     setCurrentQuestion(0);
     setUserAnswers({});
@@ -98,7 +108,7 @@ function Quiz() {
             <Row className="align-items-center">
               <Col md="6" className="content">
                 <h1 className="feature-title">
-                  How much do you know about Reptiles?
+                  How much do you know about Marine Reptiles?
                 </h1>
                 <p className="feature-description">
                   Let's test your knowledge and see how much you really know
@@ -202,6 +212,10 @@ function Quiz() {
               <h2>{isCorrect ? "Correct!" : "Incorrect :("}</h2>
               <p>
                 The correct answer is: <strong>{question.correctOption}</strong>
+              </p>
+              <p>
+                <span className="subtitle">Explanation: </span>
+                {question.explanation}
               </p>
               <Button onClick={nextQuestion} className="dark-blue-button">
                 {currentQuestion < questions.length - 1

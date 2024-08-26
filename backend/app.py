@@ -39,7 +39,7 @@ def get_questions():
     db = get_db_connection()
     cur = db.cursor()
     cur.execute('''SELECT question_id, question, option_1, option_2, option_3, option_4, correct_answer, 
-                          option_1_count, option_2_count, option_3_count, option_4_count
+                          option_1_count, option_2_count, option_3_count, option_4_count, explanation
                    FROM questions''')
     data = cur.fetchall()
     cur.close()
@@ -58,7 +58,8 @@ def get_questions():
             "option1Count": row[7],
             "option2Count": row[8],
             "option3Count": row[9],
-            "option4Count": row[10]
+            "option4Count": row[10],
+            "explanation": row[11]
         })
 
     return jsonify(questions)
