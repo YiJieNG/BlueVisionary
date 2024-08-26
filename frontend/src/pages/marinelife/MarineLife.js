@@ -6,6 +6,7 @@ import StateMap from "./StateMap";
 import BluePieChart from "./BluePieChart";
 import BlueBarChart from "./BlueBarChart";
 import axios from "axios";
+import BlueModal from "./BlueModal";
 
 
 function MarineLife() {
@@ -14,13 +15,16 @@ function MarineLife() {
     const [stateStat, setStateStat] = useState();
     const [endangerData, setEndangerData] = useState();
     const [xAxis, setXAxis] = useState();
+    const [speciesSelected, setSpeciesSelected] = useState();
+    const [isOpen, setIsOpen] = useState(false);
+
     const stateSpeciesData = {
-        Victoria: [
+        "Victoria": [
             { value: 10, label: "Critically Endangered", color: "#003366" },
             { value: 15, label: "Endangered", color: "#36A2EB" },
             { value: 20, label: "Vulnerable", color: "#bbe0f7" },
         ],
-        Queensland: [
+        "Queensland": [
             { value: 10, label: "Critically Endangered", color: "#003366" },
             { value: 30, label: "Endangered", color: "#36A2EB" },
             { value: 20, label: "Vulnerable", color: "#bbe0f7" },
@@ -30,7 +34,7 @@ function MarineLife() {
             { value: 30, label: "Endangered", color: "#36A2EB" },
             { value: 10, label: "Vulnerable", color: "#bbe0f7" },
         ],
-        Tasmania: [
+        "Tasmania": [
             { value: 10, label: "Critically Endangered", color: "#003366" },
             { value: 30, label: "Endangered", color: "#36A2EB" },
             { value: 20, label: "Vulnerable", color: "#bbe0f7" },
@@ -65,6 +69,15 @@ function MarineLife() {
     const updateEndangerType = (newType) => {
         setEndangerType(newType);
     };
+
+    const updateSpeciesSelected = (newSpecies) => {
+        setSpeciesSelected(newSpecies);
+        setIsOpen(true);
+    }
+
+    const updateIsOpen = (openStatus) => {
+        setIsOpen(openStatus);
+    }
 
     // Fetch state statistic from backend
     useEffect(() => {
@@ -148,7 +161,7 @@ function MarineLife() {
                                             <p key={i}>{item}</p>
                                         ))} */}
                                         {endangerData && xAxis &&
-                                            <BlueBarChart width={430} height={300} data={endangerData} xAxis={xAxis} />
+                                            <BlueBarChart width={430} height={300} data={endangerData} xAxis={xAxis} updateSpeciesSelected={updateSpeciesSelected} updateIsOpen={updateIsOpen} />
                                         }
                                     </Row>
                                 </Col>
@@ -157,6 +170,9 @@ function MarineLife() {
                         </Row>
                     </Container>
                 </div>
+            </div>
+            <div>
+                <BlueModal isOpen={isOpen} speciesType={speciesSelected} stateName={stateStat[stateSelected[0]]} threatStatus={endangerType} updateIsOpen={updateIsOpen} />
             </div>
         </>
     );
