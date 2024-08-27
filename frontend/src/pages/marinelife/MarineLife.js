@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Card, CardHeader, CardBody } from "reactstrap";
 import CommonNavbar from "../../components/Navbar/CommonNavbar";
 // import BarChart from "./BarChart";
 import StateMap from "./StateMap";
@@ -125,52 +125,72 @@ function MarineLife() {
                 <div className="section-marinelife">
                     <Container fluid>
                         <Row>
-                            <Col md="6">
+                            <Col md="6" sm={{size: 'auto'}}>
                                 <StateMap
-                                    w={700}
-                                    h={700}
+                                    w={650}
+                                    h={650}
                                     stateSelected={stateSelected[0]}
                                     updateStateSelected={updateStateSelected}
                                 />
                             </Col>
+                            {/* add a card boundary */}
                             {stateStat &&
-                                <Col md="6">
-                                    <Row>
-                                        <h1>{stateSelected[0]}</h1>
-                                    </Row>
-                                    <Row>
-                                        <BluePieChart
-                                            //   data={stateSpeciesData[stateSelected[0]]}
-                                            data={stateStat[stateSelected[1]]}
-                                            width={500}
-                                            height={300}
-                                            updateEndangerType={updateEndangerType}
-                                        />
-                                    </Row>
-                                    <Row>
-                                        <h1>
-                                            Top{" "}
-                                            <b className={endangerType.replace(/\s+/g, "")}>
-                                                {endangerType}
-                                            </b>{" "}
-                                            Species
-                                        </h1>
-                                    </Row>
-                                    <Row>
-                                        {endangerData && xAxis &&
-                                            <BlueBarChart width={430} height={300} data={endangerData} xAxis={xAxis} updateSpeciesSelected={updateSpeciesSelected} updateIsOpen={updateIsOpen} />
-                                        }
-                                    </Row>
+                                <Col md="6" sm={{size: 'auto'}}>
+                                    <Card style={{ "margin-top": "50px", "margin-left": "40px", "margin-right": "40px", padding: "10px" }}>
+                                        <CardBody>
+                                            <Row>
+                                                {/* change font bigger later */}
+                                                <h1><b>{stateSelected[0]}</b></h1>
+                                            </Row>
+                                            <Row>
+                                                <h4>Endangered status</h4>
+                                                <BluePieChart
+                                                    //   data={stateSpeciesData[stateSelected[0]]}
+                                                    data={stateStat[stateSelected[1]]}
+                                                    width={500}
+                                                    height={180}
+                                                    updateEndangerType={updateEndangerType}
+                                                />
+                                            </Row>
+                                            <Row style={{ "margin-top": "20px" }}>
+                                                <h4>
+                                                    Species under {" "}
+                                                    <b className={endangerType.replace(/\s+/g, "")}>
+                                                        {endangerType}
+                                                    </b>{" "}
+                                                    status
+                                                </h4>
+                                            </Row>
+                                            <Row>
+                                                {endangerData && xAxis &&
+                                                    <BlueBarChart width={430} height={200} data={endangerData} xAxis={xAxis} updateSpeciesSelected={updateSpeciesSelected} updateIsOpen={updateIsOpen} />
+                                                }
+                                            </Row>
+                                        </CardBody>
+                                    </Card>
                                 </Col>
                             }
 
                         </Row>
+                        <Row>
+                            <Col md="12" xs="12">
+                            <Card  style={{ "margin-top": "20px", "margin-left": "40px", "margin-right": "40px", padding: "20px" }}>
+                                <Row>
+                                    <h3><b>Information session</b></h3>
+                                    <p>*** Please click the bar chart above to select the species</p>
+                                    {/* <h5>{endangerType} {speciesSelected} - {stateSelected[0]}</h5> */}
+                                    <BlueModal isOpen={isOpen} speciesType={speciesSelected} stateName={stateSelected} threatStatus={endangerType} updateIsOpen={updateIsOpen} />
+                                </Row>
+                            </Card>
+                            </Col>
+                            
+                        </Row>
                     </Container>
                 </div>
             </div>
-            <div>
-                <BlueModal isOpen={isOpen} speciesType={speciesSelected} stateName={stateSelected[0]} threatStatus={endangerType} updateIsOpen={updateIsOpen} />
-            </div>
+            {/* <div>
+                <BlueModal isOpen={isOpen} speciesType={speciesSelected} stateName={stateSelected} threatStatus={endangerType} updateIsOpen={updateIsOpen} />
+            </div> */}
         </>
     );
 }

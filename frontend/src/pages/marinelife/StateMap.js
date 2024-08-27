@@ -10,7 +10,7 @@ function StateMap({ w, h, stateSelected, updateStateSelected }) {
         const projection = d3.geoMercator()
             .center([132, -28])
             .translate([w / 2, h / 2])
-            .scale(900);
+            .scale(750);
 
         //Define path generator
         const path = d3.geoPath()

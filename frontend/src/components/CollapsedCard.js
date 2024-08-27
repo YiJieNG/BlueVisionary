@@ -7,19 +7,19 @@ function CollapsedCard({ data }) {
 
     const toggle = () => setIsOpen(!isOpen);
 
-    const cardBody = data["content"].map(content => 
+    const cardBody = data["content"].map(content =>
         <div>
-            <h2>{content.title}</h2>
+            <h4>{content.title}</h4>
             <p>{content.content}</p>
         </div>
     )
     return (
         <>
-            <Card>
-                <CardHeader onClick={toggle} style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>{data.title}</span>
-                    <Button color="link" onClick={toggle} style={{ textDecoration: 'none' }}>
-                        {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+            <Card style={{padding: "0px", marginBottom:10, marginLeft:10, width:"98.5%"}}>
+                <CardHeader onClick={toggle} style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: "#2776c5"}}>
+                    <h5 style={{color: "white"}}><b>{data.title}</b></h5>
+                    <Button color="#ffffff" onClick={toggle} style={{ textDecoration: 'none' }}>
+                        {isOpen ? <FaChevronUp color='white'/> : <FaChevronDown color='white'/>}
                     </Button>
                 </CardHeader>
                 <Collapse isOpen={isOpen}>

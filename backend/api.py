@@ -91,6 +91,9 @@ def update_option_count():
 
 @app.route('/api/get_state_stat', methods=['GET'])
 def get_state_stat():
+    """
+    get number of species that is critically endangered, endangered and vulnerable in the provided state.
+    """
     db = get_db_connection()
     cur = db.cursor()
     cur.execute('''SELECT State, Critically_Endangered, Endangered, Vulnerable FROM threat_state_count''')
@@ -108,12 +111,15 @@ def get_state_stat():
 
 @app.route('/api/get_state_species/<state>/<status>', methods=['GET'])
 def get_state_species(state, status):
+    """
+    get number of species that is under the status provided in the provided state.
+    For example: number of fishes, mammels, reptiles that is endangered in Victoria.
+    """
     db = get_db_connection()
     cur = db.cursor()
     cur.execute('''SELECT TAXON_GROUP, count(*) FROM threat_species
                 WHERE {0}=1
                 AND LOWER(THREATENED_STATUS) = LOWER("{1}")
-                AND TAXON_GROUP != "birds"
                 GROUP BY TAXON_GROUP
                 '''.format(state, status))
     data = cur.fetchall()
@@ -124,6 +130,47 @@ def get_state_species(state, status):
         stats[item[0]] = item[1]
     
     return jsonify(stats)
+
+@app.route('/api/get_description/<state>/<status>/<species>', methods=['GET'])
+def get_description(state, status, species):
+    """
+    get the descriptions of a specific kind of species given the status and state information.
+    For example: get the descriptions of fishes that is endangered in Victoria.
+    """
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT SCIENTIFIC_NAME, VERNACULAR_NAME, habitat, threats  
+                    FROM threat_species
+                    WHERE {0}=1
+                    AND LOWER(THREATENED_STATUS) = LOWER("{1}")
+                    AND TAXON_GROUP = '{2}'
+                '''.format(state, status, species))
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    descriptions = []
+    for item in data:
+        description={}
+        description["title"] = item[1].split(",")[0]
+        description["content"] = []
+        description["content"].append({
+            "title": "Scientific Name",
+            "content": item[0]
+        })
+        description["content"].append({
+            "title": "Common Name",
+            "content": item[1]
+        })
+        description["content"].append({
+            "title": "Habitat",
+            "content": item[2]
+        })
+        description["content"].append({
+            "title": "Threats",
+            "content": item[3]
+        })
+        descriptions.append(description)
+    return jsonify(descriptions)
 
 if __name__ == '__main__':
     app.run(debug=True)

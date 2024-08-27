@@ -7,13 +7,13 @@ function BluePieChart({data, height, width, updateEndangerType}) {
                 series={[
                     {
                         data: data,
-                        innerRadius: 30,
-                        outerRadius: 100,
+                        innerRadius: 20,
+                        outerRadius: 70,
                         paddingAngle: 5,
                         cornerRadius: 5,
                         startAngle: -90,
                         endAngle: 360,
-                        cx: 0,
+                        cx: width/5,
                         cy: height/2,
                     }
                 ]}

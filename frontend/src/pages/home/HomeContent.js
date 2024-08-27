@@ -11,6 +11,7 @@ import Education from "../../assets/img/Education.jpg";
 
 function HomeContent() {
   const navigate = useNavigate();
+  const scrollToFeatures = () => { document.getElementById("key-features-section").scrollIntoView({ behavior: "smooth" }); };
   const cardItems = [
     {
       title: "Endangered Marine Species",
@@ -59,7 +60,7 @@ function HomeContent() {
                 track your cleanup efforts, and visualize the impact you're
                 making.
               </p>
-              <Button className="dark-blue-button cta-button">
+              <Button className="dark-blue-button cta-button" onClick={scrollToFeatures}>
                 Getting Started
               </Button>
             </Col>
@@ -104,7 +105,7 @@ function HomeContent() {
           {/* Icons Row */}
 
           {/* Features Section */}
-          <Row className="card-feature-section card-margin no-margin">
+          <Row id="key-features-section" className="card-feature-section card-margin no-margin">
             <h2 className="feature-header">Key Features</h2>
             {cardItems.map((cardItem, index) => (
               <Col md="3" sm="6" xs="12" key={index} className="mb-4 d-flex">
