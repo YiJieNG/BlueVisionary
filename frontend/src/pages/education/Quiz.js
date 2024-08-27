@@ -16,7 +16,7 @@ function Quiz() {
   // Function to fetch and shuffle questions
   const fetchAndShuffleQuestions = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/questions");
+      const response = await axios.get("https://www.bluevisionary.studio/api/questions");
       const formattedQuestions = response.data.map((q) => ({
         ...q,
         options: [q.option1, q.option2, q.option3, q.option4],
