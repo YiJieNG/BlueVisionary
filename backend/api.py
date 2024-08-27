@@ -39,9 +39,9 @@ else:
 def get_questions():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT question_id, question, option_1, option_2, option_3, option_4, correct_answer, 
-                          option_1_count, option_2_count, option_3_count, option_4_count, explanation
-                   FROM questions''')
+    cur.execute('''SELECT q_id, question, option_1, option_2, option_3, option_4, correct_answer, 
+                          count_option_1, count_option_2, count_option_3, count_option_4, explanation
+                   FROM questionnaire''')
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -75,13 +75,13 @@ def update_option_count():
     cur = db.cursor()
 
     if option_index == 0:
-        cur.execute("UPDATE questions SET option_1_count = option_1_count + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_1 = count_option_1 + 1 WHERE question_id = %s", (question_id,))
     elif option_index == 1:
-        cur.execute("UPDATE questions SET option_2_count = option_2_count + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_2 = count_option_2 + 1 WHERE question_id = %s", (question_id,))
     elif option_index == 2:
-        cur.execute("UPDATE questions SET option_3_count = option_3_count + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_3 = count_option_3 + 1 WHERE question_id = %s", (question_id,))
     elif option_index == 3:
-        cur.execute("UPDATE questions SET option_4_count = option_4_count + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_4 = count_option_4 + 1 WHERE question_id = %s", (question_id,))
 
     db.commit()
     cur.close()
