@@ -11,7 +11,8 @@ function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [selectedAnswer, setSelectedAnswer] = useState("")
+  const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
 
   // Function to fetch and shuffle questions
   const fetchAndShuffleQuestions = async () => {
@@ -42,6 +43,7 @@ function Quiz() {
 
   const startQuiz = () => {
     setStep("question");
+    setCurrentQuestionNumber(1);
   };
 
   const handleAnswer = async (answer, optionIndex) => {
@@ -63,6 +65,7 @@ function Quiz() {
 
     // Move to feedback step to show correct answer
     setStep("feedback");
+    setCurrentQuestionNumber(currentQuestionNumber + 1);
   };
 
   const updateOptionCount = async (questionId, optionIndex) => {
@@ -138,7 +141,7 @@ function Quiz() {
     const question = questions[currentQuestion];
     return (
       <div className="question-page">
-        <h2>{question.questionText}</h2>
+        <h2>Q{currentQuestionNumber}: {question.questionText}</h2>
         <div className="options-grid">
           {question.options.map((option, index) => (
             <Button
