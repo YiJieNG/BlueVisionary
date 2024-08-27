@@ -21,8 +21,8 @@ function Quiz() {
         ...q,
         options: [q.option1, q.option2, q.option3, q.option4],
       }));
-      // Shuffle the questions and select 3 random questions
-      const shuffledQuestions = shuffleArray(formattedQuestions).slice(0, 3);
+      // Shuffle the questions and select 5 random questions
+      const shuffledQuestions = shuffleArray(formattedQuestions).slice(0, 5);
       setQuestions(shuffledQuestions);
     } catch (error) {
       console.error("Error fetching questions:", error);

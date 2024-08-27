@@ -160,12 +160,13 @@ function MarineLife() {
                     <CardBody>
                       <Row>
                         {/* change font bigger later */}
-                        <h1>
+                        <h2>
                           <b>{stateSelected[0]}</b>
-                        </h1>
+                        </h2>
                       </Row>
                       <Row>
                         <h4>Endangered status</h4>
+                        <p>*** Please click the pie chart below to select different status</p>
                         <BluePieChart
                           //   data={stateSpeciesData[stateSelected[0]]}
                           data={stateStat[stateSelected[1]]}
