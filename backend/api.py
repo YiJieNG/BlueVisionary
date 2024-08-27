@@ -34,6 +34,7 @@ else:
     print("Connection successful")
     connection.close()
 
+#need to make a change
 @app.route('/api/questions', methods=['GET'])
 def get_questions():
     db = get_db_connection()
