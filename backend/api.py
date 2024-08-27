@@ -75,13 +75,13 @@ def update_option_count():
     cur = db.cursor()
 
     if option_index == 0:
-        cur.execute("UPDATE questionnaire SET count_option_1 = count_option_1 + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_1 = count_option_1 + 1 WHERE q_id = %s", (question_id,))
     elif option_index == 1:
-        cur.execute("UPDATE questionnaire SET count_option_2 = count_option_2 + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_2 = count_option_2 + 1 WHERE q_id = %s", (question_id,))
     elif option_index == 2:
-        cur.execute("UPDATE questionnaire SET count_option_3 = count_option_3 + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_3 = count_option_3 + 1 WHERE q_id = %s", (question_id,))
     elif option_index == 3:
-        cur.execute("UPDATE questionnaire SET count_option_4 = count_option_4 + 1 WHERE question_id = %s", (question_id,))
+        cur.execute("UPDATE questionnaire SET count_option_4 = count_option_4 + 1 WHERE q_id = %s", (question_id,))
 
     db.commit()
     cur.close()
