@@ -16,6 +16,41 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `questionnaire`
+--
+
+DROP TABLE IF EXISTS `questionnaire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `questionnaire` (
+  `q_id` int NOT NULL AUTO_INCREMENT,
+  `question` varchar(200) NOT NULL,
+  `option_1` varchar(100) NOT NULL,
+  `option_2` varchar(100) NOT NULL,
+  `option_3` varchar(100) NOT NULL,
+  `option_4` varchar(100) NOT NULL,
+  `correct_answer` varchar(100) NOT NULL,
+  `count_option_1` int NOT NULL,
+  `count_option_2` int NOT NULL,
+  `count_option_3` int NOT NULL,
+  `count_option_4` int NOT NULL,
+  `total_correct_answer` int NOT NULL,
+  `explanation` varchar(500) NOT NULL,
+  PRIMARY KEY (`q_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `questionnaire`
+--
+
+LOCK TABLES `questionnaire` WRITE;
+/*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
+INSERT INTO `questionnaire` VALUES (1,'What is the primary characteristic that distinguishes reptiles from amphibians?','Reptiles lay eggs in water','Reptiles have dry, scaly skin','Reptiles undergo metamorphosis','Reptiles are warm-blooded','Reptiles have dry, scaly skin',0,0,0,0,0,'Reptiles have dry, scaly skin, which distinguishes them from amphibians that typically have moist, smooth skin and often require water for reproduction.'),(2,'Which of the following is a common habitat for turtles?','Deserts','Oceans','Rainforests','Arctic regions','Oceans',0,0,0,0,0,'Turtles are commonly found in aquatic environments, including oceans, where marine turtles spend most of their lives.'),(3,'What do most reptiles primarily eat?','Plants only','Insects, small animals, and plants','Fruits only','Fish exclusively','Insects, small animals, and plants',0,0,0,0,0,'Most reptiles are carnivorous or omnivorous, eating a diet that includes insects, small animals, and sometimes plants.'),(4,'Which turtle species is known for its long migration to nesting beaches?','Galápagos tortoise','Green sea turtle','Snapping turtle','Box turtle','Green sea turtle',0,0,0,0,0,'Green sea turtles are known for their long migrations from feeding grounds to nesting beaches, where they return to lay eggs.'),(5,'How do most reptiles regulate their body temperature?','By sweating','By shivering','By basking in the sun','By hibernating','By basking in the sun',0,0,0,0,0,'Reptiles are ectothermic and regulate their body temperature by basking in the sun or moving to cooler areas as needed.'),(6,'Which part of the Environmental Protection Act 1986 allows for the issuance of notices to prevent habitat destruction that could impact reptiles and turtles?','Part III, Section 25','Part V, Section 65','Part II, Section 12','Part VI, Section 80','Part V, Section 65',0,0,0,0,0,'Part V, Section 65 of the Environmental Protection Act 1986 allows for the issuance of environmental protection notices to prevent or remedy environmental harm, including habitat destruction that could negatively affect reptiles and turtles.'),(7,'How do environmental offsets under the Environmental Offsets Policy help reptiles and turtles?','By delaying development projects','By restoring or protecting equivalent habitats','By reducing project costs','By removing invasive species','By restoring or protecting equivalent habitats',0,0,0,0,0,'Environmental offsets ensure that when habitat loss occurs due to development, equivalent habitats are restored or protected elsewhere, helping to maintain or improve biodiversity for reptiles and turtles.'),(8,'Which section of the Biodiversity Conservation Regulation 2017 requires species-specific offsets when native vegetation removal impacts reptiles and turtles?','Section 1.5','Section 2.31','Section 4.1','Section 3.2','Section 4.1',0,0,0,0,0,'Section 4.1 of the Biodiversity Conservation Regulation 2017 requires species-specific offsets when native vegetation removal impacts threatened species, including reptiles and turtles, ensuring targeted conservation efforts.'),(9,'How does the Water Management Act 1999 protect the habitats of reptiles and turtles?','By allowing unrestricted water use','By maintaining ecological processes in aquatic ecosystems','By promoting urban development','By encouraging agricultural expansion','By maintaining ecological processes in aquatic ecosystems',0,0,0,0,0,'The Water Management Act 1999 emphasises maintaining ecological processes within aquatic ecosystems, ensuring that the habitats of reptiles and turtles are protected from over-extraction or pollution.'),(10,'What is the purpose of environmental impact assessments under the Planning and Development Act 2007 for reptiles and turtles?','To increase project profitability','To identify and mitigate threats to their habitats','To allow unrestricted land use','To reduce project timelines','To identify and mitigate threats to their habitats',0,0,0,0,0,'Environmental impact assessments required by the Planning and Development Act 2007 ensure that potential impacts on the habitats of reptiles and turtles are identified and mitigated before any development proceeds.'),(11,'What is the role of heritage agreements under the Native Vegetation Act 1991 concerning reptiles and turtles?','To promote tourism','To provide long-term protection and management of critical habitats','To increase agricultural production','To encourage urban development','To provide long-term protection and management of critical habitats',0,0,0,0,0,'Heritage agreements under the Native Vegetation Act 1991 allow landowners to protect and manage native vegetation, providing long-term protection for habitats critical to reptiles and turtles.'),(12,'Which section of the Threatened Species Protection Act 1995 allows for the development of recovery plans for listed reptile and turtle species?','Section 11','Section 19','Section 25','Section 32','Section 25',0,0,0,0,0,'Section 25 of the Threatened Species Protection Act 1995 allows for the development of recovery plans aimed at restoring the population and habitats of listed reptile and turtle species.'),(13,'How do targeted surveys under the Guidelines for Natural Values Surveys benefit reptiles and turtles?','By identifying the presence of threatened species in development area','By promoting housing development','By assessing the economic value of land','By encouraging agricultural expansion','By identifying the presence of threatened species in development areas',0,0,0,0,0,'Targeted surveys under the Guidelines for Natural Values Surveys identify the presence of threatened species, such as reptiles and turtles, in development areas, ensuring their protection.'),(14,'How do habitat protection and restoration efforts under the WA Environmental Offsets Guidelines benefit reptiles and turtles?','By allowing unrestricted land use','By compensating for habitat loss through protecting or enhancing similar habitats','By preventing conservation efforts','By reducing the need for environmental assessments','By compensating for habitat loss through protecting or enhancing similar habitats',0,0,0,0,0,'The WA Environmental Offsets Guidelines ensure that when habitats are lost due to development, equivalent habitats are protected or enhanced elsewhere, benefiting reptiles and turtles by maintaining their environments.'),(15,'Why are species-specific offsets important under the Biodiversity Conservation Regulation 2017?','They allow for faster project approval','They ensure that conservation efforts directly benefit the impacted species','They reduce the need for biodiversity assessments','They increase the profitability of development projects','They ensure that conservation efforts directly benefit the impacted species',0,0,0,0,0,'Species-specific offsets ensure that conservation efforts are directly targeted at the species impacted by development, such as reptiles and turtles, thereby supporting their survival and recovery.'),(16,'Which part of the Native Vegetation Offset Regulations helps ensure that even if reptile and turtle habitats are cleared, equivalent habitats are protected or restored elsewhere?','Land Use Provisions','Habitat Protection and Restoration','Agricultural Developmen','Urban Expansion','Habitat Protection and Restoration ',0,0,0,0,0,'The Native Vegetation Offset Regulations help ensure that if reptile and turtle habitats are cleared, equivalent habitats are protected or restored elsewhere, maintaining the necessary environments for these species to thrive.');
+/*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `threat_species`
 --
 
@@ -95,4 +130,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-26 21:39:24
+-- Dump completed on 2024-08-27 11:00:37
