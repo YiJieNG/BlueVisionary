@@ -31,10 +31,6 @@ function BlueBarChart({ xAxis, data, height, width, updateSpeciesSelected, updat
                 onAxisClick={(event, d) => {
                     updateSpeciesSelected(d.axisValue);
                 }}
-                // tooltip={{
-                //     trigger: "item",
-                //     itemContent: CustomItemTooltipContent
-                // }}
             />
         </>
     );

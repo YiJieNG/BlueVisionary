@@ -165,7 +165,7 @@ function MarineLife() {
                         </h2>
                       </Row>
                       <Row>
-                        <h4>Endangered status</h4>
+                        <h4>Threatened status</h4>
                         <p>*** Please click the pie chart below to select different status</p>
                         <BluePieChart
                           //   data={stateSpeciesData[stateSelected[0]]}

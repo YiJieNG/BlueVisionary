@@ -40,7 +40,7 @@ function BlueModal({ isOpen, speciesType, stateName, threatStatus, updateIsOpen 
     const listCards = descriptions.map((description, i) =>
         <CollapsedCard data={description} />
     );
-
+    // fetch species description
     useEffect(() => {
         if (!isOpen) return;
         axios
