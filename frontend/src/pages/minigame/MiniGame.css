@@ -1,0 +1,46 @@
+/* src/pages/minigame/TurtleTides.css */
+
+.minigame-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  padding: 150px 0;
+  background: linear-gradient(45deg, #add8f3, #f4f9fb);
+}
+
+.stats {
+  font-size: 1.5rem;
+}
+
+.game-area {
+  width: 500px;
+  height: 300px;
+  margin: 0 auto;
+  border: 2px solid black;
+  position: relative;
+}
+
+.turtle {
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.debris {
+  width: 15px;
+  height: 15px;
+  background-color: gray;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.food {
+  width: 15px;
+  height: 15px;
+  background-color: orange; /* Food color */
+  border-radius: 50%;
+  position: absolute;
+}

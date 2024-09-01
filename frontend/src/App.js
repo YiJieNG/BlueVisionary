@@ -8,6 +8,7 @@ import "./App.css";
 import Home from "./pages/home/Home";
 import MarineLife from "./pages/marinelife/MarineLife";
 import Quiz from "./pages/education/Quiz";
+import MiniGame from "./pages/minigame/MiniGame";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/marinelife" element={<MarineLife />} />
         <Route path="/quiz" element={<Quiz />} />
+        <Route path="/minigame" element={<MiniGame />} />
       </Routes>
     </Router>
   );
