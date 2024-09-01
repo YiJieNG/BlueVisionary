@@ -8,7 +8,7 @@ import "./App.css";
 import Home from "./pages/home/Home";
 import MarineLife from "./pages/marinelife/MarineLife";
 import Quiz from "./pages/education/Quiz";
-import MiniGame from "./pages/minigame/MiniGame";
+import MiniGame from "./pages/seaTurtleGame/SeaTurtleGame";
 
 function App() {
   return (

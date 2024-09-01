@@ -9,7 +9,7 @@ const MiniGame = () => {
   const [plasticDebris, setPlasticDebris] = useState([]);
   const [foodItems, setFoodItems] = useState([]); // New state for food
 
-  const itemSize = 1; // size of the turtle, food, and debris
+  const itemSize = 3; // size of the turtle, food, and debris
 
   // Utility function to generate a random y position aligned to the nearest 10%
   const generateRandomYPosition = () => {
