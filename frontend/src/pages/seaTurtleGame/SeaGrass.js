@@ -1,4 +1,5 @@
 import img from "../../assets/img/sea_grass.png";
+
 export class SeaGrass {
   speed = 1;
   dead = false;
@@ -9,12 +10,12 @@ export class SeaGrass {
   }
 
   isDead = () => {
-    return this.xPos < -75;
+    return this.yPos > 550;
   };
 
   update = (player) => {
     if (this.dead) return;
-    this.xPos -= this.speed;
+    this.yPos += this.speed;
 
     if (!this.dead && this.isDead()) {
       this.dead = true;
@@ -22,12 +23,12 @@ export class SeaGrass {
 
     if (
       !this.dead &&
-      Math.abs(player.posX - this.xPos) < 90 &&
-      Math.abs(player.posY - this.yPos) < 65
+      Math.abs(player.posX - this.xPos) < 65 &&
+      Math.abs(player.posY - this.yPos) < 90
     ) {
       this.dead = true;
-      player.increaseScore(20);
-      pauseGameWithInfo();
+      player.increaseScore(20); // Method to add bonus score
+      pauseGameWithInfo(); // Method to pause the game and show information
     }
   };
 

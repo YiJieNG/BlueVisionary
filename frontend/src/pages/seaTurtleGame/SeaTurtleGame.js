@@ -8,8 +8,10 @@ function App() {
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
   const lastItemSpawnAtRef = useRef(Date.now()); // Ref for last item spawn time
+  const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
 
-  const player = new Player(50, 550 / 2);
+  // means plastic spawn at (945, random place of Y)
+  const player = useRef(new Player(5, 550 / 2)).current; // Persist the player instance across renders
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
   useEffect(() => {
@@ -17,63 +19,41 @@ function App() {
     const ctx = canvas.getContext("2d");
     ctxRef.current = ctx; // Store context in ref
 
-    let plastics = [];
-    let foods = [];
-    let seaGrasses = [];
-
     const gameLoop = () => {
-      ctx.clearRect(0, 0, 950, 550);
+      ctx.clearRect(0, 0, 950, 550); // card width and height as mentioned above
 
-      player.update();
-      player.draw(ctx);
+      player.update(); // allow user to move
+      player.draw(ctx); // draw player (turtle out)
 
-      const randomX = randomNumber(700, 950);
+      const randomX = 945; // fix the x coord of spawner at 945
       const randomY = randomNumber(0, 550);
+      const plasticSpawnIntervalTime = 350;
 
-      //   if (
-      //     plastics.length < 10 &&
-      //     Date.now() - lastItemSpawnAtRef.current > 1500
-      //   ) {
-      //     plastics.push(new Plastic(randomX, randomY));
-      //     lastItemSpawnAtRef.current = Date.now();
-      //   }
-
-      //   console.log(plastics);
-
-      if (foods.length < 1 && Math.random() < 0.05) {
-        foods.push(new Food(randomX, randomY));
+      if (
+        plasticsRef.current.length < 1 && // if currently less than 10 plastics
+        Date.now() - lastItemSpawnAtRef.current > plasticSpawnIntervalTime // last plastic spawn time is long enough
+      ) {
+        console.log("spawning plastic");
+        plasticsRef.current.push(new Plastic(randomX, randomY));
+        lastItemSpawnAtRef.current = Date.now(); // update plastic spawn time
       }
 
-      if (plastics.length < 5 && Math.random() < 0.05) {
-        plastics.push(new Plastic(randomX, randomY));
-      }
-
-      //   if (seaGrasses.length < 1 && Math.random() < 0.02) {
-      //     seaGrasses.push(new SeaGrass(randomX, randomY));
-      //   }
-
-      plastics = plastics.filter((item) => !item.dead);
-      plastics.forEach((plastic) => {
+      plasticsRef.current = plasticsRef.current.filter((item) => !item.dead);
+      plasticsRef.current.forEach((plastic) => {
         plastic.update(player);
         plastic.draw(ctx);
       });
-
-      foods = foods.filter((item) => !item.dead);
-      foods.forEach((food) => {
-        food.update(player);
-        food.draw(ctx);
-      });
-
-      // seaGrasses = seaGrasses.filter((item) => !item.dead);
-      // seaGrasses.forEach((seaGrass) => {
-      //   seaGrass.update(player);
-      //   seaGrass.draw(ctx);
-      // });
 
       requestAnimationFrame(gameLoop);
     };
 
     gameLoop(); // Start the game loop
+
+    // Clean up the effect to avoid multiple game loops
+    return () => {
+      plasticsRef.current = []; // Reset plastics array when the component unmounts
+      cancelAnimationFrame(gameLoop);
+    };
   }, [player]); // Dependencies array includes 'player' to avoid unnecessary re-renders
 
   return (

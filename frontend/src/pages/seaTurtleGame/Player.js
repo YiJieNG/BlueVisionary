@@ -34,7 +34,7 @@ export class Player {
       }
     };
 
-    if (this.posY < 0) this.posY = 0;
+    if (this.posY < 45) this.posY = 45;
     if (this.posY > 550 - 90) this.posY = 550 - 90; // Prevent the player from moving outside the canvas
 
     if (this.health <= 0) {
@@ -46,7 +46,7 @@ export class Player {
   draw = (ctx) => {
     const image = new Image();
     image.src = img;
-    ctx.drawImage(image, this.posX, this.posY, 65, 90);
+    ctx.drawImage(image, this.posX, this.posY, 90, 65);
 
     ctx.font = "16px Arial";
     ctx.fillStyle = "white";

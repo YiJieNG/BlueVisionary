@@ -9,7 +9,7 @@ export class Food {
   }
 
   isDead = () => {
-    return this.xPos < -75;
+    return this.xPos < 0;
   };
 
   update = (player) => {
@@ -33,7 +33,7 @@ export class Food {
   draw = (ctx) => {
     const image = new Image();
     image.src = img;
-    ctx.drawImage(image, this.xPos, this.yPos, 75, 100);
+    ctx.drawImage(image, this.xPos, this.yPos, 100, 75);
   };
 }
 
