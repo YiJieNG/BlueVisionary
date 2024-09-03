@@ -44,7 +44,8 @@ function BlueModal({ isOpen, speciesType, stateName, threatStatus, updateIsOpen 
     useEffect(() => {
         if (!isOpen) return;
         axios
-            .get(`https://www.bluevisionary.studio/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`)
+            // .get(`https://www.bluevisionary.studio/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`)
+            .get(`/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`)
             .then((res) => {
                 console.log(res)
                 setDescriptions(res.data)

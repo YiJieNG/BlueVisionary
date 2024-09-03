@@ -17,7 +17,8 @@ function Quiz() {
   // Function to fetch and shuffle questions
   const fetchAndShuffleQuestions = async () => {
     try {
-      const response = await axios.get("https://www.bluevisionary.studio/api/questions");
+      // const response = await axios.get("https://www.bluevisionary.studio/api/questions");
+      const response = await axios.get("/api/questions");
       const formattedQuestions = response.data.map((q) => ({
         ...q,
         options: [q.option1, q.option2, q.option3, q.option4],
@@ -79,7 +80,8 @@ function Quiz() {
       console.log(data);
 
       // Send the data to the backend using POST request
-      await axios.post("https://www.bluevisionary.studio/api/update_option_count", data);
+      // await axios.post("https://www.bluevisionary.studio/api/update_option_count", data);
+      await axios.post("/api/update_option_count", data);
     } catch (error) {
       console.error("Error updating option count:", error);
     }
