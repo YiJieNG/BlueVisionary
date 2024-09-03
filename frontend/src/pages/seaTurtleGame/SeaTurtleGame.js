@@ -3,6 +3,7 @@ import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { SeaGrass } from "./SeaGrass";
+import bgrdImg from "../../assets/img/minigameBackground.png"; // Load your sprite sheet
 
 function App() {
   const canvasRef = useRef(null); // Ref for canvas element
@@ -89,8 +90,9 @@ function App() {
         width="950"
         height="550"
         style={{
-          background: "linear-gradient(45deg, #add8f3, #f4f9fb)",
+          // background: "linear-gradient(45deg, #add8f3, #f4f9fb)",
           backgroundSize: "cover",
+          backgroundImage: `url(${bgrdImg})`,
           border: "2px solid #000000",
           marginTop: "48px",
         }}

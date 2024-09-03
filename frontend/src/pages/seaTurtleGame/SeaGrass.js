@@ -1,4 +1,4 @@
-import img from "../../assets/img/sea_grass.png";
+import img from "../../assets/img/plastic.png";
 
 export class SeaGrass {
   dead = false;

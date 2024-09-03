@@ -2,10 +2,10 @@ import img from "../../assets/img/plastic.png";
 
 export class Plastic {
   dead = false;
-  collisionWidth = 90;
-  collisionHeight = 65;
-  width = 100;
-  height = 75;
+  collisionWidth = 30;
+  collisionHeight = 50;
+  width = 40;
+  height = 60;
   damageCaused = 10;
 
   constructor(xPos, yPos, speed) {
