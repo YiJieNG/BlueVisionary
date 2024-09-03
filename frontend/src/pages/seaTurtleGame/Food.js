@@ -1,15 +1,21 @@
 import img from "../../assets/img/food.png";
-export class Food {
-  speed = 1;
-  dead = false;
 
-  constructor(xPos, yPos) {
+export class Food {
+  dead = false;
+  collisionWidth = 90;
+  collisionHeight = 65;
+  width = 100;
+  height = 75;
+  healthRecover = 5;
+
+  constructor(xPos, yPos, speed) {
     this.xPos = xPos;
     this.yPos = yPos;
+    this.speed = speed;
   }
 
   isDead = () => {
-    return this.xPos < 0;
+    return this.xPos < -75;
   };
 
   update = (player) => {
@@ -22,18 +28,18 @@ export class Food {
 
     if (
       !this.dead &&
-      Math.abs(player.posX - this.xPos) < 90 &&
-      Math.abs(player.posY - this.yPos) < 65
+      Math.abs(player.posX - this.xPos) < this.collisionWidth &&
+      Math.abs(player.posY - this.yPos) < this.collisionHeight
     ) {
       this.dead = true;
-      player.recoverHealth();
+      player.recoverHealth(this.healthRecover);
     }
   };
 
   draw = (ctx) => {
     const image = new Image();
     image.src = img;
-    ctx.drawImage(image, this.xPos, this.yPos, 100, 75);
+    ctx.drawImage(image, this.xPos, this.yPos, this.width, this.height);
   };
 }
 

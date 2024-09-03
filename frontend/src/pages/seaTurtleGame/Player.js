@@ -4,21 +4,26 @@ export class Player {
   health = 100;
   score = 0;
   speed = 25;
+  width = 90;
+  height = 65;
+  damageTaken = 10;
+  healthRecover = 5;
+  bonusAdd = 10;
 
   constructor(posX, posY) {
     this.posX = posX;
     this.posY = posY;
   }
 
-  deductHealth = () => {
-    this.health -= 5;
+  deductHealth = (damageTaken = this.damageTaken) => {
+    this.health -= damageTaken;
   };
 
-  recoverHealth = () => {
-    this.health = Math.min(this.health + 10, 100); // health can't exceed 100
+  recoverHealth = (recover = this.healthRecover) => {
+    this.health = Math.min(this.health + recover, 100); // health can't exceed 100
   };
 
-  increaseScore = (bonus = 10) => {
+  increaseScore = (bonus = this.bonusAdd) => {
     this.score += bonus;
   };
 
@@ -46,14 +51,14 @@ export class Player {
   draw = (ctx) => {
     const image = new Image();
     image.src = img;
-    ctx.drawImage(image, this.posX, this.posY, 90, 65);
+    ctx.drawImage(image, this.posX, this.posY, this.width, this.height);
 
     ctx.font = "16px Arial";
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "black";
     ctx.fillText(`Health: ${this.health}`, 950 - 95, 550 - 15);
 
     ctx.font = "16px Arial";
-    ctx.fillStyle = "lightgreen";
+    ctx.fillStyle = "black";
     ctx.fillText(`Score: ${this.score}`, 15, 25);
   };
 }

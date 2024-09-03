@@ -1,16 +1,21 @@
 import img from "../../assets/img/plastic.png";
 
 export class Plastic {
-  speed = 1;
   dead = false;
+  collisionWidth = 90;
+  collisionHeight = 65;
+  width = 100;
+  height = 75;
+  damageCaused = 10;
 
-  constructor(xPos, yPos) {
+  constructor(xPos, yPos, speed) {
     this.xPos = xPos;
     this.yPos = yPos;
+    this.speed = speed;
   }
 
   isDead = () => {
-    return this.xPos < 5;
+    return this.xPos < -75;
   };
 
   update = (player) => {
@@ -24,20 +29,14 @@ export class Plastic {
     // Check for collision with player
     if (
       !this.dead &&
-      Math.abs(player.posX - this.xPos) < 90 &&
-      Math.abs(player.posY - this.yPos) < 65
+      Math.abs(player.posX - this.xPos) < this.collisionWidth &&
+      Math.abs(player.posY - this.yPos) < this.collisionHeight
     ) {
       this.dead = true; // Mark plastic as dead immediately
-      if (!player.isInvulnerable) {
-        player.deductHealth();
-        console.log("collide at:", this.xPos, this.yPos);
-        console.log("player at:", player.posX, player.posY);
-        console.log("collide: ", this.xPos, this.yPos);
-        player.isInvulnerable = true; // Make player invulnerable for a short period
-        setTimeout(() => {
-          player.isInvulnerable = false;
-        }, 100); // Adjust the time as needed
-      }
+      player.deductHealth(this.damageCaused);
+      // console.log("collide at:", this.xPos, this.yPos);
+      // console.log("player at:", player.posX, player.posY);
+      // console.log("collide: ", this.xPos, this.yPos);
     }
   };
 
@@ -46,7 +45,7 @@ export class Plastic {
       // Only draw if not dead
       const image = new Image();
       image.src = img;
-      ctx.drawImage(image, this.xPos, this.yPos, 100, 75);
+      ctx.drawImage(image, this.xPos, this.yPos, this.width, this.height);
     }
   };
 }

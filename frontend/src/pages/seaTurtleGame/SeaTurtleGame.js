@@ -25,24 +25,40 @@ function App() {
       player.update(); // allow user to move
       player.draw(ctx); // draw player (turtle out)
 
-      const randomX = 945; // fix the x coord of spawner at 945
-      const randomY = randomNumber(0, 550);
+      // Value controls
+      // Plastic
+      // const plasticNumber = Math.floor(Math.random() * 5) + 1;
+      const plasticNumber = 3;
+      const plasticSpawnX = 945;
+      const plasticSpawnY = randomNumber(30, 550 - 100);
+      const plasticSpeed = randomNumber(1, 1.5);
       const plasticSpawnIntervalTime = 350;
 
+      // Logic to spawn the items
+      // Plastic
       if (
-        plasticsRef.current.length < 1 && // if currently less than 10 plastics
+        plasticsRef.current.length < plasticNumber && // if currently less than 10 plastics
         Date.now() - lastItemSpawnAtRef.current > plasticSpawnIntervalTime // last plastic spawn time is long enough
       ) {
-        console.log("spawning plastic");
-        plasticsRef.current.push(new Plastic(randomX, randomY));
+        // console.log("plasticNumber:", plasticNumber);
+        plasticsRef.current.push(
+          new Plastic(plasticSpawnX, plasticSpawnY, plasticSpeed)
+        );
         lastItemSpawnAtRef.current = Date.now(); // update plastic spawn time
       }
 
+      // Food
+      // Seagrass (Educational information)
+
+      // Game update logic for all the items
+      // Plastic
       plasticsRef.current = plasticsRef.current.filter((item) => !item.dead);
       plasticsRef.current.forEach((plastic) => {
         plastic.update(player);
         plastic.draw(ctx);
       });
+      // Food
+      // Seagrass
 
       requestAnimationFrame(gameLoop);
     };

@@ -1,16 +1,21 @@
 import img from "../../assets/img/sea_grass.png";
 
 export class SeaGrass {
-  speed = 1;
   dead = false;
+  collisionWidth = 90;
+  collisionHeight = 65;
+  width = 100;
+  height = 75;
+  score = 10;
 
-  constructor(xPos, yPos) {
+  constructor(xPos, yPos, speed) {
     this.xPos = xPos;
     this.yPos = yPos;
+    this.speed = speed;
   }
 
   isDead = () => {
-    return this.yPos > 550;
+    return this.yPos < -75;
   };
 
   update = (player) => {
@@ -23,11 +28,11 @@ export class SeaGrass {
 
     if (
       !this.dead &&
-      Math.abs(player.posX - this.xPos) < 65 &&
-      Math.abs(player.posY - this.yPos) < 90
+      Math.abs(player.posX - this.xPos) < this.collisionWidth &&
+      Math.abs(player.posY - this.yPos) < this.collisionHeight
     ) {
       this.dead = true;
-      player.increaseScore(20); // Method to add bonus score
+      player.increaseScore(this.score); // Method to add bonus score
       pauseGameWithInfo(); // Method to pause the game and show information
     }
   };
@@ -35,7 +40,7 @@ export class SeaGrass {
   draw = (ctx) => {
     const image = new Image();
     image.src = img;
-    ctx.drawImage(image, this.xPos, this.yPos, 75, 100);
+    ctx.drawImage(image, this.xPos, this.yPos, this.width, this.height);
   };
 }
 
@@ -44,7 +49,6 @@ function pauseGameWithInfo() {
   alert(
     "Congratulations! You've found a sea grass! Sea grass is vital for the marine ecosystem. Let's learn more about it..."
   );
-  // Add further logic for pausing and showing info here
 }
 
 export default SeaGrass;
