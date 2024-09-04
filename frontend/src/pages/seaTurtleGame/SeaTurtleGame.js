@@ -10,6 +10,7 @@ function App() {
   const ctxRef = useRef(null); // Ref for canvas context
   const lastItemSpawnAtRef = useRef(Date.now()); // Ref for last item spawn time
   const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
+  const foodsRef = useRef([]); // Use ref to persist plastics array across renders
 
   // means plastic spawn at (945, random place of Y)
   const player = useRef(new Player(5, 550 / 2)).current; // Persist the player instance across renders
@@ -49,6 +50,12 @@ function App() {
       }
 
       // Food
+      if (foodsRef.current.length < 1 && Math.random() < 0.05) {
+        foodsRef.current.push(
+          new Food(plasticSpawnX, plasticSpawnY, plasticSpeed)
+        );
+        console.log("spawining food");
+      }
       // Seagrass (Educational information)
 
       // Game update logic for all the items
@@ -59,6 +66,12 @@ function App() {
         plastic.draw(ctx);
       });
       // Food
+      foodsRef.current = foodsRef.current.filter((item) => !item.dead);
+      foodsRef.current.forEach((food) => {
+        food.update(player);
+        food.draw(ctx);
+      });
+
       // Seagrass
 
       requestAnimationFrame(gameLoop);
@@ -90,9 +103,9 @@ function App() {
         width="950"
         height="550"
         style={{
-          // background: "linear-gradient(45deg, #add8f3, #f4f9fb)",
+          background: "linear-gradient(45deg, #add8f3, #f4f9fb)",
           backgroundSize: "cover",
-          backgroundImage: `url(${bgrdImg})`,
+          // backgroundImage: `url(${bgrdImg})`,
           border: "2px solid #000000",
           marginTop: "48px",
         }}
