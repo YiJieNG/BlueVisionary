@@ -36,6 +36,12 @@ function App() {
       const plasticSpeed = randomNumber(1, 1.5);
       const plasticSpawnIntervalTime = 350;
 
+      // Food
+      const foodNumber = 1;
+      const foodSpawnX = 945;
+      const foodSpawnY = randomNumber(30, 550 - 100);
+      const foodSpeed = 1;
+
       // Logic to spawn the items
       // Plastic
       if (
@@ -50,11 +56,8 @@ function App() {
       }
 
       // Food
-      if (foodsRef.current.length < 1 && Math.random() < 0.05) {
-        foodsRef.current.push(
-          new Food(plasticSpawnX, plasticSpawnY, plasticSpeed)
-        );
-        console.log("spawining food");
+      if (foodsRef.current.length < foodNumber && Math.random() < 0.05) {
+        foodsRef.current.push(new Food(foodSpawnX, foodSpawnY, foodSpeed));
       }
       // Seagrass (Educational information)
 
@@ -103,9 +106,9 @@ function App() {
         width="950"
         height="550"
         style={{
-          background: "linear-gradient(45deg, #add8f3, #f4f9fb)",
+          // background: "linear-gradient(45deg, #add8f3, #f4f9fb)",
           backgroundSize: "cover",
-          // backgroundImage: `url(${bgrdImg})`,
+          backgroundImage: `url(${bgrdImg})`,
           border: "2px solid #000000",
           marginTop: "48px",
         }}

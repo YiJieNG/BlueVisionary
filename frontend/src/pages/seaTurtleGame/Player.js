@@ -6,8 +6,8 @@ export class Player {
   health = 100;
   score = 0;
   speed = 25;
-  width = 90; // Set the width to match the sprite frame width
-  height = 90; // Set the height to match the sprite frame height
+  width = 96; // Set the width to match the sprite frame width
+  height = 96; // Set the height to match the sprite frame height
   damageTaken = 10;
   healthRecover = 5;
   bonusAdd = 10;

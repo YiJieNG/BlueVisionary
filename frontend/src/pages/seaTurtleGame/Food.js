@@ -4,31 +4,39 @@ export class Food {
   dead = false;
   collisionWidth = 30;
   collisionHeight = 50;
-  width = 40;
-  height = 60;
+  width = 90; // Set the width of each frame
+  height = 90; // Set the height of each frame
   healthRecover = 5;
 
   frameIndex = 0; // Current frame index in the animation
   numberOfFrames = 4; // Total number of frames in the sprite sheet for the animation
-  ticksPerFrame = 30; // Number of game ticks (or frames) to wait before advancing the animation frame
+  ticksPerFrame = 50; // Number of game ticks (or frames) to wait before advancing the animation frame
   tickCount = 0; // Counts the game ticks
 
   // Sprite coordinates and dimensions on the sprite sheet
   spriteX = 0; // x coordinate of the first frame on the sheet
   spriteY = 0; // y coordinate of the first frame on the sheet
-  spriteWidth = 48; // width of each frame
-  spriteHeight = 48; // height of each frame
-  hurtWidth = 96; // image of displaying the hurt turtle
-  hurtHeight = 36; // image of displaying the hurt turtle
+  spriteWidth = 48; // width of each frame in the sprite sheet
+  spriteHeight = 48; // height of each frame in the sprite sheet
 
   constructor(xPos, yPos, speed) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.speed = speed;
+
+    // Load the image
+    this.image = new Image();
+    this.image.src = img;
+    this.image.onload = () => {
+      console.log("Food image loaded successfully");
+    };
+    this.image.onerror = (err) => {
+      console.error("Failed to load food image", err);
+    };
   }
 
   isDead = () => {
-    return this.xPos < -75;
+    return this.xPos < -this.width;
   };
 
   update = (player) => {
@@ -60,22 +68,24 @@ export class Food {
   };
 
   draw = (ctx) => {
-    const image = new Image();
-    image.src = img;
-    const frameX = this.frameIndex * this.spriteWidth;
+    if (this.image.complete && this.image.naturalWidth !== 0) {
+      const frameX = this.frameIndex * this.spriteWidth;
 
-    // Draw the current frame from the sprite sheet
-    ctx.drawImage(
-      image,
-      frameX,
-      this.spriteY, // y coordinate stays the same
-      this.spriteWidth,
-      this.spriteHeight,
-      this.posX,
-      this.posY,
-      this.width,
-      this.height
-    );
+      // Draw the current frame from the sprite sheet
+      ctx.drawImage(
+        this.image,
+        frameX,
+        this.spriteY, // y coordinate stays the same
+        this.spriteWidth,
+        this.spriteHeight,
+        this.xPos,
+        this.yPos,
+        this.width,
+        this.height
+      );
+    } else {
+      console.error("Image not loaded or failed to load");
+    }
   };
 }
 

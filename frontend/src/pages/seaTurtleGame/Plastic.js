@@ -2,8 +2,8 @@ import img from "../../assets/img/minigame/plastic.png";
 
 export class Plastic {
   dead = false;
-  collisionWidth = 30;
-  collisionHeight = 50;
+  collisionWidth = 70;
+  collisionHeight = 60;
   width = 40;
   height = 60;
   damageCaused = 10;
