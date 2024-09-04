@@ -2,8 +2,8 @@ import img from "../../assets/img/minigame/food.png";
 
 export class Food {
   dead = false;
-  collisionWidth = 30;
-  collisionHeight = 50;
+  collisionWidth = 70;
+  collisionHeight = 60;
   width = 90; // Set the width of each frame
   height = 90; // Set the height of each frame
   healthRecover = 5;
