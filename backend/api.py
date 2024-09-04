@@ -18,13 +18,18 @@ MYSQL_PORT = int(os.getenv('MYSQL_PORT'))
 
 # Function to get a database connection
 def get_db_connection():
-    return MySQLdb.connect(
-        host=MYSQL_HOST,
-        user=MYSQL_USER,
-        passwd=MYSQL_PASSWORD,
-        db=MYSQL_DB,
-        port=MYSQL_PORT
-    )
+    try:
+        return MySQLdb.connect(
+            host=MYSQL_HOST,
+            user=MYSQL_USER,
+            passwd=MYSQL_PASSWORD,
+            db=MYSQL_DB,
+            port=MYSQL_PORT
+        )
+    except Exception as error:
+        # handle the exception
+        print("An exception occurred:", error)
+
 
 # Testing connection on start-up
 connection = get_db_connection()
