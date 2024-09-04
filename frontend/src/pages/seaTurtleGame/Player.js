@@ -1,5 +1,5 @@
-import spriteSheet from "../../assets/img/turtle_sprite.png"; // Load your sprite sheet
-import hurtImage from "../../assets/img/turtle_hurt_sprite.png"; // Load the hurt image
+import spriteSheet from "../../assets/img/minigame/turtle_sprite.png"; // Load your sprite sheet
+import hurtImage from "../../assets/img/minigame/turtle_hurt_sprite.png"; // Load the hurt image
 
 export class Player {
   dead = false;

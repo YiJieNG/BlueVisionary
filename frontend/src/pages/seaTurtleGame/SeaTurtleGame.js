@@ -3,7 +3,7 @@ import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { SeaGrass } from "./SeaGrass";
-import bgrdImg from "../../assets/img/minigameBackground.png"; // Load your sprite sheet
+import bgrdImg from "../../assets/img/minigame/minigameBackground.png"; // Load your sprite sheet
 
 function App() {
   const canvasRef = useRef(null); // Ref for canvas element

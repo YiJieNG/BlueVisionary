@@ -1,4 +1,4 @@
-import img from "../../assets/img/plastic.png";
+import img from "../../assets/img/minigame/plastic.png";
 
 export class Plastic {
   dead = false;

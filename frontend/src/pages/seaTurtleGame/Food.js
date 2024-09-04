@@ -1,4 +1,4 @@
-import img from "../../assets/img/food.png";
+import img from "../../assets/img/minigame/food.png";
 
 export class Food {
   dead = false;
