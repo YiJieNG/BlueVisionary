@@ -15,22 +15,34 @@ function App() {
   const player = useRef(new Player(5, 550 / 2)).current; // Persist the player instance across renders
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
-  let lastTime = performance.now(); // Track the time of the last frame
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctxRef.current = ctx; // Store context in ref
 
-    const gameLoop = () => {
-      const currentTime = performance.now();
-      const deltaTime = (currentTime - lastTime) / 1000; // Time difference in seconds
-      lastTime = currentTime;
+    const fixedTimeStep = 1000 / 60; // 60 updates per second (16.67ms per update)
+    let lastUpdate = performance.now();
+    let accumulatedTime = 0;
 
-      ctx.clearRect(0, 0, 950, 550); // Clear the canvas
+    const gameLoop = (timestamp) => {
+      accumulatedTime += timestamp - lastUpdate;
+      lastUpdate = timestamp;
 
+      // Update game logic in fixed time steps
+      while (accumulatedTime >= fixedTimeStep) {
+        updateGameLogic(fixedTimeStep / 1000); // Convert to seconds
+        accumulatedTime -= fixedTimeStep;
+      }
+
+      // Render the current frame
+      renderGame();
+
+      // Request the next frame
+      requestAnimationFrame(gameLoop);
+    };
+
+    const updateGameLogic = (deltaTime) => {
       player.update(deltaTime); // Update player based on deltaTime
-      player.draw(ctx); // Draw player
 
       // Value controls
       // Plastic
@@ -46,7 +58,6 @@ function App() {
       const foodSpeed = 1;
 
       // Logic to spawn the items
-      // Plastic
       if (
         plasticsRef.current.length < plasticNumber && // if currently less than the desired number of plastics
         Date.now() - lastItemSpawnAtRef.current > 350 // last plastic spawn time is long enough
@@ -57,37 +68,43 @@ function App() {
         lastItemSpawnAtRef.current = Date.now(); // update plastic spawn time
       }
 
-      // Food
       if (foodsRef.current.length < foodNumber && Math.random() < 0.05) {
         foodsRef.current.push(new Food(foodSpawnX, foodSpawnY, foodSpeed));
       }
 
-      // Game update logic for all the items
-      // Plastic
+      // Update game items
       plasticsRef.current = plasticsRef.current.filter((item) => !item.dead);
       plasticsRef.current.forEach((plastic) => {
-        plastic.update(player, deltaTime); // Update each plastic based on deltaTime
-        plastic.draw(ctx); // Draw each plastic
+        plastic.update(player, deltaTime);
       });
 
-      // Food
       foodsRef.current = foodsRef.current.filter((item) => !item.dead);
       foodsRef.current.forEach((food) => {
-        food.update(player, deltaTime); // Update each food item based on deltaTime
-        food.draw(ctx); // Draw each food item
+        food.update(player, deltaTime);
       });
-
-      // Request the next frame
-      requestAnimationFrame(gameLoop);
     };
 
-    gameLoop(); // Start the game loop
+    const renderGame = () => {
+      ctx.clearRect(0, 0, 950, 550); // Clear the canvas
+      player.draw(ctx); // Draw player
+
+      // Draw game items
+      plasticsRef.current.forEach((plastic) => {
+        plastic.draw(ctx);
+      });
+
+      foodsRef.current.forEach((food) => {
+        food.draw(ctx);
+      });
+    };
+
+    requestAnimationFrame(gameLoop); // Start the game loop
 
     // Clean up the effect to avoid multiple game loops
     return () => {
       plasticsRef.current = []; // Reset plastics array when the component unmounts
       foodsRef.current = []; // Reset foods array when the component unmounts
-      cancelAnimationFrame(gameLoop); // Cancel the animation frame
+      cancelAnimationFrame(gameLoop);
     };
   }, [player]); // Dependencies array includes 'player' to avoid unnecessary re-renders
 
