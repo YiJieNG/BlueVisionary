@@ -51,14 +51,14 @@ function App() {
       const plasticNumber = 3;
       const plasticSpawnX = 945;
       const plasticSpawnY = randomNumber(30, 550 - 100);
-      const plasticSpeed = randomNumber(1, 1.5);
+      const plasticSpeed = randomNumber(1, 4);
       const plasticSpawnIntervalTime = 350;
 
       // Food
       const foodNumber = 1;
       const foodSpawnX = 945;
       const foodSpawnY = randomNumber(30, 550 - 100);
-      const foodSpeed = 1;
+      const foodSpeed = 3;
 
       // Logic to spawn the items
       if (
