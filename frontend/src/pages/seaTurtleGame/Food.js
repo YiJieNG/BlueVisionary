@@ -10,7 +10,7 @@ export class Food {
 
   frameIndex = 0; // Current frame index in the animation
   numberOfFrames = 4; // Total number of frames in the sprite sheet for the animation
-  ticksPerFrame = 50; // Number of game ticks (or frames) to wait before advancing the animation frame
+  ticksPerFrame = 15; // Number of game ticks (or frames) to wait before advancing the animation frame
   tickCount = 0; // Counts the game ticks
 
   // Sprite coordinates and dimensions on the sprite sheet

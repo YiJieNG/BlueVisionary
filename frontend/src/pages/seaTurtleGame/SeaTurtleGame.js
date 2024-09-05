@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { Bubble } from "./Bubble";
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
 import popupBgrdImg from "../../assets/img/minigame/warning.png";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+import { FactData } from "./MinigameFact";
 
 function Game() {
   const canvasRef = useRef(null); // Ref for canvas element
@@ -20,8 +20,34 @@ function Game() {
   const [player, setPlayer] = useState(null); // Use state for the player instance
   const [isPaused, setIsPaused] = useState(false); // State for pause control
   const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
-  const navigate = useNavigate();
+  const [factArray, setFactArray] = useState([]);
+
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
+
+  // Function to fetch and shuffle questions
+  const fetchAndShuffleFacts = async () => {
+    try {
+      const response = FactData.factsData;
+      setFactArray(response);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
+
+  // Function to load the content of the pop up message
+  const loadContent = () => {
+    // const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
+    const randomizeIndex = 0;
+
+    return (
+      <div>
+        <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
+          {factArray[randomizeIndex].title}
+        </h2>
+        <p>{factArray[randomizeIndex].description}</p>
+      </div>
+    );
+  };
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
@@ -54,6 +80,7 @@ function Game() {
   };
 
   useEffect(() => {
+    fetchAndShuffleFacts();
     if (step !== "game") return;
 
     const canvas = canvasRef.current;
@@ -92,7 +119,7 @@ function Game() {
       const plasticNumber = 3;
       const plasticSpawnX = 945;
       const plasticSpawnY = randomNumber(30, 550 - 100);
-      const plasticSpeed = randomNumber(4, 8);
+      const plasticSpeed = randomNumber(4, 6);
       const plasticSpawnIntervalTime = 350;
 
       const foodNumber = 1;
@@ -212,25 +239,30 @@ function Game() {
                 />
                 {showPopup && (
                   <>
-                    <div className="overlay"></div>
-                    <div
-                      className="popup-window"
-                      style={{
-                        backgroundSize: "cover",
-                        // backgroundImage: `url(${popupBgrdImg})`,
-                        backgroundColor: "white",
-                      }}
-                    >
-                      <h2>Bubble Collision!</h2>
-                      <p>You've hit a bubble. The game is paused.</p>
-                      <button onClick={closePopup}>Resume Game</button>
+                    <div className="overlay">
+                      <div
+                        className="popup-window"
+                        style={{
+                          backgroundSize: "cover",
+                          backgroundImage: `url(${popupBgrdImg})`,
+                          backgroundColor: "transparent",
+                          resizeMode: "stretch",
+                        }}
+                      >
+                        <div className="popup-content">{loadContent()}</div>
+                        <button onClick={closePopup}>Resume Game</button>
+                      </div>
                     </div>
                   </>
                 )}
               </div>
             </Col>
             <Col md="6" className="image-section">
+              {/* <Card>
+                <CardBody> */}
               <p>Information session</p>
+              {/* </CardBody>
+              </Card> */}
             </Col>
           </Row>
         </Container>

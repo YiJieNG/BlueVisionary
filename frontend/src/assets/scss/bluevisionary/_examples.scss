@@ -662,10 +662,22 @@
   transform: translate(-50%, -50%); /* Adjust position to be truly centered */
   padding: 50px; /* Padding inside the pop-up */
   border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for pop-up */
   z-index: 1001; /* Ensure it is above other elements */
-  width: 300px; /* Set width of the pop-up */
-  text-align: center; /* Center text inside the pop-up */
+  width: 715px; /* Set width of the pop-up */
+  height: 553px; /* Set width of the pop-up */
+  text-align: center;
+  background-size: cover;
+  background-image: url("../../../assets/img/minigame/warning.png"); /* Set the provided PNG as the background */
+}
+
+.popup-content {
+  height: 300px; /* Set a maximum height for the scrollable area */
+  overflow-y: auto; /* Make the content scrollable if it exceeds the max height */
+  background-color: white; /* White background for the text area */
+  padding: 20px; /* Padding inside the text area */
+  border-radius: 8px; /* Rounded corners for the text area */
+  margin-bottom: 20px;
+  text-align: left; /* Center text inside the pop-up */
 }
 
 .popup-window h2 {
@@ -679,17 +691,19 @@
 }
 
 .popup-window button {
-  background-color: #007bff; /* Button background color */
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #2776c5; /* Button background color */
   color: white; /* Button text color */
   border: none; /* Remove button border */
-  padding: 10px 20px; /* Button padding */
-  border-radius: 4px; /* Button rounded corners */
+  padding: 10px 50px; /* Button padding */
+  border-radius: 10px; /* Button rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
   font-size: 1rem; /* Font size of the button text */
 }
 
 .popup-window button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #003366; /* Darker shade on hover */
 }
 
 /* Optional: Dark overlay behind the pop-up */
