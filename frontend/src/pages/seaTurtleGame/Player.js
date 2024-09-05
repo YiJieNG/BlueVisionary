@@ -116,7 +116,7 @@ export class Player {
 
     ctx.font = "16px Arial";
     ctx.fillStyle = "white";
-    ctx.fillText(`Health: ${this.health}`, 950 - 95, 550 - 15);
+    ctx.fillText(`Health: ${this.health}`, 15, 50);
 
     ctx.font = "16px Arial";
     ctx.fillStyle = "white";
