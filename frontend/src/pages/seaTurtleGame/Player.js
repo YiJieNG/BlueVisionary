@@ -3,7 +3,7 @@ import hurtImage from "../../assets/img/minigame/turtle_hurt_sprite.png"; // Loa
 
 export class Player {
   dead = false;
-  health = 100;
+  health = 10;
   score = 0;
   speed = 25;
   width = 96; // Set the width to match the sprite frame width
@@ -15,7 +15,7 @@ export class Player {
 
   frameIndex = 0; // Current frame index in the animation
   numberOfFrames = 6; // Total number of frames in the sprite sheet for the animation
-  ticksPerFrame = 10; // Number of game ticks (or frames) to wait before advancing the animation frame
+  ticksPerFrame = 5; // Number of game ticks (or frames) to wait before advancing the animation frame
   tickCount = 0; // Counts the game ticks
 
   // Sprite coordinates and dimensions on the sprite sheet
@@ -26,9 +26,10 @@ export class Player {
   hurtWidth = 96; // image of displaying the hurt turtle
   hurtHeight = 36; // image of displaying the hurt turtle
 
-  constructor(posX, posY) {
+  constructor(posX, posY, handleGameOver) {
     this.posX = posX;
     this.posY = posY;
+    this.handleGameOver = handleGameOver; // Pass the callback to handle game over
   }
 
   deductHealth = (damageTaken = this.damageTaken) => {
@@ -37,6 +38,11 @@ export class Player {
     setTimeout(() => {
       this.isHurt = false; // Revert to normal after 0.5 seconds
     }, 500);
+
+    if (this.health <= 0) {
+      this.dead = true;
+      this.handleGameOver(this.score); // Call the game over handler with the current score
+    }
   };
 
   recoverHealth = (recover = this.healthRecover) => {
@@ -61,11 +67,6 @@ export class Player {
 
     if (this.posY < 45) this.posY = 45;
     if (this.posY > 550 - 90) this.posY = 550 - 90; // Prevent the player from moving outside the canvas
-
-    if (this.health <= 0) {
-      this.dead = true;
-      gameOver(this.score);
-    }
 
     // Update the frame index for animation
     this.tickCount += 1;
@@ -121,17 +122,6 @@ export class Player {
     ctx.fillStyle = "white";
     ctx.fillText(`Score: ${this.score}`, 15, 25);
   };
-}
-
-function gameOver(score) {
-  document.body.innerHTML = `
-  <center>
-  <br/>
-  <h2>Game Over!</h2>
-  <p>Your Score: ${score}</p>
-  <button class="btn btn-danger mt-2" onClick="location.reload()">Again</button>
-  </center>
-  `;
 }
 
 export default Player;

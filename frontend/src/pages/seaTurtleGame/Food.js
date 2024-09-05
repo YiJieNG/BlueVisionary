@@ -6,7 +6,7 @@ export class Food {
   collisionHeight = 60;
   width = 90; // Set the width of each frame
   height = 90; // Set the height of each frame
-  healthRecover = 5;
+  pointAdd = 5;
 
   frameIndex = 0; // Current frame index in the animation
   numberOfFrames = 4; // Total number of frames in the sprite sheet for the animation
@@ -27,12 +27,12 @@ export class Food {
     // Load the image
     this.image = new Image();
     this.image.src = img;
-    // this.image.onload = () => {
-    //   console.log("Food image loaded successfully");
-    // };
-    // this.image.onerror = (err) => {
-    //   console.error("Failed to load food image", err);
-    // };
+    this.image.onload = () => {
+      console.log("Food image loaded successfully");
+    };
+    this.image.onerror = (err) => {
+      console.error("Failed to load food image", err);
+    };
   }
 
   isDead = () => {
@@ -53,7 +53,7 @@ export class Food {
       Math.abs(player.posY - this.yPos) < this.collisionHeight
     ) {
       this.dead = true;
-      player.recoverHealth(this.healthRecover);
+      player.increaseScore(this.pointAdd);
     }
 
     // Update the frame index for animation

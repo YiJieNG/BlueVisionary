@@ -33,8 +33,8 @@ export class Bubble {
       Math.abs(player.posY - this.yPos) < this.collisionHeight
     ) {
       this.dead = true; // Mark bubble as dead immediately
-      player.deductHealth(this.damageCaused);
-      pauseGameWithInfo();
+      player.increaseScore(this.pointAdd);
+      // pauseGameWithInfo();
       // console.log("collide at:", this.xPos, this.yPos);
       // console.log("player at:", player.posX, player.posY);
       // console.log("collide: ", this.xPos, this.yPos);
@@ -51,11 +51,11 @@ export class Bubble {
   };
 }
 
-function pauseGameWithInfo() {
-  // Pause the game and show additional educational information
-  alert(
-    "Congratulations! You've found a sea grass! Sea grass is vital for the marine ecosystem. Let's learn more about it..."
-  );
-}
+// function pauseGameWithInfo() {
+//   // Pause the game and show additional educational information
+//   alert(
+//     "Congratulations! You've found a sea grass! Sea grass is vital for the marine ecosystem. Let's learn more about it..."
+//   );
+// }
 
 export default Bubble;
