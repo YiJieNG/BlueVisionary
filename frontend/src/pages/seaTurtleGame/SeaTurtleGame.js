@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
-import { SeaGrass } from "./SeaGrass";
+import { Bubble } from "./Bubble";
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png"; // Load your sprite sheet
 
 function App() {
@@ -10,7 +10,8 @@ function App() {
   const ctxRef = useRef(null); // Ref for canvas context
   const lastItemSpawnAtRef = useRef(Date.now()); // Ref for last item spawn time
   const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
-  const foodsRef = useRef([]); // Use ref to persist plastics array across renders
+  const foodsRef = useRef([]); // Use ref to persist foods array across renders
+  const bubblesRef = useRef([]); // Use ref to persist bubbles array across renders
 
   // means plastic spawn at (945, random place of Y)
   const player = useRef(new Player(5, 550 / 2)).current; // Persist the player instance across renders
@@ -60,7 +61,14 @@ function App() {
       const foodSpawnY = randomNumber(30, 550 - 100);
       const foodSpeed = 3;
 
+      // Bubble
+      const bubbleNumber = 1;
+      const bubbleSpawnX = 945;
+      const bubbleSpawnY = randomNumber(30, 550 - 100);
+      const bubbleSpeed = 2;
+
       // Logic to spawn the items
+      // plastic
       if (
         plasticsRef.current.length < plasticNumber && // if currently less than 10 plastics
         Date.now() - lastItemSpawnAtRef.current > plasticSpawnIntervalTime // last plastic spawn time is long enough
@@ -71,11 +79,16 @@ function App() {
         );
         lastItemSpawnAtRef.current = Date.now(); // update plastic spawn time
       }
-
+      // Food
       if (foodsRef.current.length < foodNumber && Math.random() < 0.05) {
         foodsRef.current.push(new Food(foodSpawnX, foodSpawnY, foodSpeed));
       }
-      // Seagrass (Educational information)
+      // Bubble (Educational information)
+      if (bubblesRef.current.length < bubbleNumber && Math.random() < 0.05) {
+        bubblesRef.current.push(
+          new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed)
+        );
+      }
 
       // Update game items
       plasticsRef.current = plasticsRef.current.filter((item) => !item.dead);
@@ -86,6 +99,11 @@ function App() {
       foodsRef.current = foodsRef.current.filter((item) => !item.dead);
       foodsRef.current.forEach((food) => {
         food.update(player, deltaTime);
+      });
+
+      bubblesRef.current = bubblesRef.current.filter((item) => !item.dead);
+      bubblesRef.current.forEach((bubble) => {
+        bubble.update(player, deltaTime);
       });
     };
 
@@ -101,6 +119,10 @@ function App() {
       foodsRef.current.forEach((food) => {
         food.draw(ctx);
       });
+
+      bubblesRef.current.forEach((bubble) => {
+        bubble.draw(ctx);
+      });
     };
 
     requestAnimationFrame(gameLoop); // Start the game loop
@@ -109,6 +131,7 @@ function App() {
     return () => {
       plasticsRef.current = []; // Reset plastics array when the component unmounts
       foodsRef.current = []; // Reset foods array when the component unmounts
+      bubblesRef.current = []; // Reset foods array when the component unmounts
       cancelAnimationFrame(gameLoop);
     };
   }, [player]); // Dependencies array includes 'player' to avoid unnecessary re-renders

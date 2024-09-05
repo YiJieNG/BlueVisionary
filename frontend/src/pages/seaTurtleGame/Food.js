@@ -27,12 +27,12 @@ export class Food {
     // Load the image
     this.image = new Image();
     this.image.src = img;
-    this.image.onload = () => {
-      console.log("Food image loaded successfully");
-    };
-    this.image.onerror = (err) => {
-      console.error("Failed to load food image", err);
-    };
+    // this.image.onload = () => {
+    //   console.log("Food image loaded successfully");
+    // };
+    // this.image.onerror = (err) => {
+    //   console.error("Failed to load food image", err);
+    // };
   }
 
   isDead = () => {
