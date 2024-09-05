@@ -7,6 +7,7 @@ export class Bubble {
   width = 38;
   height = 38;
   pointAdd = 10;
+  onCollide = null;
 
   constructor(xPos, yPos, speed) {
     this.xPos = xPos;
@@ -34,10 +35,7 @@ export class Bubble {
     ) {
       this.dead = true; // Mark bubble as dead immediately
       player.increaseScore(this.pointAdd);
-      // pauseGameWithInfo();
-      // console.log("collide at:", this.xPos, this.yPos);
-      // console.log("player at:", player.posX, player.posY);
-      // console.log("collide: ", this.xPos, this.yPos);
+      this.onCollide(); // Trigger the onCollide callback to pause the game and show the pop-up
     }
   };
 
@@ -50,12 +48,5 @@ export class Bubble {
     }
   };
 }
-
-// function pauseGameWithInfo() {
-//   // Pause the game and show additional educational information
-//   alert(
-//     "Congratulations! You've found a sea grass! Sea grass is vital for the marine ecosystem. Let's learn more about it..."
-//   );
-// }
 
 export default Bubble;

@@ -652,3 +652,53 @@
 .Vulnerable {
   color: #bbe0f7;
 }
+
+////////////////////////Minigame pop out window css/////////////////
+
+.popup-window {
+  position: fixed; /* Position the pop-up relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position to be truly centered */
+  padding: 50px; /* Padding inside the pop-up */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for pop-up */
+  z-index: 1001; /* Ensure it is above other elements */
+  width: 300px; /* Set width of the pop-up */
+  text-align: center; /* Center text inside the pop-up */
+}
+
+.popup-window h2 {
+  margin-bottom: 10px; /* Space below the title */
+  font-size: 1.5rem; /* Font size of the title */
+}
+
+.popup-window p {
+  margin-bottom: 20px; /* Space below the message */
+  font-size: 1rem; /* Font size of the message */
+}
+
+.popup-window button {
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove button border */
+  padding: 10px 20px; /* Button padding */
+  border-radius: 4px; /* Button rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1rem; /* Font size of the button text */
+}
+
+.popup-window button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Optional: Dark overlay behind the pop-up */
+.overlay {
+  position: fixed; /* Position the overlay relative to the viewport */
+  top: 0; /* Start from the top of the screen */
+  left: 0; /* Start from the left of the screen */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000; /* Ensure it is below the pop-up but above other content */
+}

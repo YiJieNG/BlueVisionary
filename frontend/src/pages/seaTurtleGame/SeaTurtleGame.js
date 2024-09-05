@@ -4,7 +4,9 @@ import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { Bubble } from "./Bubble";
-import bgrdImg from "../../assets/img/minigame/minigameBackground.png"; // Load your sprite sheet
+import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
+import popupBgrdImg from "../../assets/img/minigame/warning.png";
+import { Container, Row, Col, Button } from "reactstrap";
 
 function Game() {
   const canvasRef = useRef(null); // Ref for canvas element
@@ -16,19 +18,24 @@ function Game() {
   const [step, setStep] = useState("landing");
   const [score, setScore] = useState(0);
   const [player, setPlayer] = useState(null); // Use state for the player instance
+  const [isPaused, setIsPaused] = useState(false); // State for pause control
+  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
   const navigate = useNavigate();
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
   const initializeGame = () => {
-    // Reinitialize game state
+    // Reinitialize game state only on game start, not on resume
     setScore(0);
     setPlayer(new Player(5, 550 / 2, handleGameOver)); // Create a new player instance with default values
     plasticsRef.current = [];
     foodsRef.current = [];
     bubblesRef.current = [];
     setStep("game");
+    setIsPaused(false); // Ensure the game starts unpaused
+    setShowPopup(false); // Ensure the popup is hidden at the start
+    lastItemSpawnAtRef.current = Date.now(); // Reset the item spawn time
   };
 
   const handleGameOver = (finalScore) => {
@@ -36,8 +43,14 @@ function Game() {
     setStep("conclusion");
   };
 
-  const startGame = () => {
-    setStep("landing");
+  const handleBubbleCollision = () => {
+    setIsPaused(true);
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setIsPaused(false);
   };
 
   useEffect(() => {
@@ -53,18 +66,19 @@ function Game() {
 
     const gameLoop = (timestamp) => {
       if (step !== "game") return; // Exit the loop if the game is over
+      if (!isPaused) {
+        accumulatedTime += timestamp - lastUpdate;
+        lastUpdate = timestamp;
 
-      accumulatedTime += timestamp - lastUpdate;
-      lastUpdate = timestamp;
+        // Update game logic in fixed time steps
+        while (accumulatedTime >= fixedTimeStep) {
+          updateGameLogic(fixedTimeStep / 1000); // Convert to seconds
+          accumulatedTime -= fixedTimeStep;
+        }
 
-      // Update game logic in fixed time steps
-      while (accumulatedTime >= fixedTimeStep) {
-        updateGameLogic(fixedTimeStep / 1000); // Convert to seconds
-        accumulatedTime -= fixedTimeStep;
+        // Render the current frame
+        renderGame();
       }
-
-      // Render the current frame
-      renderGame();
 
       // Request the next frame
       gameLoopRef.current = requestAnimationFrame(gameLoop);
@@ -107,9 +121,9 @@ function Game() {
       }
 
       if (bubblesRef.current.length < bubbleNumber && Math.random() < 0.05) {
-        bubblesRef.current.push(
-          new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed)
-        );
+        const newBubble = new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed);
+        newBubble.onCollide = handleBubbleCollision; // Assign collision handler
+        bubblesRef.current.push(newBubble);
       }
 
       // Update game items
@@ -153,14 +167,11 @@ function Game() {
 
     // Clean up the effect to avoid multiple game loops
     return () => {
-      plasticsRef.current = []; // Reset plastics array when the component unmounts
-      foodsRef.current = []; // Reset foods array when the component unmounts
-      bubblesRef.current = []; // Reset bubbles array when the component unmounts
       if (gameLoopRef.current) {
         cancelAnimationFrame(gameLoopRef.current); // Cancel the game loop on unmount
       }
     };
-  }, [step, player]); // Dependencies array includes 'player' to avoid unnecessary re-renders
+  }, [step, player, isPaused]); // Dependencies array includes 'isPaused' to trigger re-renders
 
   if (step === "landing") {
     return (
@@ -173,28 +184,56 @@ function Game() {
 
   if (step === "game") {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          flexDirection: "row",
-          padding: "60px 0",
-        }}
-      >
-        <canvas
-          ref={canvasRef} // Attach the canvas ref here
-          id="myCanvas"
-          width="950"
-          height="550"
-          style={{
-            backgroundSize: "cover",
-            backgroundImage: `url(${bgrdImg})`,
-            border: "2px solid #000000",
-            marginTop: "48px",
-          }}
-        />
+      <div className="landing-page">
+        <Container fluid>
+          <Row className="align-items-center">
+            <Col md="6">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  flexDirection: "row",
+                  // padding: "60px 0",
+                }}
+              >
+                <canvas
+                  ref={canvasRef} // Attach the canvas ref here
+                  id="myCanvas"
+                  width="950"
+                  height="550"
+                  style={{
+                    backgroundSize: "cover",
+                    backgroundImage: `url(${bgrdImg})`,
+                    border: "2px solid #000000",
+                    // marginTop: "48px",
+                  }}
+                />
+                {showPopup && (
+                  <>
+                    <div className="overlay"></div>
+                    <div
+                      className="popup-window"
+                      style={{
+                        backgroundSize: "cover",
+                        // backgroundImage: `url(${popupBgrdImg})`,
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <h2>Bubble Collision!</h2>
+                      <p>You've hit a bubble. The game is paused.</p>
+                      <button onClick={closePopup}>Resume Game</button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </Col>
+            <Col md="6" className="image-section">
+              <p>Information session</p>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
@@ -204,8 +243,8 @@ function Game() {
       <div className="feedback-page">
         <h2>Game Over</h2>
         <p>Your Score: {score}</p>
-        <button onClick={() => navigate("/")}>Go to Main Menu</button>
-        <button onClick={startGame}>Play Again</button>
+        <p>You are TOP 5% sea turtle in VIC!!!</p>
+        <button onClick={initializeGame}>Play Again</button>
       </div>
     );
   }
