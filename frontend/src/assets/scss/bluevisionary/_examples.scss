@@ -682,12 +682,16 @@
 
 .popup-window h2 {
   margin-bottom: 10px; /* Space below the title */
-  font-size: 1.5rem; /* Font size of the title */
+  font-size: 1.8rem; /* Font size of the title */
+  font-weight: bold;
+  color: #003366;
 }
 
 .popup-window p {
   margin-bottom: 20px; /* Space below the message */
-  font-size: 1rem; /* Font size of the message */
+  font-size: 1.2rem; /* Font size of the message */
+  font-weight: bold;
+  color: #3f4447;
 }
 
 .popup-window button {

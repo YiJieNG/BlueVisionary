@@ -111,6 +111,7 @@ function Game() {
   const closePopup = () => {
     setShowPopup(false);
     setIsPaused(false);
+    player.updateIspaused(false);
   };
 
   useEffect(() => {
@@ -145,9 +146,8 @@ function Game() {
           updateGameLogic(fixedTimeStep / 1000); // Convert to seconds
           accumulatedTime -= fixedTimeStep;
         }
-
-        // Render the current frame
       }
+      // Render the current frame
       renderGame();
       // Request the next frame
       gameLoopRef.current = requestAnimationFrame(gameLoop);
@@ -160,18 +160,18 @@ function Game() {
       // Value controls
       const plasticNumber = 3;
       const plasticSpawnX = 945;
-      const plasticSpawnY = randomNumber(30, 550 - 100);
+      const plasticSpawnY = randomNumber(80, 550 - 90);
       const plasticSpeed = randomNumber(4, 6);
       const plasticSpawnIntervalTime = 350;
 
       const foodNumber = 1;
       const foodSpawnX = 945;
-      const foodSpawnY = randomNumber(30, 550 - 100);
+      const foodSpawnY = randomNumber(80, 550 - 90);
       const foodSpeed = 5;
 
       const bubbleNumber = 1;
       const bubbleSpawnX = 945;
-      const bubbleSpawnY = randomNumber(30, 550 - 100);
+      const bubbleSpawnY = randomNumber(80, 550 - 90);
       const bubbleSpeed = 5;
 
       // Logic to spawn the items

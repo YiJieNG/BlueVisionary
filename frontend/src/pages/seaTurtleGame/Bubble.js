@@ -35,6 +35,7 @@ export class Bubble {
     ) {
       this.dead = true; // Mark bubble as dead immediately
       player.increaseScore(this.pointAdd);
+      player.updateIspaused(true);
       this.onCollide(); // Trigger the onCollide callback to pause the game and show the pop-up
     }
   };

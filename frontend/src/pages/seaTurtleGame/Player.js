@@ -26,6 +26,8 @@ export class Player {
   hurtWidth = 96; // image of displaying the hurt turtle
   hurtHeight = 36; // image of displaying the hurt turtle
 
+  isPaused = false;
+
   constructor(posX, posY, handleGameOver) {
     this.posX = posX;
     this.posY = posY;
@@ -53,19 +55,23 @@ export class Player {
     this.score += bonus;
   };
 
-  update = () => {
+  updateIspaused = (pause) => {
+    this.isPaused = pause;
+  };
+
+  update() {
     document.onkeydown = (e) => {
-      if (e.keyCode === 38) {
+      if (!this.isPaused && e.keyCode === 38) {
         // Up arrow
         this.posY -= this.speed;
       }
-      if (e.keyCode === 40) {
+      if (!this.isPaused && e.keyCode === 40) {
         // Down arrow
         this.posY += this.speed;
       }
     };
 
-    if (this.posY < 45) this.posY = 45;
+    if (this.posY < 80) this.posY = 80;
     if (this.posY > 550 - 90) this.posY = 550 - 90; // Prevent the player from moving outside the canvas
 
     // Update the frame index for animation
@@ -77,7 +83,7 @@ export class Player {
         this.frameIndex = 0; // Loop back to the first frame
       }
     }
-  };
+  }
 
   draw = (ctx) => {
     const image = new Image();
