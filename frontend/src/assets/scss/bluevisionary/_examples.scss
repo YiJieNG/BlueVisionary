@@ -747,3 +747,37 @@
     z-index: 1; // Keeps text above the image
   }
 }
+
+.gametitle-section {
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rem 10rem;
+  text-align: left;
+
+  .content {
+    flex: 1;
+    padding-right: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: #3f4447;
+      margin-bottom: 2rem;
+
+      strong {
+        color: #185797; // Highlight the correct answer
+        font-weight: bold;
+      }
+      .subtitle {
+        color: #000000;
+        font-weight: bold;
+      }
+    }
+  }
+}

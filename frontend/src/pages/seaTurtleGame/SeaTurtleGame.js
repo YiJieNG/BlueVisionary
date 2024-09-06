@@ -253,11 +253,13 @@ function Game() {
 
   if (step === "game") {
     return (
-      <div className="landing-page">
+      <div className="landing-page gametitle-section">
         <Container fluid>
-          <Row className="align-items-center">
-            <h1>You are currently in VIC's ocean area!!! </h1>
-            <h3>Difficulty: High</h3>
+          <Row className="content">
+            <h2>You are currently in VIC's ocean area!!! </h2>
+            <p>
+              Difficulty: <strong>HIGH</strong>
+            </p>
           </Row>
           <Row className="align-items-center">
             <Col md="7">
