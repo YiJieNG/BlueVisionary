@@ -149,11 +149,11 @@ function Game() {
         foodsRef.current.push(new Food(foodSpawnX, foodSpawnY, foodSpeed));
       }
 
-      if (bubblesRef.current.length < bubbleNumber && Math.random() < 0.05) {
-        const newBubble = new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed);
-        newBubble.onCollide = handleBubbleCollision; // Assign collision handler
-        bubblesRef.current.push(newBubble);
-      }
+      // if (bubblesRef.current.length < bubbleNumber && Math.random() < 0.05) {
+      //   const newBubble = new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed);
+      //   newBubble.onCollide = handleBubbleCollision; // Assign collision handler
+      //   bubblesRef.current.push(newBubble);
+      // }
 
       // Update game items
       plasticsRef.current = plasticsRef.current.filter((item) => !item.dead);
