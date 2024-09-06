@@ -18,6 +18,8 @@ import { FactData } from "./MinigameFact";
 function Game() {
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
+  const containerRef = useRef(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 950, height: 550 });
   const lastItemSpawnAtRef = useRef(Date.now()); // Ref for last item spawn time
   const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
   const foodsRef = useRef([]); // Use ref to persist foods array across renders
@@ -30,7 +32,32 @@ function Game() {
   const [factArray, setFactArray] = useState([]);
 
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const containerHeight = containerRef.current.offsetHeight;
+        const aspectRatio = 950 / 550;
 
+        let newWidth, newHeight;
+
+        if (containerWidth / containerHeight > aspectRatio) {
+          newHeight = containerHeight;
+          newWidth = newHeight * aspectRatio;
+        } else {
+          newWidth = containerWidth;
+          newHeight = newWidth / aspectRatio;
+        }
+
+        setCanvasSize({ width: newWidth, height: newHeight });
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // Function to fetch and shuffle questions
   const fetchAndShuffleFacts = async () => {
     try {
@@ -94,6 +121,15 @@ function Game() {
     const ctx = canvas.getContext("2d");
     ctxRef.current = ctx; // Store context in ref
 
+    // Set canvas size
+    canvas.width = canvasSize.width;
+    canvas.height = canvasSize.height;
+
+    // Scale the context to maintain the aspect ratio
+    const scaleX = canvasSize.width / 950;
+    const scaleY = canvasSize.height / 550;
+    ctx.scale(scaleX, scaleY);
+
     const fixedTimeStep = 1000 / 60; // 60 updates per second (16.67ms per update)
     let lastUpdate = performance.now();
     let accumulatedTime = 0;
@@ -111,9 +147,8 @@ function Game() {
         }
 
         // Render the current frame
-        renderGame();
       }
-
+      renderGame();
       // Request the next frame
       gameLoopRef.current = requestAnimationFrame(gameLoop);
     };
@@ -154,11 +189,11 @@ function Game() {
         foodsRef.current.push(new Food(foodSpawnX, foodSpawnY, foodSpeed));
       }
 
-      // if (bubblesRef.current.length < bubbleNumber && Math.random() < 0.05) {
-      //   const newBubble = new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed);
-      //   newBubble.onCollide = handleBubbleCollision; // Assign collision handler
-      //   bubblesRef.current.push(newBubble);
-      // }
+      if (bubblesRef.current.length < bubbleNumber && Math.random() < 0.05) {
+        const newBubble = new Bubble(bubbleSpawnX, bubbleSpawnY, bubbleSpeed);
+        newBubble.onCollide = handleBubbleCollision; // Assign collision handler
+        bubblesRef.current.push(newBubble);
+      }
 
       // Update game items
       plasticsRef.current = plasticsRef.current.filter((item) => !item.dead);
@@ -205,7 +240,7 @@ function Game() {
         cancelAnimationFrame(gameLoopRef.current); // Cancel the game loop on unmount
       }
     };
-  }, [step, player, isPaused]); // Dependencies array includes 'isPaused' to trigger re-renders
+  }, [step, player, isPaused, canvasSize]); // Dependencies array includes 'isPaused' to trigger re-renders
 
   if (step === "landing") {
     return (
@@ -221,27 +256,33 @@ function Game() {
       <div className="landing-page">
         <Container fluid>
           <Row className="align-items-center">
+            <h1>You are currently in VIC's ocean area!!! </h1>
+            <h3>Difficulty: High</h3>
+          </Row>
+          <Row className="align-items-center">
             <Col md="7">
               <div
+                ref={containerRef}
                 style={{
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   height: "100%",
+                  width: "100%",
                   flexDirection: "row",
-                  // padding: "60px 0",
                 }}
               >
                 <canvas
-                  ref={canvasRef} // Attach the canvas ref here
+                  ref={canvasRef}
                   id="myCanvas"
-                  width="950"
-                  height="550"
                   style={{
                     backgroundSize: "cover",
                     backgroundImage: `url(${bgrdImg})`,
                     border: "2px solid #000000",
-                    // marginTop: "48px",
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "950px",
+                    maxHeight: "550px",
                   }}
                 />
                 {showPopup && (
