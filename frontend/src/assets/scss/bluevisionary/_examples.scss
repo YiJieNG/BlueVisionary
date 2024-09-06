@@ -718,3 +718,32 @@
 }
 
 ////////////////////////Minigame instruction css/////////////////
+.instruction-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px; // Adjust max width of the frame image container as necessary
+  height: auto;
+  margin: auto; // Center it horizontally
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+  }
+
+  .text-content {
+    position: relative; // Ensures the text stays inside the frame
+    padding: 50px; // Adds padding to the text for better readability
+    font-size: 18px; // Adjust the font size as needed
+    font-weight: bold;
+    color: #ffffff; // Text color, adjust if necessary
+    text-align: left;
+    max-width: 80%; // Keeps the text within the image, adjust if necessary
+    max-height: 100%;
+    word-wrap: break-word; // Ensures long text wraps within the container
+    z-index: 1; // Keeps text above the image
+  }
+}

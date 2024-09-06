@@ -6,6 +6,11 @@ import { Bubble } from "./Bubble";
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
 import popupBgrdImg from "../../assets/img/minigame/warning.png";
 import frameImg from "../../assets/img/minigame/frame.png";
+import plasticImg from "../../assets/img/minigame/plastic.png";
+import jellyfishImg from "../../assets/img/minigame/jellyfish.png";
+import bubbleImg from "../../assets/img/minigame/bubble.png";
+import upImg from "../../assets/img/minigame/up.png";
+import downImg from "../../assets/img/minigame/down.png";
 
 import { Container, Row, Col } from "reactstrap";
 import { FactData } from "./MinigameFact";
@@ -216,7 +221,7 @@ function Game() {
       <div className="landing-page">
         <Container fluid>
           <Row className="align-items-center">
-            <Col md="8">
+            <Col md="7">
               <div
                 style={{
                   display: "flex",
@@ -259,8 +264,72 @@ function Game() {
                 )}
               </div>
             </Col>
-            <Col md="4" className="image-section">
-              <img src={frameImg} alt="info" style={{ paddingLeft: "50px" }} />
+            <Col md="5" className="instruction-section">
+              <div className="instruction-section">
+                <img src={frameImg} alt="frame" />
+                <div className="text-content">
+                  <Row>
+                    <Col md="5">
+                      <img
+                        src={upImg}
+                        alt="Up"
+                        style={{ height: "25px", width: "25px" }}
+                      />
+                    </Col>
+                    <Col md="7">
+                      <p>Move up</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="5">
+                      <img
+                        src={downImg}
+                        alt="Down"
+                        style={{ height: "25px", width: "25px" }}
+                      />
+                    </Col>
+                    <Col md="7">
+                      <p>Move down</p>
+                    </Col>
+                    <Row>
+                      <Col md="5">
+                        <img
+                          src={plasticImg}
+                          alt="plastic"
+                          style={{ height: "30px", width: "20px" }}
+                        />
+                      </Col>
+                      <Col md="7">
+                        <p>-10 HP</p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="5">
+                        <img
+                          src={jellyfishImg}
+                          alt="jellyfish"
+                          style={{ height: "30px", width: "20px" }}
+                        />
+                      </Col>
+                      <Col md="7">
+                        <p>+5 PTS</p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="5">
+                        <img
+                          src={bubbleImg}
+                          alt="bubble"
+                          style={{ height: "25px", width: "25px" }}
+                        />
+                      </Col>
+                      <Col md="7">
+                        <p>+10 PTS</p>
+                      </Col>
+                    </Row>
+                  </Row>
+                </div>
+              </div>
             </Col>
           </Row>
         </Container>
