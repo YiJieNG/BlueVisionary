@@ -5,6 +5,8 @@ import { Food } from "./Food";
 import { Bubble } from "./Bubble";
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
 import popupBgrdImg from "../../assets/img/minigame/warning.png";
+import frameImg from "../../assets/img/minigame/frame.png";
+
 import { Container, Row, Col } from "reactstrap";
 import { FactData } from "./MinigameFact";
 
@@ -36,8 +38,8 @@ function Game() {
 
   // Function to load the content of the pop up message
   const loadContent = () => {
-    // const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
-    const randomizeIndex = 0;
+    const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
+    // const randomizeIndex = 0;
 
     return (
       <div>
@@ -214,7 +216,7 @@ function Game() {
       <div className="landing-page">
         <Container fluid>
           <Row className="align-items-center">
-            <Col md="6">
+            <Col md="8">
               <div
                 style={{
                   display: "flex",
@@ -257,12 +259,8 @@ function Game() {
                 )}
               </div>
             </Col>
-            <Col md="6" className="image-section">
-              {/* <Card>
-                <CardBody> */}
-              <p>Information session</p>
-              {/* </CardBody>
-              </Card> */}
+            <Col md="4" className="image-section">
+              <img src={frameImg} alt="info" style={{ paddingLeft: "50px" }} />
             </Col>
           </Row>
         </Container>
