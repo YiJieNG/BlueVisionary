@@ -19,7 +19,7 @@ function Layout() {
   return (
     <>
       {/* Conditionally render Navbar based on the current path */}
-      {location.pathname === "/" ? <BlueNavbar /> : <BlueNavbar_1 />}
+      {location.pathname.includes("iter1") ? <BlueNavbar_1 /> : <BlueNavbar />}
     </>
   );
 }
