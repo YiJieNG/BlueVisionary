@@ -18,28 +18,28 @@ function HomeContent_1() {
       description:
         "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
       image: EndangeredSpecies,
-      link: "/marinelife",
+      link: "/iter1/marinelife",
     },
     {
       title: "Extent of plastic pollution",
       description:
         "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
       image: PlasticPollution,
-      link: "/",
+      link: "/iter1",
     },
     {
       title: "Track Your Impact",
       description:
         "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
       image: CleanUp,
-      link: "/",
+      link: "/iter1",
     },
     {
       title: "Educate yourself",
       description:
         "Dive into a variety of resources to expand and test your knowledge on marine conservation and become a more effective advocate to protect our oceans.",
       image: Education,
-      link: "/quiz",
+      link: "/iter1/quiz",
     },
   ];
 
