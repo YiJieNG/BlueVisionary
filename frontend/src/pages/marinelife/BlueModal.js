@@ -47,7 +47,7 @@ function BlueModal({ isOpen, speciesType, stateName, threatStatus, updateIsOpen 
             // .get(`https://www.bluevisionary.studio/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`)
             .get(`/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`)
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 setDescriptions(res.data)
             })
             .catch(err => {

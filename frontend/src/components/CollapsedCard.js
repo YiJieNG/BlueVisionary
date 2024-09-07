@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, Button, Collapse, Card, CardBody, CardHeader } from 'reactstrap';
+import { Button, Collapse, Card, CardBody, CardHeader } from 'reactstrap';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 
 function CollapsedCard({ data }) {
