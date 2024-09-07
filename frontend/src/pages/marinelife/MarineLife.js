@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "reactstrap";
-import CommonNavbar from "../../components/Navbar/CommonNavbar";
 // import BarChart from "./BarChart";
 import StateMap from "./StateMap";
 import BluePieChart from "./BluePieChart";
