@@ -9,7 +9,7 @@ import SAImage from "../../assets/img/minigame/SA.png";
 import TASImage from "../../assets/img/minigame/TAS.png";
 import NTImage from "../../assets/img/minigame/NT.png";
 import plasticImage from "../../assets/img/minigame/plastic.png";
-import { Container, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 const stateImages = {
   VIC: VICImage,

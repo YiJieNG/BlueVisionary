@@ -993,28 +993,32 @@
 
     .carousel-arrow {
       position: absolute;
+      border: none;
       top: 50%;
       transform: translateY(-50%);
-      background-color: #003366;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      padding-left: 10px;
-      padding-right: 10px;
+      background-color: transparent;
+      border-radius: 50%; /* Make the arrow a circle */
+      color: #003366;
+      font-size: 8rem;
+      padding: 10px;
+      width: 60px; /* Set a fixed width */
+      height: 60px; /* Set a fixed height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
       z-index: 1000;
 
       &.prev-arrow {
-        padding-left: 10px;
+        left: 50px;
       }
 
       &.next-arrow {
-        right: 0px;
-        padding-right: 10px;
+        right: 50px;
       }
 
       &:hover {
-        background-color: #1a1a1a;
+        color: #a8caed;
       }
     }
 
