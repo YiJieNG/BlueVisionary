@@ -1,11 +1,29 @@
 import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import cardBgrdImg from "../../assets/img/minigame/minigameDemo.png";
+import VICImage from "../../assets/img/minigame/VIC.png";
+import NSWImage from "../../assets/img/minigame/NSW.png";
+import QLDImage from "../../assets/img/minigame/QLD.png";
+import WAImage from "../../assets/img/minigame/WA.png";
+import SAImage from "../../assets/img/minigame/SA.png";
+import TASImage from "../../assets/img/minigame/TAS.png";
+import NTImage from "../../assets/img/minigame/NT.png";
+import plasticImage from "../../assets/img/minigame/plastic.png";
+
+const stateImages = {
+  VIC: VICImage,
+  NSW: NSWImage,
+  QLD: QLDImage,
+  WA: WAImage,
+  SA: SAImage,
+  TAS: TASImage,
+  NT: NTImage,
+};
 
 const dummyData = [
   {
     state: "VIC",
+    name: "VICTORIA",
     difficulty: 4,
     pollutionSeverity: 200,
     marineLaws: 2,
@@ -13,6 +31,7 @@ const dummyData = [
   },
   {
     state: "NSW",
+    name: "NEW SOUTH WAVES",
     difficulty: 3,
     pollutionSeverity: 150,
     marineLaws: 3,
@@ -20,6 +39,7 @@ const dummyData = [
   },
   {
     state: "QLD",
+    name: "QUEENSLAND",
     difficulty: 2,
     pollutionSeverity: 100,
     marineLaws: 4,
@@ -27,6 +47,7 @@ const dummyData = [
   },
   {
     state: "WA",
+    name: "WESTERN AUSTRALIA",
     difficulty: 4,
     pollutionSeverity: 180,
     marineLaws: 2,
@@ -34,6 +55,7 @@ const dummyData = [
   },
   {
     state: "SA",
+    name: "SOUTH AUSTRALIA",
     difficulty: 3,
     pollutionSeverity: 130,
     marineLaws: 3,
@@ -41,6 +63,7 @@ const dummyData = [
   },
   {
     state: "TAS",
+    name: "TASMANIA",
     difficulty: 2,
     pollutionSeverity: 90,
     marineLaws: 5,
@@ -48,6 +71,7 @@ const dummyData = [
   },
   {
     state: "NT",
+    name: "NORTHERN TERRITORY",
     difficulty: 1,
     pollutionSeverity: 70,
     marineLaws: 5,
@@ -56,7 +80,7 @@ const dummyData = [
 ];
 
 const LandingPage = ({ onStartGame }) => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState("EASY");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("ALL");
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
 
   // Handler when difficulty changes
@@ -70,7 +94,7 @@ const LandingPage = ({ onStartGame }) => {
       <div className="content">
         <h2>Welcome to our informative sea-turtle role-play game!</h2>
         <p>Welcome to our informative sea-turtle role-play game!</p>
-        <p className="subtitle">Choose your difficulty level:</p>
+        <p className="subtitle">Difficulty level:</p>
 
         <div className="difficulty-buttons">
           {["ALL", "EASY", "MEDIUM", "HARD"].map((difficulty) => (
@@ -134,27 +158,42 @@ const LandingPage = ({ onStartGame }) => {
               )
               .map((data, index) => (
                 <div key={index} className="state-card">
-                  <h4>{data.state} State Insights</h4>
-                  <div className="card-content">
+                  <h4>{data.name}</h4>
+                  <div className="card-content ">
                     <div className="state-shape">
-                      <span>{data.state}</span>
+                      <img
+                        style={{ height: "120px", width: "50%" }}
+                        src={stateImages[data.state]} // Dynamically set the source based on the state
+                        alt={data.state} // Alt text as the state name
+                      />{" "}
+                      {/* <span>{data.state}</span> */}
                     </div>
-                    <p className="difficulty-rating">
-                      Difficulty rating: {data.difficulty} stars
+                    <p
+                      className="difficulty-rating"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      Difficulty Rating:
                     </p>
+                    {Array.from({ length: data.difficulty }).map((_, idx) => (
+                      <img
+                        key={idx}
+                        src={plasticImage}
+                        alt="plastic bottle"
+                        style={{ width: "30px", margin: "10px 5px" }}
+                      />
+                    ))}
                     <p className="description-insight">
-                      <strong>Pollution severity: </strong>Severe (
-                      {data.pollutionSeverity})
+                      <strong>Pollution Severity: </strong>
+                      {data.pollutionSeverity}, <strong>Marine Laws: </strong>{" "}
+                      {data.marineLaws}
                     </p>
-                    <p>
-                      <strong>Marine laws: </strong>
-                      {data.marineLaws === 2
+
+                    {/* {data.marineLaws === 2
                         ? "Low"
                         : data.marineLaws === 3
                         ? "Medium"
-                        : "High"}{" "}
-                      ({data.marineLaws})
-                    </p>
+                        : "High"}{" "} */}
+
                     <button
                       className="start-game-button"
                       onClick={() => onStartGame(selectedDifficulty)}

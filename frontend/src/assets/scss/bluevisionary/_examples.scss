@@ -793,7 +793,7 @@
   align-items: center;
   min-height: 100vh;
   background: linear-gradient(45deg, #eff9ff, #9cd8fd);
-  padding: 4rem 2rem;
+  padding: 2rem 2rem;
   text-align: left;
   padding-top: 100px;
 
@@ -812,23 +812,22 @@
     .subtitle {
       font-size: 1.5rem;
       color: #3f4447;
-      margin-bottom: 2rem;
       font-weight: bold;
     }
 
     .difficulty-buttons {
       display: flex;
       justify-content: flex-start;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       gap: 1rem;
     }
 
     .option-button {
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #ffffff;
       background-color: #2776c5;
       border: none;
-      padding: 0.75rem 2rem;
+      padding: 0.75rem 3rem;
       text-align: center;
       font-weight: bold;
       border: 3px solid #2776c5;
@@ -918,14 +917,13 @@
 }
 
 .states-card {
-  margin-bottom: 3rem;
   .carousel {
     position: relative;
     width: 80%; // Adjust carousel width to show part of next/previous cards
     margin: 0 auto;
 
     .carousel .slider-wrapper {
-      overflow: visible !important; // Show part of the next/previous cards
+      overflow: visible;
     }
 
     .state-card {
@@ -952,10 +950,10 @@
       }
 
       .state-shape {
-        width: 80px;
-        height: 80px;
+        width: 50%;
+        height: 120px;
         background-color: #e1eaf3;
-        border-radius: 50%;
+        border-radius: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1042,7 +1040,7 @@
       transition: background-color 0.3s ease;
 
       &.selected {
-        background-color: #003366;
+        background-color: #a8caed;
       }
     }
 
