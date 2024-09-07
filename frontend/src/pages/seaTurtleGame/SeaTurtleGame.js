@@ -3,6 +3,7 @@ import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { Bubble } from "./Bubble";
+import LandingPage from "./LandingPage"; // Adjust the import path as needed
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
 import popupBgrdImg from "../../assets/img/minigame/warning.png";
 import frameImg from "../../assets/img/minigame/frame.png";
@@ -70,8 +71,8 @@ function Game() {
 
   // Function to load the content of the pop up message
   const loadContent = () => {
-    const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
-    // const randomizeIndex = 0;
+    // const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
+    const randomizeIndex = 0;
 
     return (
       <div>
@@ -242,12 +243,16 @@ function Game() {
     };
   }, [step, player, isPaused, canvasSize]); // Dependencies array includes 'isPaused' to trigger re-renders
 
+  // logic of landing page:
+  // 1. Select the state (Information session showing the details of the state)
+
   if (step === "landing") {
     return (
-      <div className="landing-page">
-        <h1>Welcome to the Sea Turtle Game!</h1>
-        <button onClick={initializeGame}>Start Game</button>
-      </div>
+      <LandingPage
+        onStartGame={(difficulty) => {
+          initializeGame();
+        }}
+      />
     );
   }
 
