@@ -12,9 +12,10 @@ import Home_1 from "./iter1/home/Home_1";
 import MarineLife_1 from "./iter1/marinelife/MarineLife_1";
 import Quiz_1 from "./iter1/education/Quiz_1";
 import BlueNavbar_1 from "./components/Navbar/BlueNavbar_1";
+import Pollution from "./pages/pollution/Pollution";
 
 function Layout() {
-  const location = useLocation(); // This is now inside a child of Router
+  const location = useLocation();
 
   return (
     <>
@@ -25,8 +26,6 @@ function Layout() {
 }
 
 function App() {
-  // const location = useLocation();
-  // const { hash, pathname, search } = location;
   return (
     <Router>
       <Layout />
@@ -37,6 +36,7 @@ function App() {
         <Route path="/iter1" element={<Home_1 />} />
         <Route path="/iter1/marinelife" element={<MarineLife_1 />} />
         <Route path="/iter1/quiz" element={<Quiz_1 />} />
+        <Route path='/pollution' element={<Pollution />} />
       </Routes>
     </Router>
   );

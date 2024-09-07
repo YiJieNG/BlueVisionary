@@ -1,6 +1,5 @@
 
 import { BarChart } from '@mui/x-charts/BarChart';
-import { Paper } from '@mui/material';
 
 function BlueBarChart_1({ xAxis, data, height, width, updateSpeciesSelected, updateModalStatus }) {
     return (

@@ -177,15 +177,15 @@ def get_description(state, status, species):
         descriptions.append(description)
     return jsonify(descriptions)
 
-@app.route('/api/get_pollution', methods=['GET'])
-def get_pollution():
+@app.route('/api/get_pollution/<year>', methods=['GET'])
+def get_pollution(year):
     db = get_db_connection()
     cur = db.cursor()
     cur.execute('''SELECT REGION, START_LAT, START_LONG, POLYMER_TYPE  
                     FROM AODN_IMOS_Microdebris_Data
                     WHERE POLYMER_TYPE <> ''
-                    AND SAMPLE_YEAR = '2024'
-                ''')
+                    AND SAMPLE_YEAR = '{0}'
+                '''.format(year))
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -205,25 +205,6 @@ def get_pollution():
             "pollutions": item
         })
     return jsonify(pollutions)
-
-@app.route('/api/get_pollution_1', methods=['GET'])
-def get_pollution_1():
-    db = get_db_connection()
-    cur = db.cursor()
-    cur.execute('''select DISTINCT StartLatitude , StartLongitude 
-                    FROM nettows_info;
-                ''')
-    data = cur.fetchall()
-    cur.close()
-    db.close()
-    pollutions = []
-    for item in data:
-        pollutions.append({
-            "lat": item[0],
-            "long": item[1]
-        })
-    return jsonify(pollutions)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

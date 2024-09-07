@@ -1,5 +1,4 @@
-import { Container } from "reactstrap";
-import PollutionMap from "./PollutionMap";
+import { Container, Row } from "reactstrap";
 import PollutionLefMap from "./PollutionLefMap";
 
 function Pollution () {
@@ -8,8 +7,9 @@ function Pollution () {
         <div className="section-with-space">
             <div className="section-marinelife">
             <Container fluid>
-                {/* <PollutionMap width={800} height={600}/> */}
-                <PollutionLefMap />
+                <Row className="justify-content-center">
+                    <PollutionLefMap />
+                </Row>
             </Container>
             </div>
            
