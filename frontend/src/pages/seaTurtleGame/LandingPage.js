@@ -9,6 +9,7 @@ import SAImage from "../../assets/img/minigame/SA.png";
 import TASImage from "../../assets/img/minigame/TAS.png";
 import NTImage from "../../assets/img/minigame/NT.png";
 import plasticImage from "../../assets/img/minigame/plastic.png";
+import { Container, Row, Col } from "reactstrap";
 
 const stateImages = {
   VIC: VICImage,
@@ -94,7 +95,7 @@ const LandingPage = ({ onStartGame }) => {
       <div className="content">
         <h2>Welcome to our informative sea-turtle role-play game!</h2>
         <p>Welcome to our informative sea-turtle role-play game!</p>
-        <p className="subtitle">Difficulty level:</p>
+        <p className="subtitle">State selection (Difficulty level):</p>
 
         <div className="difficulty-buttons">
           {["ALL", "EASY", "MEDIUM", "HARD"].map((difficulty) => (
@@ -110,7 +111,7 @@ const LandingPage = ({ onStartGame }) => {
           ))}
         </div>
         <div className="states-card">
-          <p className="subtitle">State selection:</p>
+          {/* <p className="subtitle">State selection:</p> */}
 
           {/* Carousel Component */}
           <Carousel
@@ -157,51 +158,59 @@ const LandingPage = ({ onStartGame }) => {
                   data.difficultyLevel === selectedDifficulty
               )
               .map((data, index) => (
-                <div key={index} className="state-card">
-                  <h4>{data.name}</h4>
-                  <div className="card-content ">
+                <Row className="state-card">
+                  <Col md="6">
                     <div className="state-shape">
                       <img
-                        style={{ height: "120px", width: "50%" }}
+                        // style={{ height: "120px", width: "50%" }}
                         src={stateImages[data.state]} // Dynamically set the source based on the state
                         alt={data.state} // Alt text as the state name
                       />{" "}
                       {/* <span>{data.state}</span> */}
                     </div>
-                    <p
-                      className="difficulty-rating"
-                      style={{ fontWeight: "bold" }}
-                    >
-                      Difficulty Rating:
-                    </p>
-                    {Array.from({ length: data.difficulty }).map((_, idx) => (
-                      <img
-                        key={idx}
-                        src={plasticImage}
-                        alt="plastic bottle"
-                        style={{ width: "30px", margin: "10px 5px" }}
-                      />
-                    ))}
-                    <p className="description-insight">
-                      <strong>Pollution Severity: </strong>
-                      {data.pollutionSeverity}, <strong>Marine Laws: </strong>{" "}
-                      {data.marineLaws}
-                    </p>
+                  </Col>
+                  <Col md="6" className="state-card-details ">
+                    <div key={index}>
+                      <h2>{data.name}</h2>
+                      <div className="card-content ">
+                        <p
+                          className="difficulty-rating"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Difficulty Rating:
+                        </p>
+                        {Array.from({ length: data.difficulty }).map(
+                          (_, idx) => (
+                            <img
+                              key={idx}
+                              src={plasticImage}
+                              alt="plastic bottle"
+                              style={{ width: "30px", margin: "10px 5px" }}
+                            />
+                          )
+                        )}
+                        <p className="description-insight">
+                          <strong>Pollution Severity: </strong>
+                          {data.pollutionSeverity},{" "}
+                          <strong>Marine Laws: </strong> {data.marineLaws}
+                        </p>
 
-                    {/* {data.marineLaws === 2
-                        ? "Low"
-                        : data.marineLaws === 3
-                        ? "Medium"
-                        : "High"}{" "} */}
+                        {/* {data.marineLaws === 2
+                      ? "Low"
+                      : data.marineLaws === 3
+                      ? "Medium"
+                      : "High"}{" "} */}
 
-                    <button
-                      className="start-game-button"
-                      onClick={() => onStartGame(selectedDifficulty)}
-                    >
-                      START GAME
-                    </button>
-                  </div>
-                </div>
+                        <button
+                          className="start-game-button"
+                          onClick={() => onStartGame(selectedDifficulty)}
+                        >
+                          START GAME
+                        </button>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
               ))}
           </Carousel>
         </div>
