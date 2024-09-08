@@ -231,16 +231,32 @@ def get_minigame_state_info():
         law_array.append(-1*col[4])
     severe_array = softmax(np.array(severe_array))
     law_array = softmax(np.array(law_array))
+
+    difficulty_array = []
+    difficulty_level = []
+    for count in range(len(severe_array)):
+        cur_value = round((severe_array[count]*0.5 + law_array[count] * 0.5) * 25)
+        difficulty_array.append(cur_value)
+        if cur_value >= 0 and cur_value <= 2:
+            difficulty_rating = "EASY"
+        elif cur_value >= 3 and cur_value <= 4:
+            difficulty_rating = "MEDIUM"
+        else:
+            difficulty_rating = "HARD"
+        difficulty_level.append(difficulty_rating)
+
+
     my_count = 0
     for col in data:
         stateInfo.append({
             "state": col[0],
-            "stateName": col[1],
+            "name": col[1],
             "polymerCount": col[2],
-            "lawCount": col[4],
-            "pollutionSeverity": severe_array[my_count]*100,
+            "marineLaws": col[4],
+            "pollutionSeverity": round(severe_array[my_count]*100),
             "score": col[6],
-            "difficulty": (severe_array[my_count]*0.5 + law_array[my_count] * 0.5) * 50,
+            "difficulty": difficulty_array[my_count],
+            "difficultyLevel": difficulty_level[my_count],
         })
         my_count += 1
 

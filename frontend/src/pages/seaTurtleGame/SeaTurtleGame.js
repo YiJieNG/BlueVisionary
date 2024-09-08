@@ -15,6 +15,7 @@ import bubbleImg from "../../assets/img/minigame/bubble.png";
 import upImg from "../../assets/img/minigame/up.png";
 import downImg from "../../assets/img/minigame/down.png";
 import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
+import axios from "axios";
 
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { FactData } from "./MinigameFact";
@@ -45,8 +46,10 @@ function Game() {
   const [gameStateData, setGameStateData] = useState([]);
   const fetchStateData = async () => {
     try {
-      const response = GameStateData;
-      setGameStateData(response);
+      const response = await axios.get(
+        "http://127.0.0.1:5000/api/minigame/state_info"
+      );
+      setGameStateData(response.data);
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
