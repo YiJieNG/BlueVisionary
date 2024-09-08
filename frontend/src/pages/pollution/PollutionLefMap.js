@@ -7,6 +7,7 @@ import L from 'leaflet';
 import 'leaflet.heat';
 import axios from "axios";
 import stateData from "../../data/FINAL_STATE_data_rewind.json"
+// import pollutionData from "../../data/pollution.json"
 
 
 const stateCenter = {
@@ -84,9 +85,6 @@ function ChoroplethLayer({ data, colorData }) {
     return () => {
       map.removeLayer(choroplethLayer);
     };
-    // L.geoJson(data, {style: style}).addTo(map);
-    // L.geoJson(data).addTo(map);
-
   }, [data, colorData]);
 
 }
@@ -160,6 +158,11 @@ function PollutionLefMap() {
       .catch((err) => {
         console.log(err);
       });
+    // const severe = pollutionData.map((p) => ([p.state, p.pollutions.length]));
+    // console.log(severe);
+    // setSevereData(severe);
+    // const statesForYear = pollutionData.map((p) => p.state);
+    // setFilteredStates(statesForYear);
 
   }, [selectedYear]);
 
