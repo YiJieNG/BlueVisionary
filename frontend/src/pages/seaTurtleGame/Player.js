@@ -3,7 +3,7 @@ import hurtImage from "../../assets/img/minigame/turtle_hurt_sprite.png"; // Loa
 
 export class Player {
   dead = false;
-  health = 100;
+  health = 30;
   score = 0;
   speed = 25;
   width = 96; // Set the width to match the sprite frame width

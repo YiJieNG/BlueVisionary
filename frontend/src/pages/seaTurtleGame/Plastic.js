@@ -6,7 +6,7 @@ export class Plastic {
   collisionHeight = 60;
   width = 40;
   height = 60;
-  damageCaused = -10;
+  damageCaused = 10;
 
   constructor(xPos, yPos, speed) {
     this.xPos = xPos;

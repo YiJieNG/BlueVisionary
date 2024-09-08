@@ -170,7 +170,7 @@ function Game() {
       const plasticSpeed = randomNumber(4, 6);
       const plasticSpawnIntervalTime = 350 / gameState.difficulty;
 
-      const foodNumber = 1;
+      const foodNumber = 2;
       const foodSpawnX = 945;
       const foodSpawnY = randomNumber(80, 550 - 90);
       const foodSpeed = 5;
