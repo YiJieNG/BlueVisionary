@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import ProgressBar from "@ramonak/react-progress-bar";
 import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
@@ -15,6 +16,7 @@ import downImg from "../../assets/img/minigame/down.png";
 
 import { Container, Row, Col } from "reactstrap";
 import { FactData } from "./MinigameFact";
+import { GameStateData } from "./MinigameStateData";
 
 function Game() {
   const [gameState, setGameState] = useState({
@@ -30,7 +32,7 @@ function Game() {
   const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
   const foodsRef = useRef([]); // Use ref to persist foods array across renders
   const bubblesRef = useRef([]); // Use ref to persist bubbles array across renders
-  const [step, setStep] = useState("landing");
+  const [step, setStep] = useState("conclusion");
   const [score, setScore] = useState(0);
   const [player, setPlayer] = useState(null); // Use state for the player instance
   const [isPaused, setIsPaused] = useState(false); // State for pause control
@@ -38,6 +40,15 @@ function Game() {
   const [factArray, setFactArray] = useState([]);
 
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
+  const [gameStateData, setGameStateData] = useState([]);
+  const fetchStateData = async () => {
+    try {
+      const response = GameStateData;
+      setGameStateData(response);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
@@ -125,6 +136,7 @@ function Game() {
   };
 
   useEffect(() => {
+    fetchStateData();
     fetchAndShuffleFacts();
     if (step !== "game") return;
 
@@ -253,7 +265,9 @@ function Game() {
   }, [step, player, isPaused, canvasSize, gameState.difficulty]); // Dependencies array includes 'isPaused' to trigger re-renders
 
   if (step === "landing") {
-    return <LandingPage onStartGame={initializeGame} />;
+    return (
+      <LandingPage onStartGame={initializeGame} gameStateData={gameStateData} />
+    );
   }
 
   if (step === "game") {
@@ -387,11 +401,34 @@ function Game() {
 
   if (step === "conclusion") {
     return (
-      <div className="feedback-page">
-        <h2>Game Over</h2>
-        <p>Your Score: {score}</p>
-        <p>You are TOP 5% sea turtle in VIC!!!</p>
-        <button onClick={restartGame}>Play Again</button>
+      <div className="minigame-feedback">
+        <div className="content">
+          <h1>Game Over</h1>
+          <h2>Your Score: {score}</h2>
+          <h3>
+            In <strong>VIC</strong>,
+          </h3>
+          <p>
+            You are just <strong>20 points</strong> away from the top sea
+            turtle!
+          </p>
+          <p>
+            You are <strong>Master</strong> sea turtle{" "}
+            <strong>(Top 5% score)</strong>
+          </p>
+          <ProgressBar
+            completed={80}
+            maxCompleted={100}
+            bgColor={"#003366"} // completed
+            baseBgColor={"#a8caed"} // not completed
+            animateOnRender={true}
+            height={"35px"}
+            margin={"15px 0"}
+          />
+          <button className="option-buttons" onClick={restartGame}>
+            Play Again
+          </button>
+        </div>
       </div>
     );
   }

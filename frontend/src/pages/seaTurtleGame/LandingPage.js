@@ -21,66 +21,7 @@ const stateImages = {
   NT: NTImage,
 };
 
-const gameStateData = [
-  {
-    state: "VIC",
-    name: "VICTORIA",
-    difficulty: 4,
-    pollutionSeverity: 200,
-    marineLaws: 2,
-    difficultyLevel: "HARD",
-  },
-  {
-    state: "NSW",
-    name: "NEW SOUTH WAVES",
-    difficulty: 3,
-    pollutionSeverity: 150,
-    marineLaws: 3,
-    difficultyLevel: "MEDIUM",
-  },
-  {
-    state: "QLD",
-    name: "QUEENSLAND",
-    difficulty: 2,
-    pollutionSeverity: 100,
-    marineLaws: 4,
-    difficultyLevel: "EASY",
-  },
-  {
-    state: "WA",
-    name: "WESTERN AUSTRALIA",
-    difficulty: 4,
-    pollutionSeverity: 180,
-    marineLaws: 2,
-    difficultyLevel: "HARD",
-  },
-  {
-    state: "SA",
-    name: "SOUTH AUSTRALIA",
-    difficulty: 3,
-    pollutionSeverity: 130,
-    marineLaws: 3,
-    difficultyLevel: "MEDIUM",
-  },
-  {
-    state: "TAS",
-    name: "TASMANIA",
-    difficulty: 2,
-    pollutionSeverity: 90,
-    marineLaws: 5,
-    difficultyLevel: "EASY",
-  },
-  {
-    state: "NT",
-    name: "NORTHERN TERRITORY",
-    difficulty: 1,
-    pollutionSeverity: 70,
-    marineLaws: 5,
-    difficultyLevel: "EASY",
-  },
-];
-
-const LandingPage = ({ onStartGame }) => {
+const LandingPage = ({ onStartGame, gameStateData }) => {
   const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState("ALL");
   const [selectedState, setSelectedState] = useState(gameStateData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
