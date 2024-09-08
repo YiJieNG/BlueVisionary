@@ -19,7 +19,6 @@ import axios from "axios";
 
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { FactData } from "./MinigameFact";
-import { GameStateData } from "./MinigameStateData";
 
 function Game() {
   const [gameState, setGameState] = useState({
@@ -411,7 +410,7 @@ function Game() {
           <h1>Game Over</h1>
           <h2>Your Score: {score}</h2>
           <h3>
-            In <strong>VIC</strong>,
+            In <strong>{gameState.state}</strong>,
           </h3>
 
           <p>

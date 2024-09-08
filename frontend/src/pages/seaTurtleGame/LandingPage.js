@@ -22,20 +22,25 @@ const stateImages = {
 };
 
 const LandingPage = ({ onStartGame, gameStateData }) => {
-  // console.log("first time fetching: ", gameStateData);
   const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState("ALL");
-  console.log("checking:", gameStateData[0]);
   const [selectedState, setSelectedState] = useState(gameStateData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
+  const [filteredStateData, setFilteredStateData] = useState(gameStateData);
   useEffect(() => {
     setSelectedState(gameStateData[0]);
+    setCurrentIndex(0);
+    setFilteredStateData(gameStateData);
   }, [gameStateData]);
+
+  useEffect(() => {
+    setFilteredStateData(filteredData(gameStateData));
+    setSelectedState(filteredData(gameStateData)[0]);
+  }, [selectedDifficultyLevel]);
 
   // Handler when difficulty changes
   const handleDifficultyChange = (difficulty) => {
     setSelectedDifficultyLevel(difficulty);
     setCurrentIndex(0); // Reset index to 0 whenever difficulty changes
-    setSelectedState(filteredData(gameStateData)[0]);
   };
 
   const filteredData = (myData) => {
@@ -47,8 +52,8 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   };
 
   const handleStartGame = () => {
-    // console.log(selectedDifficultyLevel);
-    // console.log(selectedState);
+    console.log(selectedDifficultyLevel);
+    console.log(selectedState);
     if (selectedState) {
       onStartGame(
         selectedState.state,
@@ -120,7 +125,7 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                 );
               }}
             >
-              {filteredData(gameStateData).map((data, index) => (
+              {filteredStateData.map((data, index) => (
                 <Row key={index} className="state-card">
                   <Col md="6">
                     <div className="state-shape">
