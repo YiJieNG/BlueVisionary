@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { GiSeaTurtle } from "react-icons/gi";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { Player } from "./Player";
 import { Plastic } from "./Plastic";
@@ -14,7 +15,7 @@ import bubbleImg from "../../assets/img/minigame/bubble.png";
 import upImg from "../../assets/img/minigame/up.png";
 import downImg from "../../assets/img/minigame/down.png";
 
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { FactData } from "./MinigameFact";
 import { GameStateData } from "./MinigameStateData";
 
@@ -425,9 +426,34 @@ function Game() {
             height={"35px"}
             margin={"15px 0"}
           />
-          <button className="option-buttons" onClick={restartGame}>
-            Play Again
-          </button>
+          <Card className="card-info ">
+            <CardBody>
+              <h3 style={{ textAlign: "left" }}>
+                Insights you can think about from this minigame{" "}
+                <GiSeaTurtle size={40} />
+              </h3>
+              <p style={{ textAlign: "left" }}>
+                "Microplastics are tiny plastic particles that are less than 5mm
+                in size. These particles are often ingested by marine animals,
+                including turtles, and can lead to severe internal injuries and
+                even death." "Microplastics are tiny plastic particles that are
+                less than 5mm in size. These particles are often ingested by
+                marine animals, including turtles, and can lead to severe
+                internal injuries and even death. *********If every ocean's
+                environment is as clean as Queensland, sea turtle will face less
+                obstacles on finding the food and avoid distinction."
+              </p>
+            </CardBody>
+          </Card>
+
+          <div className="session-buttons">
+            <button className="option-buttons" onClick={restartGame}>
+              Play Again
+            </button>
+            <button className="option-buttons" onClick={restartGame}>
+              About Plastic Pollution
+            </button>
+          </div>
         </div>
       </div>
     );

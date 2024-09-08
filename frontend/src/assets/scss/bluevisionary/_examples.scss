@@ -1117,6 +1117,12 @@
         font-weight: bold;
       }
     }
+    .session-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      gap: 5rem;
+    }
 
     .option-buttons {
       font-size: 1rem;
@@ -1127,12 +1133,52 @@
       padding: 0.75rem 2rem;
       text-align: center;
       border-radius: 10px;
-      margin-top: 5px;
+      margin-top: 20px;
       cursor: pointer;
+      width: 40%;
 
       &:hover {
         color: #003366;
         background-color: #a8caed;
+      }
+    }
+  }
+
+  .card-info {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #3f4447;
+      margin-bottom: 1rem;
+      strong {
+        color: #2776c5; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+    p {
+      font-size: 1.2rem;
+      color: #3f4447;
+      margin-bottom: 0.5rem;
+      strong {
+        color: #000000; // Highlight the correct answer
+        font-weight: bold;
       }
     }
   }
