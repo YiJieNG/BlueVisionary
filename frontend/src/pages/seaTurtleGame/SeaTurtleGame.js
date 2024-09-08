@@ -443,15 +443,37 @@ function Game() {
           {score < gameState.highScore ? (
             <>
               <p>
-                You are just <strong>{gameState.highScore - score}</strong> away
-                from the top sea turtle!
+                You are just{" "}
+                <strong>{gameState.highScore - score} points </strong> away from
+                the top sea turtle!
               </p>
               <p>
                 You are <strong>Master</strong> sea turtle{" "}
                 <strong>
-                  (Top {Math.round(score / gameState.highScore)}% score)
+                  {console.log(score, gameState.highScore)}
+                  (Top {100 - Math.round((score / gameState.highScore) * 100)}%
+                  score)
                 </strong>
               </p>
+              <ProgressBar
+                completed={Math.round((score / gameState.highScore) * 100)}
+                maxCompleted={100}
+                bgColor={"#5d8dff"} // completed
+                baseBgColor={"#a8caed"} // not completed
+                animateOnRender={true}
+                height={"35px"}
+                margin={"15px 0"}
+                // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+                customLabel={
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={seaTurtleImg}
+                      alt="Progress Icon"
+                      style={{ height: "20px", marginRight: "8px" }}
+                    />
+                  </div>
+                }
+              />
             </>
           ) : (
             <>
@@ -464,28 +486,28 @@ function Game() {
                 <strong>CONGRATULATIONS!</strong> You are <strong>TOP 1</strong>{" "}
                 sea turtle now!!!
               </p>
+              <ProgressBar
+                completed={100}
+                maxCompleted={100}
+                bgColor={"#5d8dff"} // completed
+                baseBgColor={"#a8caed"} // not completed
+                animateOnRender={true}
+                height={"35px"}
+                margin={"15px 0"}
+                // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+                customLabel={
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={seaTurtleImg}
+                      alt="Progress Icon"
+                      style={{ height: "20px", marginRight: "8px" }}
+                    />
+                  </div>
+                }
+              />
             </>
           )}
 
-          <ProgressBar
-            completed={80}
-            maxCompleted={100}
-            bgColor={"#5d8dff"} // completed
-            baseBgColor={"#a8caed"} // not completed
-            animateOnRender={true}
-            height={"35px"}
-            margin={"15px 0"}
-            // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
-            customLabel={
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src={seaTurtleImg}
-                  alt="Progress Icon"
-                  style={{ height: "20px", marginRight: "8px" }}
-                />
-              </div>
-            }
-          />
           <Card className="card-info ">
             <CardBody>
               <h3 style={{ textAlign: "left" }}>
