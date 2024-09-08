@@ -91,6 +91,21 @@ function Game() {
     }
   };
 
+  const updateHighScore = async (state, score) => {
+    try {
+      console.log(state, score);
+
+      // Construct the data to send
+      const data = {
+        state: state,
+        score: score,
+      };
+      await axios.post("http://127.0.0.1:5000/api/minigame/updatescore", data);
+    } catch (error) {
+      console.error("Error updating high score:", error);
+    }
+  };
+
   // Function to load the content of the pop up message
   const loadContent = () => {
     // const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
@@ -115,7 +130,6 @@ function Game() {
     stateName,
     highScore
   ) => {
-    console.log(stateName, highScore);
     setGameState({ state, difficulty, difficultyLevel, stateName, highScore });
     setScore(0);
     setPlayer(new Player(5, 550 / 2, handleGameOver)); // Create a new player instance with default values
@@ -129,6 +143,10 @@ function Game() {
   };
 
   const restartGame = () => {
+    if (score > gameState.highScore) {
+      updateHighScore(gameState.state, score);
+      gameState.highScore = score;
+    }
     setStep("landing");
   };
 
@@ -422,14 +440,33 @@ function Game() {
             In <strong>{gameState.stateName}</strong>
           </h3>
 
-          <p>
-            You are just <strong>20 points</strong> away from the top sea
-            turtle!
-          </p>
-          <p>
-            You are <strong>Master</strong> sea turtle{" "}
-            <strong>(Top 5% score)</strong>
-          </p>
+          {score < gameState.highScore ? (
+            <>
+              <p>
+                You are just <strong>{gameState.highScore - score}</strong> away
+                from the top sea turtle!
+              </p>
+              <p>
+                You are <strong>Master</strong> sea turtle{" "}
+                <strong>
+                  (Top {Math.round(score / gameState.highScore)}% score)
+                </strong>
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                You just broke the record with{" "}
+                <strong>{score - gameState.highScore} points </strong> more from
+                the previous top sea turtle!
+              </p>
+              <p>
+                <strong>CONGRATULATIONS!</strong> You are <strong>TOP 1</strong>{" "}
+                sea turtle now!!!
+              </p>
+            </>
+          )}
+
           <ProgressBar
             completed={80}
             maxCompleted={100}
