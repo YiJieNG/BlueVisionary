@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import VICImage from "../../assets/img/minigame/VIC.png";
@@ -22,15 +22,19 @@ const stateImages = {
 };
 
 const LandingPage = ({ onStartGame, gameStateData }) => {
+  // console.log("first time fetching: ", gameStateData);
   const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState("ALL");
+  console.log("checking:", gameStateData[0]);
   const [selectedState, setSelectedState] = useState(gameStateData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
+  useEffect(() => {
+    setSelectedState(gameStateData[0]);
+  }, [gameStateData]);
 
   // Handler when difficulty changes
   const handleDifficultyChange = (difficulty) => {
     setSelectedDifficultyLevel(difficulty);
     setCurrentIndex(0); // Reset index to 0 whenever difficulty changes
-    setCurrentIndex(0);
     setSelectedState(filteredData(gameStateData)[0]);
   };
 
@@ -43,6 +47,8 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   };
 
   const handleStartGame = () => {
+    // console.log(selectedDifficultyLevel);
+    // console.log(selectedState);
     if (selectedState) {
       onStartGame(
         selectedState.state,
@@ -73,53 +79,48 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
           ))}
         </div>
         <div className="states-card">
-          <Carousel
-            showThumbs={false}
-            showStatus={false}
-            infiniteLoop={true}
-            emulateTouch={true}
-            selectedItem={currentIndex} // Control the current index based on the state
-            onChange={(index) => {
-              setCurrentIndex(index); // Update currentIndex when user navigates manually
-              setSelectedState(filteredData(gameStateData)[index]); // Memorise the selected state
-            }}
-            renderArrowPrev={(onClickHandler, hasPrev) =>
-              hasPrev && (
-                <button
-                  className="carousel-arrow prev-arrow"
-                  onClick={onClickHandler}
-                >
-                  &#8249;
-                </button>
-              )
-            }
-            renderArrowNext={(onClickHandler, hasNext) =>
-              hasNext && (
-                <button
-                  className="carousel-arrow next-arrow"
-                  onClick={onClickHandler}
-                >
-                  &#8250;
-                </button>
-              )
-            }
-            renderIndicator={(onClickHandler, isSelected, index, label) => {
-              return (
-                <li
-                  className={`carousel-dot ${isSelected ? "selected" : ""}`}
-                  onClick={onClickHandler}
-                  key={index}
-                />
-              );
-            }}
-          >
-            {gameStateData
-              .filter(
-                (data) =>
-                  selectedDifficultyLevel === "ALL" ||
-                  data.difficultyLevel === selectedDifficultyLevel
-              )
-              .map((data, index) => (
+          {selectedState ? (
+            <Carousel
+              showThumbs={false}
+              showStatus={false}
+              infiniteLoop={true}
+              emulateTouch={true}
+              selectedItem={currentIndex} // Control the current index based on the state
+              onChange={(index) => {
+                setCurrentIndex(index); // Update currentIndex when user navigates manually
+                setSelectedState(filteredData(gameStateData)[index]); // Memorise the selected state
+              }}
+              renderArrowPrev={(onClickHandler, hasPrev) =>
+                hasPrev && (
+                  <button
+                    className="carousel-arrow prev-arrow"
+                    onClick={onClickHandler}
+                  >
+                    &#8249;
+                  </button>
+                )
+              }
+              renderArrowNext={(onClickHandler, hasNext) =>
+                hasNext && (
+                  <button
+                    className="carousel-arrow next-arrow"
+                    onClick={onClickHandler}
+                  >
+                    &#8250;
+                  </button>
+                )
+              }
+              renderIndicator={(onClickHandler, isSelected, index, label) => {
+                return (
+                  <li
+                    className={`carousel-dot ${isSelected ? "selected" : ""}`}
+                    onClick={onClickHandler}
+                    key={index}
+                  />
+                );
+              }}
+            >
+              {filteredData(gameStateData).map((data, index) => (
                 <Row key={index} className="state-card">
                   <Col md="6">
                     <div className="state-shape">
@@ -175,7 +176,10 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                   </Col>
                 </Row>
               ))}
-          </Carousel>
+            </Carousel>
+          ) : (
+            <div>Loading...</div>
+          )}
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import jellyfishImg from "../../assets/img/minigame/jellyfish.png";
 import bubbleImg from "../../assets/img/minigame/bubble.png";
 import upImg from "../../assets/img/minigame/up.png";
 import downImg from "../../assets/img/minigame/down.png";
+import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
 
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { FactData } from "./MinigameFact";
@@ -33,7 +34,7 @@ function Game() {
   const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
   const foodsRef = useRef([]); // Use ref to persist foods array across renders
   const bubblesRef = useRef([]); // Use ref to persist bubbles array across renders
-  const [step, setStep] = useState("conclusion");
+  const [step, setStep] = useState("landing");
   const [score, setScore] = useState(0);
   const [player, setPlayer] = useState(null); // Use state for the player instance
   const [isPaused, setIsPaused] = useState(false); // State for pause control
@@ -409,6 +410,7 @@ function Game() {
           <h3>
             In <strong>VIC</strong>,
           </h3>
+
           <p>
             You are just <strong>20 points</strong> away from the top sea
             turtle!
@@ -420,11 +422,21 @@ function Game() {
           <ProgressBar
             completed={80}
             maxCompleted={100}
-            bgColor={"#003366"} // completed
+            bgColor={"#5d8dff"} // completed
             baseBgColor={"#a8caed"} // not completed
             animateOnRender={true}
             height={"35px"}
             margin={"15px 0"}
+            // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+            customLabel={
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src={seaTurtleImg}
+                  alt="Progress Icon"
+                  style={{ height: "20px", marginRight: "8px" }}
+                />
+              </div>
+            }
           />
           <Card className="card-info ">
             <CardBody>
@@ -433,27 +445,20 @@ function Game() {
                 <GiSeaTurtle size={40} />
               </h3>
               <p style={{ textAlign: "left" }}>
-                "Microplastics are tiny plastic particles that are less than 5mm
-                in size. These particles are often ingested by marine animals,
-                including turtles, and can lead to severe internal injuries and
-                even death." "Microplastics are tiny plastic particles that are
-                less than 5mm in size. These particles are often ingested by
-                marine animals, including turtles, and can lead to severe
-                internal injuries and even death. *********If every ocean's
-                environment is as clean as Queensland, sea turtle will face less
-                obstacles on finding the food and avoid distinction."
+                If every ocean's environment is as clean as Queensland, sea
+                turtle will face less obstacles on finding the food and avoid
+                distinction.
               </p>
+              <div className="session-buttons">
+                <button className="option-buttons" onClick={restartGame}>
+                  Play Again
+                </button>
+                <button className="option-buttons" onClick={restartGame}>
+                  About Plastic Pollution
+                </button>
+              </div>
             </CardBody>
           </Card>
-
-          <div className="session-buttons">
-            <button className="option-buttons" onClick={restartGame}>
-              Play Again
-            </button>
-            <button className="option-buttons" onClick={restartGame}>
-              About Plastic Pollution
-            </button>
-          </div>
         </div>
       </div>
     );
