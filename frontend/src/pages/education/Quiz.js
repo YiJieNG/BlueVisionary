@@ -11,7 +11,7 @@ function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState("")
+  const [selectedAnswer, setSelectedAnswer] = useState("");
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
 
   // Function to fetch and shuffle questions
@@ -143,7 +143,9 @@ function Quiz() {
     const question = questions[currentQuestion];
     return (
       <div className="question-page">
-        <h2>Q{currentQuestionNumber}: {question.questionText}</h2>
+        <h2>
+          Q{currentQuestionNumber}: {question.questionText}
+        </h2>
         <div className="options-grid">
           {question.options.map((option, index) => (
             <Button

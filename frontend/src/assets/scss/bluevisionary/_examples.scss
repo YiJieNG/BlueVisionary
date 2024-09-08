@@ -652,3 +652,534 @@
 .Vulnerable {
   color: #bbe0f7;
 }
+
+////////////////////////Minigame pop out window css/////////////////
+
+.popup-window {
+  position: fixed; /* Position the pop-up relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position to be truly centered */
+  padding: 50px; /* Padding inside the pop-up */
+  border-radius: 8px; /* Rounded corners */
+  z-index: 1001; /* Ensure it is above other elements */
+  width: 715px; /* Set width of the pop-up */
+  height: 553px; /* Set width of the pop-up */
+  text-align: center;
+  background-size: cover;
+  background-image: url("../../../assets/img/minigame/warning.png"); /* Set the provided PNG as the background */
+}
+
+.popup-content {
+  height: 300px; /* Set a maximum height for the scrollable area */
+  overflow-y: auto; /* Make the content scrollable if it exceeds the max height */
+  background-color: white; /* White background for the text area */
+  padding: 20px; /* Padding inside the text area */
+  border-radius: 8px; /* Rounded corners for the text area */
+  margin-bottom: 20px;
+  text-align: left; /* Center text inside the pop-up */
+}
+
+.popup-window h2 {
+  margin-bottom: 10px; /* Space below the title */
+  font-size: 1.8rem; /* Font size of the title */
+  font-weight: bold;
+  color: #003366;
+}
+
+.popup-window p {
+  margin-bottom: 20px; /* Space below the message */
+  font-size: 1.2rem; /* Font size of the message */
+  font-weight: bold;
+  color: #3f4447;
+}
+
+.popup-window button {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #2776c5; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove button border */
+  padding: 10px 50px; /* Button padding */
+  border-radius: 10px; /* Button rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1rem; /* Font size of the button text */
+}
+
+.popup-window button:hover {
+  background-color: #003366; /* Darker shade on hover */
+}
+
+/* Optional: Dark overlay behind the pop-up */
+.overlay {
+  position: fixed; /* Position the overlay relative to the viewport */
+  top: 0; /* Start from the top of the screen */
+  left: 0; /* Start from the left of the screen */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000; /* Ensure it is below the pop-up but above other content */
+}
+
+////////////////////////Minigame instruction css/////////////////
+.instruction-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px; // Adjust max width of the frame image container as necessary
+  height: auto;
+  margin: auto; // Center it horizontally
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+  }
+
+  .text-content {
+    position: relative; // Ensures the text stays inside the frame
+    padding: 50px; // Adds padding to the text for better readability
+    font-size: 18px; // Adjust the font size as needed
+    font-weight: bold;
+    color: #ffffff; // Text color, adjust if necessary
+    text-align: left;
+    max-width: 80%; // Keeps the text within the image, adjust if necessary
+    max-height: 100%;
+    word-wrap: break-word; // Ensures long text wraps within the container
+    z-index: 1; // Keeps text above the image
+  }
+}
+
+.gametitle-section {
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rem 10rem;
+  text-align: left;
+
+  .content {
+    flex: 1;
+    padding-right: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.5rem;
+      color: #3f4447;
+      margin-bottom: 2rem;
+
+      strong {
+        color: #185797; // Highlight the correct answer
+        font-weight: bold;
+      }
+      .subtitle {
+        color: #000000;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+////////////////////////Game landing page //////////////////////
+.game-landing-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #eff9ff, #9cd8fd);
+  padding: 2rem 2rem;
+  text-align: left;
+  padding-top: 100px;
+
+  .content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #3f4447;
+      font-weight: bold;
+    }
+
+    .difficulty-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .option-button {
+      font-size: 1rem;
+      color: #ffffff;
+      background-color: #2776c5;
+      border: none;
+      padding: 0.75rem 3rem;
+      text-align: center;
+      font-weight: bold;
+      border: 3px solid #2776c5;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: #003366;
+        background-color: #a8caed;
+        border: 3px solid #a8caed;
+      }
+      &.selected {
+        color: #284567;
+        background-color: #a7f8ff;
+        border: 3px solid #284567;
+      }
+    }
+
+    .key-features {
+      margin-bottom: 2rem;
+
+      h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 1rem;
+      }
+
+      .feature-cards {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .feature-card {
+        flex: 0 0 auto;
+        width: 280px;
+        background-color: #f0f8ff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        h4 {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #003366;
+          margin-bottom: 1rem;
+        }
+
+        .card-content {
+          text-align: center;
+        }
+
+        .state-shape {
+          width: 80px;
+          height: 80px;
+          background-color: #2776c5;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto 1rem;
+
+          span {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+        }
+
+        .difficulty-rating {
+          font-size: 1rem;
+          font-weight: bold;
+          color: #003366;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          font-size: 0.9rem;
+          color: #3f4447;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+.states-card {
+  .carousel {
+    position: relative;
+    width: 80%; // Adjust carousel width to show part of next/previous cards
+    margin: 0 auto;
+
+    .carousel .slider-wrapper {
+      overflow: visible;
+    }
+
+    .state-card {
+      width: 75%;
+      margin: 0 auto;
+      padding: 3rem;
+      // background-color: #f0f8ff;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../../../assets/img/minigame/minigameDemo.png");
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: none;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #e3f0fc;
+        margin-bottom: 1rem;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #c5ddf5;
+        margin-bottom: 1rem;
+      }
+
+      .card-content {
+        text-align: center;
+      }
+
+      .state-shape {
+        // width: 30%;
+        // height: 100px;
+        // background-color: #e1eaf3;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 1rem;
+
+        span {
+          color: #000000;
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+      }
+
+      .difficulty-rating {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #b0d1f2;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: #feffff;
+        margin-bottom: 0.5rem;
+        strong {
+          color: #ffffff; // Highlight the correct answer
+          font-weight: bold;
+        }
+      }
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      border: none;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent;
+      border-radius: 50%; /* Make the arrow a circle */
+      color: #003366;
+      font-size: 8rem;
+      padding: 10px;
+      width: 60px; /* Set a fixed width */
+      height: 60px; /* Set a fixed height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1000;
+
+      &.prev-arrow {
+        left: 50px;
+      }
+
+      &.next-arrow {
+        right: 50px;
+      }
+
+      &:hover {
+        color: #a8caed;
+      }
+    }
+
+    .start-game-button {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #ffffff;
+      background-color: #2776c5;
+      border: none;
+      padding: 0.75rem 2rem;
+      text-align: center;
+      border-radius: 10px;
+      margin-top: 5px;
+      cursor: pointer;
+
+      &:hover {
+        color: #003366;
+        background-color: #a8caed;
+      }
+    }
+
+    .carousel-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      background-color: #ccc;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &.selected {
+        background-color: #a8caed;
+      }
+    }
+
+    .carousel .control-dots {
+      margin-top: 20px;
+      position: relative;
+    }
+  }
+}
+
+.state-card-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: auto;
+  margin: auto; // Center it horizontally
+}
+
+//////Minigame conclusion page//////
+.minigame-feedback {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #eff9ff, #9cd8fd);
+  padding: 2rem 2rem;
+  text-align: center;
+  padding-top: 100px;
+
+  .content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #3f4447;
+      margin-bottom: 1rem;
+      strong {
+        color: #2776c5; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+    p {
+      font-size: 1.5rem;
+      color: #3f4447;
+      margin-bottom: 0.5rem;
+      strong {
+        color: #000000; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+    .session-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      gap: 5rem;
+    }
+
+    .option-buttons {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #ffffff;
+      background-color: #2776c5;
+      border: none;
+      padding: 0.75rem 2rem;
+      text-align: center;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      width: 40%;
+
+      &:hover {
+        color: #003366;
+        background-color: #a8caed;
+      }
+    }
+  }
+
+  .card-info {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #3f4447;
+      margin-bottom: 1rem;
+      strong {
+        color: #2776c5; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+    p {
+      font-size: 1.2rem;
+      color: #3f4447;
+      margin-bottom: 0.5rem;
+      strong {
+        color: #000000; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+  }
+}
