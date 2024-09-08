@@ -52,13 +52,13 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   };
 
   const handleStartGame = () => {
-    console.log(selectedDifficultyLevel);
-    console.log(selectedState);
     if (selectedState) {
       onStartGame(
         selectedState.state,
         selectedState.difficulty,
-        selectedState.difficultyLevel
+        selectedState.difficultyLevel,
+        selectedState.name,
+        selectedState.score
       );
     }
   };

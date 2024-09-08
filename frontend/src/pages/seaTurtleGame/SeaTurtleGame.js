@@ -25,6 +25,8 @@ function Game() {
     state: "",
     difficulty: 0,
     difficultyLevel: "",
+    stateName: "",
+    highScore: 0,
   });
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
@@ -106,8 +108,15 @@ function Game() {
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
-  const initializeGame = (state, difficulty, difficultyLevel) => {
-    setGameState({ state, difficulty, difficultyLevel });
+  const initializeGame = (
+    state,
+    difficulty,
+    difficultyLevel,
+    stateName,
+    highScore
+  ) => {
+    console.log(stateName, highScore);
+    setGameState({ state, difficulty, difficultyLevel, stateName, highScore });
     setScore(0);
     setPlayer(new Player(5, 550 / 2, handleGameOver)); // Create a new player instance with default values
     plasticsRef.current = [];
@@ -188,7 +197,7 @@ function Game() {
       const plasticSpawnX = 945;
       const plasticSpawnY = randomNumber(80, 550 - 90);
       const plasticSpeed = randomNumber(4, 6);
-      const plasticSpawnIntervalTime = 350 / gameState.difficulty;
+      const plasticSpawnIntervalTime = 350;
 
       const foodNumber = 2;
       const foodSpawnX = 945;
@@ -410,7 +419,7 @@ function Game() {
           <h1>Game Over</h1>
           <h2>Your Score: {score}</h2>
           <h3>
-            In <strong>{gameState.state}</strong>,
+            In <strong>{gameState.stateName}</strong>
           </h3>
 
           <p>
