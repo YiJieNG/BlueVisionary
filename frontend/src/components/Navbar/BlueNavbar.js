@@ -67,7 +67,7 @@ function BlueNavbar() {
               <NavLink href="/marinelife">Marine Life</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/">Pollution Insights</NavLink>
+              <NavLink href="/pollution">Pollution Insights</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/minigame">Mini Game</NavLink>

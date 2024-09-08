@@ -7,7 +7,7 @@ function HomeHeader() {
         className="page-header section-dark"
         style={{
           backgroundImage:
-            "url(" + require("../../assets/img/HomeBackground.jpg") + ")",
+            "url(" + require("../../assets/img/naja-bertolt-jensen-Uu1CtKngEXY-unsplash.jpg") + ")",
         }}
       >
         <div className="filter" />
