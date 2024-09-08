@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "reactstrap";
-// import BarChart from "./BarChart";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import StateMap from "./StateMap";
 import BluePieChart from "./BluePieChart";
 import BlueBarChart from "./BlueBarChart";
@@ -15,50 +14,6 @@ function MarineLife() {
   const [xAxis, setXAxis] = useState();
   const [speciesSelected, setSpeciesSelected] = useState();
   const [isOpen, setIsOpen] = useState(false);
-
-  // const stateSpeciesData = {
-  //     "Victoria": [
-  //         { value: 10, label: "Critically Endangered", color: "#003366" },
-  //         { value: 15, label: "Endangered", color: "#36A2EB" },
-  //         { value: 20, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "Queensland": [
-  //         { value: 10, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 20, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "Australian Capital Territory": [
-  //         { value: 20, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 10, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "Tasmania": [
-  //         { value: 10, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 20, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "Northern Territory": [
-  //         { value: 10, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 40, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "South Australia": [
-  //         { value: 10, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 10, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "Western Australia": [
-  //         { value: 20, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 20, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  //     "New South Wales": [
-  //         { value: 30, label: "Critically Endangered", color: "#003366" },
-  //         { value: 30, label: "Endangered", color: "#36A2EB" },
-  //         { value: 20, label: "Vulnerable", color: "#bbe0f7" },
-  //     ],
-  // };
-  const topSpecies = ["aaaaaa", "bbbbbbbbb", "cccccc", "dddddd", "eeeeee"];
 
   const updateStateSelected = (newState) => {
     setStateSelected(newState);
@@ -80,7 +35,6 @@ function MarineLife() {
   // Fetch state statistic from backend
   useEffect(() => {
     axios
-      // .get("https://www.bluevisionary.studio/api/get_state_stat")
       .get("/api/get_state_stat")
       .then((res) => {
         let stateSpecies = {};
@@ -113,9 +67,6 @@ function MarineLife() {
   // fetch state species threat status data from backend
   useEffect(() => {
     axios
-      // .get(
-      //   `https://www.bluevisionary.studio/api/get_state_species/${stateSelected[1]}/${endangerType}`
-      // )
       .get(
         `/api/get_state_species/${stateSelected[1]}/${endangerType}`
       )

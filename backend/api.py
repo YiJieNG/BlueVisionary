@@ -177,5 +177,34 @@ def get_description(state, status, species):
         descriptions.append(description)
     return jsonify(descriptions)
 
+@app.route('/api/get_pollution/<year>', methods=['GET'])
+def get_pollution(year):
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT REGION, START_LAT, START_LONG, POLYMER_TYPE  
+                    FROM AODN_IMOS_Microdebris_Data
+                    WHERE POLYMER_TYPE <> ''
+                    AND SAMPLE_YEAR = '{0}'
+                '''.format(year))
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    pollutions = []
+    states = {}
+    for item in data:
+        if item[0] not in states:
+            states[item[0]] = []
+        states[item[0]].append({
+            "lat": item[1],
+            "long": item[2],
+            "type": item[3]
+        })
+    for state, item in states.items():
+        pollutions.append({
+            "state": state,
+            "pollutions": item
+        })
+    return jsonify(pollutions)
+
 if __name__ == '__main__':
     app.run(debug=True)
