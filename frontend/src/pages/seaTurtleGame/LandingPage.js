@@ -21,7 +21,7 @@ const stateImages = {
   NT: NTImage,
 };
 
-const dummyData = [
+const gameStateData = [
   {
     state: "VIC",
     name: "VICTORIA",
@@ -82,7 +82,7 @@ const dummyData = [
 
 const LandingPage = ({ onStartGame }) => {
   const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState("ALL");
-  const [selectedState, setSelectedState] = useState(dummyData[0]);
+  const [selectedState, setSelectedState] = useState(gameStateData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
 
   // Handler when difficulty changes
@@ -90,7 +90,7 @@ const LandingPage = ({ onStartGame }) => {
     setSelectedDifficultyLevel(difficulty);
     setCurrentIndex(0); // Reset index to 0 whenever difficulty changes
     setCurrentIndex(0);
-    setSelectedState(filteredData(dummyData)[0]);
+    setSelectedState(filteredData(gameStateData)[0]);
   };
 
   const filteredData = (myData) => {
@@ -140,7 +140,7 @@ const LandingPage = ({ onStartGame }) => {
             selectedItem={currentIndex} // Control the current index based on the state
             onChange={(index) => {
               setCurrentIndex(index); // Update currentIndex when user navigates manually
-              setSelectedState(filteredData(dummyData)[index]); // Memorise the selected state
+              setSelectedState(filteredData(gameStateData)[index]); // Memorise the selected state
             }}
             renderArrowPrev={(onClickHandler, hasPrev) =>
               hasPrev && (
@@ -172,7 +172,7 @@ const LandingPage = ({ onStartGame }) => {
               );
             }}
           >
-            {dummyData
+            {gameStateData
               .filter(
                 (data) =>
                   selectedDifficultyLevel === "ALL" ||

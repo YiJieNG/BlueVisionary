@@ -104,6 +104,10 @@ function Game() {
     lastItemSpawnAtRef.current = Date.now(); // Reset the item spawn time
   };
 
+  const restartGame = () => {
+    setStep("landing");
+  };
+
   const handleGameOver = (finalScore) => {
     setScore(finalScore);
     setStep("conclusion");
@@ -387,7 +391,7 @@ function Game() {
         <h2>Game Over</h2>
         <p>Your Score: {score}</p>
         <p>You are TOP 5% sea turtle in VIC!!!</p>
-        <button onClick={initializeGame}>Play Again</button>
+        <button onClick={restartGame}>Play Again</button>
       </div>
     );
   }
