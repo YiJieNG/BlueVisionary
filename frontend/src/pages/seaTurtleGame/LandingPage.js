@@ -81,13 +81,34 @@ const dummyData = [
 ];
 
 const LandingPage = ({ onStartGame }) => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState("ALL");
+  const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState("ALL");
+  const [selectedState, setSelectedState] = useState(dummyData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
 
   // Handler when difficulty changes
   const handleDifficultyChange = (difficulty) => {
-    setSelectedDifficulty(difficulty);
+    setSelectedDifficultyLevel(difficulty);
     setCurrentIndex(0); // Reset index to 0 whenever difficulty changes
+    setCurrentIndex(0);
+    setSelectedState(filteredData(dummyData)[0]);
+  };
+
+  const filteredData = (myData) => {
+    return myData.filter(
+      (data) =>
+        selectedDifficultyLevel === "ALL" ||
+        data.difficultyLevel === selectedDifficultyLevel
+    );
+  };
+
+  const handleStartGame = () => {
+    if (selectedState) {
+      onStartGame(
+        selectedState.state,
+        selectedState.difficulty,
+        selectedState.difficultyLevel
+      );
+    }
   };
 
   return (
@@ -102,25 +123,25 @@ const LandingPage = ({ onStartGame }) => {
             <button
               key={difficulty}
               className={`option-button ${
-                selectedDifficulty === difficulty ? "selected" : ""
+                selectedDifficultyLevel === difficulty ? "selected" : ""
               }`}
-              onClick={() => handleDifficultyChange(difficulty)} // Update selectedDifficulty and reset carousel
+              onClick={() => handleDifficultyChange(difficulty)} // Update selectedDifficultyLevel and reset carousel
             >
               {difficulty}
             </button>
           ))}
         </div>
         <div className="states-card">
-          {/* <p className="subtitle">State selection:</p> */}
-
-          {/* Carousel Component */}
           <Carousel
             showThumbs={false}
             showStatus={false}
             infiniteLoop={true}
             emulateTouch={true}
             selectedItem={currentIndex} // Control the current index based on the state
-            onChange={(index) => setCurrentIndex(index)} // Update currentIndex when user navigates manually
+            onChange={(index) => {
+              setCurrentIndex(index); // Update currentIndex when user navigates manually
+              setSelectedState(filteredData(dummyData)[index]); // Memorise the selected state
+            }}
             renderArrowPrev={(onClickHandler, hasPrev) =>
               hasPrev && (
                 <button
@@ -154,11 +175,11 @@ const LandingPage = ({ onStartGame }) => {
             {dummyData
               .filter(
                 (data) =>
-                  selectedDifficulty === "ALL" ||
-                  data.difficultyLevel === selectedDifficulty
+                  selectedDifficultyLevel === "ALL" ||
+                  data.difficultyLevel === selectedDifficultyLevel
               )
               .map((data, index) => (
-                <Row className="state-card">
+                <Row key={index} className="state-card">
                   <Col md="6">
                     <div className="state-shape">
                       <img
@@ -203,7 +224,8 @@ const LandingPage = ({ onStartGame }) => {
 
                         <button
                           className="start-game-button"
-                          onClick={() => onStartGame(selectedDifficulty)}
+                          onClick={handleStartGame}
+                          disabled={!selectedState}
                         >
                           START GAME
                         </button>

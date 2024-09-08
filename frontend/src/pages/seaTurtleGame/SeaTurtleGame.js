@@ -17,6 +17,11 @@ import { Container, Row, Col } from "reactstrap";
 import { FactData } from "./MinigameFact";
 
 function Game() {
+  const [gameState, setGameState] = useState({
+    state: "",
+    difficulty: 0,
+    difficultyLevel: "",
+  });
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
   const containerRef = useRef(null);
@@ -86,8 +91,8 @@ function Game() {
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
-  const initializeGame = () => {
-    // Reinitialize game state only on game start, not on resume
+  const initializeGame = (state, difficulty, difficultyLevel) => {
+    setGameState({ state, difficulty, difficultyLevel });
     setScore(0);
     setPlayer(new Player(5, 550 / 2, handleGameOver)); // Create a new player instance with default values
     plasticsRef.current = [];
@@ -159,11 +164,11 @@ function Game() {
       player.update(deltaTime); // Update player based on deltaTime
 
       // Value controls
-      const plasticNumber = 3;
+      const plasticNumber = 2 * gameState.difficulty;
       const plasticSpawnX = 945;
       const plasticSpawnY = randomNumber(80, 550 - 90);
       const plasticSpeed = randomNumber(4, 6);
-      const plasticSpawnIntervalTime = 350;
+      const plasticSpawnIntervalTime = 350 / gameState.difficulty;
 
       const foodNumber = 1;
       const foodSpawnX = 945;
@@ -241,19 +246,10 @@ function Game() {
         cancelAnimationFrame(gameLoopRef.current); // Cancel the game loop on unmount
       }
     };
-  }, [step, player, isPaused, canvasSize]); // Dependencies array includes 'isPaused' to trigger re-renders
-
-  // logic of landing page:
-  // 1. Select the state (Information session showing the details of the state)
+  }, [step, player, isPaused, canvasSize, gameState.difficulty]); // Dependencies array includes 'isPaused' to trigger re-renders
 
   if (step === "landing") {
-    return (
-      <LandingPage
-        onStartGame={(difficulty) => {
-          initializeGame();
-        }}
-      />
-    );
+    return <LandingPage onStartGame={initializeGame} />;
   }
 
   if (step === "game") {
@@ -261,9 +257,9 @@ function Game() {
       <div className="landing-page gametitle-section">
         <Container fluid>
           <Row className="content">
-            <h2>You are currently in VIC's ocean area!!! </h2>
+            <h2>You are currently in {gameState.state}'s ocean area!!! </h2>
             <p>
-              Difficulty: <strong>HIGH</strong>
+              Difficulty: <strong>{gameState.difficultyLevel}</strong>
             </p>
           </Row>
           <Row className="align-items-center">
