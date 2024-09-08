@@ -3,6 +3,7 @@ from flask_cors import CORS
 import MySQLdb
 import os
 from dotenv import load_dotenv
+import numpy as np
 
 load_dotenv()
 
@@ -177,6 +178,7 @@ def get_description(state, status, species):
         descriptions.append(description)
     return jsonify(descriptions)
 
+# Iteration 2 api call
 @app.route('/api/get_pollution/<year>', methods=['GET'])
 def get_pollution(year):
     db = get_db_connection()
@@ -205,6 +207,63 @@ def get_pollution(year):
             "pollutions": item
         })
     return jsonify(pollutions)
+
+def softmax(x):
+    e_x = np.exp(x - np.max(x))
+    return e_x / e_x.sum(axis=0)
+
+
+@app.route('/api/minigame/state_info', methods=['GET'])
+def get_minigame_state_info():
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT * FROM pollution_severity''')
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+
+    stateInfo = []
+    severe_array = []
+    law_array = []
+
+    for col in data:
+        severe_array.append(col[5])
+        law_array.append(-1*col[4])
+    severe_array = softmax(np.array(severe_array))
+    law_array = softmax(np.array(law_array))
+    my_count = 0
+    for col in data:
+        stateInfo.append({
+            "state": col[0],
+            "stateName": col[1],
+            "polymerCount": col[2],
+            "lawCount": col[4],
+            "pollutionSeverity": severe_array[my_count]*100,
+            "score": col[6],
+            "difficulty": (severe_array[my_count]*0.5 + law_array[my_count] * 0.5) * 50,
+        })
+        my_count += 1
+
+    return jsonify(stateInfo)
+
+
+@app.route('/api/minigame/updatescore', methods=['POST'])
+def update_minigame_score():
+    data = request.get_json()
+    state = data.get('state')  
+    score = data.get('score')
+
+    db = get_db_connection()
+    cur = db.cursor()
+
+    cur.execute("UPDATE pollution_severity SET score = %s WHERE state = %s", (score, state,))
+
+    db.commit()
+    cur.close()
+    db.close()
+
+    return jsonify({"message": "Option count updated"}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
