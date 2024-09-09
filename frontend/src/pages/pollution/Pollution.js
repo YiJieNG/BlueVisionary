@@ -12,12 +12,18 @@ function Pollution() {
                         <Row className="justify-content-center">
                             <PollutionLefMap />
                         </Row>
-                        <Row>
-                            
-                            <Col className="md-6 d-flex justify-content-end" style={{height: "300px"}}>
+                        <Row className="justify-content-md-center">
+                            <Col className="col-md-3" style={{height: "300px"}}>
+                            <Row>
                                 <PollutionLineChart />
+                            </Row>
+                            <Row>
+                                <div>
+                                    <h4>Trend for pollution</h4>
+                                </div>
+                            </Row>
                             </Col>
-                            <Col className="md-6" style={{height: "300px"}}>
+                            <Col className="col-md-3" style={{height: "300px"}}>
                                 <PollutionRadarChart />
                             </Col>
                         </Row>

@@ -24,12 +24,13 @@ function PollutionLineChart() {
         responsive: true,
         plugins: {
           legend: {
-            position: 'top',
+            // position: 'top',
+            display: false, // Hide the legend
           },
-          title: {
-            display: true,
-            text: 'Line Chart Example',
-          },
+          // title: {
+          //   display: true,
+          //   text: 'Line Chart Example',
+          // },
         },
         scales: {
           y: {
@@ -39,8 +40,8 @@ function PollutionLineChart() {
       };
     return (
         <>
-            {/* <Line data={data} options={options} /> */}
-            <Line data={data} />
+            <Line data={data} options={options} />
+            {/* <Line data={data} /> */}
 
         </>
     );

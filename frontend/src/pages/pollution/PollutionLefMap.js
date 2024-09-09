@@ -12,8 +12,6 @@ import stateData from "../../data/FINAL_STATE_data_rewind.json"
 // Choropleth map color
 function getColor(d, colorData) {
   const index = colorData.findIndex((obj) => obj[0] === d);
-  console.log(d)
-  console.log(index)
   return index === 0 ? '#800026' :
     index === 1 ? '#BD0026' :
       index === 2 ? '#E31A1C' :
