@@ -54,15 +54,15 @@ function Game() {
   const turtleClassInfo = () => {
     return (
       <div className="custom-tooltip">
-        <h3>Hatchling (0% - 24%)</h3>
+        <h3>Hatchling (Top 100%)</h3>
         <p>A baby sea turtle just starting its journey.</p>
-        <h3>Juvenile (25% - 49%)</h3>
+        <h3>Juvenile (Top 75%)</h3>
         <p>Growing stronger but still learning how to navigate the ocean.</p>
-        <h3>Explorer (50% - 69%)</h3>
+        <h3>Explorer (Top 50%)</h3>
         <p>Gaining confidence, now exploring deeper waters.</p>
-        <h3>Guardian (70% - 89%)</h3>
+        <h3>Guardian (Top 20%)</h3>
         <p>Protecting the seas with their knowledge and skills.</p>
-        <h3>Master (90% - 100%)</h3>
+        <h3>Master (Top 10%)</h3>
         <p>
           A fully grown sea turtle, adept at surviving the ocean's challenges.
         </p>

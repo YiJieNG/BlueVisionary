@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import VICImage from "../../assets/img/minigame/VIC.png";
@@ -26,16 +26,28 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   const [selectedState, setSelectedState] = useState(gameStateData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
   const [filteredStateData, setFilteredStateData] = useState(gameStateData);
+
   useEffect(() => {
     setSelectedState(gameStateData[0]);
     setCurrentIndex(0);
     setFilteredStateData(gameStateData);
   }, [gameStateData]);
 
+  const filteredData = useCallback(
+    (myData) => {
+      return myData.filter(
+        (data) =>
+          selectedDifficultyLevel === "ALL" ||
+          data.difficultyLevel === selectedDifficultyLevel
+      );
+    },
+    [selectedDifficultyLevel] // Add selectedDifficultyLevel as a dependency
+  );
+
   useEffect(() => {
     setFilteredStateData(filteredData(gameStateData));
     setSelectedState(filteredData(gameStateData)[0]);
-  }, [selectedDifficultyLevel]);
+  }, [selectedDifficultyLevel, filteredData, gameStateData]);
 
   // Handler when difficulty changes
   const handleDifficultyChange = (difficulty) => {
@@ -43,13 +55,13 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
     setCurrentIndex(0); // Reset index to 0 whenever difficulty changes
   };
 
-  const filteredData = (myData) => {
-    return myData.filter(
-      (data) =>
-        selectedDifficultyLevel === "ALL" ||
-        data.difficultyLevel === selectedDifficultyLevel
-    );
-  };
+  // const filteredData = (myData) => {
+  //   return myData.filter(
+  //     (data) =>
+  //       selectedDifficultyLevel === "ALL" ||
+  //       data.difficultyLevel === selectedDifficultyLevel
+  //   );
+  // };
 
   const handleStartGame = () => {
     if (selectedState) {
