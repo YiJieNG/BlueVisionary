@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { FaInfoCircle } from "react-icons/fa";
 import VICImage from "../../assets/img/minigame/VIC.png";
 import NSWImage from "../../assets/img/minigame/NSW.png";
 import QLDImage from "../../assets/img/minigame/QLD.png";
@@ -9,7 +10,7 @@ import SAImage from "../../assets/img/minigame/SA.png";
 import TASImage from "../../assets/img/minigame/TAS.png";
 import NTImage from "../../assets/img/minigame/NT.png";
 import plasticImage from "../../assets/img/minigame/plastic.png";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Tooltip } from "reactstrap";
 
 const stateImages = {
   VIC: VICImage,
@@ -22,38 +23,59 @@ const stateImages = {
 };
 
 const LandingPage = ({ onStartGame, gameStateData }) => {
-  // console.log("first time fetching: ", gameStateData);
   const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState("ALL");
-  console.log("checking:", gameStateData[0]);
   const [selectedState, setSelectedState] = useState(gameStateData[0]);
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index of the carousel
+  const [filteredStateData, setFilteredStateData] = useState(gameStateData);
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const toggle = () => setTooltipOpen(!tooltipOpen);
+
   useEffect(() => {
     setSelectedState(gameStateData[0]);
+    setCurrentIndex(0);
+    setFilteredStateData(gameStateData);
   }, [gameStateData]);
+
+  const filteredData = useCallback(
+    (myData) => {
+      return myData.filter(
+        (data) =>
+          selectedDifficultyLevel === "ALL" ||
+          data.difficultyLevel === selectedDifficultyLevel
+      );
+    },
+    [selectedDifficultyLevel] // Add selectedDifficultyLevel as a dependency
+  );
+
+  useEffect(() => {
+    setFilteredStateData(filteredData(gameStateData));
+    setSelectedState(filteredData(gameStateData)[0]);
+  }, [selectedDifficultyLevel, filteredData, gameStateData]);
 
   // Handler when difficulty changes
   const handleDifficultyChange = (difficulty) => {
     setSelectedDifficultyLevel(difficulty);
     setCurrentIndex(0); // Reset index to 0 whenever difficulty changes
-    setSelectedState(filteredData(gameStateData)[0]);
   };
 
-  const filteredData = (myData) => {
-    return myData.filter(
-      (data) =>
-        selectedDifficultyLevel === "ALL" ||
-        data.difficultyLevel === selectedDifficultyLevel
-    );
-  };
+  // const filteredData = (myData) => {
+  //   return myData.filter(
+  //     (data) =>
+  //       selectedDifficultyLevel === "ALL" ||
+  //       data.difficultyLevel === selectedDifficultyLevel
+  //   );
+  // };
 
   const handleStartGame = () => {
-    // console.log(selectedDifficultyLevel);
-    // console.log(selectedState);
     if (selectedState) {
       onStartGame(
         selectedState.state,
         selectedState.difficulty,
-        selectedState.difficultyLevel
+        selectedState.difficultyLevel,
+        selectedState.name,
+        selectedState.score,
+        selectedState.score
       );
     }
   };
@@ -62,7 +84,10 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
     <div className="game-landing-page">
       <div className="content">
         <h2>Welcome to our informative sea-turtle role-play game!</h2>
-        <p>Welcome to our informative sea-turtle role-play game!</p>
+        <p>
+          Find out more about the challenges related to plastic pollution faced
+          by sea turtle
+        </p>
         <p className="subtitle">State selection (Difficulty level):</p>
 
         <div className="difficulty-buttons">
@@ -120,7 +145,7 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                 );
               }}
             >
-              {filteredData(gameStateData).map((data, index) => (
+              {filteredStateData.map((data, index) => (
                 <Row key={index} className="state-card">
                   <Col md="6">
                     <div className="state-shape">
@@ -140,6 +165,30 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                           className="difficulty-rating"
                           style={{ fontWeight: "bold" }}
                         >
+                          <span
+                            id="turtleClassInfo"
+                            style={{ marginLeft: "10px", cursor: "pointer" }}
+                          >
+                            <FaInfoCircle />
+                          </span>
+                          <Tooltip
+                            isOpen={tooltipOpen}
+                            target="turtleClassInfo"
+                            toggle={toggle}
+                            placement="right"
+                          >
+                            <div className="custom-tooltip">
+                              <h3>Formula applied to classify difficulty</h3>
+                              <p>
+                                Softmax (polymerCount / oceanArea) * 0.5 +
+                                Softmax (-lawCount) * 0.5, then scaled in 25.
+                              </p>
+                              <h3>Data sources: </h3>
+                              <p>Pollution Data:</p>
+                              <p>Marine Law Data:</p>
+                            </div>
+                          </Tooltip>
+                          {"  "}
                           Difficulty Rating:
                         </p>
                         {Array.from({ length: data.difficulty }).map(
@@ -153,8 +202,8 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                           )
                         )}
                         <p className="description-insight">
-                          <strong>Pollution Severity: </strong>
-                          {data.pollutionSeverity},{" "}
+                          <strong>Pollution Rating: </strong>
+                          {data.pollutionSeverity}%,{" "}
                           <strong>Marine Laws: </strong> {data.marineLaws}
                         </p>
 

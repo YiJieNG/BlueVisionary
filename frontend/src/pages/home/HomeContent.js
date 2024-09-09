@@ -8,10 +8,15 @@ import PlasticPollution from "../../assets/img/PlasticPollution.jpg";
 import CleanUp from "../../assets/img/CleanUp.jpg";
 import EndangeredSpecies from "../../assets/img/EndangeredSpecies.jpg";
 import Education from "../../assets/img/Education.jpg";
+import MiniGame from "../../assets/img/MiniGame.png";
 
 function HomeContent() {
   const navigate = useNavigate();
-  const scrollToFeatures = () => { document.getElementById("key-features-section").scrollIntoView({ behavior: "smooth" }); };
+  const scrollToFeatures = () => {
+    document
+      .getElementById("key-features-section")
+      .scrollIntoView({ behavior: "smooth" });
+  };
   const cardItems = [
     {
       title: "Endangered Marine Species",
@@ -25,14 +30,21 @@ function HomeContent() {
       description:
         "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
       image: PlasticPollution,
-      link: "/",
+      link: "/pollution",
     },
+    // {
+    //   title: "Track Your Impact",
+    //   description:
+    //     "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
+    //   image: CleanUp,
+    //   link: "/",
+    // },
     {
-      title: "Track Your Impact",
+      title: "Sea Turtle Journey",
       description:
-        "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
-      image: CleanUp,
-      link: "/",
+        "Step into the flippers of a sea turtle, experience the challenges they face and gain a deeper understanding of the effects of plastic pollution on marine reptiles.",
+      image: MiniGame,
+      link: "/minigame",
     },
     {
       title: "Educate yourself",
@@ -60,7 +72,10 @@ function HomeContent() {
                 track your cleanup efforts, and visualize the impact you're
                 making.
               </p>
-              <Button className="dark-blue-button cta-button" onClick={scrollToFeatures}>
+              <Button
+                className="dark-blue-button cta-button"
+                onClick={scrollToFeatures}
+              >
                 Getting Started
               </Button>
             </Col>
@@ -105,7 +120,10 @@ function HomeContent() {
           {/* Icons Row */}
 
           {/* Features Section */}
-          <Row id="key-features-section" className="card-feature-section card-margin no-margin">
+          <Row
+            id="key-features-section"
+            className="card-feature-section card-margin no-margin"
+          >
             <h2 className="feature-header">Key Features</h2>
             {cardItems.map((cardItem, index) => (
               <Col md="3" sm="6" xs="12" key={index} className="mb-4 d-flex">

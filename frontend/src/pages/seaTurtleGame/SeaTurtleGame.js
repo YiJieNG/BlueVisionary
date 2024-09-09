@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GiSeaTurtle } from "react-icons/gi";
+import { FaInfoCircle } from "react-icons/fa";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { Player } from "./Player";
 import { Plastic } from "./Plastic";
@@ -15,16 +16,19 @@ import bubbleImg from "../../assets/img/minigame/bubble.png";
 import upImg from "../../assets/img/minigame/up.png";
 import downImg from "../../assets/img/minigame/down.png";
 import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
+import axios from "axios";
 
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
 import { FactData } from "./MinigameFact";
-import { GameStateData } from "./MinigameStateData";
 
 function Game() {
   const [gameState, setGameState] = useState({
     state: "",
     difficulty: 0,
     difficultyLevel: "",
+    stateName: "",
+    highScore: 0,
+    prevHighScore: 0,
   });
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
@@ -43,14 +47,40 @@ function Game() {
 
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
   const [gameStateData, setGameStateData] = useState([]);
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const toggle = () => setTooltipOpen(!tooltipOpen);
+
+  const turtleClassInfo = () => {
+    return (
+      <div className="custom-tooltip">
+        <h3>Master (Top 10%)</h3>
+        <p>
+          A fully grown sea turtle, adept at surviving the ocean's challenges.
+        </p>
+        <h3>Guardian (Top 20%)</h3>
+        <p>Protecting the seas with their knowledge and skills.</p>
+        <h3>Explorer (Top 50%)</h3>
+        <p>Gaining confidence, now exploring deeper waters.</p>
+        <h3>Juvenile (Top 75%)</h3>
+        <p>Growing stronger but still learning how to navigate the ocean.</p>
+        <h3>Hatchling (Top 100%)</h3>
+        <p>A baby sea turtle just starting its journey.</p>
+      </div>
+    );
+  };
+
   const fetchStateData = async () => {
     try {
-      const response = GameStateData;
-      setGameStateData(response);
+      const response = await axios.get(
+        "http://127.0.0.1:5000/api/minigame/state_info"
+      );
+      setGameStateData(response.data);
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
   };
+
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
@@ -87,10 +117,33 @@ function Game() {
     }
   };
 
+  const updateHighScore = useCallback(async (state, score) => {
+    try {
+      const data = {
+        state: state,
+        score: score,
+      };
+      await axios.post("http://127.0.0.1:5000/api/minigame/updatescore", data);
+    } catch (error) {
+      console.error("Error updating high score:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (score > gameState.highScore) {
+      updateHighScore(gameState.state, score).then(() => {
+        if (gameState.prevHighScore === gameState.highScore) {
+          gameState.prevHighScore = gameState.highScore;
+        }
+        gameState.highScore = score; // Update the gameState after updating the high score
+      });
+    }
+  }, [score, gameState, updateHighScore]);
+
   // Function to load the content of the pop up message
   const loadContent = () => {
-    // const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
-    const randomizeIndex = 0;
+    const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
+    // const randomizeIndex = 0;
 
     return (
       <div>
@@ -104,8 +157,36 @@ function Game() {
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
-  const initializeGame = (state, difficulty, difficultyLevel) => {
-    setGameState({ state, difficulty, difficultyLevel });
+  const classifyLevel = (percentage) => {
+    if (percentage >= 0 && percentage <= 24) {
+      return "Hatchling";
+    } else if (percentage >= 25 && percentage <= 49) {
+      return "Juvenile";
+    } else if (percentage >= 50 && percentage <= 69) {
+      return "Explorer";
+    } else if (percentage >= 70 && percentage <= 89) {
+      return "Guardian";
+    } else if (percentage >= 90 && percentage <= 100) {
+      return "Master Sea Turtle";
+    }
+  };
+
+  const initializeGame = (
+    state,
+    difficulty,
+    difficultyLevel,
+    stateName,
+    highScore,
+    prevHighScore
+  ) => {
+    setGameState({
+      state,
+      difficulty,
+      difficultyLevel,
+      stateName,
+      highScore,
+      prevHighScore,
+    });
     setScore(0);
     setPlayer(new Player(5, 550 / 2, handleGameOver)); // Create a new player instance with default values
     plasticsRef.current = [];
@@ -186,7 +267,7 @@ function Game() {
       const plasticSpawnX = 945;
       const plasticSpawnY = randomNumber(80, 550 - 90);
       const plasticSpeed = randomNumber(4, 6);
-      const plasticSpawnIntervalTime = 350 / gameState.difficulty;
+      const plasticSpawnIntervalTime = 350;
 
       const foodNumber = 2;
       const foodSpawnX = 945;
@@ -406,43 +487,121 @@ function Game() {
       <div className="minigame-feedback">
         <div className="content">
           <h1>Game Over</h1>
-          <h2>Your Score: {score}</h2>
           <h3>
-            In <strong>VIC</strong>,
+            Your Score: <strong>{score}</strong>
+          </h3>
+          <h3>
+            In <strong>{gameState.stateName}</strong>
           </h3>
 
-          <p>
-            You are just <strong>20 points</strong> away from the top sea
-            turtle!
-          </p>
-          <p>
-            You are <strong>Master</strong> sea turtle{" "}
-            <strong>(Top 5% score)</strong>
-          </p>
-          <ProgressBar
-            completed={80}
-            maxCompleted={100}
-            bgColor={"#5d8dff"} // completed
-            baseBgColor={"#a8caed"} // not completed
-            animateOnRender={true}
-            height={"35px"}
-            margin={"15px 0"}
-            // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
-            customLabel={
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src={seaTurtleImg}
-                  alt="Progress Icon"
-                  style={{ height: "20px", marginRight: "8px" }}
-                />
-              </div>
-            }
-          />
+          {score < gameState.highScore ? (
+            <>
+              <p>
+                You are just{" "}
+                <strong>{gameState.highScore - score} points </strong> away from
+                the top sea turtle!
+              </p>
+              <p>
+                You are{" "}
+                <strong>
+                  {classifyLevel(
+                    Math.round((score / gameState.highScore) * 100)
+                  )}
+                </strong>{" "}
+                sea turtle{" "}
+                <strong>
+                  (Top {100 - Math.round((score / gameState.highScore) * 100)}%
+                  score)
+                </strong>
+                <span
+                  id="turtleClassInfo"
+                  style={{ marginLeft: "10px", cursor: "pointer" }}
+                >
+                  <FaInfoCircle />
+                </span>
+                <Tooltip
+                  isOpen={tooltipOpen}
+                  target="turtleClassInfo"
+                  toggle={toggle}
+                  placement="right"
+                  style={{ width: "200%" }}
+                >
+                  {turtleClassInfo}
+                </Tooltip>
+              </p>
+              <ProgressBar
+                completed={Math.round((score / gameState.highScore) * 100)}
+                maxCompleted={100}
+                bgColor={"#5d8dff"} // completed
+                baseBgColor={"#a8caed"} // not completed
+                animateOnRender={true}
+                height={"35px"}
+                margin={"15px 0"}
+                // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+                customLabel={
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={seaTurtleImg}
+                      alt="Progress Icon"
+                      style={{ height: "20px", marginRight: "8px" }}
+                    />
+                  </div>
+                }
+              />
+            </>
+          ) : (
+            <>
+              <p>
+                You just broke the record with{" "}
+                <strong>{score - gameState.highScore} points </strong> more from
+                the previous top sea turtle!
+              </p>
+              <p>
+                <strong>CONGRATULATIONS!</strong> You are <strong>TOP 1</strong>{" "}
+                sea turtle now!!!{" "}
+                <span
+                  id="turtleClassInfo"
+                  style={{ marginLeft: "10px", cursor: "pointer" }}
+                >
+                  <FaInfoCircle />
+                </span>
+                <Tooltip
+                  isOpen={tooltipOpen}
+                  target="turtleClassInfo"
+                  toggle={toggle}
+                  placement="right"
+                  style={{ width: "200%" }}
+                >
+                  {turtleClassInfo}
+                </Tooltip>
+              </p>
+              <ProgressBar
+                completed={100}
+                maxCompleted={100}
+                bgColor={"#5d8dff"} // completed
+                baseBgColor={"#a8caed"} // not completed
+                animateOnRender={true}
+                height={"35px"}
+                margin={"15px 0"}
+                // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+                customLabel={
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={seaTurtleImg}
+                      alt="Progress Icon"
+                      style={{ height: "20px", marginRight: "8px" }}
+                    />
+                  </div>
+                }
+              />
+            </>
+          )}
+
           <Card className="card-info ">
             <CardBody>
               <h3 style={{ textAlign: "left" }}>
-                Insights you can think about from this minigame{" "}
-                <GiSeaTurtle size={40} />
+                <GiSeaTurtle size={40} /> Insights you can think about from this
+                minigame
               </h3>
               <p style={{ textAlign: "left" }}>
                 If every ocean's environment is as clean as Queensland, sea
