@@ -1182,4 +1182,47 @@
       }
     }
   }
+
+  .tool-tip-info {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: left;
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #3f4447;
+      margin-bottom: 1rem;
+      strong {
+        color: #2776c5; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+    p {
+      font-size: 1.2rem;
+      color: #3f4447;
+      margin-bottom: 0.5rem;
+      strong {
+        color: #000000; // Highlight the correct answer
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.custom-tooltip {
+  text-align: left;
+  h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #d0e2f5;
+  }
+  p {
+    strong {
+      color: #a8caed; // Highlight the correct answer
+      font-weight: bold;
+    }
+  }
 }

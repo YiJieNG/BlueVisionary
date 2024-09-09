@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GiSeaTurtle } from "react-icons/gi";
+import { FaInfoCircle } from "react-icons/fa";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { Player } from "./Player";
 import { Plastic } from "./Plastic";
@@ -17,7 +18,7 @@ import downImg from "../../assets/img/minigame/down.png";
 import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
 import axios from "axios";
 
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
 import { FactData } from "./MinigameFact";
 
 function Game() {
@@ -46,6 +47,29 @@ function Game() {
 
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
   const [gameStateData, setGameStateData] = useState([]);
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const toggle = () => setTooltipOpen(!tooltipOpen);
+
+  const turtleClassInfo = () => {
+    return (
+      <div className="custom-tooltip">
+        <h3>Hatchling (0% - 24%)</h3>
+        <p>A baby sea turtle just starting its journey.</p>
+        <h3>Juvenile (25% - 49%)</h3>
+        <p>Growing stronger but still learning how to navigate the ocean.</p>
+        <h3>Explorer (50% - 69%)</h3>
+        <p>Gaining confidence, now exploring deeper waters.</p>
+        <h3>Guardian (70% - 89%)</h3>
+        <p>Protecting the seas with their knowledge and skills.</p>
+        <h3>Master (90% - 100%)</h3>
+        <p>
+          A fully grown sea turtle, adept at surviving the ocean's challenges.
+        </p>
+      </div>
+    );
+  };
+
   const fetchStateData = async () => {
     try {
       const response = await axios.get(
@@ -116,8 +140,8 @@ function Game() {
 
   // Function to load the content of the pop up message
   const loadContent = () => {
-    // const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
-    const randomizeIndex = 0;
+    const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
+    // const randomizeIndex = 0;
 
     return (
       <div>
@@ -130,6 +154,20 @@ function Game() {
   };
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
+
+  const classifyLevel = (percentage) => {
+    if (percentage >= 0 && percentage <= 24) {
+      return "Hatchling";
+    } else if (percentage >= 25 && percentage <= 49) {
+      return "Juvenile";
+    } else if (percentage >= 50 && percentage <= 69) {
+      return "Explorer";
+    } else if (percentage >= 70 && percentage <= 89) {
+      return "Guardian";
+    } else if (percentage >= 90 && percentage <= 100) {
+      return "Master Sea Turtle";
+    }
+  };
 
   const initializeGame = (
     state,
@@ -460,11 +498,32 @@ function Game() {
                 the top sea turtle!
               </p>
               <p>
-                You are <strong>Master</strong> sea turtle{" "}
+                You are{" "}
+                <strong>
+                  {classifyLevel(
+                    Math.round((score / gameState.highScore) * 100)
+                  )}
+                </strong>{" "}
+                sea turtle{" "}
                 <strong>
                   (Top {100 - Math.round((score / gameState.highScore) * 100)}%
                   score)
                 </strong>
+                <span
+                  id="turtleClassInfo"
+                  style={{ marginLeft: "10px", cursor: "pointer" }}
+                >
+                  <FaInfoCircle />
+                </span>
+                <Tooltip
+                  isOpen={tooltipOpen}
+                  target="turtleClassInfo"
+                  toggle={toggle}
+                  placement="right"
+                  style={{ width: "200%" }}
+                >
+                  {turtleClassInfo}
+                </Tooltip>
               </p>
               <ProgressBar
                 completed={Math.round((score / gameState.highScore) * 100)}
@@ -495,7 +554,22 @@ function Game() {
               </p>
               <p>
                 <strong>CONGRATULATIONS!</strong> You are <strong>TOP 1</strong>{" "}
-                sea turtle now!!!
+                sea turtle now!!!{" "}
+                <span
+                  id="turtleClassInfo"
+                  style={{ marginLeft: "10px", cursor: "pointer" }}
+                >
+                  <FaInfoCircle />
+                </span>
+                <Tooltip
+                  isOpen={tooltipOpen}
+                  target="turtleClassInfo"
+                  toggle={toggle}
+                  placement="right"
+                  style={{ width: "200%" }}
+                >
+                  {turtleClassInfo}
+                </Tooltip>
               </p>
               <ProgressBar
                 completed={100}
