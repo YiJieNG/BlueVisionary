@@ -181,8 +181,8 @@ def get_description(state, status, species):
 def get_pollution(year):
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT REGION, START_LAT, START_LONG, POLYMER_TYPE  
-                    FROM AODN_IMOS_Microdebris_Data
+    cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, POLYMER_TYPE  
+                    FROM polymer_main
                     WHERE POLYMER_TYPE <> ''
                     AND SAMPLE_YEAR = '{0}'
                 '''.format(year))
