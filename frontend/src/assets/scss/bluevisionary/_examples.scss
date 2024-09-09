@@ -1097,6 +1097,10 @@
       font-weight: bold;
       color: #003366;
       margin-bottom: 1rem;
+      strong {
+        color: #2776c5; // Highlight the correct answer
+        font-weight: bold;
+      }
     }
     h3 {
       font-size: 2.5rem;

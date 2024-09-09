@@ -54,18 +54,18 @@ function Game() {
   const turtleClassInfo = () => {
     return (
       <div className="custom-tooltip">
-        <h3>Hatchling (Top 100%)</h3>
-        <p>A baby sea turtle just starting its journey.</p>
-        <h3>Juvenile (Top 75%)</h3>
-        <p>Growing stronger but still learning how to navigate the ocean.</p>
-        <h3>Explorer (Top 50%)</h3>
-        <p>Gaining confidence, now exploring deeper waters.</p>
-        <h3>Guardian (Top 20%)</h3>
-        <p>Protecting the seas with their knowledge and skills.</p>
         <h3>Master (Top 10%)</h3>
         <p>
           A fully grown sea turtle, adept at surviving the ocean's challenges.
         </p>
+        <h3>Guardian (Top 20%)</h3>
+        <p>Protecting the seas with their knowledge and skills.</p>
+        <h3>Explorer (Top 50%)</h3>
+        <p>Gaining confidence, now exploring deeper waters.</p>
+        <h3>Juvenile (Top 75%)</h3>
+        <p>Growing stronger but still learning how to navigate the ocean.</p>
+        <h3>Hatchling (Top 100%)</h3>
+        <p>A baby sea turtle just starting its journey.</p>
       </div>
     );
   };
@@ -485,7 +485,9 @@ function Game() {
       <div className="minigame-feedback">
         <div className="content">
           <h1>Game Over</h1>
-          <h2>Your Score: {score}</h2>
+          <h3>
+            Your Score: <strong>{score}</strong>
+          </h3>
           <h3>
             In <strong>{gameState.stateName}</strong>
           </h3>
