@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GiSeaTurtle } from "react-icons/gi";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { Player } from "./Player";
@@ -27,6 +27,7 @@ function Game() {
     difficultyLevel: "",
     stateName: "",
     highScore: 0,
+    prevHighScore: 0,
   });
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
@@ -92,9 +93,8 @@ function Game() {
     }
   };
 
-  const updateHighScore = async (state, score) => {
+  const updateHighScore = useCallback(async (state, score) => {
     try {
-      // Construct the data to send
       const data = {
         state: state,
         score: score,
@@ -103,11 +103,12 @@ function Game() {
     } catch (error) {
       console.error("Error updating high score:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (score > gameState.highScore) {
       updateHighScore(gameState.state, score).then(() => {
+        gameState.prevHighScore = gameState.highScore;
         gameState.highScore = score; // Update the gameState after updating the high score
       });
     }
@@ -135,9 +136,17 @@ function Game() {
     difficulty,
     difficultyLevel,
     stateName,
-    highScore
+    highScore,
+    prevHighScore
   ) => {
-    setGameState({ state, difficulty, difficultyLevel, stateName, highScore });
+    setGameState({
+      state,
+      difficulty,
+      difficultyLevel,
+      stateName,
+      highScore,
+      prevHighScore,
+    });
     setScore(0);
     setPlayer(new Player(5, 550 / 2, handleGameOver)); // Create a new player instance with default values
     plasticsRef.current = [];
@@ -479,9 +488,6 @@ function Game() {
             </>
           ) : (
             <>
-              {/* {updateHighScore(gameState.state, score)}
-              {(gameState.highScore = score)} */}
-
               <p>
                 You just broke the record with{" "}
                 <strong>{score - gameState.highScore} points </strong> more from
@@ -516,8 +522,8 @@ function Game() {
           <Card className="card-info ">
             <CardBody>
               <h3 style={{ textAlign: "left" }}>
-                Insights you can think about from this minigame{" "}
-                <GiSeaTurtle size={40} />
+                <GiSeaTurtle size={40} /> Insights you can think about from this
+                minigame
               </h3>
               <p style={{ textAlign: "left" }}>
                 If every ocean's environment is as clean as Queensland, sea

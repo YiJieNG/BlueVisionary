@@ -58,6 +58,7 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
         selectedState.difficulty,
         selectedState.difficultyLevel,
         selectedState.name,
+        selectedState.score,
         selectedState.score
       );
     }
