@@ -132,7 +132,9 @@ function Game() {
   useEffect(() => {
     if (score > gameState.highScore) {
       updateHighScore(gameState.state, score).then(() => {
-        gameState.prevHighScore = gameState.highScore;
+        if (gameState.prevHighScore === gameState.highScore) {
+          gameState.prevHighScore = gameState.highScore;
+        }
         gameState.highScore = score; // Update the gameState after updating the high score
       });
     }
