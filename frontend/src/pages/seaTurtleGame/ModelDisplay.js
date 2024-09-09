@@ -13,7 +13,7 @@ const classToModelPath = {
 
 function SeaTurtleModel({ modelPath }) {
   const fbx = useFBX(modelPath);
-  return <primitive object={fbx} scale={0.02} />;
+  return <primitive object={fbx} scale={0.03} />;
 }
 
 export default function ModelDisplay({ className }) {
