@@ -9,84 +9,72 @@ import axios from "axios";
 import stateData from "../../data/FINAL_STATE_data_rewind.json"
 // import pollutionData from "../../data/pollution.json"
 
-
-const stateCenter = {
-  "VIC": {
-    "lon": 144.30415866686647,
-    "lat": -36.84997039395135
-  },
-  "NSW": {
-    "lon": 147.00826243979776,
-    "lat": -32.165643426308634
-  },
-  "WA": {
-    "lon": 122.1816351541453,
-    "lat": -25.46688628368836
-  },
-  "SA": {
-    "lon": 135.83186732039903,
-    "lat": -30.107902779697323
-  },
-  "NT": {
-    "lon": 133.364679622243,
-    "lat": -19.415065457018095
-  },
-  "QLD": {
-    "lon": 144.54564198425672,
-    "lat": -22.567505517773675
-  },
-  "ACT": {
-    "lon": 149.0025288517912,
-    "lat": -35.488314482956845
-  },
-  "TAS": {
-    "lon": 146.59469130995754,
-    "lat": -41.936844460847325
-  },
-  "All": {
-    "lon": 135.0,
-    "lat": -20.0
-  }
+// Choropleth map color
+function getColor(d, colorData) {
+  const index = colorData.findIndex((obj) => obj[0] === d);
+  console.log(d)
+  console.log(index)
+  return index === 0 ? '#800026' :
+    index === 1 ? '#BD0026' :
+      index === 2 ? '#E31A1C' :
+        index === 3 ? '#FC4E2A' :
+          index === 4 ? '#FD8D3C' :
+            index === 5 ? '#FEB24C' :
+              index === 6 ? '#FED976' :
+                index === 7 ?
+                  '#FFEDA0' :
+                  '#DCDCDC';
 }
 
 // Choropleth Map Layer Component
 function ChoroplethLayer({ data, colorData }) {
   const map = useMap();
-  const sortedData = colorData.sort((a, b) => {
-    return b[1] - a[1]; // Sort in descending order
-  });
-  console.log(sortedData);
-  function getColor(d) {
-    const index = sortedData.findIndex((obj) => obj[0] === d);
-    return index === 0 ? '#800026' :
-      index === 1 ? '#BD0026' :
-        index === 2 ? '#E31A1C' :
-          index === 3 ? '#FC4E2A' :
-            index === 4 ? '#FD8D3C' :
-              index === 5 ? '#FEB24C' :
-                index === 6 ? '#FED976' :
-                  index === 7 ?
-                    '#FFEDA0' :
-                    '#DCDCDC';
-  }
+  
   function style(feature) {
     return {
-        fillColor: getColor(feature.properties.ste_iso3166_code),
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.4
+      fillColor: getColor(feature.properties.ste_iso3166_code, colorData),
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.4
     };
-}
+  }
   useEffect(() => {
-    const choroplethLayer =L.geoJson(data, {style: style});
+    const choroplethLayer = L.geoJson(data, { style: style });
     choroplethLayer.addTo(map);
     return () => {
       map.removeLayer(choroplethLayer);
     };
   }, [data, colorData]);
+}
 
+// Legend Component
+function Legend({ colorData }) {
+  const map = useMap();
+  useEffect(() => {
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'info legend');
+      // const grades = colorData.map((p) => p[1]);
+      let labels = [];
+
+      for (let i = 0; i < colorData.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' + getColor(colorData[i][0], colorData) + '"></i> ' +
+          colorData[i][1] + '<br>';
+      }
+      div.innerHTML += '<i style="background:#DCDCDC"></i> 0';
+      return div;
+    };
+
+    legend.addTo(map);
+    return () => {
+      legend.remove(); // Clean up on component unmount
+    };
+
+  }, [map]);
 }
 
 // Heatmap Layer Component
@@ -123,7 +111,7 @@ function StateZoom({ center, zoomLevel }) {
 
   useEffect(() => {
     if (center) {
-      map.flyTo(center, zoomLevel); // Zoom in on the selected state with a zoom level of 6
+      map.flyTo(center, zoomLevel); // Zoom in on the selected state
     }
   }, [center, zoomLevel, map]);
 
@@ -133,11 +121,11 @@ function StateZoom({ center, zoomLevel }) {
 function PollutionLefMap() {
   // Manage selected state and center of the map
   const [selectedState, setSelectedState] = useState('ALL');
-  const [filteredStates, setFilteredStates] = useState([]);
+  const [filteredStates, setFilteredStates] = useState([]); // All available stated
   const [center, setCenter] = useState([-28.0, 132.0]); // Default center for all states
-  const [selectedYear, setSelectedYear] = useState('2024')
-  const [pollutionData, setPollutionData] = useState();
-  const [severeData, setSevereData] = useState();
+  const [selectedYear, setSelectedYear] = useState('2024');
+  const [pollutionData, setPollutionData] = useState(); // Pollution data from backend
+  const [severeData, setSevereData] = useState(); // Count of pollution in eadh state
 
   useEffect(() => {
     axios
@@ -147,7 +135,11 @@ function PollutionLefMap() {
       .then((res) => {
         setPollutionData(res.data);
         const severe = res.data.map((p) => ([p.state, p.pollutions.length]));
-        setSevereData(severe);
+        // sort state pollution data by number of pollutions
+        const sortedData = severe.sort((a, b) => {
+          return b[1] - a[1]; // Sort in descending order
+        });
+        setSevereData(sortedData);
         const statesForYear = res.data.map((p) => p.state);
         setFilteredStates(statesForYear);
         if (!statesForYear.includes(selectedState)) {
@@ -181,7 +173,6 @@ function PollutionLefMap() {
         const { lat, long } = selected.pollutions[0];
         setCenter([lat, long]);
       }
-      // setCenter([stateCenter[state]["lat"], stateCenter[state]["lon"]]);
     }
   };
 
@@ -230,6 +221,7 @@ function PollutionLefMap() {
             />
             <StateZoom center={center} zoomLevel={selectedState === 'ALL' ? 4 : 8} />
             <ChoroplethLayer data={stateData} colorData={severeData} />
+            <Legend colorData={severeData}/>
             <HeatmapLayer data={pollutionData} />
           </MapContainer>
         </Row>
