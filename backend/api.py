@@ -268,6 +268,7 @@ def update_minigame_score():
     data = request.get_json()
     state = data.get('state')  
     score = data.get('score')
+    
 
     db = get_db_connection()
     cur = db.cursor()

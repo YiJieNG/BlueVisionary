@@ -55,6 +55,7 @@ function Game() {
       console.error("Error fetching questions:", error);
     }
   };
+
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
@@ -93,8 +94,6 @@ function Game() {
 
   const updateHighScore = async (state, score) => {
     try {
-      console.log(state, score);
-
       // Construct the data to send
       const data = {
         state: state,
@@ -105,6 +104,14 @@ function Game() {
       console.error("Error updating high score:", error);
     }
   };
+
+  useEffect(() => {
+    if (score > gameState.highScore) {
+      updateHighScore(gameState.state, score).then(() => {
+        gameState.highScore = score; // Update the gameState after updating the high score
+      });
+    }
+  }, [score, gameState, updateHighScore]);
 
   // Function to load the content of the pop up message
   const loadContent = () => {
@@ -143,10 +150,6 @@ function Game() {
   };
 
   const restartGame = () => {
-    if (score > gameState.highScore) {
-      updateHighScore(gameState.state, score);
-      gameState.highScore = score;
-    }
     setStep("landing");
   };
 
@@ -450,7 +453,6 @@ function Game() {
               <p>
                 You are <strong>Master</strong> sea turtle{" "}
                 <strong>
-                  {console.log(score, gameState.highScore)}
                   (Top {100 - Math.round((score / gameState.highScore) * 100)}%
                   score)
                 </strong>
@@ -477,6 +479,9 @@ function Game() {
             </>
           ) : (
             <>
+              {/* {updateHighScore(gameState.state, score)}
+              {(gameState.highScore = score)} */}
+
               <p>
                 You just broke the record with{" "}
                 <strong>{score - gameState.highScore} points </strong> more from
