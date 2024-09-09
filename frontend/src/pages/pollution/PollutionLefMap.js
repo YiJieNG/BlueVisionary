@@ -1,7 +1,7 @@
 import { Row, Col } from "reactstrap";
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.heat';
@@ -57,8 +57,6 @@ function Legend({ colorData }) {
 
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
-      // const grades = colorData.map((p) => p[1]);
-      let labels = [];
 
       for (let i = 0; i < colorData.length; i++) {
         div.innerHTML +=
@@ -74,8 +72,44 @@ function Legend({ colorData }) {
       legend.remove(); // Clean up on component unmount
     };
 
-  }, [map]);
+  }, [map, colorData]);
 }
+
+// Component for adding state names on the map
+const Labels = ({ geojson }) => {
+  const map = useMap();
+  const markersRef = useRef([]);
+
+  useEffect(() => {
+    // Clear previous markers when component re-renders or unmounts
+    markersRef.current.forEach(marker => {
+      map.removeLayer(marker);
+    });
+
+    // Add new markers for state names
+    const markers = geojson.features.map((feature) => {
+      const center = L.latLng(feature.properties.geo_point_2d.lat, feature.properties.geo_point_2d.lon);
+      const marker = L.marker(center, {
+        icon: L.divIcon({
+          className: 'label',
+          html: `<div style="font-size:12px;color:black;font-weight:bold;">${feature.properties.ste_iso3166_code}</div>`
+        })
+      }).addTo(map);
+
+      return marker;
+    });
+
+    // Store the markers in the ref for cleanup
+    markersRef.current = markers;
+
+    // Remove the markers when the component unmounts
+    return () => {
+      markersRef.current.forEach(marker => {
+        map.removeLayer(marker);
+      });
+    };
+  }, [geojson, map]);
+};
 
 // Heatmap Layer Component
 function HeatmapLayer({ data }) {
@@ -222,6 +256,7 @@ function PollutionLefMap() {
             <StateZoom center={center} zoomLevel={selectedState === 'ALL' ? 4 : 8} />
             <ChoroplethLayer data={stateData} colorData={severeData} />
             <Legend colorData={severeData}/>
+            <Labels geojson={stateData} />
             <HeatmapLayer data={pollutionData} />
           </MapContainer>
         </Row>
