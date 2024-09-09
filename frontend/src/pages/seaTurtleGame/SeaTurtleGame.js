@@ -6,7 +6,8 @@ import { Player } from "./Player";
 import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { Bubble } from "./Bubble";
-import LandingPage from "./LandingPage"; // Adjust the import path as needed
+import LandingPage from "./LandingPage";
+import ModelDisplay from "./ModelDisplay";
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
 import popupBgrdImg from "../../assets/img/minigame/warning.png";
 import frameImg from "../../assets/img/minigame/frame.png";
@@ -167,7 +168,7 @@ function Game() {
     } else if (percentage >= 70 && percentage <= 89) {
       return "Guardian";
     } else if (percentage >= 90 && percentage <= 100) {
-      return "Master Sea Turtle";
+      return "Master";
     }
   };
 
@@ -486,138 +487,155 @@ function Game() {
     return (
       <div className="minigame-feedback">
         <div className="content">
-          <h1>Game Over</h1>
-          <h3>
-            Your Score: <strong>{score}</strong>
-          </h3>
-          <h3>
-            In <strong>{gameState.stateName}</strong>
-          </h3>
-
-          {score < gameState.highScore ? (
-            <>
-              <p>
-                You are just{" "}
-                <strong>{gameState.highScore - score} points </strong> away from
-                the top sea turtle!
-              </p>
-              <p>
-                You are{" "}
-                <strong>
-                  {classifyLevel(
+          <Row>
+            <Col md="7">
+              {" "}
+              <h1>Game Over</h1>
+              <h3>
+                Your Score: <strong>{score}</strong>
+              </h3>
+              <h3>
+                In <strong>{gameState.stateName}</strong>
+              </h3>
+              {score < gameState.highScore ? (
+                <>
+                  <p>
+                    You are just{" "}
+                    <strong>{gameState.highScore - score} points </strong> away
+                    from the top sea turtle!
+                  </p>
+                  <p>
+                    You are{" "}
+                    <strong>
+                      {classifyLevel(
+                        Math.round((score / gameState.highScore) * 100)
+                      )}
+                    </strong>{" "}
+                    sea turtle{" "}
+                    <strong>
+                      (Top{" "}
+                      {100 - Math.round((score / gameState.highScore) * 100)}%
+                      score)
+                    </strong>
+                    <span
+                      id="turtleClassInfo"
+                      style={{ marginLeft: "10px", cursor: "pointer" }}
+                    >
+                      <FaInfoCircle />
+                    </span>
+                    <Tooltip
+                      isOpen={tooltipOpen}
+                      target="turtleClassInfo"
+                      toggle={toggle}
+                      placement="right"
+                      style={{ width: "200%" }}
+                    >
+                      {turtleClassInfo}
+                    </Tooltip>
+                  </p>
+                  <ProgressBar
+                    completed={Math.round((score / gameState.highScore) * 100)}
+                    maxCompleted={100}
+                    bgColor={"#5d8dff"} // completed
+                    baseBgColor={"#a8caed"} // not completed
+                    animateOnRender={true}
+                    height={"35px"}
+                    margin={"15px 0"}
+                    // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+                    customLabel={
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={seaTurtleImg}
+                          alt="Progress Icon"
+                          style={{ height: "20px", marginRight: "8px" }}
+                        />
+                      </div>
+                    }
+                  />
+                </>
+              ) : (
+                <>
+                  <p>
+                    You just broke the record with{" "}
+                    <strong>{score - gameState.highScore} points </strong> more
+                    from the previous top sea turtle!
+                  </p>
+                  <p>
+                    <strong>CONGRATULATIONS!</strong> You are{" "}
+                    <strong>TOP 1</strong> sea turtle now!!!{" "}
+                    <span
+                      id="turtleClassInfo"
+                      style={{ marginLeft: "10px", cursor: "pointer" }}
+                    >
+                      <FaInfoCircle />
+                    </span>
+                    <Tooltip
+                      isOpen={tooltipOpen}
+                      target="turtleClassInfo"
+                      toggle={toggle}
+                      placement="right"
+                      style={{ width: "200%" }}
+                    >
+                      {turtleClassInfo}
+                    </Tooltip>
+                  </p>
+                  <ProgressBar
+                    completed={100}
+                    maxCompleted={100}
+                    bgColor={"#5d8dff"} // completed
+                    baseBgColor={"#a8caed"} // not completed
+                    animateOnRender={true}
+                    height={"35px"}
+                    margin={"15px 0"}
+                    // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
+                    customLabel={
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={seaTurtleImg}
+                          alt="Progress Icon"
+                          style={{ height: "20px", marginRight: "8px" }}
+                        />
+                      </div>
+                    }
+                  />
+                </>
+              )}
+            </Col>
+            <Col md="5">
+              {score < gameState.highScore ? (
+                <ModelDisplay
+                  className={classifyLevel(
                     Math.round((score / gameState.highScore) * 100)
                   )}
-                </strong>{" "}
-                sea turtle{" "}
-                <strong>
-                  (Top {100 - Math.round((score / gameState.highScore) * 100)}%
-                  score)
-                </strong>
-                <span
-                  id="turtleClassInfo"
-                  style={{ marginLeft: "10px", cursor: "pointer" }}
-                >
-                  <FaInfoCircle />
-                </span>
-                <Tooltip
-                  isOpen={tooltipOpen}
-                  target="turtleClassInfo"
-                  toggle={toggle}
-                  placement="right"
-                  style={{ width: "200%" }}
-                >
-                  {turtleClassInfo}
-                </Tooltip>
-              </p>
-              <ProgressBar
-                completed={Math.round((score / gameState.highScore) * 100)}
-                maxCompleted={100}
-                bgColor={"#5d8dff"} // completed
-                baseBgColor={"#a8caed"} // not completed
-                animateOnRender={true}
-                height={"35px"}
-                margin={"15px 0"}
-                // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
-                customLabel={
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <img
-                      src={seaTurtleImg}
-                      alt="Progress Icon"
-                      style={{ height: "20px", marginRight: "8px" }}
-                    />
-                  </div>
-                }
-              />
-            </>
-          ) : (
-            <>
-              <p>
-                You just broke the record with{" "}
-                <strong>{score - gameState.highScore} points </strong> more from
-                the previous top sea turtle!
-              </p>
-              <p>
-                <strong>CONGRATULATIONS!</strong> You are <strong>TOP 1</strong>{" "}
-                sea turtle now!!!{" "}
-                <span
-                  id="turtleClassInfo"
-                  style={{ marginLeft: "10px", cursor: "pointer" }}
-                >
-                  <FaInfoCircle />
-                </span>
-                <Tooltip
-                  isOpen={tooltipOpen}
-                  target="turtleClassInfo"
-                  toggle={toggle}
-                  placement="right"
-                  style={{ width: "200%" }}
-                >
-                  {turtleClassInfo}
-                </Tooltip>
-              </p>
-              <ProgressBar
-                completed={100}
-                maxCompleted={100}
-                bgColor={"#5d8dff"} // completed
-                baseBgColor={"#a8caed"} // not completed
-                animateOnRender={true}
-                height={"35px"}
-                margin={"15px 0"}
-                // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
-                customLabel={
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <img
-                      src={seaTurtleImg}
-                      alt="Progress Icon"
-                      style={{ height: "20px", marginRight: "8px" }}
-                    />
-                  </div>
-                }
-              />
-            </>
-          )}
-
-          <Card className="card-info ">
-            <CardBody>
-              <h3 style={{ textAlign: "left" }}>
-                <GiSeaTurtle size={40} /> Insights you can think about from this
-                minigame
-              </h3>
-              <p style={{ textAlign: "left" }}>
-                If every ocean's environment is as clean as Queensland, sea
-                turtle will face less obstacles on finding the food and avoid
-                distinction.
-              </p>
-              <div className="session-buttons">
-                <button className="option-buttons" onClick={restartGame}>
-                  Play Again
-                </button>
-                <button className="option-buttons" onClick={restartGame}>
-                  About Plastic Pollution
-                </button>
-              </div>
-            </CardBody>
-          </Card>
+                />
+              ) : (
+                <ModelDisplay className={"Top1"} />
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Card className="card-info ">
+              <CardBody>
+                <h3 style={{ textAlign: "left" }}>
+                  <GiSeaTurtle size={40} /> Insights you can think about from
+                  this minigame
+                </h3>
+                <p style={{ textAlign: "left" }}>
+                  If every ocean's environment is as clean as Queensland, sea
+                  turtle will face less obstacles on finding the food and avoid
+                  distinction.
+                </p>
+                <div className="session-buttons">
+                  <button className="option-buttons" onClick={restartGame}>
+                    Play Again
+                  </button>
+                  <button className="option-buttons" onClick={restartGame}>
+                    About Plastic Pollution
+                  </button>
+                </div>
+              </CardBody>
+            </Card>
+          </Row>
         </div>
       </div>
     );
