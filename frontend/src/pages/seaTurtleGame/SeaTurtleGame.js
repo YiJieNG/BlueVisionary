@@ -189,8 +189,7 @@ function Game() {
     return (
       <div style={{ height: "150px", overflowY: "auto" }}>
         <h3 style={{ textAlign: "left" }}>
-          <GiSeaTurtle size={40} /> Insights you can think about from this
-          minigame
+          <GiSeaTurtle size={40} /> Fun Fact
         </h3>
         <h5 style={{ textAlign: "left", color: "#003366" }}>
           <strong>{selectedGeneralFact.title}:</strong>
