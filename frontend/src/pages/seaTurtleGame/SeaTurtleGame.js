@@ -45,6 +45,8 @@ function Game() {
   const [isPaused, setIsPaused] = useState(false); // State for pause control
   const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
   const [factArray, setFactArray] = useState([]);
+  const [generalFactArray, setGeneralFactArray] = useState([]);
+  const [selectedGeneralFact, setSelectedGeneralFact] = useState(null);
 
   const gameLoopRef = useRef(null); // Ref to store the game loop's requestAnimationFrame ID
   const [gameStateData, setGameStateData] = useState([]);
@@ -114,7 +116,18 @@ function Game() {
       const response = FactData.factsData;
       setFactArray(response);
     } catch (error) {
-      console.error("Error fetching questions:", error);
+      console.error("Error fetching fact:", error);
+    }
+  };
+
+  const fetchGeneralFact = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:5000/api/minigame/general_fact"
+      );
+      setGeneralFactArray(response.data);
+    } catch (error) {
+      console.error("Error fetching general fact:", error);
     }
   };
 
@@ -157,6 +170,46 @@ function Game() {
   };
 
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
+
+  useEffect(() => {
+    fetchStateData();
+
+    // Set a random general fact when component mounts
+    if (generalFactArray.length > 0) {
+      const randomIndex = Math.floor(Math.random() * generalFactArray.length);
+      console.log(randomIndex);
+      setSelectedGeneralFact(generalFactArray[randomIndex]);
+    }
+  }, [score, gameState, updateHighScore]);
+
+  const loadGeneralFact = () => {
+    if (!selectedGeneralFact) {
+      return <p>No facts available</p>;
+    }
+    return (
+      <div style={{ height: "150px", overflowY: "auto" }}>
+        <h3 style={{ textAlign: "left" }}>
+          <GiSeaTurtle size={40} /> Insights you can think about from this
+          minigame
+        </h3>
+        <h5 style={{ textAlign: "left", color: "#003366" }}>
+          <strong>{selectedGeneralFact.title}:</strong>
+        </h5>
+        <p style={{ textAlign: "left" }}>{selectedGeneralFact.description}</p>
+        <p style={{ textAlign: "left" }}>
+          <strong>Find out more: </strong>
+          <a
+            href={selectedGeneralFact.references}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "blue", textDecoration: "underline" }}
+          >
+            {selectedGeneralFact.references}
+          </a>
+        </p>
+      </div>
+    );
+  };
 
   const classifyLevel = (percentage) => {
     if (percentage >= 0 && percentage <= 24) {
@@ -221,6 +274,7 @@ function Game() {
 
   useEffect(() => {
     fetchStateData();
+    fetchGeneralFact();
     fetchAndShuffleFacts();
     if (step !== "game") return;
 
@@ -616,15 +670,7 @@ function Game() {
           <Row>
             <Card className="card-info ">
               <CardBody>
-                <h3 style={{ textAlign: "left" }}>
-                  <GiSeaTurtle size={40} /> Insights you can think about from
-                  this minigame
-                </h3>
-                <p style={{ textAlign: "left" }}>
-                  If every ocean's environment is as clean as Queensland, sea
-                  turtle will face less obstacles on finding the food and avoid
-                  distinction.
-                </p>
+                {loadGeneralFact()}
                 <div className="session-buttons">
                   <button className="option-buttons" onClick={restartGame}>
                     Play Again
