@@ -55,8 +55,17 @@ export default function ModelDisplay({ className }) {
   return (
     <Canvas
       shadows
-      style={{ height: "400px", width: "80%", paddingBottom: "80px" }}
-      camera={{ position: [0, 5, 10], fov: 35 }} // Slightly adjust camera position for better view
+      style={{
+        height: "335px",
+        width: "80%",
+        backgroundColor: "#a8caed",
+        marginBottom: "40px",
+        marginLeft: "40px",
+        borderRadius: "15px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        border: "10px solid #003366",
+      }}
+      camera={{ position: [0, -2, 10], fov: 45 }} // Slightly adjust camera position for better view
     >
       <ambientLight intensity={0.3} />
 

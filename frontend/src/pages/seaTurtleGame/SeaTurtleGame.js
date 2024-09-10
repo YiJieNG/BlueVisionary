@@ -542,7 +542,7 @@ function Game() {
       <div className="minigame-feedback">
         <div className="content">
           <Row>
-            <Col md="7">
+            <Col md="7" style={{}}>
               {" "}
               <h1>Game Over</h1>
               <h3>
@@ -595,7 +595,6 @@ function Game() {
                     animateOnRender={true}
                     height={"35px"}
                     margin={"15px 0"}
-                    // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
                     customLabel={
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <img
