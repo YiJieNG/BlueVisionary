@@ -1,12 +1,11 @@
-import { Container, Row, Col } from 'reactstrap';
-
+import { Container, Row, Col } from "reactstrap";
 
 function HomeFooter() {
-    return (
-        <>
-            <footer className="footer-section">
-            <Container>
-                <Row>
+  return (
+    <>
+      <footer className="footer-section">
+        <Container>
+          {/* <Row>
                     <Col md="4">
                         <h6 className="footer-title">ABOUT BLUEVISIONARY</h6>
                         <ul className="footer-list">
@@ -31,16 +30,19 @@ function HomeFooter() {
                             <li><a href="/">Media releases</a></li>
                         </ul>
                     </Col>
-                </Row>
-                <Row className="footer-bottom-row">
-                    <Col md="12" className="text-center">
-                        <p>&copy; 2024, made by BlueVisionary | <a href="/">&copy; Copyright</a> | <a href="/">Advertising & partnerships</a></p>
-                    </Col>
-                </Row>
-            </Container>
-        </footer>
-        </>
-    );
+                </Row> */}
+          {/* <Row className="footer-bottom-row"> */}
+          <Col md="12" className="text-center">
+            <p>
+              &copy; 2024, made with love by BlueVisionary &copy;
+              {/* <a href="/">&copy; Copyright</a> |{" "} */}
+            </p>
+          </Col>
+          {/* </Row> */}
+        </Container>
+      </footer>
+    </>
+  );
 }
 
 export default HomeFooter;
