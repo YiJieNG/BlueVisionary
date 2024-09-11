@@ -6,17 +6,17 @@ function PollutionRadarChart() {
 
     const data = {
         labels: [
-            'Eating',
-            'Drinking',
-            'Sleeping',
-            'Designing',
-            'Coding',
-            'Cycling',
-            'Running'
+            'PETE',
+            'HDPE',
+            'PVC',
+            'LDPE',
+            'PP',
+            'PS',
+            'OTHER'
         ],
         datasets: [
             {
-                label: 'My First Dataset',
+                label: 'Pollution type',
                 data: [65, 59, 90, 81, 56, 55, 40],
                 fill: true,
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',

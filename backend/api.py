@@ -208,6 +208,35 @@ def get_pollution(year):
         })
     return jsonify(pollutions)
 
+@app.route('/api/get_pollution_intensity/<year>', methods=['GET'])
+def get_pollution_intensity(year):
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
+                    FROM polymer_main
+                    WHERE SAMPLE_YEAR = '{0}'
+                    group by STATE_TERRITORY, START_LAT, START_LONG
+                '''.format(year))
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    pollutions = []
+    states = {}
+    for item in data:
+        if item[0] not in states:
+            states[item[0]] = []
+        states[item[0]].append({
+            "lat": item[1],
+            "long": item[2],
+            "count": item[3]
+        })
+    for state, item in states.items():
+        pollutions.append({
+            "state": state,
+            "pollutions": item
+        })
+    return jsonify(pollutions)
+
 def softmax(x):
     e_x = np.exp(x - np.max(x))
     return e_x / e_x.sum(axis=0)
