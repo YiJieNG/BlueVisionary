@@ -26,7 +26,7 @@ import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
 import axios from "axios";
 
 import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
-// import { FactData } from "./MinigameFact";
+import AnimatedTurtle from "./AnimatedTurtle";
 
 function Game() {
   const [gameState, setGameState] = useState({
@@ -618,12 +618,19 @@ function Game() {
                     height={"35px"}
                     margin={"15px 0"}
                     customLabel={
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          paddingTop: "35px",
+                        }}
+                      >
+                        {/* <img
                           src={seaTurtleImg}
                           alt="Progress Icon"
                           style={{ height: "20px", marginRight: "8px" }}
-                        />
+                        /> */}
+                        <AnimatedTurtle height={50} width={50} />
                       </div>
                     }
                   />
@@ -662,14 +669,22 @@ function Game() {
                     animateOnRender={true}
                     height={"35px"}
                     margin={"15px 0"}
-                    // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
                     customLabel={
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
-                          src={seaTurtleImg}
-                          alt="Progress Icon"
-                          style={{ height: "20px", marginRight: "8px" }}
-                        />
+                      // <div style={{ display: "flex", alignItems: "center" }}>
+                      //   <img
+                      //     src={seaTurtleImg}
+                      //     alt="Progress Icon"
+                      //     style={{ height: "20px", marginRight: "8px" }}
+                      //   />
+                      // </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          paddingTop: "35px",
+                        }}
+                      >
+                        <AnimatedTurtle height={50} width={50} />
                       </div>
                     }
                   />
