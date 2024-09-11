@@ -183,8 +183,8 @@ def get_description(state, status, species):
 def get_pollution(year):
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT REGION, START_LAT, START_LONG, POLYMER_TYPE  
-                    FROM AODN_IMOS_Microdebris_Data
+    cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, POLYMER_TYPE  
+                    FROM polymer_main
                     WHERE POLYMER_TYPE <> ''
                     AND SAMPLE_YEAR = '{0}'
                 '''.format(year))
@@ -200,6 +200,35 @@ def get_pollution(year):
             "lat": item[1],
             "long": item[2],
             "type": item[3]
+        })
+    for state, item in states.items():
+        pollutions.append({
+            "state": state,
+            "pollutions": item
+        })
+    return jsonify(pollutions)
+
+@app.route('/api/get_pollution_intensity/<year>', methods=['GET'])
+def get_pollution_intensity(year):
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
+                    FROM polymer_main
+                    WHERE SAMPLE_YEAR = '{0}'
+                    group by STATE_TERRITORY, START_LAT, START_LONG
+                '''.format(year))
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    pollutions = []
+    states = {}
+    for item in data:
+        if item[0] not in states:
+            states[item[0]] = []
+        states[item[0]].append({
+            "lat": item[1],
+            "long": item[2],
+            "count": item[3]
         })
     for state, item in states.items():
         pollutions.append({

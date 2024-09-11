@@ -1,93 +1,110 @@
 import { Row, Col } from "reactstrap";
-import { MapContainer, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { useEffect, useState } from 'react';
-import { useMap } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet.heat';
-import axios from "axios";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { useEffect, useState, useRef } from "react";
+import L from "leaflet";
+import "leaflet.heat";
 import stateData from "../../data/FINAL_STATE_data_rewind.json"
-// import pollutionData from "../../data/pollution.json"
 
-
-const stateCenter = {
-  "VIC": {
-    "lon": 144.30415866686647,
-    "lat": -36.84997039395135
-  },
-  "NSW": {
-    "lon": 147.00826243979776,
-    "lat": -32.165643426308634
-  },
-  "WA": {
-    "lon": 122.1816351541453,
-    "lat": -25.46688628368836
-  },
-  "SA": {
-    "lon": 135.83186732039903,
-    "lat": -30.107902779697323
-  },
-  "NT": {
-    "lon": 133.364679622243,
-    "lat": -19.415065457018095
-  },
-  "QLD": {
-    "lon": 144.54564198425672,
-    "lat": -22.567505517773675
-  },
-  "ACT": {
-    "lon": 149.0025288517912,
-    "lat": -35.488314482956845
-  },
-  "TAS": {
-    "lon": 146.59469130995754,
-    "lat": -41.936844460847325
-  },
-  "All": {
-    "lon": 135.0,
-    "lat": -20.0
-  }
+// Choropleth map color
+function getColor(d, colorData) {
+  const index = colorData.findIndex((obj) => obj[0] === d);
+  return index === 0 ? '#800026' :
+    index === 1 ? '#BD0026' :
+      index === 2 ? '#E31A1C' :
+        index === 3 ? '#FC4E2A' :
+          index === 4 ? '#FD8D3C' :
+            index === 5 ? '#FEB24C' :
+              index === 6 ? '#FED976' :
+                index === 7 ?
+                  '#FFEDA0' :
+                  '#DCDCDC';
 }
 
 // Choropleth Map Layer Component
 function ChoroplethLayer({ data, colorData }) {
   const map = useMap();
-  const sortedData = colorData.sort((a, b) => {
-    return b[1] - a[1]; // Sort in descending order
-  });
-  console.log(sortedData);
-  function getColor(d) {
-    const index = sortedData.findIndex((obj) => obj[0] === d);
-    return index === 0 ? '#800026' :
-      index === 1 ? '#BD0026' :
-        index === 2 ? '#E31A1C' :
-          index === 3 ? '#FC4E2A' :
-            index === 4 ? '#FD8D3C' :
-              index === 5 ? '#FEB24C' :
-                index === 6 ? '#FED976' :
-                  index === 7 ?
-                    '#FFEDA0' :
-                    '#DCDCDC';
-  }
+
   function style(feature) {
     return {
-        fillColor: getColor(feature.properties.ste_iso3166_code),
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.4
+      fillColor: getColor(feature.properties.ste_iso3166_code, colorData),
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.4
     };
-}
+  }
   useEffect(() => {
-    const choroplethLayer =L.geoJson(data, {style: style});
+    const choroplethLayer = L.geoJson(data, { style: style });
     choroplethLayer.addTo(map);
     return () => {
       map.removeLayer(choroplethLayer);
     };
   }, [data, colorData]);
-
 }
+
+// Legend Component
+function Legend({ colorData }) {
+  const map = useMap();
+  useEffect(() => {
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'info legend');
+
+      for (let i = 0; i < colorData.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' + getColor(colorData[i][0], colorData) + '"></i> <b>' +
+          colorData[i][1] + '</b> (' + colorData[i][0] + ')<br>';
+      }
+      div.innerHTML += '<i style="background:#DCDCDC"></i> 0';
+      return div;
+    };
+
+    legend.addTo(map);
+    return () => {
+      legend.remove(); // Clean up on component unmount
+    };
+
+  }, [map, colorData]);
+}
+
+// Component for adding state names on the map
+const Labels = ({ geojson }) => {
+  const map = useMap();
+  const markersRef = useRef([]);
+
+  useEffect(() => {
+    // Clear previous markers when component re-renders or unmounts
+    markersRef.current.forEach(marker => {
+      map.removeLayer(marker);
+    });
+
+    // Add new markers for state names
+    const markers = geojson.features.map((feature) => {
+      const center = L.latLng(feature.properties.geo_point_2d.lat, feature.properties.geo_point_2d.lon);
+      const marker = L.marker(center, {
+        icon: L.divIcon({
+          className: 'label',
+          html: `<div style="font-size:12px;color:black;font-weight:bold;">${feature.properties.ste_iso3166_code}</div>`
+        })
+      }).addTo(map);
+
+      return marker;
+    });
+
+    // Store the markers in the ref for cleanup
+    markersRef.current = markers;
+
+    // Remove the markers when the component unmounts
+    return () => {
+      markersRef.current.forEach(marker => {
+        map.removeLayer(marker);
+      });
+    };
+  }, [geojson, map]);
+};
 
 // Heatmap Layer Component
 function HeatmapLayer({ data }) {
@@ -95,7 +112,8 @@ function HeatmapLayer({ data }) {
 
   useEffect(() => {
     const heatData = data.flatMap((state) =>
-      state.pollutions.map((pollution) => [pollution.lat, pollution.long, 1])
+      // state.pollutions.map((pollution) => [pollution.lat, pollution.long, 1])
+      state.pollutions.map((pollution) => [pollution.lat, pollution.long, pollution.count])
     );
 
     const heatLayer = L.heatLayer(heatData, {
@@ -109,6 +127,38 @@ function HeatmapLayer({ data }) {
       }
     });
     heatLayer.addTo(map);
+
+    // const markers = L.markerClusterGroup();
+    // data.forEach(function (stateData) {
+    //   stateData.pollutions.forEach(function (pollution) {
+    //     var marker = L.marker([pollution.lat, pollution.long])
+    //       .bindPopup("Count: " + pollution.count + "<br>State: " + stateData.state);
+    //     markers.addLayer(marker); // Add marker to the cluster group
+    //   });
+    // });
+    // // Add the marker cluster group to the map
+    // map.addLayer(markers);
+
+    // tooltip
+    // var tooltip = L.tooltip(
+    //   {permanent: false,
+    //   direction: 'top',
+    //   offset: L.point(0, -10)})
+    // .setLatLng([-31.979317,115.45625])
+    // .setContent('Hello world!<br />This is a nice tooltip.')
+    // .addTo(map);
+
+
+    // add markers for tooltip
+    heatData.forEach(function (point) {
+      var marker = L.marker([point[0], point[1]]).setOpacity(0).addTo(map);
+      marker.bindTooltip("Tooltip for point (" + point[0] + ", " + point[1] + ", " + point[2] + ")", {
+        permanent: false,   // Only show on hover
+        direction: "top",   // Tooltip position relative to the marker
+        offset: L.point(0, -10)  // Offset to adjust position slightly above the marker
+      });
+    });
+
     return () => {
       map.removeLayer(heatLayer);
     };
@@ -123,113 +173,65 @@ function StateZoom({ center, zoomLevel }) {
 
   useEffect(() => {
     if (center) {
-      map.flyTo(center, zoomLevel); // Zoom in on the selected state with a zoom level of 6
+      map.flyTo(center, zoomLevel); // Zoom in on the selected state
+      // map.setView(center, zoomLevel); // Zoom in on the selected state
     }
   }, [center, zoomLevel, map]);
 
   return null;
 }
 
-function PollutionLefMap() {
-  // Manage selected state and center of the map
-  const [selectedState, setSelectedState] = useState('ALL');
-  const [filteredStates, setFilteredStates] = useState([]);
+function PollutionLefMap({ selectedState, pollutionData }) {
   const [center, setCenter] = useState([-28.0, 132.0]); // Default center for all states
-  const [selectedYear, setSelectedYear] = useState('2024')
-  const [pollutionData, setPollutionData] = useState();
-  const [severeData, setSevereData] = useState();
+  const [severeData, setSevereData] = useState(); // Count of pollution in eadh state
 
   useEffect(() => {
-    axios
-      .get(
-        `http://127.0.0.1:5000/api/get_pollution/${selectedYear}`
-      )
-      .then((res) => {
-        setPollutionData(res.data);
-        const severe = res.data.map((p) => ([p.state, p.pollutions.length]));
-        setSevereData(severe);
-        const statesForYear = res.data.map((p) => p.state);
-        setFilteredStates(statesForYear);
-        if (!statesForYear.includes(selectedState)) {
-          setSelectedState("ALL");
-          setCenter([-28.0, 132.0]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     // const severe = pollutionData.map((p) => ([p.state, p.pollutions.length]));
-    // console.log(severe);
-    // setSevereData(severe);
-    // const statesForYear = pollutionData.map((p) => p.state);
-    // setFilteredStates(statesForYear);
+    // // sort state pollution data by number of pollutions
+    // const sortedData = severe.sort((a, b) => {
+    //   return b[1] - a[1]; // Sort in descending order
+    // });
+    // setSevereData(sortedData);
 
-  }, [selectedYear]);
+    const severe = pollutionData.map(stateData => {
+      const sum = stateData.pollutions.reduce((acc, pollution) => acc + pollution.count, 0);
+      return [stateData.state, sum];
+    });
+    const sortedData = severe.sort((a, b) => {
+      return b[1] - a[1]; // Sort in descending order
+    });
+    setSevereData(sortedData);
 
-  // Handle state dropdown change
-  const handleStateChange = (event) => {
-    const state = event.target.value;
-    setSelectedState(state);
+  }, [pollutionData]);
 
-    if (state === 'ALL') {
+  // update center of map when selected state change
+  useEffect(() => {
+    if (selectedState === 'ALL') {
       // Set center of the map to Australia when "All" is selected
       setCenter([-28.0, 132.0]);
     } else {
       // Set center of the map based on the selected state
-      const selected = pollutionData.find((p) => p.state === state);
+      const selected = pollutionData.find((p) => p.state === selectedState);
       if (selected && selected.pollutions.length > 0) {
         const { lat, long } = selected.pollutions[0];
         setCenter([lat, long]);
       }
-      // setCenter([stateCenter[state]["lat"], stateCenter[state]["lon"]]);
     }
-  };
-
-  // Handle year dropdown change
-  const handleYearChange = (event) => {
-    const year = event.target.value;
-    setSelectedYear(year);
-  };
+  }, [selectedState, pollutionData]);
 
   return (
     <>
-      <Row>
-        <Col>
-          <div>
-            <label>Select State: </label>
-            {pollutionData &&
-              <select onChange={handleStateChange} value={selectedState}>
-                <option value="ALL">All States</option>
-                {filteredStates.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
-            }
-          </div>
-        </Col>
-        <Col>
-          <div>
-            <label>Select Year: </label>
-            <select onChange={handleYearChange} value={selectedYear}>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-            </select>
-          </div>
-        </Col>
-      </Row>
-      {pollutionData &&
+      {pollutionData && severeData &&
         <Row className="justify-content-center">
-          <MapContainer center={center} zoom={4} style={{ height: '500px', width: '80%' }}>
+          <MapContainer center={center} zoom={4} style={{ height: '90vh', width: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             <StateZoom center={center} zoomLevel={selectedState === 'ALL' ? 4 : 8} />
             <ChoroplethLayer data={stateData} colorData={severeData} />
+            <Legend colorData={severeData} />
+            <Labels geojson={stateData} />
             <HeatmapLayer data={pollutionData} />
           </MapContainer>
         </Row>
