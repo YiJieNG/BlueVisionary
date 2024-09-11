@@ -329,6 +329,26 @@ def get_minigame_general_fact():
 
     return jsonify(fact_array)
 
+@app.route('/api/minigame/state_fact', methods=['GET'])
+def get_minigame_state_fact():
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT * FROM state_facts''')
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+
+    fact_array = []
+    for col in data:
+        fact_array.append({
+            "factId": col[0],
+            "state": col[1],
+            "title": col[2],
+            "description": col[3],
+        })
+
+    return jsonify(fact_array)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { GiSeaTurtle } from "react-icons/gi";
 import { FaInfoCircle } from "react-icons/fa";
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -20,7 +26,7 @@ import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
 import axios from "axios";
 
 import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
-import { FactData } from "./MinigameFact";
+// import { FactData } from "./MinigameFact";
 
 function Game() {
   const [gameState, setGameState] = useState({
@@ -84,6 +90,10 @@ function Game() {
     }
   };
 
+  const stateFactsArray = useMemo(() => {
+    return factArray.filter((fact) => fact.state === gameState.state);
+  }, [factArray, gameState.state]);
+
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
@@ -113,8 +123,10 @@ function Game() {
   // Function to fetch and shuffle questions
   const fetchAndShuffleFacts = async () => {
     try {
-      const response = FactData.factsData;
-      setFactArray(response);
+      const response = await axios.get(
+        "http://127.0.0.1:5000/api/minigame/state_fact"
+      );
+      setFactArray(response.data);
     } catch (error) {
       console.error("Error fetching fact:", error);
     }
@@ -156,15 +168,26 @@ function Game() {
 
   // Function to load the content of the pop up message
   const loadContent = () => {
-    const randomizeIndex = Math.floor(randomNumber(0, factArray.length));
-    // const randomizeIndex = 0;
+    if (stateFactsArray.length === 0) {
+      return (
+        <div>
+          <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
+            No Facts Available
+          </h2>
+          <p>There are no facts available for {gameState.stateName}.</p>
+        </div>
+      );
+    }
+
+    const randomIndex = Math.floor(Math.random() * stateFactsArray.length);
+    const selectedFact = stateFactsArray[randomIndex];
 
     return (
       <div>
         <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
-          {factArray[randomizeIndex].title}
+          {selectedFact.title}
         </h2>
-        <p>{factArray[randomizeIndex].description}</p>
+        <p>{selectedFact.description}</p>
       </div>
     );
   };
