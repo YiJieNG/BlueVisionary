@@ -291,7 +291,6 @@ def get_minigame_state_info():
 
     return jsonify(stateInfo)
 
-
 @app.route('/api/minigame/updatescore', methods=['POST'])
 def update_minigame_score():
     data = request.get_json()
@@ -309,6 +308,26 @@ def update_minigame_score():
     db.close()
 
     return jsonify({"message": "Option count updated"}), 200
+
+@app.route('/api/minigame/general_fact', methods=['GET'])
+def get_minigame_general_fact():
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT * FROM facts''')
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+
+    fact_array = []
+    for col in data:
+        fact_array.append({
+            "factId": col[0],
+            "title": col[1],
+            "description": col[2],
+            "references": col[3],
+        })
+
+    return jsonify(fact_array)
 
 
 if __name__ == '__main__':

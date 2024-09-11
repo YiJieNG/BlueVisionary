@@ -166,8 +166,9 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                           style={{ fontWeight: "bold" }}
                         >
                           <span
-                            id="turtleClassInfo"
                             style={{ marginLeft: "10px", cursor: "pointer" }}
+                            id="turtleClassInfo"
+                            onMouseLeave={() => setTooltipOpen(false)}
                           >
                             <FaInfoCircle />
                           </span>
