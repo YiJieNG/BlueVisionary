@@ -62,15 +62,14 @@ function HomeContent() {
           {/* Hero Section */}
           <Row className="hero-section align-items-center no-margin">
             <Col md="6" className="text-section">
-              <h1 className="hero-title">Our Vision</h1>
+              <h1 className="hero-title">Your Vision in Action</h1>
               <p className="hero-subtitle">
-                We envision a world where everyone, regardless of their location
-                or busy schedule, can contribute to the health of our oceans to
-                save marine lifes especially reptiles. BlueVisionary bridges the
-                gap between awareness and action, providing a user-friendly
-                platform where you can discover the extent of plastic pollution,
-                track your cleanup efforts, and visualize the impact you're
-                making.
+                Imagine a world where you, no matter where you are or how busy
+                your schedule, can make a meaningful contribution to the health
+                of our oceans and save marine life, especially reptiles.
+                BlueVisionary empowers you to take action, helping you explore
+                the scale of plastic pollution, track your cleanup efforts, and
+                see the real impact you’re making.
               </p>
               <Button
                 className="dark-blue-button cta-button"
@@ -87,15 +86,15 @@ function HomeContent() {
           {/* Header Section */}
           <Row className="information-section text-center no-margin">
             <Col>
-              <h1 className="hero-title">Our Goals</h1>
+              <h1 className="hero-title">What You Can Achieve</h1>
               <p className="hero-subtitle information-margin">
-                At BlueVisionary, we empower individuals and communities to
-                actively participate in marine conservation. Our platform is
-                designed to help you understand the challenges our oceans face,
-                reduce plastic pollution, and contribute to protect marine life
-                especially reptiles. Through education, actionable insights, and
-                community-driven efforts, we aim to make a lasting impact on our
-                planet's health.
+                With BlueVisionary, you have the power to actively engage in
+                marine conservation. Our platform helps you understand the
+                challenges our oceans face, reduce plastic pollution, and make a
+                real difference in protecting marine life, especially reptiles.
+                Through education, actionable insights, and community-driven
+                efforts, you can help create a lasting positive impact on the
+                health of our planet.
               </p>
             </Col>
             <Row className="icons-row text-center mb-5 justify-content-center">

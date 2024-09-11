@@ -22,6 +22,10 @@ function BlueNavbar() {
     document.documentElement.classList.toggle("nav-open");
   };
 
+  const normalizePath = (path) => {
+    return path.endsWith("/") ? path.slice(0, -1) : path; // Remove trailing slash if exists
+  };
+
   useEffect(() => {
     const updateNavbarColor = () => {
       if (
@@ -50,7 +54,12 @@ function BlueNavbar() {
     <Navbar className={classnames("fixed-top", navbarColor)} expand="lg" light>
       <Container>
         <NavbarBrand href="/" className="mr-auto">
-          BlueVisionary
+          BlueVisionary{" "}
+          <img
+            src="/logo.png"
+            alt="BlueVisionary Logo"
+            style={{ width: "35px", height: "35px", marginRight: "5px" }}
+          />
         </NavbarBrand>
         <NavbarToggler
           onClick={toggleNavbarCollapse}
@@ -64,16 +73,50 @@ function BlueNavbar() {
         >
           <Nav navbar className="ml-auto">
             <NavItem>
-              <NavLink href="/marinelife">Marine Life</NavLink>
+              <NavLink
+                href="/marinelife"
+                className={
+                  normalizePath(location.pathname) === "/marinelife"
+                    ? "active"
+                    : ""
+                }
+              >
+                Marine Life
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/pollution">Pollution Insights</NavLink>
+              <NavLink
+                href="/pollution"
+                className={
+                  normalizePath(location.pathname) === "/pollution"
+                    ? "active"
+                    : ""
+                }
+              >
+                Pollution Insights
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/minigame">Mini Game</NavLink>
+              <NavLink
+                href="/minigame"
+                className={
+                  normalizePath(location.pathname) === "/minigame"
+                    ? "active"
+                    : ""
+                }
+              >
+                Mini Game
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/quiz">Educate Yourself</NavLink>
+              <NavLink
+                href="/quiz"
+                className={
+                  normalizePath(location.pathname) === "/quiz" ? "active" : ""
+                }
+              >
+                Educate Yourself
+              </NavLink>
             </NavItem>
           </Nav>
         </Collapse>
