@@ -1263,10 +1263,41 @@
   transition: opacity 0.3s ease-in-out;
 }
 .hover-card:hover .hover-text {
-  opacity: 1; 
+  opacity: 1;
 }
 
 .scrollable-col {
-  max-height: 88vh; 
-  overflow-y: auto;  
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+// Nav
+.navbar .nav-link {
+  color: #3f4447; /* Default text color */
+  position: relative;
+}
+
+.navbar .nav-link:hover {
+  color: #003366; /* Change text color on hover */
+}
+
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #2776c5; /* Blue underline */
+  bottom: -5px;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.navbar .nav-link:hover::after {
+  width: 100%; /* Underline on hover */
+}
+
+.navbar .nav-link.active {
+  background-color: #d0e2f5;
+  color: #003366 !important;
+  border-radius: 8px;
 }
