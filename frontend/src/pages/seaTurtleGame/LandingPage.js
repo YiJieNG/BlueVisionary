@@ -83,10 +83,10 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   return (
     <div className="game-landing-page">
       <div className="content">
-        <h2>Welcome to our informative sea-turtle role-play game!</h2>
-        <p>
-          Find out more about the challenges related to plastic pollution faced
-          by sea turtle
+        <h2>Welcome to our immersive sea-turtle role-play game!</h2>
+        <p style={{ fontWeight: "bold" }}>
+          Experience the dangers of plastic pollution through the eyes of a sea
+          turtle
         </p>
         <p className="subtitle">State selection (Difficulty level):</p>
 

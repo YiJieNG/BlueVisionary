@@ -22,11 +22,12 @@ import jellyfishImg from "../../assets/img/minigame/jellyfish.png";
 import bubbleImg from "../../assets/img/minigame/bubble.png";
 import upImg from "../../assets/img/minigame/up.png";
 import downImg from "../../assets/img/minigame/down.png";
-import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
+// import seaTurtleImg from "../../assets/img/minigame/sea_turtle.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
-// import { FactData } from "./MinigameFact";
+import AnimatedTurtle from "./AnimatedTurtle";
 
 function Game() {
   const [gameState, setGameState] = useState({
@@ -273,9 +274,14 @@ function Game() {
     setShowPopup(false); // Ensure the popup is hidden at the start
     lastItemSpawnAtRef.current = Date.now(); // Reset the item spawn time
   };
+  const navigate = useNavigate();
 
   const restartGame = () => {
     setStep("landing");
+  };
+
+  const navigateToPollution = () => {
+    navigate("/pollution");
   };
 
   const handleGameOver = (finalScore) => {
@@ -618,12 +624,19 @@ function Game() {
                     height={"35px"}
                     margin={"15px 0"}
                     customLabel={
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          paddingTop: "35px",
+                        }}
+                      >
+                        {/* <img
                           src={seaTurtleImg}
                           alt="Progress Icon"
                           style={{ height: "20px", marginRight: "8px" }}
-                        />
+                        /> */}
+                        <AnimatedTurtle height={50} width={50} />
                       </div>
                     }
                   />
@@ -662,14 +675,22 @@ function Game() {
                     animateOnRender={true}
                     height={"35px"}
                     margin={"15px 0"}
-                    // customLabel={<GiSeaTurtle size={40} />} seaTurtleImg
                     customLabel={
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img
-                          src={seaTurtleImg}
-                          alt="Progress Icon"
-                          style={{ height: "20px", marginRight: "8px" }}
-                        />
+                      // <div style={{ display: "flex", alignItems: "center" }}>
+                      //   <img
+                      //     src={seaTurtleImg}
+                      //     alt="Progress Icon"
+                      //     style={{ height: "20px", marginRight: "8px" }}
+                      //   />
+                      // </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          paddingTop: "35px",
+                        }}
+                      >
+                        <AnimatedTurtle height={50} width={50} />
                       </div>
                     }
                   />
@@ -696,7 +717,10 @@ function Game() {
                   <button className="option-buttons" onClick={restartGame}>
                     Play Again
                   </button>
-                  <button className="option-buttons" onClick={restartGame}>
+                  <button
+                    className="option-buttons"
+                    onClick={navigateToPollution}
+                  >
                     About Plastic Pollution
                   </button>
                 </div>
