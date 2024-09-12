@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import BlueNavbar from "./components/Navbar/BlueNavbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/scss/bootstrap.scss";
@@ -38,7 +43,7 @@ function App() {
         <Route path="/iter1" element={<Home_1 />} />
         <Route path="/iter1/marinelife" element={<MarineLife_1 />} />
         <Route path="/iter1/quiz" element={<Quiz_1 />} />
-        <Route path='/pollution' element={<Pollution />} />
+        <Route path="/pollution" element={<Pollution />} />
       </Routes>
     </Router>
   );
