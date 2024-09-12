@@ -112,7 +112,6 @@ function HeatmapLayer({ data }) {
 
   useEffect(() => {
     const heatData = data.flatMap((state) =>
-      // state.pollutions.map((pollution) => [pollution.lat, pollution.long, 1])
       state.pollutions.map((pollution) => [pollution.lat, pollution.long, pollution.count])
     );
 
@@ -128,39 +127,32 @@ function HeatmapLayer({ data }) {
     });
     heatLayer.addTo(map);
 
-    // const markers = L.markerClusterGroup();
-    // data.forEach(function (stateData) {
-    //   stateData.pollutions.forEach(function (pollution) {
-    //     var marker = L.marker([pollution.lat, pollution.long])
-    //       .bindPopup("Count: " + pollution.count + "<br>State: " + stateData.state);
-    //     markers.addLayer(marker); // Add marker to the cluster group
+    // add markers for tooltip
+    const markers = heatData.map(point => {
+      const marker = L.marker([point[0], point[1]]).setOpacity(0).addTo(map);
+      marker.bindTooltip(
+        `Tooltip for point (${point[0]}, ${point[1]}, ${point[2]})`,
+        {
+          permanent: false,   // Only show on hover
+          direction: "top",   // Tooltip position relative to the marker
+          offset: L.point(0, -10)  // Offset to adjust position slightly above the marker
+        }
+      );
+      return marker;
+    });
+
+    // heatData.forEach(function (point) {
+    //   var marker = L.marker([point[0], point[1]]).setOpacity(0).addTo(map);
+    //   marker.bindTooltip("Tooltip for point (" + point[0] + ", " + point[1] + ", " + point[2] + ")", {
+    //     permanent: false,   // Only show on hover
+    //     direction: "top",   // Tooltip position relative to the marker
+    //     offset: L.point(0, -10)  // Offset to adjust position slightly above the marker
     //   });
     // });
-    // // Add the marker cluster group to the map
-    // map.addLayer(markers);
-
-    // tooltip
-    // var tooltip = L.tooltip(
-    //   {permanent: false,
-    //   direction: 'top',
-    //   offset: L.point(0, -10)})
-    // .setLatLng([-31.979317,115.45625])
-    // .setContent('Hello world!<br />This is a nice tooltip.')
-    // .addTo(map);
-
-
-    // add markers for tooltip
-    heatData.forEach(function (point) {
-      var marker = L.marker([point[0], point[1]]).setOpacity(0).addTo(map);
-      marker.bindTooltip("Tooltip for point (" + point[0] + ", " + point[1] + ", " + point[2] + ")", {
-        permanent: false,   // Only show on hover
-        direction: "top",   // Tooltip position relative to the marker
-        offset: L.point(0, -10)  // Offset to adjust position slightly above the marker
-      });
-    });
 
     return () => {
       map.removeLayer(heatLayer);
+      markers.forEach(marker => map.removeLayer(marker));
     };
   }, [data, map]);
 

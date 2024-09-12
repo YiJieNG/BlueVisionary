@@ -4,6 +4,7 @@ import MySQLdb
 import os
 from dotenv import load_dotenv
 import numpy as np
+import re
 
 load_dotenv()
 
@@ -212,11 +213,17 @@ def get_pollution(year):
 def get_pollution_intensity(year):
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
+    if year == '2025':
+        cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
                     FROM polymer_main
-                    WHERE SAMPLE_YEAR = '{0}'
                     group by STATE_TERRITORY, START_LAT, START_LONG
                 '''.format(year))
+    else:
+        cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
+                        FROM polymer_main
+                        WHERE SAMPLE_YEAR = '{0}'
+                        group by STATE_TERRITORY, START_LAT, START_LONG
+                    '''.format(year))
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -236,6 +243,159 @@ def get_pollution_intensity(year):
             "pollutions": item
         })
     return jsonify(pollutions)
+@app.route('/api/get_pollution_type_all/', methods=['GET'])
+def get_pollution_type_all():
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT SAMPLE_YEAR , POLYMER_TYPE, count(*) as count_type  
+                    FROM polymer_main
+                    group by POLYMER_TYPE ,SAMPLE_YEAR
+                    order by SAMPLE_YEAR, count_type desc
+                ''')
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    pollutions = []
+    pollution_type = {}
+    types = ["polyethylene", "polypropylene", "polyethylene glycol", "polystyrene", "thermoset", "thermoplastic"]
+    others = {}
+    for item in data:
+        if item[1] not in pollution_type:
+            pollution_type[item[1]] = []
+        if item[1] not in types:
+            if item[0] not in others:
+                others[item[0]] = 0
+            others[item[0]] += item[2]
+        else:
+            pollution_type[item[1]].append({
+                "count": item[2],
+                "year": item[0]
+            })
+    others_pollution = []
+    for year, count in others.items():
+        others_pollution.append({
+            "count": count,
+            "year": year
+        })
+    for type, item in pollution_type.items():
+        if type in types:
+            pollutions.append({
+                "type": type,
+                "pollutions": item
+            })  
+    pollutions.append({
+        "type": "other",
+        "pollutions": others_pollution
+    })
+    return jsonify(pollutions)
+
+@app.route('/api/get_pollution_type/<year>', methods=['GET'])
+def get_pollution_type(year):
+    db = get_db_connection()
+    cur = db.cursor()
+    if year != '2025':
+        cur.execute('''SELECT STATE_TERRITORY , POLYMER_TYPE, count(*) as count_type  
+                        FROM polymer_main
+                        WHERE SAMPLE_YEAR = '{0}'
+                        group by STATE_TERRITORY, POLYMER_TYPE
+                        order by STATE_TERRITORY, count_type desc, POLYMER_TYPE
+                    '''.format(year))
+    else:
+        cur.execute('''SELECT STATE_TERRITORY , POLYMER_TYPE, count(*) as count_type  
+                    FROM polymer_main
+                    group by STATE_TERRITORY, POLYMER_TYPE
+                    order by STATE_TERRITORY, count_type desc, POLYMER_TYPE
+                ''')
+    data = cur.fetchall()
+    if year != '2025':
+        cur.execute('''SELECT POLYMER_TYPE, count(*) as count_type  
+                        FROM polymer_main
+                        WHERE SAMPLE_YEAR = '{}'
+                        group by POLYMER_TYPE
+                        order by count_type desc, POLYMER_TYPE
+                    '''.format(year))
+    else:
+        cur.execute('''SELECT POLYMER_TYPE, count(*) as count_type  
+                        FROM polymer_main
+                        group by POLYMER_TYPE
+                        order by count_type desc, POLYMER_TYPE
+                    ''')
+    data_allstate = cur.fetchall()
+    cur.close()
+    db.close()
+    types = ["polyethylene", "polypropylene", "polyethylene glycol", "polystyrene", "thermoset", "thermoplastic"]
+    # data for each state
+    pollutions = []
+    states = {}
+    others = {}
+    for item in data:
+        if item[0] not in states:
+            states[item[0]] = []
+            for pollution_type in types:
+                states[item[0]].append({
+                    "type": pollution_type,
+                    "count": 0
+                })
+        if item[1] not in types:
+            if item[0] not in others:
+                others[item[0]] = 0
+            others[item[0]] += item[2]
+        else:
+            states[item[0]][types.index(item[1])]["count"] = item[2]
+    for pollution_state, count in others.items():
+        states[pollution_state].append({
+            "count": count,
+            "type": "other"
+        })
+    for pollution_state, item in states.items():
+        pollutions.append({
+            "state": pollution_state,
+            "pollutions": item
+        })
+    #  data for all state
+    states_all = []
+    others_all = 0
+    for pollution_type in types:
+        states_all.append({
+            "type": pollution_type,
+            "count": 0
+        })
+    for item in data_allstate:
+        if item[0] not in types:
+            others_all += item[1]
+        else:
+            states_all[types.index(item[0])]["count"] = item[1]
+    states_all.append({
+        "count": others_all,
+        "type": "other"
+    })
+    pollutions.append({
+        "state": "ALL",
+        "pollutions": states_all
+    })
+    return jsonify(pollutions)
+
+@app.route('/api/get_pollution_type_suggestions/<polymer>', methods=['GET'])
+def get_pollution_type_suggestions(polymer):
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT Polymer_source , `Plastic Items`, `Plastic Alternatives`  
+                    FROM polymer_suggestions
+                    WHERE `﻿Polymer type` = '{0}'
+                '''.format(polymer))
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+    suggestions = {
+        "sources": [],
+        "products": [],
+        "alternatives": []
+    }
+    for item in data:
+        suggestions["sources"] = re.split(r'\s*,\s* | \s*and\s*', item[0])
+        suggestions["products"] = re.split(r'\s*,\s* | \s*and\s*', item[1])
+        suggestions["alternatives"] = re.split(r'\s*,\s* | \s*and\s*', item[2])
+    return jsonify(suggestions)
 
 def softmax(x):
     e_x = np.exp(x - np.max(x))
