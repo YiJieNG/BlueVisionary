@@ -640,7 +640,40 @@
 // marine life page
 .section-marinelife {
   padding-top: 20px;
+  padding-left: 8rem;
+  padding-right: 8rem;
   // min-height: 100vh;
+}
+
+.marine-life-content {
+  h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #3f4447;
+    margin-bottom: 2rem;
+
+    strong {
+      color: #185797; // Highlight the correct answer
+      font-weight: bold;
+    }
+    .subtitle {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
 }
 
 .CriticallyEndangered {
