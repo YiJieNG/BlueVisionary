@@ -1344,3 +1344,21 @@
   color: #003366 !important;
   border-radius: 8px;
 }
+
+.normal-button {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #2776c5;
+  border: none;
+  padding: 0.75rem 2rem;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: #003366;
+    background-color: #a8caed;
+  }
+}
