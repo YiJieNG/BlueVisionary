@@ -21,7 +21,7 @@ function NotFound() {
       <div>
         <button
           className="normal-button"
-          onClick={navigate("/")}
+          onClick={() => navigate("/")}
           style={{ margin: "1.5%" }}
         >
           Home Page
