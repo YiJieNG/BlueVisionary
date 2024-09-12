@@ -29,7 +29,14 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   const [filteredStateData, setFilteredStateData] = useState(gameStateData);
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  const toggle = () => setTooltipOpen(!tooltipOpen);
+
+  const toggleTooltip = () => {
+    setTooltipOpen((prevState) => !prevState);
+  };
+
+  const resetTooltip = () => {
+    setTooltipOpen(false);
+  };
 
   useEffect(() => {
     setSelectedState(gameStateData[0]);
@@ -84,7 +91,7 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
     <div className="game-landing-page">
       <div className="content">
         <h2>Welcome to our immersive sea-turtle role-play game!</h2>
-        <p style={{ fontWeight: "bold" }}>
+        <p>
           Experience the dangers of plastic pollution through the eyes of a sea
           turtle
         </p>
@@ -168,14 +175,14 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                           <span
                             style={{ marginLeft: "10px", cursor: "pointer" }}
                             id="turtleClassInfo"
-                            onMouseLeave={() => setTooltipOpen(false)}
+                            onMouseLeave={resetTooltip}
                           >
                             <FaInfoCircle />
                           </span>
                           <Tooltip
                             isOpen={tooltipOpen}
                             target="turtleClassInfo"
-                            toggle={toggle}
+                            toggle={toggleTooltip}
                             placement="right"
                           >
                             <div className="custom-tooltip">
