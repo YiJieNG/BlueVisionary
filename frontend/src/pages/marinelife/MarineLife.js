@@ -35,7 +35,7 @@ function MarineLife() {
   // Fetch state statistic from backend
   useEffect(() => {
     axios
-      .get("/api/get_state_stat")
+      .get("http://127.0.0.1:5000/api/get_state_stat")
       .then((res) => {
         let stateSpecies = {};
         for (let key in res.data) {
@@ -68,7 +68,7 @@ function MarineLife() {
   useEffect(() => {
     axios
       .get(
-        `/api/get_state_species/${stateSelected[1]}/${endangerType}`
+        `http://127.0.0.1:5000/api/get_state_species/${stateSelected[1]}/${endangerType}`
       )
       .then((res) => {
         let endangerSpecies = { data: [] };
@@ -120,7 +120,10 @@ function MarineLife() {
                       </Row>
                       <Row>
                         <h4>Threatened status</h4>
-                        <p>*** Please click the pie chart below to select different status</p>
+                        <p>
+                          *** Please click the pie chart below to select
+                          different status
+                        </p>
                         <BluePieChart
                           //   data={stateSpeciesData[stateSelected[0]]}
                           data={stateStat[stateSelected[1]]}

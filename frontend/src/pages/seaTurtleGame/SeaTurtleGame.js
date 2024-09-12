@@ -4,6 +4,8 @@ import React, {
   useRef,
   useCallback,
   useMemo,
+  Suspense,
+  lazy,
 } from "react";
 import { GiSeaTurtle } from "react-icons/gi";
 import { FaInfoCircle } from "react-icons/fa";
@@ -13,7 +15,7 @@ import { Plastic } from "./Plastic";
 import { Food } from "./Food";
 import { Bubble } from "./Bubble";
 import LandingPage from "./LandingPage";
-import ModelDisplay from "./ModelDisplay";
+// import ModelDisplay from "./ModelDisplay";
 import bgrdImg from "../../assets/img/minigame/minigameBackground.png";
 import popupBgrdImg from "../../assets/img/minigame/warning.png";
 import frameImg from "../../assets/img/minigame/frame.png";
@@ -38,6 +40,7 @@ function Game() {
     highScore: 0,
     prevHighScore: 0,
   });
+  const ModelDisplay = lazy(() => import("./ModelDisplay"));
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
   const containerRef = useRef(null);
@@ -699,13 +702,17 @@ function Game() {
             </Col>
             <Col md="5">
               {score < gameState.highScore ? (
-                <ModelDisplay
-                  className={classifyLevel(
-                    Math.round((score / gameState.highScore) * 100)
-                  )}
-                />
+                <Suspense fallback={<div>Loading 3D model...</div>}>
+                  <ModelDisplay
+                    className={classifyLevel(
+                      Math.round((score / gameState.highScore) * 100)
+                    )}
+                  />
+                </Suspense>
               ) : (
-                <ModelDisplay className={"Top1"} />
+                <Suspense fallback={<div>Loading 3D model...</div>}>
+                  <ModelDisplay className={"Top1"} />
+                </Suspense>
               )}
             </Col>
           </Row>
