@@ -52,6 +52,7 @@ function Legend({ colorData }) {
 
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
+      div.innerHTML += '<p><b>Number of plastic</b></p>'
 
       for (let i = 0; i < colorData.length; i++) {
         div.innerHTML +=
