@@ -189,20 +189,14 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                               <h3>Formula applied to classify difficulty</h3>
 
                               <p>
-                                Step 1: We compare all the average polymer
-                                counts (divide by oceanArea) in the datasets,
-                                making each of the contribution in % in 0 to
-                                100%. The higher the pollution severity (polymer
-                                counts / ocean area), the higher the difficulty.
-                              </p>
-                              <p>
-                                Step 2: We compare all the marine law counts in
-                                the datasets, making each of the contribution in
-                                % in 0 to 100%. The more laws in the state, the
-                                lower the difficulty
-                              </p>
-                              <p>
-                                Each of the steps contribute 50% to the final
+                                The number of polymers in the dataset is
+                                directly proportional to the difficulty level
+                                (i.e., the greater the pollution severity, the
+                                higher the difficulty). On the other hand, the
+                                number of marine laws is inversely proportional
+                                to the difficulty (i.e., more laws in the state
+                                result in lower difficulty). Both factors
+                                contribute equally to determining the
                                 difficulty.
                               </p>
                               <h3>Data sources: </h3>
