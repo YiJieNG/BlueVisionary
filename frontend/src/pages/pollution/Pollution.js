@@ -66,7 +66,6 @@ function Pollution() {
         axios
             .get(`http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`)
             .then((res) => {
-                console.log(res.data);
                 setPollutionSuggestion(res.data);
             })
             .catch((err) => {
@@ -165,18 +164,21 @@ function Pollution() {
                                         <Card variant="outlined" style={{ maxWidth: 600, margin: "0 auto" }}>
                                             <CardContent>
                                                 <Row>
-                                                    <div style={{ height: '400px', width: '100%', display: "flex" ,justifyContent: 'center' }}>
+                                                    <div>
+                                                        <h3>Plastic type distribution</h3>
+                                                    </div>
+                                                    <div style={{ height: '400px', width: '100%', display: "flex", justifyContent: 'center' }}>
                                                         <PollutionRadarChart data={pollutionRadar} selectedState={selectedState} handlePollutionTypeChange={handlePollutionTypeChange} />
                                                     </div>
                                                 </Row>
                                                 <Row>
-                                                    <Card variant="outlined" style={{ height: "100%" }}>
+                                                    <Card variant="outlined" style={{ height: "100%" }} className="inner-card">
                                                         <CardContent>
                                                             <Typography variant="h5" gutterBottom sx={{ display: 'block' }}><b>{selectedPollutionType}</b></Typography>
                                                             <Typography variant="h6" gutterBottom sx={{ display: 'block' }}>Potential source: </Typography>
                                                             {/* card for each souce, icon ~ text, scrollable vertical or horizontal */}
                                                             {pollutionSuggestion.sources.map((source, index) => (
-                                                                <span className="span-card" key={index}>{source}</span> 
+                                                                <span className="span-card" key={index}>{source}</span>
                                                             ))}
                                                             <Typography variant="h6" gutterBottom sx={{ display: 'block' }}>Potential products: </Typography>
                                                             {/* card for each products, icon ~ text, scrollable vertical or horizontal */}
@@ -188,6 +190,17 @@ function Pollution() {
                                                             {pollutionSuggestion.alternatives.map((source, index) => (
                                                                 <span className="span-card" key={index}>{source}</span>
                                                             ))}
+
+                                                            <div className="flip-card">
+                                                                <div className="flip-card-inner">
+                                                                    <div className="flip-card-front">
+                                                                        <img width="25" height="25" src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/50/external-juice-bottle-food-and-drink-tanah-basah-basic-outline-tanah-basah.png" alt="external-juice-bottle-food-and-drink-tanah-basah-basic-outline-tanah-basah"/>
+                                                                    </div>
+                                                                    <div className="flip-card-back">
+                                                                            Juice Bottle
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </CardContent>
                                                     </Card>
                                                 </Row>

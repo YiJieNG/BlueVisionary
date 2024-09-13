@@ -392,9 +392,9 @@ def get_pollution_type_suggestions(polymer):
         "alternatives": []
     }
     for item in data:
-        suggestions["sources"] = re.split(r'\s*,\s* | \s*and\s*', item[0])
-        suggestions["products"] = re.split(r'\s*,\s* | \s*and\s*', item[1])
-        suggestions["alternatives"] = re.split(r'\s*,\s* | \s*and\s*', item[2])
+        suggestions["sources"] = re.split(r'\s*,\s*', item[0])
+        suggestions["products"] = re.split(r'\s*,\s*', item[1])
+        suggestions["alternatives"] = re.split(r'\s*,\s*', item[2])
     return jsonify(suggestions)
 
 def softmax(x):

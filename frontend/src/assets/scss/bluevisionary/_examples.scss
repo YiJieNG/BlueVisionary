@@ -1232,7 +1232,10 @@
 
 // Pollution page
 .MuiCard-root {
-  background-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgb(202, 225, 246) !important;
+}
+.inner-card {
+  background-color: rgb(255, 255, 255) !important;
 }
 .chart-container {
   position: relative;
@@ -1273,15 +1276,78 @@
 .span-card {
   // width: 140px;
   display: inline-block;
-  padding: 5px;;
+  padding: 10px 8px;
   border-radius: 8px;
   border-color: #000000;
   border-style: dashed;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
-  font-size: small;
+  font-size: medium;
 
 }
+
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: transparent;
+  width: 60px;
+  height: 60px;
+  // border-radius: 8px;
+  // border-color: #000000;
+  // border-style: dashed;
+  // border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border-color: #000000;
+  border-style: dashed;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  // background-color: #bbb;
+  color: black;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+}
+.flip-card-front img {
+  display: block;
+}
+
+/* Style the back side */
+.flip-card-back {
+  // background-color: dodgerblue;
+  color: rgb(47, 114, 238);
+  transform: rotateY(180deg);
+  text-align: center;
+  // vertical-align: middle;
+  // line-height: 60px;
+}
+
+
 // Nav
 .navbar .nav-link {
   color: #3f4447; /* Default text color */
