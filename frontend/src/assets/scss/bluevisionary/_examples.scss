@@ -1280,7 +1280,7 @@
 .chart-container {
   position: relative;
   overflow: hidden;
-  height: 250px;
+  height: 650px;
 }
 .line-chart-wrapper {
   position: relative;
@@ -1293,7 +1293,7 @@
 .chart {
   position: relative;
   z-index: 1;
-  height: 200px;
+  height: 300px;
 }
 .hover-text {
   position: absolute;
@@ -1313,7 +1313,17 @@
   max-height: 88vh;
   overflow-y: auto;
 }
-
+.span-card {
+  // width: 140px;
+  display: inline-block;
+  padding: 5px;
+  border-radius: 8px;
+  border-color: #000000;
+  border-style: dashed;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: small;
+}
 // Nav
 .navbar .nav-link {
   color: #3f4447; /* Default text color */
