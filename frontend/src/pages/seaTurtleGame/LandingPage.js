@@ -187,15 +187,37 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                           >
                             <div className="custom-tooltip">
                               <h3>Formula applied to classify difficulty</h3>
+
                               <p>
-                                Softmax (polymerCount / oceanArea) * 0.5 +
-                                Softmax (-lawCount) * 0.5, then scaled in 25.
+                                Step 1: We compare all the average polymer
+                                counts (divide by oceanArea) in the datasets,
+                                making each of the contribution in % in 0 to
+                                100%. The higher the pollution severity (polymer
+                                counts / ocean area), the higher the difficulty.
+                              </p>
+                              <p>
+                                Step 2: We compare all the marine law counts in
+                                the datasets, making each of the contribution in
+                                % in 0 to 100%. The more laws in the state, the
+                                lower the difficulty
+                              </p>
+                              <p>
+                                Each of the steps contribute 50% to the final
+                                difficulty.
                               </p>
                               <h3>Data sources: </h3>
-                              <p>Pollution Data:</p>
-                              <p>Marine Law Data:</p>
+                              <p>
+                                Pollution Data:
+                                https://portal.aodn.org.au/search?uuid=fd3d74b0-0234-4864-bbc6-751c44e41f5e
+                              </p>
+                              <p>
+                                Marine Law Data:
+                                https://www.researchgate.net/figure/List-of-environmental-legislation-and-policy-reviewed_tbl1_331023282
+                              </p>
                             </div>
                           </Tooltip>
+                          {/* Softmax (polymerCount / oceanArea) * 0.5 + Softmax
+                          (-lawCount) * 0.5, then scaled in 25. */}
                           {"  "}
                           Difficulty Rating:
                         </p>
