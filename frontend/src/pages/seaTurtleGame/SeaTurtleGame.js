@@ -304,6 +304,20 @@ function Game() {
   };
 
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.code === "Space" && showPopup) {
+        closePopup();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showPopup]);
+
+  useEffect(() => {
     fetchStateData();
     fetchGeneralFact();
     fetchAndShuffleFacts();
@@ -522,6 +536,14 @@ function Game() {
                     <Col md="7">
                       <p>Move down</p>
                     </Col>
+                    <Row>
+                      <Col md="5">
+                        <p>SPACE</p>
+                      </Col>
+                      <Col md="7">
+                        <p>Close pop out</p>
+                      </Col>
+                    </Row>
                     <Row>
                       <Col md="5">
                         <img

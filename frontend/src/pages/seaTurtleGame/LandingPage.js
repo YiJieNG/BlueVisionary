@@ -29,7 +29,14 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
   const [filteredStateData, setFilteredStateData] = useState(gameStateData);
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  const toggle = () => setTooltipOpen(!tooltipOpen);
+
+  const toggleTooltip = () => {
+    setTooltipOpen((prevState) => !prevState);
+  };
+
+  const resetTooltip = () => {
+    setTooltipOpen(false);
+  };
 
   useEffect(() => {
     setSelectedState(gameStateData[0]);
@@ -84,7 +91,7 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
     <div className="game-landing-page">
       <div className="content">
         <h2>Welcome to our immersive sea-turtle role-play game!</h2>
-        <p style={{ fontWeight: "bold" }}>
+        <p>
           Experience the dangers of plastic pollution through the eyes of a sea
           turtle
         </p>
@@ -168,27 +175,43 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
                           <span
                             style={{ marginLeft: "10px", cursor: "pointer" }}
                             id="turtleClassInfo"
-                            onMouseLeave={() => setTooltipOpen(false)}
+                            onMouseLeave={resetTooltip}
                           >
                             <FaInfoCircle />
                           </span>
                           <Tooltip
                             isOpen={tooltipOpen}
                             target="turtleClassInfo"
-                            toggle={toggle}
+                            toggle={toggleTooltip}
                             placement="right"
                           >
                             <div className="custom-tooltip">
                               <h3>Formula applied to classify difficulty</h3>
+
                               <p>
-                                Softmax (polymerCount / oceanArea) * 0.5 +
-                                Softmax (-lawCount) * 0.5, then scaled in 25.
+                                The number of polymers in the dataset is
+                                directly proportional to the difficulty level
+                                (i.e., the greater the pollution severity, the
+                                higher the difficulty). On the other hand, the
+                                number of marine laws is inversely proportional
+                                to the difficulty (i.e., more laws in the state
+                                result in lower difficulty). Both factors
+                                contribute equally to determining the
+                                difficulty.
                               </p>
                               <h3>Data sources: </h3>
-                              <p>Pollution Data:</p>
-                              <p>Marine Law Data:</p>
+                              <p>
+                                Pollution Data:
+                                https://portal.aodn.org.au/search?uuid=fd3d74b0-0234-4864-bbc6-751c44e41f5e
+                              </p>
+                              <p>
+                                Marine Law Data:
+                                https://www.researchgate.net/figure/List-of-environmental-legislation-and-policy-reviewed_tbl1_331023282
+                              </p>
                             </div>
                           </Tooltip>
+                          {/* Softmax (polymerCount / oceanArea) * 0.5 + Softmax
+                          (-lawCount) * 0.5, then scaled in 25. */}
                           {"  "}
                           Difficulty Rating:
                         </p>
