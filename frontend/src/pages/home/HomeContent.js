@@ -67,9 +67,10 @@ function HomeContent() {
                 Imagine a world where you, no matter where you are or how busy
                 your schedule, can make a meaningful contribution to the health
                 of our oceans and save marine life, especially reptiles.
-                BlueVisionary empowers you to take action, helping you explore
-                the scale of plastic pollution, track your cleanup efforts, and
-                see the real impact you’re making.
+                BlueVisionary empowers you to take action, helping you
+                understand challenges faced by marine reptiles, explore the
+                scale of plastic pollution, track your cleanup efforts, and see
+                the real impact you’re making.
               </p>
               <Button
                 className="dark-blue-button cta-button"

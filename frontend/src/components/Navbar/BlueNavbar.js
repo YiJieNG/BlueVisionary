@@ -54,12 +54,12 @@ function BlueNavbar() {
     <Navbar className={classnames("fixed-top", navbarColor)} expand="lg" light>
       <Container>
         <NavbarBrand href="/" className="mr-auto">
-          BlueVisionary{" "}
           <img
             src="/logo.png"
             alt="BlueVisionary Logo"
             style={{ width: "35px", height: "35px", marginRight: "5px" }}
-          />
+          />{" "}
+          BlueVisionary
         </NavbarBrand>
         <NavbarToggler
           onClick={toggleNavbarCollapse}

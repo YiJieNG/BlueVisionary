@@ -89,7 +89,7 @@ function MarineLife() {
   return (
     <>
       <div className="section-with-space">
-        <div className="section-marinelife">
+        <div className="section-marinelife marine-life-content">
           <Container fluid>
             <Row>
               <Col md="6" sm={{ size: "auto" }}>
@@ -121,8 +121,10 @@ function MarineLife() {
                       <Row>
                         <h4>Threatened status</h4>
                         <p>
-                          *** Please click the pie chart below to select
-                          different status
+                          <strong>
+                            Please click the pie chart below to select different
+                            status
+                          </strong>
                         </p>
                         <BluePieChart
                           //   data={stateSpeciesData[stateSelected[0]]}
@@ -159,7 +161,7 @@ function MarineLife() {
               )}
             </Row>
             <Row>
-              <Col md="12" xs="12">
+              <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
                 <Card
                   style={{
                     "margin-top": "20px",
@@ -169,11 +171,13 @@ function MarineLife() {
                   }}
                 >
                   <Row>
-                    <h3>
+                    <h4>
                       <b>Information session</b>
-                    </h3>
+                    </h4>
                     <p>
-                      *** Please click the bar chart above to select the species
+                      <strong>
+                        Please click the bar chart above to select the species
+                      </strong>
                     </p>
                     {/* <h5>{endangerType} {speciesSelected} - {stateSelected[0]}</h5> */}
                     <BlueModal
