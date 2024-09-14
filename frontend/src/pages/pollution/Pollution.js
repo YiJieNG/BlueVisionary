@@ -125,55 +125,78 @@ function Pollution() {
                 >
                   <Row style={{ marginTop: 50 }}>
                     <h2>Explore Plastic Pollution Distribution now</h2>
-                    <p style={{ fontWeight: "bold" }}>
-                      <subtitle>
-                        Explore the distribution of microplastics across
-                        different states in Australia through an interactive
-                        heatmap. Delve into detailed insights on various polymer
-                        types, identify their potential sources, and discover
-                        sustainable alternatives to common plastic products.
-                        Track trends and explore solutions to reduce plastic
-                        pollution.
-                      </subtitle>
-                    </p>
+                    <h4
+                      style={{
+                        fontWeight: "bold",
+                        color: "#3f4447",
+                        margin: "0 0 30px",
+                      }}
+                    >
+                      Explore the distribution of microplastics across different
+                      states in Australia. Delve into detailed insights on
+                      various polymer types, identify their potential sources,
+                      and discover sustainable alternatives to common plastic
+                      products.
+                    </h4>
                   </Row>
+
                   <Card>
                     <CardBody
-                      style={{ boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)" }}
+                      style={{
+                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                      }}
                     >
+                      <h5 style={{ padding: "10px 60px 0" }}>Filtered by:</h5>
                       <Row style={{ marginTop: 30 }}>
                         <Col>
-                          <Box sx={{ minWidth: 120 }}>
+                          <h3
+                            style={{
+                              color: "#1c3c58",
+                              fontWeight: "bold",
+                              fontSize: "25px",
+                              padding: "0 60px",
+                            }}
+                          >
+                            State
+                          </h3>
+                          <Box sx={{ minWidth: 50, padding: "0 100px 0 60px" }}>
                             <FormControl fullWidth>
-                              <InputLabel
+                              {/* <InputLabel
                                 id="demo-simple-select-label"
                                 sx={{
                                   color: "#1c3c58",
                                   fontWeight: "bold",
                                 }}
+                                style={{ fontSize: "20px" }}
                               >
                                 State
-                              </InputLabel>
+                              </InputLabel> */}
 
                               <Select
-                                labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={selectedState}
-                                label="State"
                                 onChange={handleStateChange}
                                 sx={{
                                   fontWeight: "bold",
-                                  backgroundColor: "#a8caed", // Light blue background, customize as needed
+                                  backgroundColor: "#a8caed", // Light blue background
                                   color: "#1c3c58", // Text color
+                                  fontSize: "20px",
                                   "& .MuiOutlinedInput-notchedOutline": {
                                     borderColor: "#1c3c58", // Outline border color
-                                    borderWidth: "2px",
+                                    borderWidth: "2px", // Ensure border is complete
+                                    "& legend": {
+                                      width: 0, // Completely remove the white gap
+                                      visibility: "hidden", // Ensure it doesn't render
+                                    },
                                   },
                                   "&.Mui-focused .MuiOutlinedInput-notchedOutline":
                                     {
                                       borderColor: "#284567", // Focus border color
                                       borderWidth: "2px",
                                     },
+                                  "& .MuiSelect-select": {
+                                    padding: "16px", // Increase padding to make it look better without the label
+                                  },
                                 }}
                               >
                                 <MenuItem value="ALL">All States</MenuItem>
@@ -187,13 +210,16 @@ function Pollution() {
                           </Box>
                         </Col>
                         <Col>
-                          <Box sx={{ width: "100%" }}>
+                          <Box sx={{ width: "100%", padding: "0 60px" }}>
                             <Typography
                               variant="body2"
                               gutterBottom
                               sx={{
-                                color: "#1c3c58",
                                 fontWeight: "bold",
+                              }}
+                              style={{
+                                color: "#1c3c58",
+                                fontSize: "25px",
                               }}
                             >
                               Year Range
