@@ -113,11 +113,11 @@ function Quiz() {
             <Row className="align-items-center">
               <Col md="6" className="content">
                 <h1 className="feature-title">
-                  How much do you know about Marine Reptiles?
+                  Wish to know more about Marine Reptiles?
                 </h1>
                 <p className="feature-description">
-                  Let's test your knowledge and see how much you really know
-                  about reptiles and their habitats!
+                  Challenge yourself and discover how well you understand these
+                  fascinating creatures and their habitats!
                 </p>
                 <Button
                   onClick={startQuiz}
