@@ -46,9 +46,11 @@ else:
 def get_questions():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT q_id, question, option_1, option_2, option_3, option_4, correct_answer, 
-                          count_option_1, count_option_2, count_option_3, count_option_4, explanation
-                   FROM questionnaire''')
+    query = '''SELECT q_id, question, option_1, option_2, option_3, option_4, correct_answer, 
+                count_option_1, count_option_2, count_option_3, count_option_4, explanation 
+                FROM questionnaire
+            '''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -103,7 +105,10 @@ def get_state_stat():
     """
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT State, Critically_Endangered, Endangered, Vulnerable FROM threat_state_count''')
+    query = '''SELECT State, Critically_Endangered, Endangered, Vulnerable 
+                FROM threat_state_count
+            '''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -124,11 +129,18 @@ def get_state_species(state, status):
     """
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT TAXON_GROUP, count(*) FROM threat_species
-                WHERE {0}=1
-                AND LOWER(THREATENED_STATUS) = LOWER("{1}")
+    # cur.execute('''SELECT TAXON_GROUP, count(*) FROM threat_species
+    #             WHERE {0}=1
+    #             AND LOWER(THREATENED_STATUS) = LOWER("{1}")
+    #             GROUP BY TAXON_GROUP
+    #             '''.format(state, status))
+    query = '''SELECT TAXON_GROUP, count(*) 
+                FROM threat_species
+                WHERE {}=1
+                AND LOWER(THREATENED_STATUS) = LOWER(%s)
                 GROUP BY TAXON_GROUP
-                '''.format(state, status))
+            '''.format(state)
+    cur.execute(query, (status,))
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -146,12 +158,20 @@ def get_description(state, status, species):
     """
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT SCIENTIFIC_NAME, VERNACULAR_NAME, habitat, threats  
-                    FROM threat_species
-                    WHERE {0}=1
-                    AND LOWER(THREATENED_STATUS) = LOWER("{1}")
-                    AND TAXON_GROUP = '{2}'
-                '''.format(state, status, species))
+    # cur.execute('''SELECT SCIENTIFIC_NAME, VERNACULAR_NAME, habitat, threats  
+    #                 FROM threat_species
+    #                 WHERE {0}=1
+    #                 AND LOWER(THREATENED_STATUS) = LOWER("{1}")
+    #                 AND TAXON_GROUP = '{2}'
+    #             '''.format(state, status, species))
+    query = '''SELECT SCIENTIFIC_NAME, VERNACULAR_NAME, habitat, threats  
+                FROM threat_species
+                WHERE {}=1
+                AND LOWER(THREATENED_STATUS) = LOWER(%s)
+                AND TAXON_GROUP = %s
+            '''.format(state) 
+    cur.execute(query, (status, species))#doubtful
+
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -184,11 +204,17 @@ def get_description(state, status, species):
 def get_pollution(year):
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, POLYMER_TYPE  
-                    FROM polymer_main
-                    WHERE POLYMER_TYPE <> ''
-                    AND SAMPLE_YEAR = '{0}'
-                '''.format(year))
+    # cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, POLYMER_TYPE  
+    #                 FROM polymer_main
+    #                 WHERE POLYMER_TYPE <> ''
+    #                 AND SAMPLE_YEAR = '{0}'
+    #             '''.format(year))
+    query = '''SELECT STATE_TERRITORY, START_LAT, START_LONG, POLYMER_TYPE  
+                FROM polymer_main
+                WHERE POLYMER_TYPE <> ''
+                AND SAMPLE_YEAR = %s
+            '''
+    cur.execute(query, (year,))
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -215,15 +241,16 @@ def get_pollution_intensity(year):
     cur = db.cursor()
     if year == '2025':
         cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
-                    FROM polymer_main
-                    group by STATE_TERRITORY, START_LAT, START_LONG
-                '''.format(year))
-    else:
-        cur.execute('''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
                         FROM polymer_main
-                        WHERE SAMPLE_YEAR = '{0}'
-                        group by STATE_TERRITORY, START_LAT, START_LONG
-                    '''.format(year))
+                        GROUP BY STATE_TERRITORY, START_LAT, START_LONG
+                    ''')
+    else:
+        query = '''SELECT STATE_TERRITORY, START_LAT, START_LONG, COUNT(*)  
+                    FROM polymer_main
+                    WHERE SAMPLE_YEAR = %s
+                    GROUP BY STATE_TERRITORY, START_LAT, START_LONG
+                '''
+        cur.execute(query, (year,))
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -243,15 +270,22 @@ def get_pollution_intensity(year):
             "pollutions": item
         })
     return jsonify(pollutions)
+
 @app.route('/api/get_pollution_type_all/', methods=['GET'])
 def get_pollution_type_all():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT SAMPLE_YEAR , POLYMER_TYPE, count(*) as count_type  
-                    FROM polymer_main
-                    group by POLYMER_TYPE ,SAMPLE_YEAR
-                    order by SAMPLE_YEAR, count_type desc
-                ''')
+    # cur.execute('''SELECT SAMPLE_YEAR , POLYMER_TYPE, count(*) as count_type  
+    #                 FROM polymer_main
+    #                 group by POLYMER_TYPE ,SAMPLE_YEAR
+    #                 order by SAMPLE_YEAR, count_type desc
+    #             ''')
+    query = '''SELECT SAMPLE_YEAR, POLYMER_TYPE, count(*) as count_type  
+                FROM polymer_main
+                GROUP BY POLYMER_TYPE, SAMPLE_YEAR
+                ORDER BY SAMPLE_YEAR, count_type DESC
+            '''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -379,10 +413,15 @@ def get_pollution_type(year):
 def get_pollution_type_suggestions(polymer):
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT Polymer_source , `Plastic Items`, `Plastic Alternatives`  
-                    FROM polymer_suggestions
-                    WHERE `﻿Polymer type` = '{0}'
-                '''.format(polymer))
+    # cur.execute('''SELECT Polymer_source , `Plastic Items`, `Plastic Alternatives`  
+    #                 FROM polymer_suggestions
+    #                 WHERE `﻿Polymer type` = '{0}'
+    #             '''.format(polymer))
+    query = '''SELECT Polymer_source, `Plastic Items`, `Plastic Alternatives`  
+                FROM polymer_suggestions
+                WHERE `﻿Polymer type` = %s
+            '''
+    cur.execute(query, (polymer,))
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -406,7 +445,8 @@ def softmax(x):
 def get_minigame_state_info():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT * FROM pollution_severity''')
+    query = '''SELECT * FROM pollution_severity'''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -461,7 +501,9 @@ def update_minigame_score():
     db = get_db_connection()
     cur = db.cursor()
 
-    cur.execute("UPDATE pollution_severity SET score = %s WHERE state = %s", (score, state,))
+    query = '''UPDATE pollution_severity SET score = %s WHERE state = %s'''
+    cur.execute(query, (score, state,))
+    #cur.execute("UPDATE pollution_severity SET score = %s WHERE state = %s", (score, state,))
 
     db.commit()
     cur.close()
@@ -473,7 +515,8 @@ def update_minigame_score():
 def get_minigame_general_fact():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT * FROM facts''')
+    query = '''SELECT * FROM facts'''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -493,7 +536,8 @@ def get_minigame_general_fact():
 def get_minigame_state_fact():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT * FROM fact_state_knowledge''')
+    query = '''SELECT * FROM fact_state_knowledge'''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -513,7 +557,8 @@ def get_minigame_state_fact():
 def get_marine_life_logo_images():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT * FROM marine_life_logo_images''')
+    query = '''SELECT * FROM marine_life_logo_images'''
+    cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()

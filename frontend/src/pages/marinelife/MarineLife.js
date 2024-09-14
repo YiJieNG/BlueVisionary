@@ -212,6 +212,10 @@ function MarineLife() {
                     <strong>Species state: </strong>
                     https://data.gov.au/data/dataset/ae652011-f39e-4c6c-91b8-1dc2d2dfee8f/resource/78401dce-1f40-49d3-92c4-3713d6e34974/download/20240716spcs.csv
                   </p>
+                  <p>
+                    <strong>Species API narrative: </strong>
+                    https://apiv3.iucnredlist.org/api/v3/docs#version
+                  </p>
                 </Card>
               </Col>
             </Row>
