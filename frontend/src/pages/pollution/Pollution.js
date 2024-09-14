@@ -11,6 +11,7 @@ import axios from "axios";
 import PollutionLefMap from "./PollutionLefMap";
 import PollutionLineChart from "./PollutionLineChart";
 import PollutionDistribution from "./PollutionDistribution";
+import PollutionDataInsights from "./PollutionDataInsights";
 const marks = [
     {
         value: 2021,
@@ -40,7 +41,7 @@ function Pollution() {
     const [selectedYear, setSelectedYear] = useState('2024');
     const [pollutionData, setPollutionData] = useState(); // Pollution data from backend
     const [filteredStates, setFilteredStates] = useState([]); // All available stated
-    const [pollutionType, setPollutionType] = useState(); // Pollution type data
+    const [pollutionLine, setPollutionLine] = useState(); // Pollution type data
     const [pollutionRadar, setPollutionRadar] = useState();
     // const [selectedPollutionType, setSelectedPollutionType] = useState("polyethylene");
     // const [pollutionSuggestion, setPollutionSuggestion] = useState();
@@ -77,7 +78,7 @@ function Pollution() {
         axios
             .get('http://127.0.0.1:5000/api/get_pollution_type_all')
             .then((res) => {
-                setPollutionType(res.data);
+                setPollutionLine(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -116,7 +117,7 @@ function Pollution() {
         <>
             <div className="section-with-space">
                 <div className="marine-life-content">
-                    {pollutionData && pollutionType && pollutionRadar &&
+                    {pollutionData && pollutionLine && pollutionRadar &&
                         <Container fluid>
                             <Row>
                                 <Col md={6} className="scrollable-col" style={{ paddingLeft: 30, boxShadow: "4 0px 6px rgba(39, 74, 230, 0.2)" }}>
@@ -150,8 +151,8 @@ function Pollution() {
                                                 <Typography variant="body2" gutterBottom>Year Range</Typography>
                                                 <Slider
                                                     defaultValue={2024}
-                                                    step={1}
-                                                    valueLabelDisplay="auto"
+                                                    step={null}
+                                                    // valueLabelDisplay="auto"
                                                     min={2021}
                                                     max={2025}
                                                     marks={marks}
@@ -162,7 +163,13 @@ function Pollution() {
                                     </Row>
                                     <hr className="solid" />
                                     <Row>
-                                        <PollutionLineChart data={pollutionType} />
+                                        <div style={{ height: "300px" }}>
+                                            <PollutionLineChart data={pollutionLine} selectedState={selectedState} />
+                                        </div>
+                                    </Row>
+                                    <hr className="solid" />
+                                    <Row className="scrollable-linechart-content">
+                                        <PollutionDataInsights selectedState={selectedState} />
                                     </Row>
                                     <hr className="solid" />
                                     <Row>
