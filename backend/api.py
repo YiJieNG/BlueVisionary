@@ -280,47 +280,47 @@ def get_pollution_type_all():
     #                 group by POLYMER_TYPE ,SAMPLE_YEAR
     #                 order by SAMPLE_YEAR, count_type desc
     #             ''')
-    query = '''SELECT SAMPLE_YEAR, POLYMER_TYPE, count(*) as count_type  
+    # query = '''SELECT SAMPLE_YEAR, POLYMER_TYPE, count(*) as count_type  
+    #             FROM polymer_main
+    #             GROUP BY POLYMER_TYPE, SAMPLE_YEAR
+    #             ORDER BY SAMPLE_YEAR, count_type DESC
+    #         '''
+    query = '''SELECT STATE_TERRITORY, SAMPLE_YEAR, POLYMER_TYPE, count(*) as count_type  
                 FROM polymer_main
-                GROUP BY POLYMER_TYPE, SAMPLE_YEAR
-                ORDER BY SAMPLE_YEAR, count_type DESC
+                GROUP BY STATE_TERRITORY, POLYMER_TYPE, SAMPLE_YEAR
+                ORDER BY STATE_TERRITORY, SAMPLE_YEAR, count_type DESC
             '''
     cur.execute(query)
     data = cur.fetchall()
     cur.close()
     db.close()
-    pollutions = []
-    pollution_type = {}
     types = ["polyethylene", "polypropylene", "polyethylene glycol", "polystyrene", "thermoset", "thermoplastic"]
-    others = {}
-    for item in data:
-        if item[1] not in pollution_type:
-            pollution_type[item[1]] = []
-        if item[1] not in types:
-            if item[0] not in others:
-                others[item[0]] = 0
-            others[item[0]] += item[2]
-        else:
-            pollution_type[item[1]].append({
-                "count": item[2],
-                "year": item[0]
-            })
-    others_pollution = []
-    for year, count in others.items():
-        others_pollution.append({
-            "count": count,
-            "year": year
+    years = ["2021", "2022", "2023", "2024"]
+    pollutions = []
+    states = {
+        "ALL": []
+    }
+    for pollution_type in types:
+        states["ALL"].append({
+            "type": pollution_type,
+            "data": [0,0,0,0]
         })
-    for type, item in pollution_type.items():
-        if type in types:
-            pollutions.append({
-                "type": type,
-                "pollutions": item
-            })  
-    pollutions.append({
-        "type": "other",
-        "pollutions": others_pollution
-    })
+    for item in data:
+        if item[0] not in states:
+            states[item[0]] = []
+            for pollution_type in types:
+                states[item[0]].append({
+                    "type": pollution_type,
+                    "data": [0,0,0,0]
+                })
+        if item[2] in types:
+            states[item[0]][types.index(item[2])]["data"][years.index(item[1])] = item[3]
+            states["ALL"][types.index(item[2])]["data"][years.index(item[1])] += item[3]
+    for state, item in states.items():
+        pollutions.append({
+            "state": state,
+            "pollutions": item
+        })
     return jsonify(pollutions)
 
 @app.route('/api/get_pollution_type/<year>', methods=['GET'])
@@ -344,7 +344,7 @@ def get_pollution_type(year):
     if year != '2025':
         cur.execute('''SELECT POLYMER_TYPE, count(*) as count_type  
                         FROM polymer_main
-                        WHERE SAMPLE_YEAR = '{}'
+                        WHERE SAMPLE_YEAR = '{0}'
                         group by POLYMER_TYPE
                         order by count_type desc, POLYMER_TYPE
                     '''.format(year))

@@ -3,9 +3,9 @@ import { Line } from "react-chartjs-2";
 import { FormControl, InputLabel, MenuItem, Select, Checkbox, ListItemText, FormHelperText } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-function PollutionLineChart({ data }) {
-  const [selectedOptions, setSelectedOptions] = useState(data.filter(p => p.type !== "other").map((p) => p.type));
-  const [error, setError] = useState(false);
+function PollutionLineChart({ data, selectedState }) {
+  // const [selectedOptions, setSelectedOptions] = useState(data.filter(p => p.type !== "other").map((p) => p.type));
+  // const [error, setError] = useState(false);
   const [selectedData, setSelectedData] = useState();
 
   const options = {
@@ -17,7 +17,7 @@ function PollutionLineChart({ data }) {
       },
       title: {
         display: true,
-        text: "Top plastic type between 2021 and 2024",
+        text: "Top polymer type between 2021 and 2024",
       },
     },
     scales: {
@@ -29,27 +29,27 @@ function PollutionLineChart({ data }) {
 
   const years = ['2021', '2022', '2023', '2024'];
 
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
+  // const ITEM_HEIGHT = 48;
+  // const ITEM_PADDING_TOP = 8;
+  // const MenuProps = {
+  //   PaperProps: {
+  //     style: {
+  //       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+  //       width: 250,
+  //     },
+  //   },
+  // };
 
-  const handleSelection = (event) => {
-    const { value } = event.target;
+  // const handleSelection = (event) => {
+  //   const { value } = event.target;
 
-    if (value.length === 0) {
-      setError(true);  // Show error if no options selected
-    } else {
-      setError(false);  // Clear error if options are selected
-      setSelectedOptions(value);  // Update selected options
-    }
-  };
+  //   if (value.length === 0) {
+  //     setError(true);  // Show error if no options selected
+  //   } else {
+  //     setError(false);  // Clear error if options are selected
+  //     setSelectedOptions(value);  // Update selected options
+  //   }
+  // };
 
   // Helper function to generate random colors
   const getColor = (pollutionType) => {
@@ -62,13 +62,26 @@ function PollutionLineChart({ data }) {
 
   useEffect(() => {
     // Prepare datasets for the chart
-    const filteredData = data.filter((item) =>
-      selectedOptions.includes(item.type)
-    );
+    // const filteredData = data.filter((item) =>
+    //   selectedOptions.includes(item.type)
+    // );
 
-    const datasets = filteredData.map((item) => ({
+    // const datasets = data.filter(p => p.type !== "other").map((item) => ({
+    //   label: item.type,
+    //   data: item.pollutions.map((pollution) => pollution.count),
+    //   borderColor: getColor(item.type), // Helper function for random color
+    //   fill: false,
+    // }));
+
+    // // Chart configuration
+    // const chartData = {
+    //   labels: years,
+    //   datasets: datasets,
+    // };
+    // setSelectedData(chartData);
+    const datasets = data.filter(p => p.state === selectedState)[0].pollutions.map((item) => ({
       label: item.type,
-      data: item.pollutions.map((pollution) => pollution.count),
+      data: item.data,
       borderColor: getColor(item.type), // Helper function for random color
       fill: false,
     }));
@@ -79,11 +92,11 @@ function PollutionLineChart({ data }) {
       datasets: datasets,
     };
     setSelectedData(chartData);
-  }, [selectedOptions]);
+  }, [selectedState]);
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: '90%' }} error={error}>
+      {/* <FormControl sx={{ m: 1, width: '90%' }} error={error}>
         <InputLabel id="multiple-checkbox-label">Plastic Type</InputLabel>
         <Select
           labelId="multi-select-label"
@@ -103,7 +116,7 @@ function PollutionLineChart({ data }) {
           ))}
         </Select>
         {error && <FormHelperText>You must select at least one option</FormHelperText>}
-      </FormControl>
+      </FormControl> */}
       {selectedData &&
         <Line data={selectedData} options={options} />
       }
