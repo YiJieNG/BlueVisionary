@@ -52,11 +52,9 @@ function PollutionDistribution({ data, selectedState }) {
           <Row>
             <div>
               <h3>Distribution of Plastic Types by Material</h3>
-              <p style={{ fontWeight: "bold" }}>
+              <p style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
                 This chart visualizes the distribution of various plastic types,
-                highlighting the prevalence of materials. By understanding the
-                breakdown of different polymer types, we can identify areas of
-                focus for plastic reduction and recycling initiatives.
+                highlighting the prevalence of materials.
               </p>
             </div>
             <div
