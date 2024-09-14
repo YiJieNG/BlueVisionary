@@ -413,10 +413,15 @@ def get_pollution_type(year):
 def get_pollution_type_suggestions(polymer):
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT * 
+    # cur.execute('''SELECT Polymer_source , `Plastic Items`, `Plastic Alternatives`  
+    #                 FROM polymer_suggestions
+    #                 WHERE `﻿Polymer type` = '{0}'
+    #             '''.format(polymer))
+    query = '''SELECT * 
                     FROM polymer_suggestions_icon
-                    WHERE `Polymer type` = '{0}'
-                '''.format(polymer))
+                WHERE `Polymer type` = %s
+            '''
+    cur.execute(query, (polymer,))
     data = cur.fetchall()
     cur.close()
     db.close()
