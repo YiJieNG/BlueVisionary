@@ -5,21 +5,10 @@ import { Radar } from "react-chartjs-2"
 
 function PollutionRadarChart({ data, selectedState, handlePollutionTypeChange }) {
     const getLabelIndex = (x, y, pointsLabelItems) => {
-        // console.log(pointsLabelItems);
-        // console.log(x, y);
         let index = -1;
         pointsLabelItems.forEach((element, i) => {
             const {bottom, top, left, right} = element;
-            // console.log(left, right, bottom, top)
-            // console.log(x <= right)
-            // console.log(x >= left)
-            // console.log(y >= top)
-            // console.log(y <= bottom)
-
-            // console.log(typeof(bottom))
             if (x <= right && x >= left && y >= top && y <= bottom) {
-                // console.log(element);
-                // return i;
                 index = i;
             }
         });
@@ -27,15 +16,6 @@ function PollutionRadarChart({ data, selectedState, handlePollutionTypeChange })
     };
     const chartRef = useRef(null);
     const radarData = {
-        // labels: [
-        //     'PETE',
-        //     'HDPE',
-        //     'PVC',
-        //     'LDPE',
-        //     'PP',
-        //     'PS',
-        //     'OTHER'
-        // ],
         labels: data.find(item => item.state === selectedState).pollutions.map(item => item.type),
         datasets: [
             {

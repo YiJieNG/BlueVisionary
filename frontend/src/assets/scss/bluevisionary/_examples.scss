@@ -642,12 +642,20 @@
   padding-top: 20px;
   padding-left: 8rem;
   padding-right: 8rem;
+  background: linear-gradient(45deg, #add8f3, #f4f9fb);
   // min-height: 100vh;
 }
 
 .marine-life-content {
   h2 {
     font-size: 2.5rem;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 2rem;
     font-weight: bold;
     color: #003366;
     margin-bottom: 1rem;
@@ -660,10 +668,40 @@
     margin-bottom: 1rem;
   }
 
+  h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+
   p {
     font-size: 1rem;
     color: #3f4447;
     margin-bottom: 2rem;
+
+    strong {
+      color: #185797; // Highlight the correct answer
+      font-weight: bold;
+    }
+    .subtitle {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
+
+  span {
+    font-size: 1rem;
+    color: #3f4447;
+    margin-bottom: 2rem;
+    font-weight: bold;
 
     strong {
       color: #185797; // Highlight the correct answer
@@ -1273,13 +1311,23 @@
   }
 }
 
-// Pollution page
-.MuiCard-root {
-  background-color: rgb(202, 225, 246) !important;
+// --------Pollution page---------
+hr.solid {
+  border-top: 1.5px solid #bbb;
 }
-.inner-card {
-  background-color: rgb(255, 255, 255) !important;
+div .span-h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 0;
+  padding-right: 1rem;
 }
+// .MuiCard-root {
+//   background-color: rgb(202, 225, 246) !important;
+// }
+// .pollution-card {
+//   background-color: rgb(255, 255, 255) !important;
+// }
 .chart-container {
   position: relative;
   overflow: hidden;
@@ -1316,7 +1364,19 @@
   max-height: 88vh;
   overflow-y: auto;
 }
-.span-card {
+.scrollable-suggestion-content {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.scrollable-other-content {
+  max-width: 50vw;
+  overflow-x: auto;
+}
+.alternatives-arrow {
+  padding: 10px 8px;
+  margin-bottom: 0.5rem;
+}
+span.span-card {
   // width: 140px;
   display: inline-block;
   padding: 10px 8px;
