@@ -191,6 +191,30 @@ function MarineLife() {
                 </Card>
               </Col>
             </Row>
+            <Row>
+              <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
+                <Card
+                  style={{
+                    "margin-top": "20px",
+                    "margin-left": "40px",
+                    "margin-right": "40px",
+                    padding: "20px",
+                  }}
+                >
+                  <h4>
+                    <b>Data References</b>
+                  </h4>
+                  <p>
+                    <strong>Species dataset: </strong>
+                    https://fed.dcceew.gov.au/datasets/erin::species-of-national-environmental-significance-and-selected-marine-and-cetacean-species/explore?location=-19.690183%2C-73.460000%2C2.72&showTable=true
+                  </p>
+                  <p>
+                    <strong>Species state: </strong>
+                    https://data.gov.au/data/dataset/ae652011-f39e-4c6c-91b8-1dc2d2dfee8f/resource/78401dce-1f40-49d3-92c4-3713d6e34974/download/20240716spcs.csv
+                  </p>
+                </Card>
+              </Col>
+            </Row>
           </Container>
         </div>
       </div>
