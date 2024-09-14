@@ -124,8 +124,8 @@ function Pollution() {
                   }}
                 >
                   <Row style={{ marginTop: 50 }}>
-                    <h2>Explore Plastic Pollution Distribution now</h2>
-                    <h4
+                    <h2>Explore Plastic Pollution Distribution</h2>
+                    <h5
                       style={{
                         fontWeight: "bold",
                         color: "#3f4447",
@@ -137,7 +137,7 @@ function Pollution() {
                       various polymer types, identify their potential sources,
                       and discover sustainable alternatives to common plastic
                       products.
-                    </h4>
+                    </h5>
                   </Row>
 
                   <Card>
@@ -153,13 +153,13 @@ function Pollution() {
                             style={{
                               color: "#1c3c58",
                               fontWeight: "bold",
-                              fontSize: "25px",
+                              fontSize: "1.3rem",
                               padding: "0 60px",
                             }}
                           >
                             State
                           </h3>
-                          <Box sx={{ minWidth: 50, padding: "0 100px 0 60px" }}>
+                          <Box sx={{ minWidth: 50, padding: "0 80px 0 60px" }}>
                             <FormControl fullWidth>
                               {/* <InputLabel
                                 id="demo-simple-select-label"
@@ -180,7 +180,7 @@ function Pollution() {
                                   fontWeight: "bold",
                                   backgroundColor: "#a8caed", // Light blue background
                                   color: "#1c3c58", // Text color
-                                  fontSize: "20px",
+                                  fontSize: "1rem",
                                   "& .MuiOutlinedInput-notchedOutline": {
                                     borderColor: "#1c3c58", // Outline border color
                                     borderWidth: "2px", // Ensure border is complete
@@ -210,7 +210,7 @@ function Pollution() {
                           </Box>
                         </Col>
                         <Col>
-                          <Box sx={{ width: "100%", padding: "0 60px" }}>
+                          <Box sx={{ width: "100%", padding: "0 60px 0 30px" }}>
                             <Typography
                               variant="body2"
                               gutterBottom
@@ -219,7 +219,7 @@ function Pollution() {
                               }}
                               style={{
                                 color: "#1c3c58",
-                                fontSize: "25px",
+                                fontSize: "1.3rem",
                               }}
                             >
                               Year Range

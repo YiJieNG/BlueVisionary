@@ -52,10 +52,10 @@ function PollutionDistribution({ data, selectedState }) {
           <Row>
             <div>
               <h3>Distribution of Plastic Types by Material</h3>
-              <p style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+              <h5 style={{ fontWeight: "bold", color: "#3f4447" }}>
                 This chart visualizes the distribution of various plastic types,
                 highlighting the prevalence of materials.
-              </p>
+              </h5>
             </div>
             <div
               style={{
