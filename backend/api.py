@@ -489,11 +489,11 @@ def get_minigame_general_fact():
 
     return jsonify(fact_array)
 
-@app.route('/api/minigame/state_fact', methods=['GET'])
+@app.route('/api/minigame/fact_state_knowledge', methods=['GET'])
 def get_minigame_state_fact():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute('''SELECT * FROM state_facts''')
+    cur.execute('''SELECT * FROM fact_state_knowledge''')
     data = cur.fetchall()
     cur.close()
     db.close()
@@ -501,14 +501,33 @@ def get_minigame_state_fact():
     fact_array = []
     for col in data:
         fact_array.append({
-            "factId": col[0],
-            "state": col[1],
+            "factId": col[1],
+            "state": col[0],
             "title": col[2],
             "description": col[3],
         })
 
     return jsonify(fact_array)
 
+@app.route('/api/marinelife/marine_life_logo_images', methods=['GET'])
+def get_marine_life_logo_images():
+    db = get_db_connection()
+    cur = db.cursor()
+    cur.execute('''SELECT * FROM marine_life_logo_images''')
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+
+    fact_array = []
+    for col in data:
+        fact_array.append({
+            "name": col[0],
+            "icon": col[1],
+            "alt": col[2],
+            "image": col[3],
+        })
+
+    return jsonify(fact_array)
 
 if __name__ == '__main__':
     app.run(debug=True)

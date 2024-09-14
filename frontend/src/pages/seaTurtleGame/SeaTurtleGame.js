@@ -128,7 +128,7 @@ function Game() {
   const fetchAndShuffleFacts = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:5000/api/minigame/state_fact"
+        "http://127.0.0.1:5000/api/minigame/fact_state_knowledge"
       );
       setFactArray(response.data);
     } catch (error) {
