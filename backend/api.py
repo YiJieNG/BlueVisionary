@@ -417,9 +417,9 @@ def get_pollution_type_suggestions(polymer):
     #                 FROM polymer_suggestions
     #                 WHERE `﻿Polymer type` = '{0}'
     #             '''.format(polymer))
-    query = '''SELECT Polymer_source, `Plastic Items`, `Plastic Alternatives`  
-                FROM polymer_suggestions
-                WHERE `﻿Polymer type` = %s
+    query = '''SELECT * 
+                    FROM polymer_suggestions_icon
+                WHERE `Polymer type` = %s
             '''
     cur.execute(query, (polymer,))
     data = cur.fetchall()
@@ -428,12 +428,35 @@ def get_pollution_type_suggestions(polymer):
     suggestions = {
         "sources": [],
         "products": [],
-        "alternatives": []
+        "other": []
     }
+    suggestions["sources"] = re.split(r'\s*,\s*', data[0][1])
     for item in data:
-        suggestions["sources"] = re.split(r'\s*,\s* | \s*and\s*', item[0])
-        suggestions["products"] = re.split(r'\s*,\s* | \s*and\s*', item[1])
-        suggestions["alternatives"] = re.split(r'\s*,\s* | \s*and\s*', item[2])
+        product = item[2]
+        product_img = re.findall(r'src="([^"]+)"',item[3])
+        product_alt = re.findall(r'alt="([^"]+)"',item[3])
+        alt = item[4]
+        alt_img = re.findall(r'src="([^"]+)"',item[5])
+        alt_alt = re.findall(r'alt="([^"]+)"',item[5])
+        if alt != "":
+            suggestions["products"].append([
+            {
+                "name": product,
+                "img": product_img[0],
+                "alt": product_alt[0]
+            },
+            {
+                "name": alt,
+                "img": alt_img[0],
+                "alt": alt_alt[0]
+            }
+            ])
+        else:
+            suggestions["other"].append({
+                "name": product,
+                "img": product_img[0],
+                "alt": product_alt[0]
+            })
     return jsonify(suggestions)
 
 def softmax(x):

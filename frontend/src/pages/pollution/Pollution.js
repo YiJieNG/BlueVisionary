@@ -2,15 +2,15 @@ import { Container, Row, Col } from "reactstrap";
 import { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { Card, CardContent, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axios from "axios";
 import PollutionLefMap from "./PollutionLefMap";
-import PollutionRadarChart from "./PollutionRadarChart";
 import PollutionLineChart from "./PollutionLineChart";
+import PollutionDistribution from "./PollutionDistribution";
 const marks = [
     {
         value: 2021,
@@ -41,9 +41,9 @@ function Pollution() {
     const [pollutionData, setPollutionData] = useState(); // Pollution data from backend
     const [filteredStates, setFilteredStates] = useState([]); // All available stated
     const [pollutionType, setPollutionType] = useState(); // Pollution type data
-    const [pollutionRadar, setPolollutionRadar] = useState();
-    const [selectedPollutionType, setSelectedPollutionType] = useState("polyethylene");
-    const [pollutionSuggestion, setPollutionSuggestion] = useState();
+    const [pollutionRadar, setPollutionRadar] = useState();
+    // const [selectedPollutionType, setSelectedPollutionType] = useState("polyethylene");
+    // const [pollutionSuggestion, setPollutionSuggestion] = useState();
 
     // Handle state dropdown change
     const handleStateChange = (event) => {
@@ -57,22 +57,21 @@ function Pollution() {
         setSelectedYear(year);
     };
 
-    // Handle radar click event to change selected pollution type
-    const handlePollutionTypeChange = (newType) => {
-        setSelectedPollutionType(newType);
-    };
+    // // Handle radar click event to change selected pollution type
+    // const handlePollutionTypeChange = (newType) => {
+    //     setSelectedPollutionType(newType);
+    // };
 
-    useEffect(() => {
-        axios
-            .get(`http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`)
-            .then((res) => {
-                console.log(res.data);
-                setPollutionSuggestion(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [selectedPollutionType]);
+    // useEffect(() => {
+    //     axios
+    //         .get(`http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`)
+    //         .then((res) => {
+    //             setPollutionSuggestion(res.data);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, [selectedPollutionType]);
 
     useEffect(() => {
         axios
@@ -107,7 +106,7 @@ function Pollution() {
                 `http://127.0.0.1:5000/api/get_pollution_type/${selectedYear}`
             )
             .then((res) => {
-                setPolollutionRadar(res.data);
+                setPollutionRadar(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -116,13 +115,13 @@ function Pollution() {
     return (
         <>
             <div className="section-with-space">
-                <div className="section-marinelife">
-                    {pollutionData && pollutionType && pollutionRadar && pollutionSuggestion &&
+                <div className="marine-life-content">
+                    {pollutionData && pollutionType && pollutionRadar &&
                         <Container fluid>
                             <Row>
-                                <Col md={6} className="scrollable-col">
+                                <Col md={6} className="scrollable-col" style={{ paddingLeft: 30, boxShadow: "4 0px 6px rgba(39, 74, 230, 0.2)" }}>
                                     <Row style={{ marginTop: 30 }}>
-                                        <h3>Pollution Data Insights</h3>
+                                        <h2>Pollution Data Insights</h2>
                                     </Row>
                                     <Row style={{ marginTop: 30 }}>
                                         <Col>
@@ -161,47 +160,21 @@ function Pollution() {
                                             </Box>
                                         </Col>
                                     </Row>
+                                    <hr className="solid" />
                                     <Row>
-                                        <Card variant="outlined" style={{ maxWidth: 600, margin: "0 auto" }}>
-                                            <CardContent>
-                                                <Row>
-                                                    <div style={{ height: '400px', width: '100%', display: "flex" ,justifyContent: 'center' }}>
-                                                        <PollutionRadarChart data={pollutionRadar} selectedState={selectedState} handlePollutionTypeChange={handlePollutionTypeChange} />
-                                                    </div>
-                                                </Row>
-                                                <Row>
-                                                    <Card variant="outlined" style={{ height: "100%" }}>
-                                                        <CardContent>
-                                                            <Typography variant="h5" gutterBottom sx={{ display: 'block' }}><b>{selectedPollutionType}</b></Typography>
-                                                            <Typography variant="h6" gutterBottom sx={{ display: 'block' }}>Potential source: </Typography>
-                                                            {/* card for each souce, icon ~ text, scrollable vertical or horizontal */}
-                                                            {pollutionSuggestion.sources.map((source, index) => (
-                                                                <span className="span-card" key={index}>{source}</span> 
-                                                            ))}
-                                                            <Typography variant="h6" gutterBottom sx={{ display: 'block' }}>Potential products: </Typography>
-                                                            {/* card for each products, icon ~ text, scrollable vertical or horizontal */}
-                                                            {pollutionSuggestion.products.map((source, index) => (
-                                                                <span className="span-card" key={index}>{source}</span>
-                                                            ))}
-                                                            <Typography variant="h6" component="div">Alternatives:</Typography>
-                                                            {/* card for each Alternatives, icon ~ text, scrollable vertical or horizontal */}
-                                                            {pollutionSuggestion.alternatives.map((source, index) => (
-                                                                <span className="span-card" key={index}>{source}</span>
-                                                            ))}
-                                                        </CardContent>
-                                                    </Card>
-                                                </Row>
-                                            </CardContent>
-                                        </Card>
+                                        <PollutionLineChart data={pollutionType} />
                                     </Row>
-                                    <Row style={{ marginTop: 10 }}>
+                                    <hr className="solid" />
+                                    <Row>
+                                        <PollutionDistribution data={pollutionRadar} selectedState={selectedState} />
+                                    </Row>
+                                    {/* <Row style={{ marginTop: 10}}>
                                         <Card className="hover-card" variant="outlined" style={{ maxWidth: 600, margin: "0 auto" }}>
                                             <CardContent className="chart-container">
                                                 <Box className="line-chart-wrapper">
                                                     <div className="chart">
                                                         <PollutionLineChart data={pollutionType} />
                                                     </div>
-                                                    {/* description for potential source, potential product */}
                                                 </Box>
                                                 <Typography className="hover-text" variant="body2" component="div">
                                                     Trend for pollution
@@ -209,7 +182,7 @@ function Pollution() {
                                             </CardContent>
                                         </Card>
 
-                                    </Row>
+                                    </Row> */}
                                 </Col>
                                 <Col md={6}>
                                     <PollutionLefMap selectedState={selectedState} pollutionData={pollutionData} />

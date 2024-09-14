@@ -4,17 +4,18 @@ import { Radar } from "react-chartjs-2"
 
 
 function PollutionRadarChart({ data, selectedState, handlePollutionTypeChange }) {
+    const getLabelIndex = (x, y, pointsLabelItems) => {
+        let index = -1;
+        pointsLabelItems.forEach((element, i) => {
+            const {bottom, top, left, right} = element;
+            if (x <= right && x >= left && y >= top && y <= bottom) {
+                index = i;
+            }
+        });
+        return index;
+    };
     const chartRef = useRef(null);
     const radarData = {
-        // labels: [
-        //     'PETE',
-        //     'HDPE',
-        //     'PVC',
-        //     'LDPE',
-        //     'PP',
-        //     'PS',
-        //     'OTHER'
-        // ],
         labels: data.find(item => item.state === selectedState).pollutions.map(item => item.type),
         datasets: [
             {
@@ -52,21 +53,38 @@ function PollutionRadarChart({ data, selectedState, handlePollutionTypeChange })
             },
         },
         onClick: (event) => {
+            // const chart = chartRef.current;
+            // if (!chart) return;
+
+            // // Get the elements at the event (on click)
+            // const points = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+
+            // if (points.length) {
+            //     const firstPoint = points[0];
+            //     const label = chart.data.labels[firstPoint.index];
+            //     // const datasetLabel = chart.data.datasets[firstPoint.datasetIndex].label;
+            //     // const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+
+            //     // alert(`You clicked on: \nLabel: ${label}, \nDataset: ${datasetLabel}, \nValue: ${value}`);
+            //     handlePollutionTypeChange(label);
+            // }
+            
             const chart = chartRef.current;
+
             if (!chart) return;
 
-            // Get the elements at the event (on click)
-            const points = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+            const { ctx, scales: { r } } = chart;
 
-            if (points.length) {
-                const firstPoint = points[0];
-                const label = chart.data.labels[firstPoint.index];
-                // const datasetLabel = chart.data.datasets[firstPoint.datasetIndex].label;
-                // const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+            const labels = chart.data.labels;
 
-                // alert(`You clicked on: \nLabel: ${label}, \nDataset: ${datasetLabel}, \nValue: ${value}`);
-                handlePollutionTypeChange(label);
+            // Get the click position
+            const { x: clickX, y: clickY } = event;
+
+            const labelIndex = getLabelIndex(clickX, clickY, r._pointLabelItems);
+            if (labelIndex !== -1) {
+                handlePollutionTypeChange(labels[labelIndex]);
             }
+
         },
         plugins: {
             legend: {

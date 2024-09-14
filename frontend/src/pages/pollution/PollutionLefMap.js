@@ -48,7 +48,7 @@ function ChoroplethLayer({ data, colorData }) {
 function Legend({ colorData }) {
   const map = useMap();
   useEffect(() => {
-    const legend = L.control({ position: 'bottomright' });
+    const legend = L.control({ position: 'bottomleft' });
 
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
@@ -216,7 +216,7 @@ function PollutionLefMap({ selectedState, pollutionData }) {
     <>
       {pollutionData && severeData &&
         <Row className="justify-content-center">
-          <MapContainer center={center} zoom={4} style={{ height: '90vh', width: '100%' }}>
+          <MapContainer center={center} zoom={4} style={{ height: '93vh', width: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
