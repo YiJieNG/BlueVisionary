@@ -105,9 +105,7 @@ function MarineLife() {
                 <Col md="6" sm={{ size: "auto" }}>
                   <Card
                     style={{
-                      "margin-top": "50px",
-                      "margin-left": "40px",
-                      "margin-right": "40px",
+                      margin: "50px 40px 30px 40px",
                       padding: "10px",
                     }}
                   >
