@@ -101,11 +101,11 @@ function PollutionDataInsights({ selectedState }) {
                 </div>
             </>
         );
-    } else if (selectedState === "WA") {
+    } else if (selectedState === "SA") {
         return (
             <>
                 <div>
-                    <h4>WA Polymer Trend Insights:</h4>
+                    <h4>SA Polymer Trend Insights:</h4>
                 </div>
                 <div>
                     <ol>

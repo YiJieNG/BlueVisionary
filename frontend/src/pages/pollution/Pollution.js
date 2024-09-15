@@ -131,7 +131,7 @@ function Pollution() {
                         boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      <h5 style={{ padding: "10px 60px 0" }}>Filtered by:</h5>
+                      <h5 style={{ padding: "10px 30px 0" }}>Filtered by:</h5>
                       <Row style={{ marginTop: 30 }}>
                         <Col>
                           <h3
@@ -139,12 +139,12 @@ function Pollution() {
                               color: "#1c3c58",
                               fontWeight: "bold",
                               fontSize: "1.3rem",
-                              padding: "0 60px",
+                              padding: "0 30px",
                             }}
                           >
                             State
                           </h3>
-                          <Box sx={{ minWidth: 50, padding: "0 80px 0 60px" }}>
+                          <Box sx={{ minWidth: 50, padding: "0 40px 0 30px" }}>
                             <FormControl fullWidth>
                               {/* <InputLabel
                                 id="demo-simple-select-label"
@@ -195,7 +195,7 @@ function Pollution() {
                           </Box>
                         </Col>
                         <Col>
-                          <Box sx={{ width: "100%", padding: "0 60px 0 30px" }}>
+                          <Box sx={{ width: "100%", padding: "0 30px 0 5px" }}>
                             <Typography
                               variant="body2"
                               gutterBottom

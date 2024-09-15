@@ -55,9 +55,9 @@ function PollutionLineChart({ data, selectedState }) {
   const getColor = (pollutionType) => {
     return pollutionType === "polyethylene" ? "#4FB5F9" :
       pollutionType === "polypropylene" ? "#F9CC4F" :
-        pollutionType === "polyethylene glycol" ? "#8834E8" :
+        pollutionType === "polyethylene glycol" ? "#cc34eb" :
           pollutionType === "thermoplastic" ? "#2EA404" :
-            pollutionType === "thermoset" ? "#23E0E6" : "#4A23E6"
+            pollutionType === "thermoset" ? "#f52d0a" : "#4A23E6"
   };
 
   useEffect(() => {
