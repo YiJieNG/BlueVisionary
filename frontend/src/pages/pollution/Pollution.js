@@ -212,6 +212,7 @@ function Pollution() {
                             <Slider
                               defaultValue={2024}
                               step={null}
+                              track={false}
                               // valueLabelDisplay="auto"
                               min={2021}
                               max={2025}
