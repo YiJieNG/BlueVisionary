@@ -44,7 +44,7 @@ function HomeContent() {
       description:
         "Step into the flippers of a sea turtle, experience the challenges they face and gain a deeper understanding of the effects of plastic pollution on marine reptiles.",
       image: MiniGame,
-      link: "/minigame",
+      link: "/seaturtlegame",
     },
     {
       title: "Educate yourself",
