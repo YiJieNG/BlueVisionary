@@ -197,7 +197,7 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent
+                          <CardContent className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
@@ -251,7 +251,7 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent
+                          <CardContent className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
@@ -319,7 +319,7 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent
+                          <CardContent className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
