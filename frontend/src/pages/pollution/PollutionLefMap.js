@@ -132,7 +132,7 @@ function HeatmapLayer({ data }) {
     const markers = heatData.map(point => {
       const marker = L.marker([point[0], point[1]]).setOpacity(0).addTo(map);
       marker.bindTooltip(
-        `Tooltip for point (${point[0]}, ${point[1]}, ${point[2]})`,
+        `Number of polymer pollutions: ${point[2]}`,
         {
           permanent: false,   // Only show on hover
           direction: "top",   // Tooltip position relative to the marker

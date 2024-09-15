@@ -1360,14 +1360,17 @@ div .span-h3 {
 }
 div.info.legend {
   background-color: rgba($color: #ffffff, $alpha: 0.8);
-  padding: 5px;
+  padding: 15px;
   border-radius: 10px;
 }
-b.red {
+.card-body strong {
+  font-weight: bold;
+}
+strong.red {
   color: red;
 }
-b.green {
-  color: #7efcaa;
+strong.green {
+  color: #46cf76;
 }
 .custom-card {
   padding-bottom: 0px !important

@@ -59,7 +59,7 @@ function PollutionDistribution({ data, selectedState }) {
             </div>
             <div
               style={{
-                height: "500px",
+                height: "450px",
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
@@ -133,7 +133,7 @@ function PollutionDistribution({ data, selectedState }) {
                 boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <CardContent>
+              <CardContent style={{paddingBottom: 16}}>
                 <div>
                   {pollutionSuggestion.sources.map((source, index) => (
                     <span className="span-card" key={index}>

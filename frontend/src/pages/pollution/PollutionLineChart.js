@@ -29,16 +29,16 @@ function PollutionLineChart({ data, selectedState }) {
   // Helper function to generate colors based on pollution type
   const getColor = (pollutionType) => {
     return pollutionType === "polyethylene"
-      ? "#4FB5F9"
+      ? "#3C82FC"
       : pollutionType === "polypropylene"
-      ? "#F9CC4F"
+      ? "#1BBD77"
       : pollutionType === "polyethylene glycol"
-      ? "#cc34eb"
+      ? "#FAD51D"
       : pollutionType === "thermoplastic"
-      ? "#2EA404"
+      ? "#FA581D"
       : pollutionType === "thermoset"
-      ? "#f52d0a"
-      : "#4A23E6";
+      ? "#931DFA"
+      : "#999900";
   };
 
   useEffect(() => {
@@ -49,6 +49,7 @@ function PollutionLineChart({ data, selectedState }) {
         data: item.data,
         borderColor: getColor(item.type), // Use helper function to assign colors
         fill: false,
+        borderWidth: 2,
       }));
 
       // Chart configuration with datasets
