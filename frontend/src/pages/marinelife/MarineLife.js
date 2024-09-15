@@ -35,7 +35,7 @@ function MarineLife() {
   // Fetch state statistic from backend
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/api/get_state_stat")
+      .get("/api/get_state_stat")
       .then((res) => {
         let stateSpecies = {};
         for (let key in res.data) {
@@ -68,7 +68,7 @@ function MarineLife() {
   useEffect(() => {
     axios
       .get(
-        `http://127.0.0.1:5000/api/get_state_species/${stateSelected[1]}/${endangerType}`
+        `/api/get_state_species/${stateSelected[1]}/${endangerType}`
       )
       .then((res) => {
         let endangerSpecies = { data: [] };

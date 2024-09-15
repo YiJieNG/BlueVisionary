@@ -35,7 +35,7 @@ function PollutionDistribution({ data, selectedState }) {
   useEffect(() => {
     axios
       .get(
-        `http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`
+        `/api/get_pollution_type_suggestions/${selectedPollutionType}`
       )
       .then((res) => {
         setPollutionSuggestion(res.data);
@@ -207,7 +207,7 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent
+                          <CardContent className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
@@ -261,7 +261,7 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent
+                          <CardContent className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
@@ -333,7 +333,7 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent
+                          <CardContent className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",

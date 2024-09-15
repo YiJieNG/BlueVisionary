@@ -40,7 +40,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/marinelife" element={<MarineLife />} />
         <Route path="/quiz" element={<Quiz />} />
-        <Route path="/minigame" element={<MiniGame />} />
+        <Route path="/seaturtlegame" element={<MiniGame />} />
         <Route path="/iter1" element={<Home_1 />} />
         <Route path="/iter1/marinelife" element={<MarineLife_1 />} />
         <Route path="/iter1/quiz" element={<Quiz_1 />} />
