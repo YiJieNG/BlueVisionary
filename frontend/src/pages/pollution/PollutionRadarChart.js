@@ -1,3 +1,4 @@
+import { Colors } from "chart.js";
 import { useEffect, useRef } from "react";
 import { Radar } from "react-chartjs-2";
 
@@ -16,14 +17,20 @@ function PollutionRadarChart({
     });
     return index;
   };
+  const toCamelCase = (str) => {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
   const chartRef = useRef(null);
   const radarData = {
     labels: data
       .find((item) => item.state === selectedState)
-      .pollutions.map((item) => item.type),
+      .pollutions.map((item) => toCamelCase(item.type)),
     datasets: [
       {
-        label: "Number of plastic pollution",
+        label: "Polycount",
         // data: [65, 59, 90, 81, 56, 55, 40],
         data: data
           .find((item) => item.state === selectedState)
@@ -59,6 +66,7 @@ function PollutionRadarChart({
             size: 18,
             weight: "bold",
           },
+          color: "#0981b4",
         },
       },
     },

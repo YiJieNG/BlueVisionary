@@ -16,7 +16,7 @@ import PollutionRadarChart from "./PollutionRadarChart";
 
 function PollutionDistribution({ data, selectedState }) {
   const [selectedPollutionType, setSelectedPollutionType] =
-    useState("polyethylene");
+    useState("Polyethylene");
   const [pollutionSuggestion, setPollutionSuggestion] = useState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -75,73 +75,135 @@ function PollutionDistribution({ data, selectedState }) {
           <hr className="solid" />
           <Row>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <span className="span-h3">Insights of </span>
+              <span className="span-h3">What is </span>
               <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                <DropdownToggle caret style={{ width: "180px" }}>
+                <DropdownToggle
+                  caret
+                  style={{
+                    width: "180px",
+                    borderColor: "#1c3c58", // Outline border color
+                    borderWidth: "2px",
+                    fontWeight: "bold",
+                    backgroundColor: "#a8caed", // Light blue background
+                    color: "#1c3c58", // Text color
+                    fontSize: "1rem",
+                  }}
+                >
                   {selectedPollutionType}
                 </DropdownToggle>
                 <DropdownMenu style={{ width: "180px" }}>
-                  <DropdownItem onClick={() => handleSelect("polyethylene")}>
-                    polyethylene
+                  <DropdownItem onClick={() => handleSelect("Polyethylene")}>
+                    Polyethylene
                   </DropdownItem>
-                  <DropdownItem onClick={() => handleSelect("polypropylene")}>
-                    polypropylene
+                  <DropdownItem onClick={() => handleSelect("Polypropylene")}>
+                    Polypropylene
                   </DropdownItem>
                   <DropdownItem
-                    onClick={() => handleSelect("polyethylene glycol")}
+                    onClick={() => handleSelect("Polyethylene Glycol")}
                   >
-                    polyethylene glycol
+                    Polyethylene Glycol
                   </DropdownItem>
-                  <DropdownItem onClick={() => handleSelect("polystyrene")}>
-                    polystyrene
+                  <DropdownItem onClick={() => handleSelect("Polystyrene")}>
+                    Polystyrene
                   </DropdownItem>
-                  <DropdownItem onClick={() => handleSelect("thermoset")}>
-                    thermoset
+                  <DropdownItem onClick={() => handleSelect("Thermoset")}>
+                    Thermoset
                   </DropdownItem>
-                  <DropdownItem onClick={() => handleSelect("thermoplastic")}>
-                    thermoplastic
+                  <DropdownItem onClick={() => handleSelect("Thermoplastic")}>
+                    Thermoplastic
                   </DropdownItem>
-                  <DropdownItem onClick={() => handleSelect("other")}>
-                    other
+                  <DropdownItem onClick={() => handleSelect("Other")}>
+                    Other
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
+              <span className="span-h3" style={{ paddingLeft: "10px" }}>
+                ?
+              </span>
             </div>
           </Row>
           {/* <hr className="solid" /> */}
-          <Row>
-            <h4>Potential Source</h4>
-            <div>
-              {pollutionSuggestion.sources.map((source, index) => (
-                <span className="span-card" key={index}>
-                  {source}
-                </span>
-              ))}
-            </div>
+          <Row className="polytype-padding">
+            <h4 style={{ color: "#006895" }}>1. It potentially came from </h4>
+            <Card style={{ width: "95%", margin: "0 auto" }}>
+              <CardContent>
+                <div>
+                  {pollutionSuggestion.sources.map((source, index) => (
+                    <span className="span-card" key={index}>
+                      {source}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </Row>
           {/* <hr className="solid" /> */}
-          <Row>
-            {/* <h4>Potential Products & Alternatives</h4> */}
+          <Row className="polytype-padding">
+            <h4 style={{ color: "#006895" }}>
+              2. The potential plastic products & suggested alternatives
+            </h4>
             <Card
               className="pollution-card"
               variant="outlined"
               style={{ width: "95%", margin: "0 auto" }}
             >
               <CardContent>
-                <Row>
-                  <h4>Potential Products & Alternatives</h4>
-                </Row>
                 <Row className="scrollable-suggestion-content">
+                  <Row style={{ paddingTop: 15 }}>
+                    <Col
+                      md={5}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h5>Product</h5>
+                    </Col>
+                    <Col
+                      md={2}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div className="alternatives-arrow"></div>
+                    </Col>
+                    <Col
+                      md={5}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h5>Alternative</h5>
+                    </Col>
+                  </Row>
+
                   {pollutionSuggestion.products.map((source, index) => (
                     <Row key={index}>
                       <Col md={5}>
-                        <Card style={{ margin: 5, height: 110 }}>
+                        <Card
+                          style={{
+                            margin: 15,
+                            height: 210,
+                            backgroundColor: "#d4e9ff",
+                            borderRadius: "15px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                            border: "5px solid #003366",
+                          }}
+                        >
                           <CardContent
                             sx={{
                               display: "flex",
                               flexDirection: "column",
                               justifyContent: "center",
                               alignItems: "center",
+                              height: "100%",
                             }}
                           >
                             <Grid
@@ -150,8 +212,8 @@ function PollutionDistribution({ data, selectedState }) {
                               alignItems="center"
                             >
                               <img
-                                width="25px"
-                                height="25px"
+                                width="50px"
+                                height="50px"
                                 src={source[0].img}
                                 alt={source[0].alt}
                               />
@@ -159,7 +221,7 @@ function PollutionDistribution({ data, selectedState }) {
                             <Typography
                               variant="h6"
                               align="center"
-                              sx={{ marginTop: "16px" }}
+                              sx={{ margin: "16px 0 0" }}
                             >
                               {source[0].name}
                             </Typography>
@@ -179,13 +241,23 @@ function PollutionDistribution({ data, selectedState }) {
                         </div>
                       </Col>
                       <Col md={5}>
-                        <Card style={{ margin: 5, height: 110 }}>
+                        <Card
+                          style={{
+                            margin: 15,
+                            height: 210,
+                            backgroundColor: "#d4e9ff",
+                            borderRadius: "15px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                            border: "5px solid #003366",
+                          }}
+                        >
                           <CardContent
                             sx={{
                               display: "flex",
                               flexDirection: "column",
                               justifyContent: "center",
                               alignItems: "center",
+                              height: "100%",
                             }}
                           >
                             <Grid
@@ -194,8 +266,8 @@ function PollutionDistribution({ data, selectedState }) {
                               alignItems="center"
                             >
                               <img
-                                width="25px"
-                                height="25px"
+                                width="50px"
+                                height="50px"
                                 src={source[1].img}
                                 alt={source[1].alt}
                               />
@@ -203,7 +275,7 @@ function PollutionDistribution({ data, selectedState }) {
                             <Typography
                               variant="h6"
                               align="center"
-                              sx={{ marginTop: "16px" }}
+                              sx={{ margin: "16px 0 0" }}
                             >
                               {source[1].name}
                             </Typography>
@@ -216,49 +288,72 @@ function PollutionDistribution({ data, selectedState }) {
               </CardContent>
             </Card>
           </Row>
-          <hr className="solid" />
           {pollutionSuggestion.other.length > 0 && (
-            <Row>
-              <h4>Other potential products</h4>
-              <Row
-                className="justify-content-start"
-                style={{ overflowX: "auto", whiteSpace: "nowrap" }}
+            <Row className="polytype-padding">
+              <h4 style={{ color: "#006895" }}>
+                3. Other potential plastic products
+              </h4>
+              <Card
+                className="pollution-card"
+                variant="outlined"
+                style={{ width: "95%", margin: "0 auto" }}
               >
-                {pollutionSuggestion.other.map((source, index) => (
-                  <Col key={index} md={3}>
-                    <Card style={{ margin: 5 }}>
-                      <CardContent
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Grid
-                          container
-                          justifyContent="center"
-                          alignItems="center"
+                <CardContent>
+                  <Row
+                    className="justify-content-start"
+                    style={{
+                      display: "flex",
+                      overflowX: "auto",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {pollutionSuggestion.other.map((source, index) => (
+                      <Col key={index} md={6}>
+                        <Card
+                          style={{
+                            margin: 15,
+                            height: 210,
+                            backgroundColor: "#d4e9ff",
+                            borderRadius: "15px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                            border: "5px solid #003366",
+                          }}
                         >
-                          <img
-                            width="25px"
-                            height="25px"
-                            src={source.img}
-                            alt={source.alt}
-                          />
-                        </Grid>
-                        <Typography
-                          variant="h6"
-                          align="center"
-                          sx={{ marginTop: "16px" }}
-                        >
-                          {source.name}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
+                          <CardContent
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: "100%",
+                            }}
+                          >
+                            <Grid
+                              container
+                              justifyContent="center"
+                              alignItems="center"
+                            >
+                              <img
+                                width="50px"
+                                height="50px"
+                                src={source.img}
+                                alt={source.alt}
+                              />
+                            </Grid>
+                            <Typography
+                              variant="h6"
+                              align="center"
+                              sx={{ margin: "16px 0 0" }}
+                            >
+                              {source.name}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                </CardContent>
+              </Card>
             </Row>
           )}
         </Container>
