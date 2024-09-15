@@ -291,6 +291,13 @@ function Pollution() {
 
                   <hr className="solid" />
                   <Row>
+                    <PollutionDistribution
+                      data={pollutionRadar}
+                      selectedState={selectedState}
+                    />
+                  </Row>
+                  <hr className="solid" />
+                  <Row>
                     <Card
                       style={{
                         width: "95%",
@@ -324,18 +331,11 @@ function Pollution() {
                   </Row>
                   <hr className="solid" />
                   <Row>
-                    <PollutionDistribution
-                      data={pollutionRadar}
-                      selectedState={selectedState}
-                    />
-                  </Row>
-                  <hr className="solid" />
-                  <Row>
                     <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
                       <Card
                         style={{
                           width: "95%",
-                          margin: "20px",
+                          margin: "10px",
                           padding: "20px",
                           boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                         }}
