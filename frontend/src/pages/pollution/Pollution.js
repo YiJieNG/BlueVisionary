@@ -232,8 +232,20 @@ function Pollution() {
                     />
                   </Row>
                   <hr className="solid" />
-                  <Row className="scrollable-linechart-content">
-                    <PollutionDataInsights selectedState={selectedState} />
+                  <Row>
+                    <Card
+                      className="scrollable-linechart-content pollution-card"
+                      variant="outlined"
+                      style={{
+                        width: "95%",
+                        margin: "0 auto",
+                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <CardBody>
+                        <PollutionDataInsights selectedState={selectedState} />
+                      </CardBody>
+                    </Card>
                   </Row>
                   <hr className="solid" />
                   <Row>
