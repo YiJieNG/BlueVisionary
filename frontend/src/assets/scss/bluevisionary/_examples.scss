@@ -642,8 +642,43 @@
   padding-top: 20px;
   padding-left: 8rem;
   padding-right: 8rem;
-  background: linear-gradient(45deg, #add8f3, #f4f9fb);
+  background: linear-gradient(45deg, #c6e0f1, #f4f9fb);
   // min-height: 100vh;
+}
+
+.section-pollution {
+  background: linear-gradient(45deg, #f4f9fb, #e7f6ff);
+}
+
+.drop-down-pollution {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  .option-button {
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #2776c5;
+    border: none;
+    padding: 0.75rem 3rem;
+    text-align: center;
+    font-weight: bold;
+    border: 3px solid #2776c5;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: #003366;
+      background-color: #a8caed;
+      border: 3px solid #a8caed;
+    }
+    &.selected {
+      color: #284567;
+      background-color: #a7f8ff;
+      border: 3px solid #284567;
+    }
+  }
 }
 
 .marine-life-content {
@@ -1313,7 +1348,8 @@
 
 // --------Pollution page---------
 hr.solid {
-  border-top: 1.5px solid #bbb;
+  border-top: 2px solid #bbb;
+  margin: 50px 0;
 }
 div .span-h3 {
   font-size: 2rem;
@@ -1339,6 +1375,10 @@ b.green {
 // .pollution-card {
 //   background-color: rgb(255, 255, 255) !important;
 // }
+.polytype-padding {
+  margin: 2rem 0;
+}
+
 .chart-container {
   position: relative;
   overflow: hidden;
@@ -1372,11 +1412,11 @@ b.green {
 }
 
 .scrollable-col {
-  max-height: 88vh;
+  max-height: 93vh;
   overflow-y: auto;
 }
 .scrollable-suggestion-content {
-  max-height: 50vh;
+  max-height: 35vh;
   overflow-y: auto;
 }
 .scrollable-linechart-content {
@@ -1397,12 +1437,10 @@ span.span-card {
   display: inline-block;
   padding: 10px 8px;
   border-radius: 8px;
-  border-color: #000000;
-  border-style: dashed;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  border-color: #003366;
+  border-style: solid;
+  margin: 0.5rem;
   font-size: medium;
-
 }
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
@@ -1433,7 +1471,8 @@ span.span-card {
 }
 
 /* Position the front and back side */
-.flip-card-front, .flip-card-back {
+.flip-card-front,
+.flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1465,7 +1504,6 @@ span.span-card {
   // vertical-align: middle;
   // line-height: 60px;
 }
-
 
 // Nav
 .navbar .nav-link {
