@@ -335,8 +335,8 @@ function Pollution() {
                     <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
                       <Card
                         style={{
-                          width: "95%",
-                          margin: "10px",
+                          width: "100%",
+                          margin: "0 auto",
                           padding: "20px",
                           boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                         }}
