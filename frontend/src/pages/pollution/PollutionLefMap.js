@@ -48,11 +48,11 @@ function ChoroplethLayer({ data, colorData }) {
 function Legend({ colorData }) {
   const map = useMap();
   useEffect(() => {
-    const legend = L.control({ position: 'bottomright' });
+    const legend = L.control({ position: 'bottomleft' });
 
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
-      div.innerHTML += '<p><b>Number of plastic</b></p>'
+      div.innerHTML += '<p><b>Number of polymer count</b></p>'
 
       for (let i = 0; i < colorData.length; i++) {
         div.innerHTML +=
@@ -221,7 +221,7 @@ function PollutionLefMap({ selectedState, pollutionData }) {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            <StateZoom center={center} zoomLevel={selectedState === 'ALL' ? 4 : 8} />
+            <StateZoom center={center} zoomLevel={selectedState === 'ALL' ? 4.5 : 8} />
             <ChoroplethLayer data={stateData} colorData={severeData} />
             <Legend colorData={severeData} />
             <Labels geojson={stateData} />
