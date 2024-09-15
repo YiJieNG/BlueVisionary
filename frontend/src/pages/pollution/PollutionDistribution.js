@@ -124,7 +124,7 @@ function PollutionDistribution({ data, selectedState }) {
           </Row>
           {/* <hr className="solid" /> */}
           <Row className="polytype-padding">
-            <h4 style={{ color: "#006895" }}>1. It potentially came from </h4>
+            <h4 style={{ color: "#006895" }}>1. It most likely came from </h4>
             <Card
               style={{
                 width: "95%",

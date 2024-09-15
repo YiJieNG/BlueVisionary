@@ -131,7 +131,12 @@ function Pollution() {
                         boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      <h5 style={{ padding: "10px 30px 0" }}>Filtered by:</h5>
+                      <h5 style={{ padding: "10px 30px 0" }}>Filtered by :</h5>
+                      <p style={{ padding: "0 30px 0" }}>
+                        [ACT has been excluded due to the absence of ocean
+                        pollution. Data collected from January 2021 to April
+                        2024.]
+                      </p>
                       <Row style={{ marginTop: 30 }}>
                         <Col>
                           <h3
