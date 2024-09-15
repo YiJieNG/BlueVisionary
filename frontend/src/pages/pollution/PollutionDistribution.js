@@ -35,7 +35,7 @@ function PollutionDistribution({ data, selectedState }) {
   useEffect(() => {
     axios
       .get(
-        `/api/get_pollution_type_suggestions/${selectedPollutionType}`
+        `http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`
       )
       .then((res) => {
         setPollutionSuggestion(res.data);
@@ -124,8 +124,9 @@ function PollutionDistribution({ data, selectedState }) {
           </Row>
           {/* <hr className="solid" /> */}
           <Row className="polytype-padding">
-            <h4 style={{ color: "#006895" }}>1. It potentially came from </h4>
+            <h4 style={{ color: "#006895" }}>1. It most likely came from </h4>
             <Card
+              variant="outlined"
               style={{
                 width: "95%",
                 margin: "0 auto",
@@ -207,7 +208,8 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent className="custom-card"
+                          <CardContent
+                            className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
@@ -261,7 +263,8 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent className="custom-card"
+                          <CardContent
+                            className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",
@@ -333,7 +336,8 @@ function PollutionDistribution({ data, selectedState }) {
                             border: "5px solid #003366",
                           }}
                         >
-                          <CardContent className="custom-card"
+                          <CardContent
+                            className="custom-card"
                             sx={{
                               display: "flex",
                               flexDirection: "column",

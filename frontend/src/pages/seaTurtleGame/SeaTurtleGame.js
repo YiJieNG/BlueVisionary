@@ -40,6 +40,7 @@ function Game() {
     highScore: 0,
     prevHighScore: 0,
   });
+  const [selectedFact, setSelectedFact] = useState(null);
   const ModelDisplay = lazy(() => import("./ModelDisplay"));
   const canvasRef = useRef(null); // Ref for canvas element
   const ctxRef = useRef(null); // Ref for canvas context
@@ -86,7 +87,7 @@ function Game() {
   const fetchStateData = async () => {
     try {
       const response = await axios.get(
-        "/api/minigame/state_info"
+        "http://127.0.0.1:5000/api/minigame/state_info"
       );
       setGameStateData(response.data);
     } catch (error) {
@@ -128,7 +129,7 @@ function Game() {
   const fetchAndShuffleFacts = async () => {
     try {
       const response = await axios.get(
-        "/api/minigame/fact_state_knowledge"
+        "http://127.0.0.1:5000/api/minigame/fact_state_knowledge"
       );
       setFactArray(response.data);
     } catch (error) {
@@ -139,7 +140,7 @@ function Game() {
   const fetchGeneralFact = async () => {
     try {
       const response = await axios.get(
-        "/api/minigame/general_fact"
+        "http://127.0.0.1:5000/api/minigame/general_fact"
       );
       setGeneralFactArray(response.data);
     } catch (error) {
@@ -153,7 +154,7 @@ function Game() {
         state: state,
         score: score,
       };
-      await axios.post("/api/minigame/updatescore", data);
+      await axios.post("http://127.0.0.1:5000/api/minigame/updatescore", data);
     } catch (error) {
       console.error("Error updating high score:", error);
     }
@@ -172,7 +173,7 @@ function Game() {
 
   // Function to load the content of the pop up message
   const loadContent = () => {
-    if (stateFactsArray.length === 0) {
+    if (!selectedFact) {
       return (
         <div>
           <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
@@ -182,9 +183,6 @@ function Game() {
         </div>
       );
     }
-
-    const randomIndex = Math.floor(Math.random() * stateFactsArray.length);
-    const selectedFact = stateFactsArray[randomIndex];
 
     return (
       <div>
@@ -295,6 +293,16 @@ function Game() {
   const handleBubbleCollision = () => {
     setIsPaused(true);
     setShowPopup(true);
+
+    if (stateFactsArray.length > 0) {
+      const randomIndex = Math.floor(Math.random() * stateFactsArray.length);
+      setSelectedFact(stateFactsArray[randomIndex]); // Store the selected fact in state
+    } else {
+      setSelectedFact({
+        title: "No Facts Available",
+        description: "No facts are available for this state.",
+      });
+    }
   };
 
   const closePopup = () => {
