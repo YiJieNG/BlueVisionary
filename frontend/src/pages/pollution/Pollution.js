@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
@@ -12,6 +12,8 @@ import PollutionLefMap from "./PollutionLefMap";
 import PollutionLineChart from "./PollutionLineChart";
 import PollutionDistribution from "./PollutionDistribution";
 import PollutionDataInsights from "./PollutionDataInsights";
+import { FaInfoCircle } from "react-icons/fa";
+
 const marks = [
   {
     value: 2021,
@@ -31,7 +33,7 @@ const marks = [
   },
   {
     value: 2025,
-    label: "ALL",
+    label: "All",
   },
 ];
 
@@ -44,6 +46,28 @@ function Pollution() {
   const [pollutionRadar, setPollutionRadar] = useState();
   // const [selectedPollutionType, setSelectedPollutionType] = useState("polyethylene");
   // const [pollutionSuggestion, setPollutionSuggestion] = useState();
+
+  const [tooltipStateOpen, setTooltipStateOpen] = useState(false);
+  const toggleState = () => setTooltipStateOpen(!tooltipStateOpen);
+
+  const [tooltipYearOpen, setTooltipYearOpen] = useState(false);
+  const toggleYear = () => setTooltipYearOpen(!tooltipYearOpen);
+
+  const stateInfo = () => {
+    return (
+      <div className="custom-tooltip">
+        <p>ACT has been excluded due to the absence of ocean pollution.</p>
+      </div>
+    );
+  };
+
+  const yearInfo = () => {
+    return (
+      <div className="custom-tooltip">
+        <p>Data collected from January 2021 to April 2024.</p>
+      </div>
+    );
+  };
 
   // Handle state dropdown change
   const handleStateChange = (event) => {
@@ -59,7 +83,7 @@ function Pollution() {
 
   useEffect(() => {
     axios
-      .get("/api/get_pollution_type_all")
+      .get("http://127.0.0.1:5000/api/get_pollution_type_all")
       .then((res) => {
         setPollutionLine(res.data);
       })
@@ -70,7 +94,7 @@ function Pollution() {
   useEffect(() => {
     // get heatmap data
     axios
-      .get(`/api/get_pollution_intensity/${selectedYear}`)
+      .get(`http://127.0.0.1:5000/api/get_pollution_intensity/${selectedYear}`)
       .then((res) => {
         setPollutionData(res.data);
         const statesForYear = res.data.map((p) => p.state);
@@ -84,7 +108,7 @@ function Pollution() {
       });
     // get radar data
     axios
-      .get(`/api/get_pollution_type/${selectedYear}`)
+      .get(`http://127.0.0.1:5000/api/get_pollution_type/${selectedYear}`)
       .then((res) => {
         setPollutionRadar(res.data);
       })
@@ -131,7 +155,7 @@ function Pollution() {
                         boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      <h5 style={{ padding: "10px 30px 0" }}>Filtered by:</h5>
+                      <h5 style={{ padding: "10px 30px 0" }}>Filtered by :</h5>
                       <Row style={{ marginTop: 30 }}>
                         <Col>
                           <h3
@@ -143,7 +167,27 @@ function Pollution() {
                             }}
                           >
                             State
-                          </h3>
+                            <span
+                              id="stateInfo"
+                              style={{
+                                marginLeft: "10px",
+                                paddingBottom: "10px",
+                                fontSize: "1.3rem",
+                                cursor: "pointer",
+                              }}
+                            >
+                              <FaInfoCircle />
+                            </span>
+                            <Tooltip
+                              isOpen={tooltipStateOpen}
+                              target="stateInfo"
+                              toggle={toggleState}
+                              placement="right"
+                              style={{ width: "200%" }}
+                            >
+                              {stateInfo}
+                            </Tooltip>
+                          </h3>{" "}
                           <Box sx={{ minWidth: 50, padding: "0 40px 0 30px" }}>
                             <FormControl fullWidth>
                               {/* <InputLabel
@@ -208,7 +252,28 @@ function Pollution() {
                               }}
                             >
                               Year Range
+                              <span
+                                id="yearInfo"
+                                style={{
+                                  marginLeft: "10px",
+                                  paddingBottom: "10px",
+                                  fontSize: "1.3rem",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                <FaInfoCircle />
+                              </span>
+                              <Tooltip
+                                isOpen={tooltipYearOpen}
+                                target="yearInfo"
+                                toggle={toggleYear}
+                                placement="right"
+                                style={{ width: "200%" }}
+                              >
+                                {yearInfo}
+                              </Tooltip>
                             </Typography>
+
                             <Slider
                               defaultValue={2024}
                               step={null}
@@ -226,10 +291,27 @@ function Pollution() {
 
                   <hr className="solid" />
                   <Row>
-                    <PollutionLineChart
-                      data={pollutionLine}
+                    <PollutionDistribution
+                      data={pollutionRadar}
                       selectedState={selectedState}
                     />
+                  </Row>
+                  <hr className="solid" />
+                  <Row>
+                    <Card
+                      style={{
+                        width: "95%",
+                        margin: "0 auto",
+                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <CardBody>
+                        <PollutionLineChart
+                          data={pollutionLine}
+                          selectedState={selectedState}
+                        />
+                      </CardBody>
+                    </Card>
                   </Row>
                   <hr className="solid" />
                   <Row>
@@ -249,10 +331,24 @@ function Pollution() {
                   </Row>
                   <hr className="solid" />
                   <Row>
-                    <PollutionDistribution
-                      data={pollutionRadar}
-                      selectedState={selectedState}
-                    />
+                    <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
+                      <Card
+                        style={{
+                          width: "95%",
+                          margin: "10px",
+                          padding: "20px",
+                          boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                        }}
+                      >
+                        <h4>
+                          <b>Data References</b>
+                        </h4>
+                        <p>
+                          <strong>MicroPlastic distribution dataset: </strong>
+                          https://portal.aodn.org.au/search?uuid=fd3d74b0-0234-4864-bbc6-751c44e41f5e
+                        </p>
+                      </Card>
+                    </Col>
                   </Row>
                 </Col>
                 <Col md={6}>
