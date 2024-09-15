@@ -83,7 +83,7 @@ function Pollution() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/api/get_pollution_type_all")
+      .get("/api/get_pollution_type_all")
       .then((res) => {
         setPollutionLine(res.data);
       })
@@ -94,7 +94,7 @@ function Pollution() {
   useEffect(() => {
     // get heatmap data
     axios
-      .get(`http://127.0.0.1:5000/api/get_pollution_intensity/${selectedYear}`)
+      .get(`/api/get_pollution_intensity/${selectedYear}`)
       .then((res) => {
         setPollutionData(res.data);
         const statesForYear = res.data.map((p) => p.state);
@@ -108,7 +108,7 @@ function Pollution() {
       });
     // get radar data
     axios
-      .get(`http://127.0.0.1:5000/api/get_pollution_type/${selectedYear}`)
+      .get(`/api/get_pollution_type/${selectedYear}`)
       .then((res) => {
         setPollutionRadar(res.data);
       })
