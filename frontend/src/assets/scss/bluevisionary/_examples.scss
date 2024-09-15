@@ -1358,6 +1358,17 @@ div .span-h3 {
   margin-bottom: 0;
   padding-right: 1rem;
 }
+div.info.legend {
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
+  padding: 5px;
+  border-radius: 10px;
+}
+b.red {
+  color: red;
+}
+b.green {
+  color: #7efcaa;
+}
 // .MuiCard-root {
 //   background-color: rgb(202, 225, 246) !important;
 // }
@@ -1406,6 +1417,11 @@ div .span-h3 {
 }
 .scrollable-suggestion-content {
   max-height: 35vh;
+  overflow-y: auto;
+}
+.scrollable-linechart-content {
+  max-height: 35vh;
+  width: 95%;
   overflow-y: auto;
 }
 .scrollable-other-content {

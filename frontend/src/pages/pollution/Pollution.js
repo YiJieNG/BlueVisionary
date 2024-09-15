@@ -11,6 +11,7 @@ import axios from "axios";
 import PollutionLefMap from "./PollutionLefMap";
 import PollutionLineChart from "./PollutionLineChart";
 import PollutionDistribution from "./PollutionDistribution";
+import PollutionDataInsights from "./PollutionDataInsights";
 const marks = [
   {
     value: 2021,
@@ -30,7 +31,7 @@ const marks = [
   },
   {
     value: 2025,
-    label: "all",
+    label: "ALL",
   },
 ];
 
@@ -39,7 +40,7 @@ function Pollution() {
   const [selectedYear, setSelectedYear] = useState("2024");
   const [pollutionData, setPollutionData] = useState(); // Pollution data from backend
   const [filteredStates, setFilteredStates] = useState([]); // All available stated
-  const [pollutionType, setPollutionType] = useState(); // Pollution type data
+  const [pollutionLine, setPollutionLine] = useState(); // Pollution type data
   const [pollutionRadar, setPollutionRadar] = useState();
   // const [selectedPollutionType, setSelectedPollutionType] = useState("polyethylene");
   // const [pollutionSuggestion, setPollutionSuggestion] = useState();
@@ -56,27 +57,11 @@ function Pollution() {
     setSelectedYear(year);
   };
 
-  // // Handle radar click event to change selected pollution type
-  // const handlePollutionTypeChange = (newType) => {
-  //     setSelectedPollutionType(newType);
-  // };
-
-  // useEffect(() => {
-  //     axios
-  //         .get(`http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`)
-  //         .then((res) => {
-  //             setPollutionSuggestion(res.data);
-  //         })
-  //         .catch((err) => {
-  //             console.log(err);
-  //         });
-  // }, [selectedPollutionType]);
-
   useEffect(() => {
     axios
       .get("http://127.0.0.1:5000/api/get_pollution_type_all")
       .then((res) => {
-        setPollutionType(res.data);
+        setPollutionLine(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +96,7 @@ function Pollution() {
     <>
       <div className="section-with-space section-pollution">
         <div className="marine-life-content">
-          {pollutionData && pollutionType && pollutionRadar && (
+          {pollutionData && pollutionLine && pollutionRadar && (
             <Container fluid>
               <Row>
                 <Col
@@ -226,8 +211,8 @@ function Pollution() {
                             </Typography>
                             <Slider
                               defaultValue={2024}
-                              step={1}
-                              valueLabelDisplay="auto"
+                              step={null}
+                              // valueLabelDisplay="auto"
                               min={2021}
                               max={2025}
                               marks={marks}
@@ -241,7 +226,14 @@ function Pollution() {
 
                   <hr className="solid" />
                   <Row>
-                    <PollutionLineChart data={pollutionType} />
+                    <PollutionLineChart
+                      data={pollutionLine}
+                      selectedState={selectedState}
+                    />
+                  </Row>
+                  <hr className="solid" />
+                  <Row className="scrollable-linechart-content">
+                    <PollutionDataInsights selectedState={selectedState} />
                   </Row>
                   <hr className="solid" />
                   <Row>
@@ -250,21 +242,6 @@ function Pollution() {
                       selectedState={selectedState}
                     />
                   </Row>
-                  {/* <Row style={{ marginTop: 10}}>
-                                        <Card className="hover-card" variant="outlined" style={{ maxWidth: 600, margin: "0 auto" }}>
-                                            <CardContent className="chart-container">
-                                                <Box className="line-chart-wrapper">
-                                                    <div className="chart">
-                                                        <PollutionLineChart data={pollutionType} />
-                                                    </div>
-                                                </Box>
-                                                <Typography className="hover-text" variant="body2" component="div">
-                                                    Trend for pollution
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-
-                                    </Row> */}
                 </Col>
                 <Col md={6}>
                   <PollutionLefMap
