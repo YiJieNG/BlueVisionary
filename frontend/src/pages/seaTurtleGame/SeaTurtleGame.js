@@ -163,13 +163,14 @@ function Game() {
   useEffect(() => {
     if (score > gameState.highScore) {
       updateHighScore(gameState.state, score).then(() => {
-        if (gameState.prevHighScore === gameState.highScore) {
-          gameState.prevHighScore = gameState.highScore;
-        }
-        gameState.highScore = score; // Update the gameState after updating the high score
+        setGameState((prevState) => ({
+          ...prevState,
+          prevHighScore: prevState.highScore,
+          highScore: score,
+        }));
       });
     }
-  }, [score, gameState, updateHighScore]);
+  }, [score, gameState.state, gameState.highScore, updateHighScore]);
 
   // Function to load the content of the pop up message
   const loadContent = () => {
@@ -616,8 +617,8 @@ function Game() {
                 <>
                   <p>
                     You are just{" "}
-                    <strong>{gameState.highScore - score} points </strong> away
-                    from the top sea turtle!
+                    <strong>{gameState.prevHighScore - score} points </strong>{" "}
+                    away from the top sea turtle!
                   </p>
                   <p>
                     You are{" "}
@@ -678,8 +679,8 @@ function Game() {
                 <>
                   <p>
                     You just broke the record with{" "}
-                    <strong>{score - gameState.highScore} points </strong> more
-                    from the previous top sea turtle!
+                    <strong>{score - gameState.prevHighScore} points </strong>{" "}
+                    more than the previous top sea turtle!
                   </p>
                   <p>
                     <strong>CONGRATULATIONS!</strong> You are{" "}
