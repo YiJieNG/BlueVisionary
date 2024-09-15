@@ -98,9 +98,9 @@ function BlueNavbar() {
             </NavItem>
             <NavItem>
               <NavLink
-                href="/minigame"
+                href="/seaturtlegame"
                 className={
-                  normalizePath(location.pathname) === "/minigame"
+                  normalizePath(location.pathname) === "/seaturtlegame"
                     ? "active"
                     : ""
                 }
