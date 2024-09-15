@@ -126,6 +126,7 @@ function PollutionDistribution({ data, selectedState }) {
           <Row className="polytype-padding">
             <h4 style={{ color: "#006895" }}>1. It most likely came from </h4>
             <Card
+              variant="outlined"
               style={{
                 width: "95%",
                 margin: "0 auto",

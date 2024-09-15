@@ -291,10 +291,20 @@ function Pollution() {
 
                   <hr className="solid" />
                   <Row>
-                    <PollutionLineChart
-                      data={pollutionLine}
-                      selectedState={selectedState}
-                    />
+                    <Card
+                      style={{
+                        width: "95%",
+                        margin: "0 auto",
+                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <CardBody>
+                        <PollutionLineChart
+                          data={pollutionLine}
+                          selectedState={selectedState}
+                        />
+                      </CardBody>
+                    </Card>
                   </Row>
                   <hr className="solid" />
                   <Row>
@@ -318,6 +328,27 @@ function Pollution() {
                       data={pollutionRadar}
                       selectedState={selectedState}
                     />
+                  </Row>
+                  <hr className="solid" />
+                  <Row>
+                    <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
+                      <Card
+                        style={{
+                          width: "95%",
+                          margin: "20px",
+                          padding: "20px",
+                          boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                        }}
+                      >
+                        <h4>
+                          <b>Data References</b>
+                        </h4>
+                        <p>
+                          <strong>MicroPlastic distribution dataset: </strong>
+                          https://portal.aodn.org.au/search?uuid=fd3d74b0-0234-4864-bbc6-751c44e41f5e
+                        </p>
+                      </Card>
+                    </Col>
                   </Row>
                 </Col>
                 <Col md={6}>
