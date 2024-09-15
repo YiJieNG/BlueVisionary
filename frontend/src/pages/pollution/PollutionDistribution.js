@@ -35,7 +35,7 @@ function PollutionDistribution({ data, selectedState }) {
   useEffect(() => {
     axios
       .get(
-        `http://127.0.0.1:5000/api/get_pollution_type_suggestions/${selectedPollutionType}`
+        `/api/get_pollution_type_suggestions/${selectedPollutionType}`
       )
       .then((res) => {
         setPollutionSuggestion(res.data);
