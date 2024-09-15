@@ -125,7 +125,13 @@ function PollutionDistribution({ data, selectedState }) {
           {/* <hr className="solid" /> */}
           <Row className="polytype-padding">
             <h4 style={{ color: "#006895" }}>1. It potentially came from </h4>
-            <Card style={{ width: "95%", margin: "0 auto" }}>
+            <Card
+              style={{
+                width: "95%",
+                margin: "0 auto",
+                boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <CardContent>
                 <div>
                   {pollutionSuggestion.sources.map((source, index) => (
@@ -145,7 +151,11 @@ function PollutionDistribution({ data, selectedState }) {
             <Card
               className="pollution-card"
               variant="outlined"
-              style={{ width: "95%", margin: "0 auto" }}
+              style={{
+                width: "95%",
+                margin: "0 auto",
+                boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+              }}
             >
               <CardContent>
                 <Row className="scrollable-suggestion-content">
@@ -296,7 +306,11 @@ function PollutionDistribution({ data, selectedState }) {
               <Card
                 className="pollution-card"
                 variant="outlined"
-                style={{ width: "95%", margin: "0 auto" }}
+                style={{
+                  width: "95%",
+                  margin: "0 auto",
+                  boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                }}
               >
                 <CardContent>
                   <Row
