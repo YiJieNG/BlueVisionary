@@ -86,7 +86,7 @@ function Game() {
   const fetchStateData = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:5000/api/minigame/state_info"
+        "/api/minigame/state_info"
       );
       setGameStateData(response.data);
     } catch (error) {
@@ -128,7 +128,7 @@ function Game() {
   const fetchAndShuffleFacts = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:5000/api/minigame/fact_state_knowledge"
+        "/api/minigame/fact_state_knowledge"
       );
       setFactArray(response.data);
     } catch (error) {
@@ -139,7 +139,7 @@ function Game() {
   const fetchGeneralFact = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:5000/api/minigame/general_fact"
+        "/api/minigame/general_fact"
       );
       setGeneralFactArray(response.data);
     } catch (error) {
@@ -153,7 +153,7 @@ function Game() {
         state: state,
         score: score,
       };
-      await axios.post("http://127.0.0.1:5000/api/minigame/updatescore", data);
+      await axios.post("/api/minigame/updatescore", data);
     } catch (error) {
       console.error("Error updating high score:", error);
     }

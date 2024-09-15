@@ -21,7 +21,7 @@ function BlueModal({
     if (!isOpen) return;
     axios
       .get(
-        `http://127.0.0.1:5000/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`
+        `/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`
       )
       .then((res) => {
         setDescriptions(res.data);
