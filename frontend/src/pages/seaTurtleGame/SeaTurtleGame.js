@@ -63,7 +63,9 @@ function Game() {
   const [gameStateData, setGameStateData] = useState([]);
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  const toggle = () => setTooltipOpen(!tooltipOpen);
+  const toggle = useCallback(() => {
+    setTooltipOpen((prevState) => !prevState);
+  }, []);
 
   const turtleClassInfo = () => {
     return (
@@ -86,9 +88,7 @@ function Game() {
 
   const fetchStateData = async () => {
     try {
-      const response = await axios.get(
-        "/api/minigame/state_info"
-      );
+      const response = await axios.get("/api/minigame/state_info");
       setGameStateData(response.data);
     } catch (error) {
       console.error("Error fetching questions:", error);
@@ -128,9 +128,7 @@ function Game() {
   // Function to fetch and shuffle questions
   const fetchAndShuffleFacts = async () => {
     try {
-      const response = await axios.get(
-        "/api/minigame/fact_state_knowledge"
-      );
+      const response = await axios.get("/api/minigame/fact_state_knowledge");
       setFactArray(response.data);
     } catch (error) {
       console.error("Error fetching fact:", error);
@@ -139,9 +137,7 @@ function Game() {
 
   const fetchGeneralFact = async () => {
     try {
-      const response = await axios.get(
-        "/api/minigame/general_fact"
-      );
+      const response = await axios.get("/api/minigame/general_fact");
       setGeneralFactArray(response.data);
     } catch (error) {
       console.error("Error fetching general fact:", error);
@@ -203,7 +199,6 @@ function Game() {
     // Set a random general fact when component mounts
     if (generalFactArray.length > 0) {
       const randomIndex = Math.floor(Math.random() * generalFactArray.length);
-      console.log(randomIndex);
       setSelectedGeneralFact(generalFactArray[randomIndex]);
     }
   }, [score, gameState, updateHighScore]);
