@@ -75,7 +75,10 @@ function PollutionLineChart({ data, selectedState }) {
 
   return (
     <div style={{ padding: "13px" }}>
-      <h4>Polymer Trends by Type: 2021–2024</h4>
+      <h4>
+        Polymer Trends of{" "}
+        {selectedState === "ALL" ? "Australia" : selectedState}
+      </h4>
       <div style={{ height: "400px", width: "100%" }}>
         {selectedData && <Line data={selectedData} options={options} />}
       </div>
