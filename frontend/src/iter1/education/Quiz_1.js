@@ -11,7 +11,7 @@ function Quiz_1() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState("")
+  const [selectedAnswer, setSelectedAnswer] = useState("");
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
 
   // Function to fetch and shuffle questions
@@ -77,8 +77,6 @@ function Quiz_1() {
         optionIndex: optionIndex,
       };
 
-      console.log(data);
-
       // Send the data to the backend using POST request
       // await axios.post("https://www.bluevisionary.studio/api/update_option_count", data);
       await axios.post("/api/update_option_count", data);
@@ -143,7 +141,9 @@ function Quiz_1() {
     const question = questions[currentQuestion];
     return (
       <div className="question-page">
-        <h2>Q{currentQuestionNumber}: {question.questionText}</h2>
+        <h2>
+          Q{currentQuestionNumber}: {question.questionText}
+        </h2>
         <div className="options-grid">
           {question.options.map((option, index) => (
             <Button
