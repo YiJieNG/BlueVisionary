@@ -300,25 +300,23 @@ function Pollution() {
                     What You Need to Know About Polymer Trends{" "}
                   </span>
                   <Row className="polytype-padding">
-                    <div>
-                      <h4 style={{ color: "#006895" }}>
-                        1. Polymer Trends by Type{" "}
-                      </h4>
-                      <Card
-                        style={{
-                          width: "95%",
-                          margin: "0 auto",
-                          boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
-                        }}
-                      >
-                        <CardBody>
-                          <PollutionLineChart
-                            data={pollutionLine}
-                            selectedState={selectedState}
-                          />
-                        </CardBody>
-                      </Card>
-                    </div>
+                    <h4 style={{ color: "#006895" }}>
+                      1. Polymer Trends by Type{" "}
+                    </h4>
+                    <Card
+                      style={{
+                        width: "95%",
+                        margin: "0 auto",
+                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <CardBody>
+                        <PollutionLineChart
+                          data={pollutionLine}
+                          selectedState={selectedState}
+                        />
+                      </CardBody>
+                    </Card>
                   </Row>
                   <h4 style={{ color: "#006895" }}>
                     2. What you can learn and do from the trends
