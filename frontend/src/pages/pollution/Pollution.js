@@ -325,7 +325,7 @@ function Pollution() {
                         boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      <CardBody>
+                      <CardBody style={{paddingRight: 25}}>
                         <PollutionDataInsights selectedState={selectedState} />
                       </CardBody>
                     </Card>

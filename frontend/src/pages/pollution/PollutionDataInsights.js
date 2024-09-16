@@ -25,9 +25,10 @@ function PollutionCard({ title, content }) {
                         justifyContent: "space-between",
                         alignItems: "center",
                         backgroundColor: "#2776c5",
+                        height: "60px",
                     }}
                 >
-                    <h5 style={{ color: "white" }}>
+                    <h5 style={{ color: "white", margin: 0 }}>
                         <b>{title}</b>
                     </h5>
 
@@ -59,7 +60,7 @@ function PollutionDataInsights({ selectedState }) {
     if (selectedState === "NSW") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>NSW Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -75,6 +76,7 @@ function PollutionDataInsights({ selectedState }) {
                                 for packaged goods during 2022, potentially due to 
                                 <strong>consumer behaviour shifts during the COVID-19 pandemic</strong>.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Implement stricter recycling programs
                                 and promote alternatives such as cloth bags, glass bottles, and
@@ -93,6 +95,7 @@ function PollutionDataInsights({ selectedState }) {
                                 could be linked to <strong>higher production of medical creams</strong> 
                                 during the pandemic.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote natural alternatives in
                                 pharmaceuticals and skincare, such as plant-based products.
@@ -100,23 +103,29 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
-                </div>
-                <div>
-                    <strong>Urban Consumption:</strong> New South Wales (NSW), being one of
-                    Australia's most populous and urbanized states, likely saw higher
-                    plastic consumption in sectors such as{" "}
-                    <strong>household items, food packaging, and pharmaceuticals</strong>. To reduce
-                    the plastic pollution, you can enhance sustainability practices,
-                    promote alternatives, and continue regulatory efforts.
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Urban Consumption:</strong> New South Wales (NSW), being one of
+                                Australia's most populous and urbanized states, likely saw higher
+                                plastic consumption in sectors such as{" "}
+                                <strong>household items, food packaging, and pharmaceuticals</strong>. To reduce
+                                the plastic pollution, you can enhance sustainability practices,
+                                promote alternatives, and continue regulatory efforts.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </>
         );
     } else if (selectedState === "NT") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>NT Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -132,6 +141,7 @@ function PollutionDataInsights({ selectedState }) {
                                 may have been driven by external market forces or local
                                 production increases.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote natural skincare and
                                 pharmaceutical alternatives, such as plant-based lotions, to
@@ -140,22 +150,28 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
-                </div>
-                <div>
-                    <strong>Limited Industrial and Urban Consumption:</strong> The overall low
-                    numbers in NT, compared to more urbanized regions, can be explained by
-                    the <strong>smaller population and less industrial activity</strong>. NT's
-                    relatively lower levels of plastic waste are likely due to less
-                    reliance on single-use plastics and reduced consumer demand.
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Limited Industrial and Urban Consumption:</strong> The overall low
+                                numbers in NT, compared to more urbanized regions, can be explained by
+                                the <strong>smaller population and less industrial activity</strong>. NT's
+                                relatively lower levels of plastic waste are likely due to less
+                                reliance on single-use plastics and reduced consumer demand.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </>
         );
     } else if (selectedState === "QLD") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>QLD Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -173,6 +189,7 @@ function PollutionDataInsights({ selectedState }) {
                                 awareness of plastic pollution and a shift toward more
                                 sustainable practices.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote alternatives like glass bottles,
                                 reusable containers, and cloth bags to reduce the usage of
@@ -189,6 +206,7 @@ function PollutionDataInsights({ selectedState }) {
                                 increased demand for <strong>consumer goods</strong>, such as plastic
                                 bottles and food containers.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Encourage businesses and households to
                                 adopt reusable food containers made from sustainable materials
@@ -198,22 +216,29 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
-                </div>
-                <div>
-                    <strong>Urban and Industrial Consumption:</strong> Queensland, being a{" "}
-                    <strong>highly urbanized state</strong>, likely experienced higher levels of
-                    plastic consumption for household items, packaging, and pharmaceutical
-                    products. The increase in thermoplastic use may be tied to the state's
-                    reliance on <strong>automotive</strong> and <strong>packaging</strong> industries.
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Urban and Industrial Consumption:</strong> Queensland, being a{" "}
+                                <strong>highly urbanized state</strong>, likely experienced higher levels of
+                                plastic consumption for household items, packaging, and pharmaceutical
+                                products. The increase in thermoplastic use may be tied to the state's
+                                reliance on <strong>automotive</strong> and <strong>packaging</strong> industries.
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
             </>
         );
     } else if (selectedState === "SA") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>SA Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -231,6 +256,7 @@ function PollutionDataInsights({ selectedState }) {
                                 <strong>significant efforts to reduce reliance</strong> on polyethylene
                                 and transition toward sustainable alternatives.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote alternatives such as glass
                                 bottles, reusable containers, and cloth bags to help further
@@ -253,6 +279,7 @@ function PollutionDataInsights({ selectedState }) {
                                 <strong>greater awareness of plastic pollution</strong> and the adoption
                                 of more sustainable practices.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Encourage households and businesses to
                                 use reusable food containers, stainless-steel utensils, and
@@ -261,29 +288,36 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
-                </div>
-                <div>
-                    <strong>Pandemic Influence (2021-2022):</strong> The sharp rise in polymers such
-                    as polyethylene and polypropylene in 2022 could be attributed to
-                    increased consumption of disposable plastics for hygiene purposes
-                    during the pandemic, as well as a rise in packaged goods consumption.
-                </div>
-                <div>
-                    <strong>Sustainability Efforts (Post-2022):</strong> The significant decline in
-                    polymer usage, especially polyethylene and polypropylene, after 2022
-                    reflects successful sustainability campaigns and government
-                    regulations aimed at reducing plastic waste. There may have been a
-                    significant push towards banning single-use plastics and promoting
-                    eco-friendly alternatives.
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Pandemic Influence (2021-2022):</strong> The sharp rise in polymers such
+                                as polyethylene and polypropylene in 2022 could be attributed to
+                                increased consumption of disposable plastics for hygiene purposes
+                                during the pandemic, as well as a rise in packaged goods consumption.
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Sustainability Efforts (Post-2022):</strong> The significant decline in
+                                polymer usage, especially polyethylene and polypropylene, after 2022
+                                reflects successful sustainability campaigns and government
+                                regulations aimed at reducing plastic waste. There may have been a
+                                significant push towards banning single-use plastics and promoting
+                                eco-friendly alternatives.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </>
         );
     } else if (selectedState === "TAS") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>TAS Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -299,6 +333,7 @@ function PollutionDataInsights({ selectedState }) {
                                 that 2024 is not complete, the trend may continue rising if not
                                 addressed.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Encourage consumers and businesses to
                                 adopt alternatives for the polymer types mentioned.
@@ -318,6 +353,7 @@ function PollutionDataInsights({ selectedState }) {
                                 This trend could reflect shifts in consumer behaviour or
                                 increased production.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote sustainable alternatives to
                                 polypropylene, such as reusable containers and stainless-steel
@@ -326,22 +362,30 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Tourism and Population Growth:</strong> The growth in polypropylene and
+                                polyethylene usage could be linked to increasing tourism or population
+                                growth in Tasmania, leading to a rise in packaging, disposable
+                                plastics, and household products. This could be driving the sudden
+                                spikes seen in 2024.
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
-                <div>
-                    <strong>Tourism and Population Growth:</strong> The growth in polypropylene and
-                    polyethylene usage could be linked to increasing tourism or population
-                    growth in Tasmania, leading to a rise in packaging, disposable
-                    plastics, and household products. This could be driving the sudden
-                    spikes seen in 2024.
-                </div>
+
             </>
         );
     } else if (selectedState === "VIC") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>VIC Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -357,6 +401,7 @@ function PollutionDataInsights({ selectedState }) {
                                 goods and packaging demands, potentially driven by 
                                 <strong>population growth or industrial needs</strong> in Victoria.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote alternatives such as reusable
                                 containers, glass bottles, and metal packaging to maintain a
@@ -364,7 +409,7 @@ function PollutionDataInsights({ selectedState }) {
                             </li>
                         </ul>
                         `} />
-                    <PollutionCard title={"2. Polypropylene and Polyethylene Glycol"} content={`
+                    <PollutionCard title={"2. Polypropylene & Polyethylene Glycol"} content={`
                         <ul>
                             <li>
                                 <strong>Trend:</strong> Polypropylene increased slightly from 2021 to
@@ -382,6 +427,7 @@ function PollutionDataInsights({ selectedState }) {
                                 </strong>
                                 .
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Continue encouraging businesses and
                                 consumers to adopt reusable food containers, stainless-steel
@@ -392,29 +438,36 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
-                </div>
-                <div>
-                    <strong>Industrial Demand and Consumer Behaviour:</strong> The increase in
-                    polyethylene and polypropylene usage in 2021–2023 likely reflects
-                    consumer <strong>reliance on plastic packaging and industrial demand</strong>{" "}
-                    for durable plastic materials.
-                </div>
-                <div>
-                    <strong>Sustainability Efforts and Policies:</strong> Victoria's efforts to
-                    reduce plastic pollution, through initiatives such as{" "}
-                    <strong>recycling programs and bans on single-use plastics</strong>, may have
-                    contributed to the decline in polymer use in 2023. The drop in
-                    polypropylene and polyethylene glycol usage, in particular, indicates
-                    growing awareness of environmental concerns.
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Industrial Demand and Consumer Behaviour:</strong> The increase in
+                                polyethylene and polypropylene usage in 2021–2023 likely reflects
+                                consumer <strong>reliance on plastic packaging and industrial demand</strong>{" "}
+                                for durable plastic materials.
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Sustainability Efforts and Policies:</strong> Victoria's efforts to
+                                reduce plastic pollution, through initiatives such as{" "}
+                                <strong>recycling programs and bans on single-use plastics</strong>, may have
+                                contributed to the decline in polymer use in 2023. The drop in
+                                polypropylene and polyethylene glycol usage, in particular, indicates
+                                growing awareness of environmental concerns.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </>
         );
     } else if (selectedState === "WA") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>WA Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -428,6 +481,7 @@ function PollutionDataInsights({ selectedState }) {
                                 rise in polyethylene could be due to 
                                 <strong>increased packaging demands or higher production</strong> in WA.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Continue to promote alternatives such as
                                 reusable containers, glass bottles, and cloth bags to ensure the
@@ -435,7 +489,7 @@ function PollutionDataInsights({ selectedState }) {
                             </li>
                         </ul>
                         `} />
-                    <PollutionCard title={"2. Polypropylene and Polyethylene Glycol"} content={`
+                    <PollutionCard title={"2. Polypropylene & Polyethylene Glycol"} content={`
                         <ul>
                             <li>
                                 <strong>Trend:</strong> Polypropylene usage spiked from 2021 to 2022,
@@ -447,6 +501,7 @@ function PollutionDataInsights({ selectedState }) {
                                 demand for <strong>household goods and packaging materials</strong> as
                                 well as <strong>pharmaceutical or cosmetics industries</strong>.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Encourage the use of alternatives such
                                 as reusable food containers and metal utensils to further reduce
@@ -468,6 +523,7 @@ function PollutionDataInsights({ selectedState }) {
                                 concerning, as polystyrene is <strong>not easily recyclable</strong> and
                                 is <strong>harmful</strong> to the environment.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Focus on stricter regulations and
                                 promote biodegradable packaging alternatives, such as
@@ -476,28 +532,36 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Industrial and Consumer Demand:</strong> The rise in polyethylene and
+                                polypropylene usage from 2021 to 2023 could be due to higher demands
+                                in WA’s packaging and household goods industries as well as higher
+                                production of hygiene products or pharmaceuticals.
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Concerning Polystyrene Spike in 2024:</strong> The sharp increase in
+                                polystyrene in 2024 is concerning, as it indicates a resurgence of
+                                this environmentally harmful plastic. The rise may be linked to
+                                increased packaging or industrial usage, requiring urgent intervention
+                                to promote biodegradable alternatives.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div>
-                    <strong>Industrial and Consumer Demand:</strong> The rise in polyethylene and
-                    polypropylene usage from 2021 to 2023 could be due to higher demands
-                    in WA’s packaging and household goods industries as well as higher
-                    production of hygiene products or pharmaceuticals.
-                </div>
-                <div>
-                    <strong>Concerning Polystyrene Spike in 2024:</strong> The sharp increase in
-                    polystyrene in 2024 is concerning, as it indicates a resurgence of
-                    this environmentally harmful plastic. The rise may be linked to
-                    increased packaging or industrial usage, requiring urgent intervention
-                    to promote biodegradable alternatives.
-                </div>
+
             </>
         );
     } else if (selectedState === "ALL") {
         return (
             <>
-                <div>
+                <div style={{ padding: 13 }}>
                     <h4>Australia Polymer Trend Insights:</h4>
                 </div>
                 <div>
@@ -519,6 +583,7 @@ function PollutionDataInsights({ selectedState }) {
                                 plastics and the promotion of <strong>sustainable alternatives</strong>,
                                 have <strong>started to take effect</strong>.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Continue promoting alternatives to
                                 polyethylene, such as glass, stainless steel, and reusable
@@ -533,6 +598,7 @@ function PollutionDataInsights({ selectedState }) {
                                 <strong>Trend:</strong> Exactly the same as Polyethylene in terms of the
                                 trend pattern except that the peak amount is 159.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Encourage businesses and consumers to
                                 switch to reusable containers and other sustainable options to
@@ -549,6 +615,7 @@ function PollutionDataInsights({ selectedState }) {
                                 increase in polyethylene glycol use could be tied to a rise in
                                 demand from the pharmaceutical and cosmetics industries.
                             </li>
+                            <br />
                             <li>
                                 <strong>What you can do:</strong> Promote natural and plant-based
                                 alternatives to polyethylene glycol in industries such as
@@ -557,30 +624,38 @@ function PollutionDataInsights({ selectedState }) {
                         </ul>
                         `} />
                 </div>
-                <div>
-                    <h4>Potential Cause for general trend</h4>
-                </div>
-                <div>
-                    <strong>Pandemic Influence (2021-2022):</strong> The significant spike in
-                    polymers like polyethylene, polypropylene, and polyethylene glycol in
-                    2022 can be attributed to the pandemic. The increased demand for
-                    packaging materials, hygiene products, and medical supplies likely
-                    drove up polymer usage during this period.
-                </div>
-                <div>
-                    <strong>Sustainability Efforts and Regulations:</strong> The subsequent decline
-                    in most polymers, especially polyethylene and polypropylene, from 2022
-                    to 2023, indicates the growing impact of sustainability initiatives
-                    and regulatory efforts to reduce plastic pollution. These measures
-                    have encouraged consumers and industries to adopt more eco-friendly
-                    alternatives.
-                </div>
-                <div>
-                    <strong>Concerning Increase in Polystyrene:</strong> The gradual increase in
-                    polystyrene usage, particularly in 2024, is concerning, as it suggests
-                    a return to this environmentally harmful material. This rise may be
-                    due to specific sectors, such as packaging and electronics, relying on
-                    polystyrene for cost-effective solutions.
+                <div style={{ padding: 13 }}>
+                    <div>
+                        <h4>Potential Cause for general trend</h4>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>Pandemic Influence (2021-2022):</strong> The significant spike in
+                                polymers like polyethylene, polypropylene, and polyethylene glycol in
+                                2022 can be attributed to the pandemic. The increased demand for
+                                packaging materials, hygiene products, and medical supplies likely
+                                drove up polymer usage during this period.
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Sustainability Efforts and Regulations:</strong> The subsequent decline
+                                in most polymers, especially polyethylene and polypropylene, from 2022
+                                to 2023, indicates the growing impact of sustainability initiatives
+                                and regulatory efforts to reduce plastic pollution. These measures
+                                have encouraged consumers and industries to adopt more eco-friendly
+                                alternatives.
+                            </li>
+                            <br />
+                            <li>
+                                <strong>Concerning Increase in Polystyrene:</strong> The gradual increase in
+                                polystyrene usage, particularly in 2024, is concerning, as it suggests
+                                a return to this environmentally harmful material. This rise may be
+                                due to specific sectors, such as packaging and electronics, relying on
+                                polystyrene for cost-effective solutions.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </>
         );
