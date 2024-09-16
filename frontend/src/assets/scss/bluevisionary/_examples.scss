@@ -1366,6 +1366,10 @@ div.info.legend {
 .card-body strong {
   font-weight: bold;
 }
+.card-body subtitle {
+  font-weight: bold;
+  color: #0054a8;
+}
 strong.red {
   color: red;
 }
@@ -1373,7 +1377,7 @@ strong.green {
   color: #46cf76;
 }
 .custom-card {
-  padding-bottom: 0px !important
+  padding-bottom: 0px !important;
 }
 // .pollution-card {
 //   background-color: rgb(255, 255, 255) !important;

@@ -83,7 +83,7 @@ function Pollution() {
 
   useEffect(() => {
     axios
-      .get("/api/get_pollution_type_all")
+      .get("http://127.0.0.1:5000/api/get_pollution_type_all")
       .then((res) => {
         setPollutionLine(res.data);
       })
@@ -94,7 +94,7 @@ function Pollution() {
   useEffect(() => {
     // get heatmap data
     axios
-      .get(`/api/get_pollution_intensity/${selectedYear}`)
+      .get(`http://127.0.0.1:5000/api/get_pollution_intensity/${selectedYear}`)
       .then((res) => {
         setPollutionData(res.data);
         const statesForYear = res.data.map((p) => p.state);
@@ -108,7 +108,7 @@ function Pollution() {
       });
     // get radar data
     axios
-      .get(`/api/get_pollution_type/${selectedYear}`)
+      .get(`http://127.0.0.1:5000/api/get_pollution_type/${selectedYear}`)
       .then((res) => {
         setPollutionRadar(res.data);
       })
@@ -148,7 +148,6 @@ function Pollution() {
                       products.
                     </h5>
                   </Row>
-
                   <Card>
                     <CardBody
                       style={{
@@ -289,7 +288,6 @@ function Pollution() {
                       </Row>
                     </CardBody>
                   </Card>
-
                   <hr className="solid" />
                   <Row>
                     <PollutionDistribution
@@ -298,24 +296,34 @@ function Pollution() {
                     />
                   </Row>
                   <hr className="solid" />
-                  <Row>
-                    <Card
-                      style={{
-                        width: "95%",
-                        margin: "0 auto",
-                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      <CardBody>
-                        <PollutionLineChart
-                          data={pollutionLine}
-                          selectedState={selectedState}
-                        />
-                      </CardBody>
-                    </Card>
+                  <span className="span-h3">
+                    What You Need to Know About Polymer Trends{" "}
+                  </span>
+                  <Row className="polytype-padding">
+                    <div>
+                      <h4 style={{ color: "#006895" }}>
+                        1. Polymer Trends by Type{" "}
+                      </h4>
+                      <Card
+                        style={{
+                          width: "95%",
+                          margin: "0 auto",
+                          boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
+                        }}
+                      >
+                        <CardBody>
+                          <PollutionLineChart
+                            data={pollutionLine}
+                            selectedState={selectedState}
+                          />
+                        </CardBody>
+                      </Card>
+                    </div>
                   </Row>
-                  <hr className="solid" />
-                  <Row>
+                  <h4 style={{ color: "#006895" }}>
+                    2. What you can learn and do from the trends
+                  </h4>{" "}
+                  <Row className="polytype-padding">
                     <Card
                       className="scrollable-linechart-content pollution-card"
                       variant="outlined"
@@ -325,13 +333,13 @@ function Pollution() {
                         boxShadow: "0 8px 10px rgba(0, 0, 0, 0.1)",
                       }}
                     >
-                      <CardBody style={{paddingRight: 25}}>
+                      <CardBody style={{ paddingRight: 25 }}>
                         <PollutionDataInsights selectedState={selectedState} />
                       </CardBody>
                     </Card>
                   </Row>
                   <hr className="solid" />
-                  <Row>
+                  <Row className="polytype-padding">
                     <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
                       <Card
                         style={{
