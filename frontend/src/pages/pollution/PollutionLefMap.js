@@ -52,7 +52,7 @@ function Legend({ colorData }) {
 
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
-      div.innerHTML += '<p><b>Number of polymer count</b></p>'
+      div.innerHTML += '<p><b>Total plastic polymers<br> detected per state</b></p>'
 
       for (let i = 0; i < colorData.length; i++) {
         div.innerHTML +=
@@ -132,7 +132,7 @@ function HeatmapLayer({ data }) {
     const markers = heatData.map(point => {
       const marker = L.marker([point[0], point[1]]).setOpacity(0).addTo(map);
       marker.bindTooltip(
-        `Number of polymer pollutions: ${point[2]}`,
+        `Number of plastic polymers found:: ${point[2]}`,
         {
           permanent: false,   // Only show on hover
           direction: "top",   // Tooltip position relative to the marker
