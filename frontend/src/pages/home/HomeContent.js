@@ -9,12 +9,19 @@ import CleanUp from "../../assets/img/CleanUp.jpg";
 import EndangeredSpecies from "../../assets/img/EndangeredSpecies.jpg";
 import Education from "../../assets/img/Education.jpg";
 import MiniGame from "../../assets/img/MiniGame.png";
+import { FaAnglesDown } from "react-icons/fa6";
+
 
 function HomeContent() {
   const navigate = useNavigate();
   const scrollToFeatures = () => {
     document
       .getElementById("key-features-section")
+      .scrollIntoView({ behavior: "smooth" });
+  };
+  const scrollDown = () => {
+    document
+      .getElementById("vision-in-action-section")
       .scrollIntoView({ behavior: "smooth" });
   };
   const cardItems = [
@@ -58,9 +65,59 @@ function HomeContent() {
   return (
     <>
       <div>
+        <div
+          className="page-header section-dark"
+          style={{
+            backgroundImage:
+              "url(" + require("../../assets/img/naja-bertolt-jensen-Uu1CtKngEXY-unsplash.jpg") + ")",
+          }}
+        >
+          <div className="filter" />
+          <div className="content-center">
+          <Container>
+            <div className="title-brand">
+              <h1 className="presentation-title">BlueVisionary</h1>
+            </div>
+            <h2 className="presentation-subtitle text-center">
+              Discover. Learn. Protect
+            </h2>
+            <p className="presentation-descriptions text-center">
+              Safeguarding Marine Reptiles for Future Generations now !!!{" "}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
+            >
+              <Button
+                onClick={scrollDown}
+                style={{
+                  background: "transparent",
+                  border: "1px solid transparent", // Transparent border
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <FaAnglesDown />
+              </Button>
+            </div>
+          </Container>
+        </div>
+          {/* <div
+                    className="moving-clouds"
+                    style={{
+                        backgroundImage: "url(" + require("../../assets/img/clouds.png") + ")",
+                    }}
+                /> */}
+        </div>
         <Container fluid className="homepage-container">
           {/* Hero Section */}
-          <Row className="hero-section align-items-center no-margin">
+          <Row 
+          id="vision-in-action-section"
+          className="hero-section align-items-center no-margin">
             <Col md="6" className="text-section">
               <h1 className="hero-title">Your Vision in Action</h1>
               <p className="hero-subtitle">

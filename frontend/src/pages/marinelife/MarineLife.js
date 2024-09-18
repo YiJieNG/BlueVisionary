@@ -189,7 +189,7 @@ function MarineLife() {
                 </Card>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
                 <Card
                   style={{
@@ -216,7 +216,7 @@ function MarineLife() {
                   </p>
                 </Card>
               </Col>
-            </Row>
+            </Row> */}
           </Container>
         </div>
       </div>

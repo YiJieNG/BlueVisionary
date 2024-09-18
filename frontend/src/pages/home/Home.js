@@ -14,7 +14,7 @@ function Home() {
   });
   return (
     <>
-      <HomeHeader />
+      {/* <HomeHeader /> */}
       <HomeContent />
       <HomeFooter />
     </>
