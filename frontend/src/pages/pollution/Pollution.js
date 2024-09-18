@@ -336,7 +336,7 @@ function Pollution() {
                       </CardBody>
                     </Card>
                   </Row>
-                  <hr className="solid" />
+                  {/* <hr className="solid" />
                   <Row className="polytype-padding">
                     <Col md="12" xs="12" style={{ paddingBottom: "2rem" }}>
                       <Card
@@ -356,7 +356,7 @@ function Pollution() {
                         </p>
                       </Card>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </Col>
                 <Col md={6}>
                   <PollutionLefMap
