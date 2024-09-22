@@ -26,6 +26,11 @@ import Quiz_2 from "./iter2/education/Quiz";
 import Pollution_2 from "./iter2/pollution/Pollution";
 import MiniGame_2 from "./iter2/seaTurtleGame/SeaTurtleGame";
 import BlueNavbar_2 from "./components/Navbar/BlueNavbar_2";
+import Dashboard from "./pages/tracker/dashboard";
+import PlasticInput from "./pages/tracker/plasticInput";
+import Facility from "./pages/plasticFacility/plasticFacility";
+
+
 
 function Layout() {
   const location = useLocation();
@@ -49,6 +54,9 @@ function App() {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/seaturtlegame" element={<MiniGame />} />
         <Route path="/pollution" element={<Pollution />} />
+        <Route path="/tracker" element={<Dashboard />} />
+        <Route path="/plasticInput" element={<PlasticInput />} />
+        <Route path="/facility" element={<Facility />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/iter1" element={<Home_1 />} />
         <Route path="/iter1/marinelife" element={<MarineLife_1 />} />
