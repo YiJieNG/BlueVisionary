@@ -278,7 +278,7 @@ function Game() {
   };
 
   const navigateToPollution = () => {
-    navigate("/pollution");
+    navigate("/iter2/pollution");
   };
 
   const handleGameOver = (finalScore) => {
