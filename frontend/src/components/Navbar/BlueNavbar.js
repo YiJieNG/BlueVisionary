@@ -118,6 +118,26 @@ function BlueNavbar() {
                 Educate Yourself
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                href="/tracker"
+                className={
+                  normalizePath(location.pathname) === "/tracker" ? "active" : ""
+                }
+              >
+                Tracker
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                href="/facility"
+                className={
+                  normalizePath(location.pathname) === "/facility" ? "active" : ""
+                }
+              >
+                Plastic Facility
+              </NavLink>
+            </NavItem>
           </Nav>
         </Collapse>
       </Container>
