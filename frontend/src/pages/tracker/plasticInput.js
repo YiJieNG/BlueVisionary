@@ -42,7 +42,7 @@ const PlasticInput = () => {
     (total, item) => total + quantities[item] * itemWeights[item],
     0
   );
-  const totalWeightKg = (totalWeightGrams / 1000).toFixed(3); // Convert to kg and round to 3 decimal places
+  // const totalWeightKg = (totalWeightGrams / 1000).toFixed(3); // Convert to kg and round to 3 decimal places
 
   // Updated items array with new names and icons
   const items = [
@@ -109,7 +109,7 @@ const PlasticInput = () => {
                     <Row className="justify-content-between mt-4">
                       <div>
                         <h4>Estimated weight:</h4>
-                        <p>{totalWeightKg} kg</p>
+                        <p>{totalWeightGrams.toFixed(3)} g</p>
                       </div>
                     </Row>
 
