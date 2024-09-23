@@ -15,7 +15,7 @@ const PlasticInput = () => {
   // State variables to manage the flow
   const [currentStep, setCurrentStep] = useState(1);
   const [knowWeight, setKnowWeight] = useState(null); // null, true, or false
-  const [manualWeight, setManualWeight] = useState("");
+  // const [manualWeight, setManualWeight] = useState("");
   const [knowCount, setKnowCount] = useState(null); // null, true, or false
   const [quantities, setQuantities] = useState({
     "Plastic Bag": 0,
@@ -33,7 +33,7 @@ const PlasticInput = () => {
     "Plastic Straw": 0,
     "Plastic Utensil": 0,
   });
-  const [finalWeight, setFinalWeight] = useState(""); // For confirming weight
+  // const [finalWeight, setFinalWeight] = useState(""); // For confirming weight
 
   // Average weights in grams for each item
   const itemWeights = {
@@ -82,6 +82,26 @@ const PlasticInput = () => {
     }));
   };
 
+  // Function to reset counts and weights
+  const resetCountsAndWeights = () => {
+    setQuantities({
+      "Plastic Bag": 0,
+      "Plastic Bottle": 0,
+      "Plastic Container": 0,
+      "Plastic Cup": 0,
+      "Plastic Straw": 0,
+      "Plastic Utensil": 0,
+    });
+    setWeightsPerItem({
+      "Plastic Bag": 0,
+      "Plastic Bottle": 0,
+      "Plastic Container": 0,
+      "Plastic Cup": 0,
+      "Plastic Straw": 0,
+      "Plastic Utensil": 0,
+    });
+  };
+
   // Function to render the left panel steps based on user choices
   const renderSteps = () => {
     let steps = [{ number: 1, label: "Weight Choice" }];
@@ -103,7 +123,8 @@ const PlasticInput = () => {
     return (
       <div className="registration-text">
         <h2 style={{ paddingBottom: "2rem" }}>
-          Save marine reptiles by tracking the plastic waste now
+          Help save sea turtles: Start recording your recycled plastic waste now
+          to see your impact!
         </h2>
         {steps.map((step) => (
           <div key={step.number}>
@@ -156,6 +177,7 @@ const PlasticInput = () => {
           </div>
         );
       case 2:
+        // Enter weight manually
         if (knowWeight === true) {
           return (
             <div className="content-center">
@@ -170,6 +192,7 @@ const PlasticInput = () => {
                         <Label for={`weight-${index}`}>Weight (g)</Label>
                         <Input
                           type="number"
+                          min="0"
                           name={`weight-${index}`}
                           id={`weight-${index}`}
                           value={weightsPerItem[item.name]}
@@ -186,12 +209,14 @@ const PlasticInput = () => {
                   </Col>
                 ))}
               </Row>
-              {/* <Row className="justify-content-between mt-4">
+              <Row className="justify-content-between mt-4">
                 <Col xs="12">
-                  <h4>Total Weight:</h4>
-                  <p>{totalWeight.toFixed(2)} g</p>
+                  <Button color="warning" onClick={resetCountsAndWeights} block>
+                    Reset
+                  </Button>
                 </Col>
-              </Row> */}
+              </Row>
+              {/* Navigation Buttons */}
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
                   <Button
@@ -206,7 +231,7 @@ const PlasticInput = () => {
                   <Button
                     color="primary"
                     onClick={() => {
-                      setFinalWeight(totalWeight.toFixed(2));
+                      // setFinalWeight(totalWeight.toFixed(2));
                       setCurrentStep(3);
                     }}
                     block
@@ -284,6 +309,7 @@ const PlasticInput = () => {
                     <Col xs="6" md="6">
                       <Input
                         type="number"
+                        min="0"
                         name={`confirm-weight-${index}`}
                         id={`confirm-weight-${index}`}
                         placeholder="Weight (g)"
@@ -320,7 +346,7 @@ const PlasticInput = () => {
                   <Button
                     className="yes-btn"
                     onClick={() => {
-                      setFinalWeight(totalWeight.toFixed(2));
+                      // setFinalWeight(totalWeight.toFixed(2));
                       alert("Weight Confirmed");
                     }}
                     block
@@ -366,12 +392,18 @@ const PlasticInput = () => {
                     </Col>
                   ))}
                 </Row>
-                {/* <Row className="justify-content-between mt-4">
+                <Row className="justify-content-between mt-4">
                   <Col xs="12">
-                    <h4>Estimated weight:</h4>
-                    <p>{totalWeightGrams.toFixed(2)} g</p>
+                    <Button
+                      color="warning"
+                      onClick={resetCountsAndWeights}
+                      block
+                    >
+                      Reset
+                    </Button>
                   </Col>
-                </Row> */}
+                </Row>
+                {/* Navigation Buttons */}
                 <Row className="justify-content-between mt-4">
                   <Col xs="12" md="6">
                     <Button
@@ -386,7 +418,7 @@ const PlasticInput = () => {
                     <Button
                       color="primary"
                       onClick={() => {
-                        setFinalWeight(totalWeightGrams.toFixed(2));
+                        // setFinalWeight(totalWeightGrams.toFixed(2));
                         setCurrentStep(4);
                       }}
                       block
@@ -429,7 +461,7 @@ const PlasticInput = () => {
                           "Plastic Straw": 10,
                           "Plastic Utensil": 6,
                         });
-                        setFinalWeight(totalWeightGrams.toFixed(2));
+                        // setFinalWeight(totalWeightGrams.toFixed(2));
                         setCurrentStep(4);
                       }}
                       block
@@ -460,6 +492,7 @@ const PlasticInput = () => {
                     <Col xs="3" md="3">
                       <Input
                         type="number"
+                        min="0"
                         name={`confirm-count-${index}`}
                         id={`confirm-count-${index}`}
                         value={quantities[item.name]}
@@ -504,7 +537,7 @@ const PlasticInput = () => {
                   <Button
                     className="yes-btn"
                     onClick={() => {
-                      setFinalWeight(totalWeightGrams.toFixed(2));
+                      // setFinalWeight(totalWeightGrams.toFixed(2));
                       alert("Counts Confirmed");
                     }}
                     block
@@ -519,17 +552,50 @@ const PlasticInput = () => {
           // Confirm Weight
           return (
             <div className="content-center">
-              <h4>Confirm Weight</h4>
+              <h4>Confirm Counts Detected</h4>
+              <p>
+                <strong>
+                  You will not be able to change it anymore once you confirm the
+                  counts
+                </strong>
+              </p>
               <FormGroup>
-                <Label for="confirmWeight">Weight (grams)</Label>
-                <Input
-                  type="number"
-                  name="weight"
-                  id="confirmWeight"
-                  value={finalWeight}
-                  onChange={(e) => setFinalWeight(e.target.value)}
-                />
+                {items.map((item, index) => (
+                  <Row key={index} className="align-items-center mb-3">
+                    <Col xs="3" md="3">
+                      <Input
+                        type="number"
+                        min="0"
+                        name={`confirm-count-${index}`}
+                        id={`confirm-count-${index}`}
+                        value={quantities[item.name]}
+                        onChange={(e) => {
+                          const newCount = parseInt(e.target.value) || 0;
+                          setQuantities((prevQuantities) => ({
+                            ...prevQuantities,
+                            [item.name]: newCount,
+                          }));
+                        }}
+                      />
+                    </Col>
+                    <Col xs="9" md="9">
+                      <div className="item-name">
+                        x {item.name} {item.icon} ={" "}
+                        {(
+                          quantities[item.name] * itemWeights[item.name]
+                        ).toFixed(2)}
+                        g
+                      </div>
+                    </Col>
+                  </Row>
+                ))}
               </FormGroup>
+
+              <Row className="justify-content-between mt-4">
+                <Col xs="12">
+                  <h4>Estimated Weight: {totalWeightGrams.toFixed(2)} g</h4>
+                </Col>
+              </Row>
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
                   <Button
@@ -543,7 +609,10 @@ const PlasticInput = () => {
                 <Col xs="12" md="6">
                   <Button
                     className="yes-btn"
-                    onClick={() => alert("Weight Confirmed")}
+                    onClick={() => {
+                      // setFinalWeight(totalWeightGrams.toFixed(2));
+                      alert("Counts Confirmed");
+                    }}
                     block
                   >
                     Confirm
@@ -559,7 +628,7 @@ const PlasticInput = () => {
   };
 
   return (
-    <div className="plastic-input-page" style={{ paddingTop: "100px" }}>
+    <div className="plastic-input-page" style={{ paddingTop: "10rem" }}>
       <Container fluid>
         <Row className="justify-content-center">
           <Col md="10">
