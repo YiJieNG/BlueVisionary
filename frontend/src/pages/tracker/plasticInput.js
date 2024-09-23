@@ -15,7 +15,6 @@ const PlasticInput = () => {
   // State variables to manage the flow
   const [currentStep, setCurrentStep] = useState(1);
   const [knowWeight, setKnowWeight] = useState(null); // null, true, or false
-  // const [manualWeight, setManualWeight] = useState("");
   const [knowCount, setKnowCount] = useState(null); // null, true, or false
   const [quantities, setQuantities] = useState({
     "Plastic Bag": 0,
@@ -33,7 +32,8 @@ const PlasticInput = () => {
     "Plastic Straw": 0,
     "Plastic Utensil": 0,
   });
-  // const [finalWeight, setFinalWeight] = useState(""); // For confirming weight
+  const [result, setResult] = useState(null); // For storing calculation results
+  const [submissionData, setSubmissionData] = useState(null); // For storing submission data
 
   // Average weights in grams for each item
   const itemWeights = {
@@ -109,14 +109,16 @@ const PlasticInput = () => {
     if (knowWeight === true) {
       steps.push({ number: 2, label: "Enter Weight per Item" });
       steps.push({ number: 3, label: "Confirm Weight" });
+      steps.push({ number: 4, label: "Results" });
     } else if (knowWeight === false) {
       steps.push({ number: 2, label: "Count Choice" });
+      steps.push({ number: 3, label: "Enter Item Counts / Upload Photo" });
+      steps.push({ number: 4, label: "Confirm Counts" });
+      steps.push({ number: 5, label: "Results" });
       if (knowCount === true) {
-        steps.push({ number: 3, label: "Enter Item Counts" });
-        steps.push({ number: 4, label: "Confirm Counts" });
+        steps[2].label = "Enter Item Counts";
       } else if (knowCount === false) {
-        steps.push({ number: 3, label: "Upload Photo" });
-        steps.push({ number: 4, label: "Confirm Weight" });
+        steps[2].label = "Upload Photo";
       }
     }
 
@@ -231,7 +233,6 @@ const PlasticInput = () => {
                   <Button
                     color="primary"
                     onClick={() => {
-                      // setFinalWeight(totalWeight.toFixed(2));
                       setCurrentStep(3);
                     }}
                     block
@@ -346,8 +347,50 @@ const PlasticInput = () => {
                   <Button
                     className="yes-btn"
                     onClick={() => {
-                      // setFinalWeight(totalWeight.toFixed(2));
-                      alert("Weight Confirmed");
+                      if (totalWeight <= 0) {
+                        alert("Please enter a weight greater than 0.");
+                      } else {
+                        // Collect date
+                        const date = new Date();
+
+                        // Collect plastic items, their weights, and approximate counts
+                        const plasticItems = {};
+                        items.forEach((item) => {
+                          const itemName = item.name;
+                          const weight =
+                            parseFloat(weightsPerItem[itemName]) || 0;
+                          if (weight > 0) {
+                            const avgItemWeight = itemWeights[itemName];
+                            const approxCount = weight / avgItemWeight;
+                            plasticItems[itemName] = {
+                              weight: weight,
+                              approximateCount: approxCount,
+                            };
+                          }
+                        });
+
+                        // Calculate estimated items by summing approximate counts
+                        const estimatedItems = Object.values(
+                          plasticItems
+                        ).reduce((sum, item) => sum + item.approximateCount, 0);
+
+                        // Calculate sea turtles saved
+                        const seaTurtlesSaved = (estimatedItems / 14) * 0.5;
+
+                        // Set submission data
+                        setSubmissionData({
+                          date: date,
+                          plasticItems: plasticItems,
+                          totalWeight: totalWeight,
+                        });
+
+                        // Set result and proceed
+                        setResult({
+                          estimatedItems: estimatedItems,
+                          seaTurtlesSaved: seaTurtlesSaved,
+                        });
+                        setCurrentStep(4); // Changed from 5 to 4
+                      }
                     }}
                     block
                   >
@@ -418,7 +461,6 @@ const PlasticInput = () => {
                     <Button
                       color="primary"
                       onClick={() => {
-                        // setFinalWeight(totalWeightGrams.toFixed(2));
                         setCurrentStep(4);
                       }}
                       block
@@ -461,7 +503,6 @@ const PlasticInput = () => {
                           "Plastic Straw": 10,
                           "Plastic Utensil": 6,
                         });
-                        // setFinalWeight(totalWeightGrams.toFixed(2));
                         setCurrentStep(4);
                       }}
                       block
@@ -475,8 +516,40 @@ const PlasticInput = () => {
           }
         }
       case 4:
-        if (knowCount === true) {
-          // Confirm Counts per Item
+        if (knowWeight === true) {
+          // Display Results and log data
+          console.log("Submission Data:", submissionData);
+          return (
+            <div className="content-center">
+              <h4>Thank you for your contribution!</h4>
+              <p>
+                You have recycled approximately{" "}
+                <strong>{result.estimatedItems.toFixed(0)}</strong> plastic
+                items.
+              </p>
+              <p>
+                This action potentially saved{" "}
+                <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea
+                turtles.
+              </p>
+              <Button
+                color="primary"
+                onClick={() => {
+                  // Reset everything to start over
+                  setCurrentStep(1);
+                  setKnowWeight(null);
+                  setKnowCount(null);
+                  resetCountsAndWeights();
+                  setResult(null);
+                  setSubmissionData(null);
+                }}
+                block
+              >
+                Record Another Contribution
+              </Button>
+            </div>
+          );
+        } else {
           return (
             <div className="content-center">
               <h4>Confirm Counts</h4>
@@ -537,81 +610,47 @@ const PlasticInput = () => {
                   <Button
                     className="yes-btn"
                     onClick={() => {
-                      // setFinalWeight(totalWeightGrams.toFixed(2));
-                      alert("Counts Confirmed");
-                    }}
-                    block
-                  >
-                    Confirm
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          );
-        } else {
-          // Confirm Weight
-          return (
-            <div className="content-center">
-              <h4>Confirm Counts Detected</h4>
-              <p>
-                <strong>
-                  You will not be able to change it anymore once you confirm the
-                  counts
-                </strong>
-              </p>
-              <FormGroup>
-                {items.map((item, index) => (
-                  <Row key={index} className="align-items-center mb-3">
-                    <Col xs="3" md="3">
-                      <Input
-                        type="number"
-                        min="0"
-                        name={`confirm-count-${index}`}
-                        id={`confirm-count-${index}`}
-                        value={quantities[item.name]}
-                        onChange={(e) => {
-                          const newCount = parseInt(e.target.value) || 0;
-                          setQuantities((prevQuantities) => ({
-                            ...prevQuantities,
-                            [item.name]: newCount,
-                          }));
-                        }}
-                      />
-                    </Col>
-                    <Col xs="9" md="9">
-                      <div className="item-name">
-                        x {item.name} {item.icon} ={" "}
-                        {(
-                          quantities[item.name] * itemWeights[item.name]
-                        ).toFixed(2)}
-                        g
-                      </div>
-                    </Col>
-                  </Row>
-                ))}
-              </FormGroup>
+                      const totalItems = Object.values(quantities).reduce(
+                        (sum, qty) => sum + qty,
+                        0
+                      );
+                      if (totalItems <= 0) {
+                        alert("Please enter at least one item.");
+                      } else {
+                        // Calculate sea turtles saved
+                        const seaTurtlesSaved = (totalItems / 14) * 0.5;
 
-              <Row className="justify-content-between mt-4">
-                <Col xs="12">
-                  <h4>Estimated Weight: {totalWeightGrams.toFixed(2)} g</h4>
-                </Col>
-              </Row>
-              <Row className="justify-content-between mt-4">
-                <Col xs="12" md="6">
-                  <Button
-                    color="secondary"
-                    onClick={() => setCurrentStep(3)}
-                    block
-                  >
-                    Back
-                  </Button>{" "}
-                </Col>
-                <Col xs="12" md="6">
-                  <Button
-                    className="yes-btn"
-                    onClick={() => {
-                      // setFinalWeight(totalWeightGrams.toFixed(2));
-                      alert("Counts Confirmed");
+                        // Collect date
+                        const date = new Date();
+
+                        // Collect plastic items and their counts and weights
+                        const plasticItems = {};
+                        items.forEach((item) => {
+                          const itemName = item.name;
+                          const count = quantities[itemName];
+                          if (count > 0) {
+                            const weight = count * itemWeights[itemName];
+                            plasticItems[itemName] = {
+                              count: count,
+                              weight: weight,
+                            };
+                          }
+                        });
+
+                        // Set submission data
+                        setSubmissionData({
+                          date: date,
+                          plasticItems: plasticItems,
+                          totalWeight: totalWeightGrams,
+                        });
+
+                        // Set result and proceed
+                        setResult({
+                          estimatedItems: totalItems,
+                          seaTurtlesSaved: seaTurtlesSaved,
+                        });
+                        setCurrentStep(5);
+                      }
                     }}
                     block
                   >
@@ -622,6 +661,37 @@ const PlasticInput = () => {
             </div>
           );
         }
+      case 5:
+        // Display Results and log data
+        console.log("Submission Data:", submissionData);
+        return (
+          <div className="content-center">
+            <h4>Thank you for your contribution!</h4>
+            <p>
+              You have recycled approximately{" "}
+              <strong>{result.estimatedItems.toFixed(0)}</strong> plastic items.
+            </p>
+            <p>
+              This action potentially saved{" "}
+              <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea turtles.
+            </p>
+            <Button
+              color="primary"
+              onClick={() => {
+                // Reset everything to start over
+                setCurrentStep(1);
+                setKnowWeight(null);
+                setKnowCount(null);
+                resetCountsAndWeights();
+                setResult(null);
+                setSubmissionData(null);
+              }}
+              block
+            >
+              Record Another Contribution
+            </Button>
+          </div>
+        );
       default:
         return null;
     }
