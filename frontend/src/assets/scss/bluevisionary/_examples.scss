@@ -1590,15 +1590,15 @@ span.span-card {
         font-size: 1.5rem;
         font-weight: bold;
         margin-bottom: 0.3rem;
-        &.active-step {
-          color: #2776c5;
-          font-weight: bold;
-        }
       }
       p {
         font-size: 1.2rem;
-        color: #666;
+        color: #292929;
         margin-bottom: 1.5rem;
+        &.active-step {
+          color: #2754c5;
+          font-weight: bold;
+        }
       }
     }
   }

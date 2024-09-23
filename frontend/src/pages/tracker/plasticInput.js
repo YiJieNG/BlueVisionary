@@ -61,9 +61,9 @@ const PlasticInput = () => {
   const items = [
     { name: "Plastic Bag", icon: "🛍️" },
     { name: "Plastic Bottle", icon: "🧴" },
-    { name: "Plastic Container", icon: "🍱" },
+    { name: "Plastic Container", icon: "🥡" },
     { name: "Plastic Cup", icon: "🥤" },
-    { name: "Plastic Straw", icon: "🥤" },
+    { name: "Plastic Straw", icon: "📏" },
     { name: "Plastic Utensil", icon: "🍴" },
   ];
 
@@ -124,16 +124,15 @@ const PlasticInput = () => {
 
     return (
       <div className="registration-text">
-        <h2 style={{ paddingBottom: "2rem" }}>
-          Help save sea turtles: Start recording your recycled plastic waste now
-          to see your impact!
-        </h2>
+        <h2>Help save sea turtles</h2>
+        <p style={{ paddingBottom: "2rem" }}>
+          Start recording your recycled plastic waste now to see your impact on
+          saving the sea turtle!
+        </p>
         {steps.map((step) => (
           <div key={step.number}>
-            <h2 className={step.number === currentStep ? "active-step" : ""}>
-              STEP {step.number}
-            </h2>
-            <p>
+            <p className={step.number === currentStep ? "active-step" : ""}>
+              <subtitle> STEP {step.number}</subtitle>:{" "}
               <strong>{step.label}</strong>
             </p>
           </div>
@@ -148,7 +147,7 @@ const PlasticInput = () => {
       case 1:
         return (
           <div className="content-center">
-            <h4>Do you know the plastic weight?</h4>
+            <h4>Do you know your plastic weight?</h4>
             <Row className="justify-content-between mt-4">
               <Col xs="12" md="6">
                 <Button
@@ -183,7 +182,7 @@ const PlasticInput = () => {
         if (knowWeight === true) {
           return (
             <div className="content-center">
-              <h4>Enter the weight per plastic item</h4>
+              <h4>Please enter the weight per plastic item</h4>
               <Row>
                 {items.map((item, index) => (
                   <Col xs="6" md="4" key={index} className="text-center mb-4">
@@ -292,11 +291,11 @@ const PlasticInput = () => {
           // Confirm Weight per Item
           return (
             <div className="content-center">
-              <h4>Confirm Weight per Item</h4>
-              <p>
+              <h4>Please confirm the Weight per Item</h4>
+              <p style={{ paddingBottom: "0.8rem" }}>
                 <strong>
-                  You will not be able to change it anymore once you confirm the
-                  weight
+                  as you will not be able to change it anymore once you confirm
+                  the weight here :)
                 </strong>
               </p>
               <FormGroup>
