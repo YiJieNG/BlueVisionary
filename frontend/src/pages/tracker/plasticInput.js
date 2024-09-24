@@ -600,14 +600,17 @@ const PlasticInput = () => {
             return (
               <div className="content-center">
                 <h4>Let us estimate the plastic items count for you!</h4>
+                {/* <p>
+                  Sample image 
+                </p> */}
                 <p>
-                  <strong>Sample image </strong>
+                  Format accepted are{" "}
+                  <strong>
+                    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff'
+                  </strong>
+                  .
                 </p>
-                <p>
-                  Format that we accepted: '.jpg', '.jpeg', '.png', '.gif',
-                  '.bmp', '.tiff'
-                </p>
-                <p>Upload your image here: </p>
+                <p>Please upload your image here: </p>
                 <FormGroup>
                   <Input type="file" name="file" id="uploadPhoto" />
                 </FormGroup>
