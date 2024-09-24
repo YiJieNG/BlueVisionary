@@ -15,6 +15,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlasticInput = () => {
   // State variables to manage the flow
@@ -184,6 +185,12 @@ const PlasticInput = () => {
       </ModalFooter>
     </Modal>
   );
+
+  const navigate = useNavigate();
+
+  const navigateToPollution = () => {
+    navigate("/tracker");
+  };
 
   // Functions to handle increment and decrement of quantities
   const increment = (item) => {
@@ -672,9 +679,9 @@ const PlasticInput = () => {
                     Record Another Contribution
                   </Button>
                 </Col>
-                <Col xs="12" md="6">
-                  <Button color="primary" block>
-                    Back to Dashboard
+                <Col xs="12" md="6" className="d-flex">
+                  <Button color="primary" onClick={navigateToPollution} block>
+                    Return to Dashboard
                   </Button>
                 </Col>
               </Row>
@@ -933,7 +940,7 @@ const PlasticInput = () => {
               <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea turtles.
             </p>
             <Row className="justify-content-between mt-4">
-              <Col xs="12" md="6">
+              <Col xs="12" md="6" className="d-flex">
                 <Button
                   style={{}}
                   onClick={() => {
@@ -950,9 +957,9 @@ const PlasticInput = () => {
                   Record Another Contribution
                 </Button>
               </Col>
-              <Col xs="12" md="6">
+              <Col xs="12" md="6" className="d-flex">
                 <Button color="primary" block>
-                  Back to Dashboard
+                  Return to Dashboard
                 </Button>
               </Col>
             </Row>
