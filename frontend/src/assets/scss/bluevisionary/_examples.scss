@@ -1565,3 +1565,199 @@ span.span-card {
     background-color: #a8caed;
   }
 }
+
+/////// plastic Input page //////////////
+.general-padding-top {
+  padding-top: 75px;
+}
+
+.plastic-input-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #daf1ff, #eff9ff);
+  padding: 4rem 2rem;
+  text-align: left;
+
+  .left-panel {
+    background: linear-gradient(45deg, #cbd2ff, #cbecff);
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+
+    .registration-text {
+      h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+      }
+      p {
+        font-size: 1.2rem;
+        color: #292929;
+        margin-bottom: 1.5rem;
+        &.active-step {
+          color: #2754c5;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .right-panel {
+    background-color: #f4fcfb;
+    padding: 20px;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+  }
+
+  .content-center {
+    width: 100%;
+  }
+
+  .item-box {
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.3s;
+    height: 100%;
+
+    &:hover {
+      border-color: #000;
+    }
+
+    .quantity-badge {
+      position: absolute;
+      top: -10px; // Adjust as needed
+      right: -10px; // Adjust as needed
+      font-size: 1.2rem;
+      background-color: #cbd2ff;
+      color: #003366;
+      font-weight: bold;
+      padding: 5px;
+      border-radius: 50%;
+      min-width: 40px;
+      min-height: 40px;
+      text-align: center;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .item-name {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+
+      .quantity-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin: 0 10px;
+        font-size: 1.5rem;
+        color: #ffffff;
+        background-color: #2764c5;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: #003366;
+          background-color: #a8caed;
+        }
+      }
+    }
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3f4447;
+    margin-bottom: 1rem;
+    // text-align: center;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3f4447;
+    margin-bottom: 1rem;
+    // text-align: center;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #3f4447;
+    margin-bottom: 0.5rem;
+  }
+
+  button {
+    font-size: 1.2rem;
+    color: #ffffff;
+    background-color: #2776c5;
+    border-color: #2776c5;
+    padding: 0.75rem 2rem;
+    text-align: center;
+    font-weight: bold;
+
+    &:hover {
+      color: #003366;
+      background-color: #a8caed;
+      border-color: #a8caed;
+    }
+
+    &.quantity-btn {
+      padding: 0;
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .no-btn {
+    font-size: 1.2rem;
+    color: #ffffff;
+    background-color: #eb999c;
+    border-color: #eb999c;
+    padding: 0.75rem 2rem;
+    text-align: center;
+    font-weight: bold;
+
+    &:hover {
+      color: #003366;
+      background-color: #fcdee1;
+      border-color: #fcdee1;
+    }
+  }
+
+  .yes-btn {
+    font-size: 1.2rem;
+    color: #ffffff;
+    background-color: #4cddbb;
+    border-color: #73e2c8;
+    padding: 0.75rem 2rem;
+    text-align: center;
+    font-weight: bold;
+
+    &:hover {
+      color: #003366;
+      background-color: #99ebe8;
+      border-color: #99ebe8;
+    }
+  }
+}
