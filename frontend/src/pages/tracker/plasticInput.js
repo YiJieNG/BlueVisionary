@@ -9,9 +9,12 @@ import {
   FormGroup,
   Label,
   Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const PlasticInput = () => {
   // State variables to manage the flow
@@ -62,7 +65,7 @@ const PlasticInput = () => {
   // Updated items array with new names and icons
   const items = [
     { name: "Plastic Bag", icon: "🛍️" },
-    { name: "Plastic Bottle", icon: "🧴" },
+    { name: "Plastic Bottle", icon: "🍶" },
     { name: "Plastic Container", icon: "🥡" },
     { name: "Plastic Cup", icon: "🥤" },
     { name: "Plastic Straw", icon: "📏" },
@@ -104,6 +107,8 @@ const PlasticInput = () => {
         "Plastic Utensil": response.data.counter[5],
       };
 
+      setDetectionDetails(response.data.detections);
+
       // Update the quantities state with the actual detected values
       setQuantities(detectedQuantities);
       setCurrentStep(4); // Proceed to the next step
@@ -112,6 +117,51 @@ const PlasticInput = () => {
       alert("There was an error processing your image. Please try again.");
     }
   };
+
+  const [detectionDetails, setDetectionDetails] = useState([]); // To store detection data
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+
+  // Toggle Modal
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  // Modal content displaying confidence and coordinates
+  const renderModalContent = () => (
+    <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <ModalHeader toggle={toggleModal}>Estimation Details</ModalHeader>
+      <ModalBody>
+        {detectionDetails.length > 0 ? (
+          detectionDetails.map((detail, index) => (
+            <div key={index}>
+              <p>
+                <strong>Item:</strong> {detail.label}
+              </p>
+              <p>
+                <strong>Confidence:</strong> {detail.confidence.toFixed(2)}
+              </p>
+              <p>
+                <strong>Coordinates:</strong>{" "}
+                {`(${detail.coordinates[0].toFixed(
+                  2
+                )}, ${detail.coordinates[1].toFixed(
+                  2
+                )}), (${detail.coordinates[2].toFixed(
+                  2
+                )}, ${detail.coordinates[3].toFixed(2)})`}
+              </p>
+              <hr />
+            </div>
+          ))
+        ) : (
+          <p>No detection details available.</p>
+        )}
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" onClick={toggleModal}>
+          Close
+        </Button>
+      </ModalFooter>
+    </Modal>
+  );
 
   // Functions to handle increment and decrement of quantities
   const increment = (item) => {
@@ -450,7 +500,7 @@ const PlasticInput = () => {
             // Enter Item Counts
             return (
               <div>
-                <h4>Enter your contribution</h4>
+                <h4>Enter the count per plastic item</h4>
                 <Row>
                   {items.map((item, index) => (
                     <Col xs="6" md="4" key={index} className="text-center mb-4">
@@ -580,116 +630,236 @@ const PlasticInput = () => {
             </div>
           );
         } else {
-          return (
-            <div className="content-center">
-              <h4>Confirm Counts</h4>
-              <p>
-                <strong>
-                  You will not be able to change it anymore once you confirm the
-                  counts
-                </strong>
-              </p>
-              <FormGroup>
-                {items.map((item, index) => (
-                  <Row key={index} className="align-items-center mb-3">
-                    <Col xs="3" md="3">
-                      <Input
-                        type="number"
-                        min="0"
-                        name={`confirm-count-${index}`}
-                        id={`confirm-count-${index}`}
-                        value={quantities[item.name]}
-                        onChange={(e) => {
-                          const newCount = parseInt(e.target.value) || 0;
-                          setQuantities((prevQuantities) => ({
-                            ...prevQuantities,
-                            [item.name]: newCount,
-                          }));
-                        }}
-                      />
-                    </Col>
-                    <Col xs="9" md="9">
-                      <div className="item-name">
-                        x {item.name} {item.icon} ={" "}
-                        {(
-                          quantities[item.name] * itemWeights[item.name]
-                        ).toFixed(2)}
-                        g
-                      </div>
-                    </Col>
-                  </Row>
-                ))}
-              </FormGroup>
+          if (knowCount === true) {
+            return (
+              <div className="content-center">
+                <h4>Confirm Counts</h4>
+                <p>
+                  <strong>
+                    You will not be able to change it anymore once you confirm
+                    the counts
+                  </strong>
+                </p>
+                <FormGroup>
+                  {items.map((item, index) => (
+                    <Row key={index} className="align-items-center mb-3">
+                      <Col xs="3" md="3">
+                        <Input
+                          type="number"
+                          min="0"
+                          name={`confirm-count-${index}`}
+                          id={`confirm-count-${index}`}
+                          value={quantities[item.name]}
+                          onChange={(e) => {
+                            const newCount = parseInt(e.target.value) || 0;
+                            setQuantities((prevQuantities) => ({
+                              ...prevQuantities,
+                              [item.name]: newCount,
+                            }));
+                          }}
+                        />
+                      </Col>
+                      <Col xs="9" md="9">
+                        <div className="item-name">
+                          x {item.name} {item.icon} ={" "}
+                          {(
+                            quantities[item.name] * itemWeights[item.name]
+                          ).toFixed(2)}
+                          g
+                        </div>
+                      </Col>
+                    </Row>
+                  ))}
+                </FormGroup>
 
-              <Row className="justify-content-between mt-4">
-                <Col xs="12">
-                  <h4>Estimated Weight: {totalWeightGrams.toFixed(2)} g</h4>
-                </Col>
-              </Row>
-              <Row className="justify-content-between mt-4">
-                <Col xs="12" md="6">
-                  <Button
-                    color="secondary"
-                    onClick={() => setCurrentStep(3)}
-                    block
-                  >
-                    Back
-                  </Button>{" "}
-                </Col>
-                <Col xs="12" md="6">
-                  <Button
-                    className="yes-btn"
-                    onClick={() => {
-                      const totalItems = Object.values(quantities).reduce(
-                        (sum, qty) => sum + qty,
-                        0
-                      );
-                      if (totalItems <= 0) {
-                        alert("Please enter at least one item.");
-                      } else {
-                        // Calculate sea turtles saved
-                        const seaTurtlesSaved = (totalItems / 14) * 0.5;
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12">
+                    <h4>Estimated Weight: {totalWeightGrams.toFixed(2)} g</h4>
+                  </Col>
+                </Row>
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12" md="6">
+                    <Button
+                      color="secondary"
+                      onClick={() => setCurrentStep(3)}
+                      block
+                    >
+                      Back
+                    </Button>{" "}
+                  </Col>
+                  <Col xs="12" md="6">
+                    <Button
+                      className="yes-btn"
+                      onClick={() => {
+                        const totalItems = Object.values(quantities).reduce(
+                          (sum, qty) => sum + qty,
+                          0
+                        );
+                        if (totalItems <= 0) {
+                          alert("Please enter at least one item.");
+                        } else {
+                          // Calculate sea turtles saved
+                          const seaTurtlesSaved = (totalItems / 14) * 0.5;
 
-                        // Collect date
-                        const date = new Date();
+                          // Collect date
+                          const date = new Date();
 
-                        // Collect plastic items and their counts and weights
-                        const plasticItems = {};
-                        items.forEach((item) => {
-                          const itemName = item.name;
-                          const count = quantities[itemName];
-                          if (count > 0) {
-                            const weight = count * itemWeights[itemName];
-                            plasticItems[itemName] = {
-                              count: count,
-                              weight: weight,
-                            };
-                          }
-                        });
+                          // Collect plastic items and their counts and weights
+                          const plasticItems = {};
+                          items.forEach((item) => {
+                            const itemName = item.name;
+                            const count = quantities[itemName];
+                            if (count > 0) {
+                              const weight = count * itemWeights[itemName];
+                              plasticItems[itemName] = {
+                                count: count,
+                                weight: weight,
+                              };
+                            }
+                          });
 
-                        // Set submission data
-                        setSubmissionData({
-                          date: date,
-                          plasticItems: plasticItems,
-                          totalWeight: totalWeightGrams,
-                        });
+                          // Set submission data
+                          setSubmissionData({
+                            date: date,
+                            plasticItems: plasticItems,
+                            totalWeight: totalWeightGrams,
+                          });
 
-                        // Set result and proceed
-                        setResult({
-                          estimatedItems: totalItems,
-                          seaTurtlesSaved: seaTurtlesSaved,
-                        });
-                        setCurrentStep(5);
-                      }
-                    }}
-                    block
-                  >
-                    Confirm
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          );
+                          // Set result and proceed
+                          setResult({
+                            estimatedItems: totalItems,
+                            seaTurtlesSaved: seaTurtlesSaved,
+                          });
+                          setCurrentStep(5);
+                        }
+                      }}
+                      block
+                    >
+                      Confirm
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
+          } else {
+            return (
+              <div className="content-center">
+                <h4>Confirm Estimated Counts </h4>
+                <p>
+                  <strong>
+                    You will not be able to change it anymore once you confirm
+                    the counts
+                  </strong>
+                </p>
+                <FormGroup>
+                  {items.map((item, index) => (
+                    <Row key={index} className="align-items-center mb-3">
+                      <Col xs="3" md="3">
+                        <Input
+                          type="number"
+                          min="0"
+                          name={`confirm-count-${index}`}
+                          id={`confirm-count-${index}`}
+                          value={quantities[item.name]}
+                          onChange={(e) => {
+                            const newCount = parseInt(e.target.value) || 0;
+                            setQuantities((prevQuantities) => ({
+                              ...prevQuantities,
+                              [item.name]: newCount,
+                            }));
+                          }}
+                        />
+                      </Col>
+                      <Col xs="9" md="9">
+                        <div className="item-name">
+                          x {item.name} {item.icon} ={" "}
+                          {(
+                            quantities[item.name] * itemWeights[item.name]
+                          ).toFixed(2)}
+                          g
+                        </div>
+                      </Col>
+                    </Row>
+                  ))}
+                </FormGroup>
+
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12">
+                    <h4>Estimated Weight: {totalWeightGrams.toFixed(2)} g</h4>
+                  </Col>
+                </Row>
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12" md="12">
+                    <Button color="secondary" onClick={toggleModal} block>
+                      Estimation details
+                    </Button>{" "}
+                  </Col>
+                </Row>
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12" md="6">
+                    <Button
+                      color="secondary"
+                      onClick={() => setCurrentStep(3)}
+                      block
+                    >
+                      Back
+                    </Button>{" "}
+                  </Col>
+                  <Col xs="12" md="6">
+                    <Button
+                      className="yes-btn"
+                      onClick={() => {
+                        const totalItems = Object.values(quantities).reduce(
+                          (sum, qty) => sum + qty,
+                          0
+                        );
+                        if (totalItems <= 0) {
+                          alert("Please enter at least one item.");
+                        } else {
+                          // Calculate sea turtles saved
+                          const seaTurtlesSaved = (totalItems / 14) * 0.5;
+
+                          // Collect date
+                          const date = new Date();
+
+                          // Collect plastic items and their counts and weights
+                          const plasticItems = {};
+                          items.forEach((item) => {
+                            const itemName = item.name;
+                            const count = quantities[itemName];
+                            if (count > 0) {
+                              const weight = count * itemWeights[itemName];
+                              plasticItems[itemName] = {
+                                count: count,
+                                weight: weight,
+                              };
+                            }
+                          });
+
+                          // Set submission data
+                          setSubmissionData({
+                            date: date,
+                            plasticItems: plasticItems,
+                            totalWeight: totalWeightGrams,
+                          });
+
+                          // Set result and proceed
+                          setResult({
+                            estimatedItems: totalItems,
+                            seaTurtlesSaved: seaTurtlesSaved,
+                          });
+                          setCurrentStep(5);
+                        }
+                      }}
+                      block
+                    >
+                      Confirm
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
+          }
         }
       case 5:
         // Display Results and log data
@@ -746,6 +916,7 @@ const PlasticInput = () => {
             </Card>
           </Col>
         </Row>
+        {renderModalContent()}
       </Container>
     </div>
   );
