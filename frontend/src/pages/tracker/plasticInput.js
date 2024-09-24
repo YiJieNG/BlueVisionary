@@ -958,7 +958,7 @@ const PlasticInput = () => {
                 </Button>
               </Col>
               <Col xs="12" md="6" className="d-flex">
-                <Button color="primary" block>
+                <Button color="primary" onClick={navigateToPollution} block>
                   Return to Dashboard
                 </Button>
               </Col>
