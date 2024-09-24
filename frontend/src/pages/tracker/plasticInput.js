@@ -698,7 +698,7 @@ const PlasticInput = () => {
           <div className="content-center">
             <h4>Thank you for your contribution!</h4>
             <p>
-              You have recycled approximately{" "}
+              You have recycled{" "}
               <strong>{result.estimatedItems.toFixed(0)}</strong> plastic items.
             </p>
             <p>
