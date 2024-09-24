@@ -605,7 +605,7 @@ def get_marine_life_logo_images():
 # Iteration 3 api call
 @app.route('/api/plasticInput/plasticDetection', methods=['POST'])
 def get_plastic_detection():
-    trained_model = YOLO("backend/best.pt")  # Load a custom trained model
+    trained_model = YOLO("./best.pt")  # Load a custom trained model
     counter = [0] * 6
 
     # Check if the image file is present in the request

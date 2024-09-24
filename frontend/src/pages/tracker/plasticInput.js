@@ -10,6 +10,8 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlasticInput = () => {
   // State variables to manage the flow
@@ -66,6 +68,50 @@ const PlasticInput = () => {
     { name: "Plastic Straw", icon: "📏" },
     { name: "Plastic Utensil", icon: "🍴" },
   ];
+
+  const handlePhotoUpload = async () => {
+    const fileInput = document.getElementById("uploadPhoto").files[0];
+
+    // Ensure the file is selected
+    if (!fileInput) {
+      alert("Please select a file before proceeding.");
+      return;
+    }
+
+    // Prepare the FormData for file upload
+    const formData = new FormData();
+    formData.append("image", fileInput);
+
+    try {
+      // Make the API call to the Flask backend
+      const response = await axios.post(
+        "http://127.0.0.1:5000/api/plasticInput/plasticDetection",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // Assuming the response contains a "counter" object with the quantities of detected items
+      const detectedQuantities = {
+        "Plastic Bag": response.data.counter[0],
+        "Plastic Bottle": response.data.counter[1],
+        "Plastic Container": response.data.counter[2],
+        "Plastic Cup": response.data.counter[3],
+        "Plastic Straw": response.data.counter[4],
+        "Plastic Utensil": response.data.counter[5],
+      };
+
+      // Update the quantities state with the actual detected values
+      setQuantities(detectedQuantities);
+      setCurrentStep(4); // Proceed to the next step
+    } catch (error) {
+      console.error("Error during image upload:", error);
+      alert("There was an error processing your image. Please try again.");
+    }
+  };
 
   // Functions to handle increment and decrement of quantities
   const increment = (item) => {
@@ -490,22 +536,7 @@ const PlasticInput = () => {
                     </Button>
                   </Col>
                   <Col xs="12" md="6">
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        // For demonstration, we'll assume some estimated counts
-                        setQuantities({
-                          "Plastic Bag": 5,
-                          "Plastic Bottle": 3,
-                          "Plastic Container": 2,
-                          "Plastic Cup": 4,
-                          "Plastic Straw": 10,
-                          "Plastic Utensil": 6,
-                        });
-                        setCurrentStep(4);
-                      }}
-                      block
-                    >
+                    <Button color="primary" onClick={handlePhotoUpload} block>
                       Next
                     </Button>
                   </Col>
