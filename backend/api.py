@@ -6,6 +6,11 @@ from dotenv import load_dotenv
 import numpy as np
 import re
 
+# Object detection library
+from ultralytics import YOLO
+import cv2
+import glob
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -596,6 +601,68 @@ def get_marine_life_logo_images():
         })
 
     return jsonify(fact_array)
+
+# Iteration 3 api call
+@app.route('/api/plasticInput/plasticDetection', methods=['POST'])
+def get_plastic_detection():
+    trained_model = YOLO("backend/best.pt")  # Load a custom trained model
+    counter = [0] * 6
+
+    # Check if the image file is present in the request
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    file = request.files['image']
+    
+    # Check if the file has an allowed image extension
+    if file and file.filename.endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff')):
+        # Convert image to an OpenCV format
+        file_bytes = file.read()
+        np_arr = np.frombuffer(file_bytes, np.uint8)
+        img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        img = cv2.resize(img, (640, 640))
+
+        # Perform detection
+        results = trained_model(img, imgsz=640, show_boxes=True, verbose=False)
+        
+        detected_objects = []
+
+        for r in results:
+            for box in r.boxes:
+                coordinates = (box.xyxy).tolist()[0]
+                label = trained_model.names[int(box.cls)]
+                confidence = box.conf.item()
+                counter[int(box.cls)] += 1
+
+                # Collect data to return as response
+                detected_objects.append({
+                    "label": label,
+                    "coordinates": coordinates,
+                    "confidence": confidence
+                })
+
+                # Optional: Draw the bounding box
+                start_point = (int(coordinates[0]), int(coordinates[1]))
+                end_point = (int(coordinates[2]), int(coordinates[3]))
+                color = (0, 255, 0)  # Green color for the bounding box
+                thickness = 2
+                cv2.rectangle(img, start_point, end_point, color, thickness)
+
+                # Optional: Put the label and confidence score
+                text = f"{label} {confidence:.2f}"
+                cv2.putText(img, text, (int(coordinates[0]), int(coordinates[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+        # Optionally, save the image with the bounding boxes (uncomment if needed)
+        # output_path = 'output_image_with_boxes.jpg'
+        # cv2.imwrite(output_path, img)
+
+        return jsonify({
+            "message": "Image processed successfully",
+            "detections": detected_objects,
+            "counter": counter
+        }), 200
+
+    return jsonify({"error": "Unsupported file type"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
