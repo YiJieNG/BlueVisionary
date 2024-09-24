@@ -9,6 +9,10 @@ import {
   FormGroup,
   Label,
   Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -62,7 +66,7 @@ const PlasticInput = () => {
   // Updated items array with new names and icons
   const items = [
     { name: "Plastic Bag", icon: "🛍️" },
-    { name: "Plastic Bottle", icon: "🧴" },
+    { name: "Plastic Bottle", icon: "🍶" },
     { name: "Plastic Container", icon: "🥡" },
     { name: "Plastic Cup", icon: "🥤" },
     { name: "Plastic Straw", icon: "📏" },
@@ -104,6 +108,11 @@ const PlasticInput = () => {
         "Plastic Utensil": response.data.counter[5],
       };
 
+      setDetectionDetails(response.data.detections);
+      setDetectionImage(
+        `data:image/${response.data.image_type};base64,${response.data.image}`
+      );
+
       // Update the quantities state with the actual detected values
       setQuantities(detectedQuantities);
       setCurrentStep(4); // Proceed to the next step
@@ -111,6 +120,76 @@ const PlasticInput = () => {
       console.error("Error during image upload:", error);
       alert("There was an error processing your image. Please try again.");
     }
+  };
+
+  const [detectionDetails, setDetectionDetails] = useState([]); // To store detection data
+  const [detectionImage, setDetectionImage] = useState(null); // For storing boundary image
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+
+  // Toggle Modal
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  // Modal content displaying confidence and coordinates
+  const renderModalContent = () => (
+    <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
+      <ModalHeader toggle={toggleModal}>Estimation Details</ModalHeader>
+      <ModalBody>
+        <div
+          className="plastic-input-page justify-content-center"
+          style={{ minHeight: "0", padding: "0", background: "#ffffff" }}
+        >
+          <Card style={{ border: "none", boxShadow: "none" }}>
+            <CardBody>
+              <Row style={{ margin: "0px" }}>
+                <Col md="4" className="left-panel">
+                  <div className="registration-text">
+                    <h2 style={{ paddingBottom: "1.2rem" }}>
+                      Image uploaded:{" "}
+                    </h2>
+                    {console.log(detectionImage)}
+                    <img
+                      src={detectionImage}
+                      alt="Detected objects with bounding boxes"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </div>
+                </Col>
+                <Col md="8" className="right-panel">
+                  {detectionDetails.length > 0 ? (
+                    detectionDetails.map((detail, index) => (
+                      <div key={index}>
+                        <p>
+                          <strong>Detected Item {index + 1}:</strong>{" "}
+                          {detail.label}
+                        </p>
+                        <p>
+                          <strong>Confidence:</strong>{" "}
+                          {detail.confidence.toFixed(2)}
+                        </p>
+                        <hr />
+                      </div>
+                    ))
+                  ) : (
+                    <p>There are no plastic items detected from the image</p>
+                  )}
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
+        </div>
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" onClick={toggleModal}>
+          Close
+        </Button>
+      </ModalFooter>
+    </Modal>
+  );
+
+  const navigate = useNavigate();
+
+  const navigateToPollution = () => {
+    navigate("/tracker");
   };
 
   // Functions to handle increment and decrement of quantities
@@ -193,7 +272,15 @@ const PlasticInput = () => {
       case 1:
         return (
           <div className="content-center">
-            <h4>Do you know your plastic weight?</h4>
+            <h4>Do you know the weight for each plastic item?</h4>
+            <p>
+              - We are able to track and record{" "}
+              <strong>
+                plastic bag🛍️, plastic bottle🍶, plastic container🥡, plastic
+                cup🥤, plastic straw📏 and plastic utensil🍴
+              </strong>
+              only.
+            </p>
             <Row className="justify-content-between mt-4">
               <Col xs="12" md="6">
                 <Button
@@ -228,7 +315,8 @@ const PlasticInput = () => {
         if (knowWeight === true) {
           return (
             <div className="content-center">
-              <h4>Please enter the weight per plastic item</h4>
+              <h4>Please enter the weight for each plastic item :)</h4>
+
               <Row>
                 {items.map((item, index) => (
                   <Col xs="6" md="4" key={index} className="text-center mb-4">
@@ -244,7 +332,7 @@ const PlasticInput = () => {
                           id={`weight-${index}`}
                           value={weightsPerItem[item.name]}
                           onChange={(e) => {
-                            const newWeight = e.target.value;
+                            const newWeight = e.target.value || 0;
                             setWeightsPerItem((prevWeights) => ({
                               ...prevWeights,
                               [item.name]: newWeight,
@@ -291,7 +379,7 @@ const PlasticInput = () => {
         } else {
           return (
             <div className="content-center">
-              <h4>Do you know the count of the items?</h4>
+              <h4>Do you know the count of each plastic item?</h4>
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
                   <Button
@@ -337,12 +425,10 @@ const PlasticInput = () => {
           // Confirm Weight per Item
           return (
             <div className="content-center">
-              <h4>Please confirm the Weight per Item</h4>
-              <p style={{ paddingBottom: "0.8rem" }}>
-                <strong>
-                  as you will not be able to change it anymore once you confirm
-                  the weight here :)
-                </strong>
+              <h4>Please confirm the weight per item here</h4>
+              <p style={{ paddingBottom: "1.0rem" }}>
+                as you will <strong>not be able to change it anymore</strong>{" "}
+                once you submit the weight entered here :)
               </p>
               <FormGroup>
                 {items.map((item, index) => (
@@ -450,7 +536,7 @@ const PlasticInput = () => {
             // Enter Item Counts
             return (
               <div>
-                <h4>Enter your contribution</h4>
+                <h4>Please enter the count for each plastic item :)</h4>
                 <Row>
                   {items.map((item, index) => (
                     <Col xs="6" md="4" key={index} className="text-center mb-4">
@@ -520,7 +606,18 @@ const PlasticInput = () => {
             // Upload Photo
             return (
               <div className="content-center">
-                <h4>Upload Photo</h4>
+                <h4>Let us estimate the plastic items count for you!</h4>
+                {/* <p>
+                  Sample image 
+                </p> */}
+                <p>
+                  Format accepted are{" "}
+                  <strong>
+                    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff'
+                  </strong>
+                  .
+                </p>
+                <p>Please upload your image here: </p>
                 <FormGroup>
                   <Input type="file" name="file" id="uploadPhoto" />
                 </FormGroup>
@@ -551,7 +648,9 @@ const PlasticInput = () => {
           console.log("Submission Data:", submissionData);
           return (
             <div className="content-center">
-              <h4>Thank you for your contribution!</h4>
+              <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
+                Thank you, for your contribution on saving marine reptiles!
+              </h2>
               <p>
                 You have recycled approximately{" "}
                 <strong>{result.estimatedItems.toFixed(0)}</strong> plastic
@@ -562,141 +661,276 @@ const PlasticInput = () => {
                 <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea
                 turtles.
               </p>
-              <Button
-                color="primary"
-                onClick={() => {
-                  // Reset everything to start over
-                  setCurrentStep(1);
-                  setKnowWeight(null);
-                  setKnowCount(null);
-                  resetCountsAndWeights();
-                  setResult(null);
-                  setSubmissionData(null);
-                }}
-                block
-              >
-                Record Another Contribution
-              </Button>
-            </div>
-          );
-        } else {
-          return (
-            <div className="content-center">
-              <h4>Confirm Counts</h4>
-              <p>
-                <strong>
-                  You will not be able to change it anymore once you confirm the
-                  counts
-                </strong>
-              </p>
-              <FormGroup>
-                {items.map((item, index) => (
-                  <Row key={index} className="align-items-center mb-3">
-                    <Col xs="3" md="3">
-                      <Input
-                        type="number"
-                        min="0"
-                        name={`confirm-count-${index}`}
-                        id={`confirm-count-${index}`}
-                        value={quantities[item.name]}
-                        onChange={(e) => {
-                          const newCount = parseInt(e.target.value) || 0;
-                          setQuantities((prevQuantities) => ({
-                            ...prevQuantities,
-                            [item.name]: newCount,
-                          }));
-                        }}
-                      />
-                    </Col>
-                    <Col xs="9" md="9">
-                      <div className="item-name">
-                        x {item.name} {item.icon} ={" "}
-                        {(
-                          quantities[item.name] * itemWeights[item.name]
-                        ).toFixed(2)}
-                        g
-                      </div>
-                    </Col>
-                  </Row>
-                ))}
-              </FormGroup>
-
-              <Row className="justify-content-between mt-4">
-                <Col xs="12">
-                  <h4>Estimated Weight: {totalWeightGrams.toFixed(2)} g</h4>
-                </Col>
-              </Row>
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
                   <Button
-                    color="secondary"
-                    onClick={() => setCurrentStep(3)}
-                    block
-                  >
-                    Back
-                  </Button>{" "}
-                </Col>
-                <Col xs="12" md="6">
-                  <Button
-                    className="yes-btn"
+                    style={{}}
                     onClick={() => {
-                      const totalItems = Object.values(quantities).reduce(
-                        (sum, qty) => sum + qty,
-                        0
-                      );
-                      if (totalItems <= 0) {
-                        alert("Please enter at least one item.");
-                      } else {
-                        // Calculate sea turtles saved
-                        const seaTurtlesSaved = (totalItems / 14) * 0.5;
-
-                        // Collect date
-                        const date = new Date();
-
-                        // Collect plastic items and their counts and weights
-                        const plasticItems = {};
-                        items.forEach((item) => {
-                          const itemName = item.name;
-                          const count = quantities[itemName];
-                          if (count > 0) {
-                            const weight = count * itemWeights[itemName];
-                            plasticItems[itemName] = {
-                              count: count,
-                              weight: weight,
-                            };
-                          }
-                        });
-
-                        // Set submission data
-                        setSubmissionData({
-                          date: date,
-                          plasticItems: plasticItems,
-                          totalWeight: totalWeightGrams,
-                        });
-
-                        // Set result and proceed
-                        setResult({
-                          estimatedItems: totalItems,
-                          seaTurtlesSaved: seaTurtlesSaved,
-                        });
-                        setCurrentStep(5);
-                      }
+                      // Reset everything to start over
+                      setCurrentStep(1);
+                      setKnowWeight(null);
+                      setKnowCount(null);
+                      resetCountsAndWeights();
+                      setResult(null);
+                      setSubmissionData(null);
                     }}
                     block
                   >
-                    Confirm
+                    Record Another Contribution
+                  </Button>
+                </Col>
+                <Col xs="12" md="6" className="d-flex">
+                  <Button color="primary" onClick={navigateToPollution} block>
+                    Return to Dashboard
                   </Button>
                 </Col>
               </Row>
             </div>
           );
+        } else {
+          if (knowCount === true) {
+            return (
+              <div className="content-center">
+                <h4>Please confirm the count for each item here</h4>
+                <p style={{ paddingBottom: "1.0rem" }}>
+                  as you will <strong>not be able to change it anymore</strong>{" "}
+                  once you submit the count entered here :)
+                </p>
+                <FormGroup>
+                  {items.map((item, index) => (
+                    <Row key={index} className="align-items-center mb-3">
+                      <Col xs="3" md="3">
+                        <Input
+                          type="number"
+                          min="0"
+                          name={`confirm-count-${index}`}
+                          id={`confirm-count-${index}`}
+                          value={quantities[item.name]}
+                          onChange={(e) => {
+                            const newCount = parseInt(e.target.value) || 0;
+                            setQuantities((prevQuantities) => ({
+                              ...prevQuantities,
+                              [item.name]: newCount,
+                            }));
+                          }}
+                        />
+                      </Col>
+                      <Col xs="9" md="9">
+                        <div className="item-name">
+                          x {item.name} {item.icon} (avg{" "}
+                          {itemWeights[item.name]}g per item) ={" "}
+                          {(
+                            quantities[item.name] * itemWeights[item.name]
+                          ).toFixed(2)}
+                          g
+                        </div>
+                      </Col>
+                    </Row>
+                  ))}
+                </FormGroup>
+
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12">
+                    <h5 style={{ fontWeight: "bold" }}>
+                      Estimated Weight: {totalWeightGrams.toFixed(2)} g
+                    </h5>
+                  </Col>
+                </Row>
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12" md="6">
+                    <Button
+                      color="secondary"
+                      onClick={() => setCurrentStep(3)}
+                      block
+                    >
+                      Back
+                    </Button>{" "}
+                  </Col>
+                  <Col xs="12" md="6">
+                    <Button
+                      className="yes-btn"
+                      onClick={() => {
+                        const totalItems = Object.values(quantities).reduce(
+                          (sum, qty) => sum + qty,
+                          0
+                        );
+                        if (totalItems <= 0) {
+                          alert("Please enter at least one item.");
+                        } else {
+                          // Calculate sea turtles saved
+                          const seaTurtlesSaved = (totalItems / 14) * 0.5;
+
+                          // Collect date
+                          const date = new Date();
+
+                          // Collect plastic items and their counts and weights
+                          const plasticItems = {};
+                          items.forEach((item) => {
+                            const itemName = item.name;
+                            const count = quantities[itemName];
+                            if (count > 0) {
+                              const weight = count * itemWeights[itemName];
+                              plasticItems[itemName] = {
+                                count: count,
+                                weight: weight,
+                              };
+                            }
+                          });
+
+                          // Set submission data
+                          setSubmissionData({
+                            date: date,
+                            plasticItems: plasticItems,
+                            totalWeight: totalWeightGrams,
+                          });
+
+                          // Set result and proceed
+                          setResult({
+                            estimatedItems: totalItems,
+                            seaTurtlesSaved: seaTurtlesSaved,
+                          });
+                          setCurrentStep(5);
+                        }
+                      }}
+                      block
+                    >
+                      Confirm
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
+          } else {
+            return (
+              <div className="content-center">
+                <h4>Please confirm the count here </h4>
+                <p style={{ paddingBottom: "0.5rem" }}>
+                  as the count estimated <strong>give you a good start </strong>
+                  but it is highly recommended to review and refine the final
+                  count here by yourself. You will not be able to change it
+                  anymore once you confirm the entered counts here :)
+                </p>
+                <FormGroup>
+                  {items.map((item, index) => (
+                    <Row key={index} className="align-items-center mb-3">
+                      <Col xs="3" md="3">
+                        <Input
+                          type="number"
+                          min="0"
+                          name={`confirm-count-${index}`}
+                          id={`confirm-count-${index}`}
+                          value={quantities[item.name]}
+                          onChange={(e) => {
+                            const newCount = parseInt(e.target.value) || 0;
+                            setQuantities((prevQuantities) => ({
+                              ...prevQuantities,
+                              [item.name]: newCount,
+                            }));
+                          }}
+                        />
+                      </Col>
+                      <Col xs="9" md="9">
+                        <div className="item-name">
+                          x {item.name} {item.icon} (avg{" "}
+                          {itemWeights[item.name]}g per item) ={" "}
+                          {(
+                            quantities[item.name] * itemWeights[item.name]
+                          ).toFixed(2)}
+                          g
+                        </div>
+                      </Col>
+                    </Row>
+                  ))}
+                </FormGroup>
+
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12">
+                    <h5 style={{ fontWeight: "bold" }}>
+                      Estimated Weight: {totalWeightGrams.toFixed(2)} g
+                    </h5>
+                  </Col>
+                </Row>
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12" md="12">
+                    <Button color="secondary" onClick={toggleModal} block>
+                      Estimation details
+                    </Button>{" "}
+                  </Col>
+                </Row>
+                <Row className="justify-content-between mt-4">
+                  <Col xs="12" md="6">
+                    <Button
+                      color="secondary"
+                      onClick={() => setCurrentStep(3)}
+                      block
+                    >
+                      Back
+                    </Button>{" "}
+                  </Col>
+                  <Col xs="12" md="6">
+                    <Button
+                      className="yes-btn"
+                      onClick={() => {
+                        const totalItems = Object.values(quantities).reduce(
+                          (sum, qty) => sum + qty,
+                          0
+                        );
+                        if (totalItems <= 0) {
+                          alert("Please enter at least one item.");
+                        } else {
+                          // Calculate sea turtles saved
+                          const seaTurtlesSaved = (totalItems / 14) * 0.5;
+
+                          // Collect date
+                          const date = new Date();
+
+                          // Collect plastic items and their counts and weights
+                          const plasticItems = {};
+                          items.forEach((item) => {
+                            const itemName = item.name;
+                            const count = quantities[itemName];
+                            if (count > 0) {
+                              const weight = count * itemWeights[itemName];
+                              plasticItems[itemName] = {
+                                count: count,
+                                weight: weight,
+                              };
+                            }
+                          });
+
+                          // Set submission data
+                          setSubmissionData({
+                            date: date,
+                            plasticItems: plasticItems,
+                            totalWeight: totalWeightGrams,
+                          });
+
+                          // Set result and proceed
+                          setResult({
+                            estimatedItems: totalItems,
+                            seaTurtlesSaved: seaTurtlesSaved,
+                          });
+                          setCurrentStep(5);
+                        }
+                      }}
+                      block
+                    >
+                      Confirm
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            );
+          }
         }
       case 5:
         // Display Results and log data
         console.log("Submission Data:", submissionData);
         return (
           <div className="content-center">
-            <h4>Thank you for your contribution!</h4>
+            <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
+              Thank you, for your contribution on saving marine reptiles!
+            </h2>
             <p>
               You have recycled{" "}
               <strong>{result.estimatedItems.toFixed(0)}</strong> plastic items.
@@ -705,21 +939,30 @@ const PlasticInput = () => {
               This action potentially saved{" "}
               <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea turtles.
             </p>
-            <Button
-              color="primary"
-              onClick={() => {
-                // Reset everything to start over
-                setCurrentStep(1);
-                setKnowWeight(null);
-                setKnowCount(null);
-                resetCountsAndWeights();
-                setResult(null);
-                setSubmissionData(null);
-              }}
-              block
-            >
-              Record Another Contribution
-            </Button>
+            <Row className="justify-content-between mt-4">
+              <Col xs="12" md="6" className="d-flex">
+                <Button
+                  style={{}}
+                  onClick={() => {
+                    // Reset everything to start over
+                    setCurrentStep(1);
+                    setKnowWeight(null);
+                    setKnowCount(null);
+                    resetCountsAndWeights();
+                    setResult(null);
+                    setSubmissionData(null);
+                  }}
+                  block
+                >
+                  Record Another Contribution
+                </Button>
+              </Col>
+              <Col xs="12" md="6" className="d-flex">
+                <Button color="primary" block>
+                  Return to Dashboard
+                </Button>
+              </Col>
+            </Row>
           </div>
         );
       default:
@@ -746,6 +989,7 @@ const PlasticInput = () => {
             </Card>
           </Col>
         </Row>
+        {renderModalContent()}
       </Container>
     </div>
   );

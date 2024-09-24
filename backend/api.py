@@ -603,6 +603,12 @@ def get_marine_life_logo_images():
     return jsonify(fact_array)
 
 # Iteration 3 api call
+import base64
+import cv2
+import numpy as np
+from flask import jsonify, request
+from ultralytics import YOLO
+
 @app.route('/api/plasticInput/plasticDetection', methods=['POST'])
 def get_plastic_detection():
     trained_model = YOLO("./best.pt")  # Load a custom trained model
@@ -616,6 +622,20 @@ def get_plastic_detection():
     
     # Check if the file has an allowed image extension
     if file and file.filename.endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff')):
+        file_type = None
+        if file.filename.endswith(('.jpg')):
+            file_type = 'jpg'
+        if file.filename.endswith(('.jpeg')):
+            file_type = 'jpeg'
+        if file.filename.endswith(('.png')):
+            file_type = 'png'
+        if file.filename.endswith(('.gif')):
+            file_type = 'gif'
+        if file.filename.endswith(('.bmp')):
+            file_type = 'bmp'
+        if file.filename.endswith(('.tiff')):
+            file_type = 'tiff'
+
         # Convert image to an OpenCV format
         file_bytes = file.read()
         np_arr = np.frombuffer(file_bytes, np.uint8)
@@ -641,28 +661,31 @@ def get_plastic_detection():
                     "confidence": confidence
                 })
 
-                # Optional: Draw the bounding box
+                # Draw the bounding box
                 start_point = (int(coordinates[0]), int(coordinates[1]))
                 end_point = (int(coordinates[2]), int(coordinates[3]))
                 color = (0, 255, 0)  # Green color for the bounding box
                 thickness = 2
                 cv2.rectangle(img, start_point, end_point, color, thickness)
 
-                # Optional: Put the label and confidence score
+                # Put the label and confidence score
                 text = f"{label} {confidence:.2f}"
                 cv2.putText(img, text, (int(coordinates[0]), int(coordinates[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        # Optionally, save the image with the bounding boxes (uncomment if needed)
-        # output_path = 'output_image_with_boxes.jpg'
-        # cv2.imwrite(output_path, img)
+        # Encode the image to base64
+        _, buffer = cv2.imencode('.jpg', img)
+        img_base64 = base64.b64encode(buffer).decode('utf-8')
 
         return jsonify({
             "message": "Image processed successfully",
             "detections": detected_objects,
-            "counter": counter
+            "counter": counter,
+            "image": img_base64,  
+            "type": file_type
         }), 200
 
     return jsonify({"error": "Unsupported file type"}), 400
+
 
 if __name__ == '__main__':
     app.run(debug=True)
