@@ -18,12 +18,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { addDataToDB } from "../../util/db";
 
+// visual appealing
+import AnimatedTurtle from "../seaTurtleGame/AnimatedTurtle";
+import { GiSeaTurtle } from "react-icons/gi";
 
 const PlasticInput = () => {
   // State variables to manage the flow
   const [currentStep, setCurrentStep] = useState(1);
   const [knowWeight, setKnowWeight] = useState(null); // null, true, or false
   const [knowCount, setKnowCount] = useState(null); // null, true, or false
+  const [loading, setLoading] = useState(false); // Loading state for upload process
   const [quantities, setQuantities] = useState({
     "Plastic Bag": 0,
     "Plastic Bottle": 0,
@@ -89,6 +93,8 @@ const PlasticInput = () => {
     formData.append("image", fileInput);
 
     try {
+      setLoading(true); // Start loading
+
       // Make the API call to the Flask backend
       const response = await axios.post(
         "http://127.0.0.1:5000/api/plasticInput/plasticDetection",
@@ -100,7 +106,6 @@ const PlasticInput = () => {
         }
       );
 
-      // Assuming the response contains a "counter" object with the quantities of detected items
       const detectedQuantities = {
         "Plastic Bag": response.data.counter[0],
         "Plastic Bottle": response.data.counter[1],
@@ -115,12 +120,13 @@ const PlasticInput = () => {
         `data:image/${response.data.image_type};base64,${response.data.image}`
       );
 
-      // Update the quantities state with the actual detected values
       setQuantities(detectedQuantities);
       setCurrentStep(4); // Proceed to the next step
     } catch (error) {
       console.error("Error during image upload:", error);
       alert("There was an error processing your image. Please try again.");
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -134,7 +140,17 @@ const PlasticInput = () => {
   // Modal content displaying confidence and coordinates
   const renderModalContent = () => (
     <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
-      <ModalHeader toggle={toggleModal}>Estimation Details</ModalHeader>
+      <ModalHeader toggle={toggleModal}>
+        <h4
+          style={{
+            fontWeight: "bold",
+            color: "#003366",
+            padding: "0.8rem 1rem 0",
+          }}
+        >
+          <GiSeaTurtle size={35} /> Estimation Details
+        </h4>
+      </ModalHeader>
       <ModalBody>
         <div
           className="plastic-input-page justify-content-center"
@@ -181,7 +197,7 @@ const PlasticInput = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" onClick={toggleModal}>
+        <Button className="pop-out-button" onClick={toggleModal}>
           Close
         </Button>
       </ModalFooter>
@@ -251,10 +267,10 @@ const PlasticInput = () => {
 
     return (
       <div className="registration-text">
-        <h2>Help save sea turtles</h2>
+        <h2>Take Action to Protect Sea Turtles</h2>
         <p style={{ paddingBottom: "2rem" }}>
-          Start recording your recycled plastic waste now to see your impact on
-          saving the sea turtle!
+          Begin tracking your recycled plastic waste and discover the impact you
+          are making in saving sea turtles!
         </p>
         {steps.map((step) => (
           <div key={step.number}>
@@ -276,12 +292,12 @@ const PlasticInput = () => {
           <div className="content-center">
             <h4>Do you know the weight for each plastic item?</h4>
             <p>
-              - We are able to track and record{" "}
+              <GiSeaTurtle size={35} /> We can track and record only the
+              following items:{" "}
               <strong>
                 plastic bag🛍️, plastic bottle🍶, plastic container🥡, plastic
-                cup🥤, plastic straw📏 and plastic utensil🍴
+                cup🥤, plastic straw📏, and plastic utensil🍴.
               </strong>
-              only.
             </p>
             <Row className="justify-content-between mt-4">
               <Col xs="12" md="6">
@@ -317,7 +333,10 @@ const PlasticInput = () => {
         if (knowWeight === true) {
           return (
             <div className="content-center">
-              <h4>Please enter the weight for each plastic item :)</h4>
+              <h4>
+                <GiSeaTurtle size={35} /> Please enter the weight for each
+                plastic item
+              </h4>
 
               <Row>
                 {items.map((item, index) => (
@@ -427,7 +446,10 @@ const PlasticInput = () => {
           // Confirm Weight per Item
           return (
             <div className="content-center">
-              <h4>Please confirm the weight per item here</h4>
+              <h4>
+                <GiSeaTurtle size={35} /> Please confirm the weight per item
+                here
+              </h4>
               <p style={{ paddingBottom: "1.0rem" }}>
                 as you will <strong>not be able to change it anymore</strong>{" "}
                 once you submit the weight entered here :)
@@ -508,7 +530,7 @@ const PlasticInput = () => {
                             date: date,
                             type: plasticType,
                             weight: plasticItems[plasticType].weight,
-                            count: plasticItems[plasticType].approximateCount
+                            count: plasticItems[plasticType].approximateCount,
                           };
                           await addDataToDB(newData);
                         }
@@ -549,7 +571,10 @@ const PlasticInput = () => {
             // Enter Item Counts
             return (
               <div>
-                <h4>Please enter the count for each plastic item :)</h4>
+                <h4>
+                  <GiSeaTurtle size={35} /> Please enter the count for each
+                  plastic item
+                </h4>
                 <Row>
                   {items.map((item, index) => (
                     <Col xs="6" md="4" key={index} className="text-center mb-4">
@@ -630,7 +655,9 @@ const PlasticInput = () => {
                   </strong>
                   .
                 </p>
-                <p>Please upload your image here: </p>
+                <p>
+                  <GiSeaTurtle size={35} /> Upload your image here:{" "}
+                </p>
                 <FormGroup>
                   <Input type="file" name="file" id="uploadPhoto" />
                 </FormGroup>
@@ -641,13 +668,32 @@ const PlasticInput = () => {
                       color="secondary"
                       onClick={() => setCurrentStep(2)}
                       block
+                      disabled={loading} // Disable button while loading
                     >
                       Back
                     </Button>
                   </Col>
                   <Col xs="12" md="6">
-                    <Button color="primary" onClick={handlePhotoUpload} block>
-                      Next
+                    <Button
+                      color="primary"
+                      onClick={handlePhotoUpload}
+                      block
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <div className="d-flex align-items-center justify-content-center">
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          <span style={{ marginLeft: "5px" }}>
+                            Uploading...
+                          </span>
+                        </div>
+                      ) : (
+                        "Next"
+                      )}
                     </Button>
                   </Col>
                 </Row>
@@ -662,7 +708,7 @@ const PlasticInput = () => {
           return (
             <div className="content-center">
               <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
-                Thank you, for your contribution on saving marine reptiles!
+                Thank you for your contribution on saving marine reptiles!
               </h2>
               <p>
                 You have recycled approximately{" "}
@@ -674,12 +720,45 @@ const PlasticInput = () => {
                 <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea
                 turtles.
               </p>
+              {Math.floor(result.seaTurtlesSaved) >= 1 && (
+                <Card>
+                  <CardBody>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "15px 0 0",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {Array.from({
+                        length: Math.min(
+                          Math.floor(result.seaTurtlesSaved),
+                          15
+                        ),
+                      }).map((_, index) => (
+                        <AnimatedTurtle key={index} height={50} width={50} />
+                      ))}
+
+                      {Math.floor(result.seaTurtlesSaved) > 15 && (
+                        <span
+                          style={{
+                            marginLeft: "10px",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ... and countless others saved!
+                        </span>
+                      )}
+                    </div>
+                  </CardBody>
+                </Card>
+              )}
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
                   <Button
-                    style={{}}
                     onClick={() => {
-                      // Reset everything to start over
                       setCurrentStep(1);
                       setKnowWeight(null);
                       setKnowCount(null);
@@ -704,10 +783,13 @@ const PlasticInput = () => {
           if (knowCount === true) {
             return (
               <div className="content-center">
-                <h4>Please confirm the count for each item here</h4>
+                <h4>
+                  <GiSeaTurtle size={35} /> Please confirm the count for each
+                  item here
+                </h4>
                 <p style={{ paddingBottom: "1.0rem" }}>
                   as you will <strong>not be able to change it anymore</strong>{" "}
-                  once you submit the count entered here :)
+                  once you submit the count entered here
                 </p>
                 <FormGroup>
                   {items.map((item, index) => (
@@ -796,7 +878,7 @@ const PlasticInput = () => {
                               date: date,
                               type: plasticType,
                               weight: plasticItems[plasticType].weight,
-                              count: plasticItems[plasticType].count
+                              count: plasticItems[plasticType].count,
                             };
                             await addDataToDB(newData);
                           }
@@ -827,7 +909,9 @@ const PlasticInput = () => {
           } else {
             return (
               <div className="content-center">
-                <h4>Please confirm the count here </h4>
+                <h4>
+                  <GiSeaTurtle size={35} /> Please confirm the count here{" "}
+                </h4>
                 <p style={{ paddingBottom: "0.5rem" }}>
                   as the count estimated <strong>give you a good start </strong>
                   but it is highly recommended to review and refine the final
@@ -928,7 +1012,7 @@ const PlasticInput = () => {
                               date: date,
                               type: plasticType,
                               weight: plasticItems[plasticType].weight,
-                              count: plasticItems[plasticType].count
+                              count: plasticItems[plasticType].count,
                             };
                             await addDataToDB(newData);
                           }
@@ -964,7 +1048,7 @@ const PlasticInput = () => {
         return (
           <div className="content-center">
             <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
-              Thank you, for your contribution on saving marine reptiles!
+              Thank you for your contribution on saving marine reptiles!
             </h2>
             <p>
               You have recycled{" "}
@@ -974,12 +1058,42 @@ const PlasticInput = () => {
               This action potentially saved{" "}
               <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea turtles.
             </p>
+            {Math.floor(result.seaTurtlesSaved) >= 1 && (
+              <Card>
+                <CardBody>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "15px 0 0",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {Array.from({
+                      length: Math.min(Math.floor(result.seaTurtlesSaved), 15),
+                    }).map((_, index) => (
+                      <AnimatedTurtle key={index} height={50} width={50} />
+                    ))}
+
+                    {Math.floor(result.seaTurtlesSaved) > 15 && (
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          fontSize: "1.2rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ... and countless others saved!
+                      </span>
+                    )}
+                  </div>
+                </CardBody>
+              </Card>
+            )}
             <Row className="justify-content-between mt-4">
-              <Col xs="12" md="6" className="d-flex">
+              <Col xs="12" md="6">
                 <Button
-                  style={{}}
                   onClick={() => {
-                    // Reset everything to start over
                     setCurrentStep(1);
                     setKnowWeight(null);
                     setKnowCount(null);
