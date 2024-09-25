@@ -20,17 +20,15 @@ import MarineLife_1 from "./iter1/marinelife/MarineLife_1";
 import Quiz_1 from "./iter1/education/Quiz_1";
 import BlueNavbar_1 from "./components/Navbar/BlueNavbar_1";
 import NotFound from "./pages/NotFound";
-import Home_2 from "./iter2/home/Home"
+import Home_2 from "./iter2/home/Home";
 import MarineLife_2 from "./iter2/marinelife/MarineLife";
 import Quiz_2 from "./iter2/education/Quiz";
 import Pollution_2 from "./iter2/pollution/Pollution";
 import MiniGame_2 from "./iter2/seaTurtleGame/SeaTurtleGame";
 import BlueNavbar_2 from "./components/Navbar/BlueNavbar_2";
-import Dashboard from "./pages/tracker/Dashboard";
+import Dashboard from "./pages/tracker/dashboard";
 import PlasticInput from "./pages/tracker/plasticInput";
 import Facility from "./pages/plasticFacility/plasticFacility";
-
-
 
 function Layout() {
   const location = useLocation();
@@ -38,8 +36,13 @@ function Layout() {
   return (
     <>
       {/* Conditionally render Navbar based on the current path */}
-      {location.pathname.includes("iter1") ? <BlueNavbar_1 /> : 
-      location.pathname.includes("iter2") ? <BlueNavbar_2 /> :<BlueNavbar />}
+      {location.pathname.includes("iter1") ? (
+        <BlueNavbar_1 />
+      ) : location.pathname.includes("iter2") ? (
+        <BlueNavbar_2 />
+      ) : (
+        <BlueNavbar />
+      )}
     </>
   );
 }
