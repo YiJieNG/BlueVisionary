@@ -140,7 +140,17 @@ const PlasticInput = () => {
   // Modal content displaying confidence and coordinates
   const renderModalContent = () => (
     <Modal isOpen={isModalOpen} toggle={toggleModal} size="xl">
-      <ModalHeader toggle={toggleModal}>Estimation Details</ModalHeader>
+      <ModalHeader toggle={toggleModal}>
+        <h4
+          style={{
+            fontWeight: "bold",
+            color: "#003366",
+            padding: "0.8rem 1rem 0",
+          }}
+        >
+          <GiSeaTurtle size={35} /> Estimation Details
+        </h4>
+      </ModalHeader>
       <ModalBody>
         <div
           className="plastic-input-page justify-content-center"
@@ -187,7 +197,7 @@ const PlasticInput = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" onClick={toggleModal}>
+        <Button className="pop-out-button" onClick={toggleModal}>
           Close
         </Button>
       </ModalFooter>
