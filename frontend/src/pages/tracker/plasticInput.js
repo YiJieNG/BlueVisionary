@@ -16,6 +16,8 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { addDataToDB } from "../../util/db";
+
 
 // visual appealing
 import AnimatedTurtle from "../seaTurtleGame/AnimatedTurtle";
@@ -152,7 +154,7 @@ const PlasticInput = () => {
                     <h2 style={{ paddingBottom: "1.2rem" }}>
                       Image uploaded:{" "}
                     </h2>
-                    {console.log(detectionImage)}
+                    {/* {console.log(detectionImage)} */}
                     <img
                       src={detectionImage}
                       alt="Detected objects with bounding boxes"
@@ -483,12 +485,12 @@ const PlasticInput = () => {
                 <Col xs="12" md="6">
                   <Button
                     className="yes-btn"
-                    onClick={() => {
+                    onClick={async () => {
                       if (totalWeight <= 0) {
                         alert("Please enter a weight greater than 0.");
                       } else {
                         // Collect date
-                        const date = new Date();
+                        const date = new Date().getTime();
 
                         // Collect plastic items, their weights, and approximate counts
                         const plasticItems = {};
@@ -505,6 +507,17 @@ const PlasticInput = () => {
                             };
                           }
                         });
+
+                        // store data to indexedDB
+                        for (var plasticType in plasticItems) {
+                          const newData = {
+                            date: date,
+                            type: plasticType,
+                            weight: plasticItems[plasticType].weight,
+                            count: plasticItems[plasticType].approximateCount
+                          };
+                          await addDataToDB(newData);
+                        }
 
                         // Calculate estimated items by summing approximate counts
                         const estimatedItems = Object.values(
@@ -807,7 +820,7 @@ const PlasticInput = () => {
                   <Col xs="12" md="6">
                     <Button
                       className="yes-btn"
-                      onClick={() => {
+                      onClick={async () => {
                         const totalItems = Object.values(quantities).reduce(
                           (sum, qty) => sum + qty,
                           0
@@ -819,7 +832,7 @@ const PlasticInput = () => {
                           const seaTurtlesSaved = (totalItems / 14) * 0.5;
 
                           // Collect date
-                          const date = new Date();
+                          const date = new Date().getTime();
 
                           // Collect plastic items and their counts and weights
                           const plasticItems = {};
@@ -834,6 +847,17 @@ const PlasticInput = () => {
                               };
                             }
                           });
+
+                          // store data to indexedDB
+                          for (var plasticType in plasticItems) {
+                            const newData = {
+                              date: date,
+                              type: plasticType,
+                              weight: plasticItems[plasticType].weight,
+                              count: plasticItems[plasticType].count
+                            };
+                            await addDataToDB(newData);
+                          }
 
                           // Set submission data
                           setSubmissionData({
@@ -928,7 +952,7 @@ const PlasticInput = () => {
                   <Col xs="12" md="6">
                     <Button
                       className="yes-btn"
-                      onClick={() => {
+                      onClick={async () => {
                         const totalItems = Object.values(quantities).reduce(
                           (sum, qty) => sum + qty,
                           0
@@ -940,7 +964,7 @@ const PlasticInput = () => {
                           const seaTurtlesSaved = (totalItems / 14) * 0.5;
 
                           // Collect date
-                          const date = new Date();
+                          const date = new Date().getTime();
 
                           // Collect plastic items and their counts and weights
                           const plasticItems = {};
@@ -955,6 +979,17 @@ const PlasticInput = () => {
                               };
                             }
                           });
+
+                          // store data to indexedDB
+                          for (var plasticType in plasticItems) {
+                            const newData = {
+                              date: date,
+                              type: plasticType,
+                              weight: plasticItems[plasticType].weight,
+                              count: plasticItems[plasticType].count
+                            };
+                            await addDataToDB(newData);
+                          }
 
                           // Set submission data
                           setSubmissionData({
