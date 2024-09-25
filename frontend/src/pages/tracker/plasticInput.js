@@ -18,9 +18,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { addDataToDB } from "../../util/db";
 
-
 // visual appealing
 import AnimatedTurtle from "../seaTurtleGame/AnimatedTurtle";
+import { GiSeaTurtle } from "react-icons/gi";
 
 const PlasticInput = () => {
   // State variables to manage the flow
@@ -257,10 +257,10 @@ const PlasticInput = () => {
 
     return (
       <div className="registration-text">
-        <h2>Help save sea turtles</h2>
+        <h2>Take Action to Protect Sea Turtles</h2>
         <p style={{ paddingBottom: "2rem" }}>
-          Start recording your recycled plastic waste now to see your impact on
-          saving the sea turtle!
+          Begin tracking your recycled plastic waste and discover the impact you
+          are making in saving sea turtles!
         </p>
         {steps.map((step) => (
           <div key={step.number}>
@@ -282,12 +282,12 @@ const PlasticInput = () => {
           <div className="content-center">
             <h4>Do you know the weight for each plastic item?</h4>
             <p>
-              - We are able to track and record{" "}
+              <GiSeaTurtle size={35} /> We can track and record only the
+              following items:{" "}
               <strong>
                 plastic bag🛍️, plastic bottle🍶, plastic container🥡, plastic
-                cup🥤, plastic straw📏 and plastic utensil🍴
+                cup🥤, plastic straw📏, and plastic utensil🍴.
               </strong>
-              only.
             </p>
             <Row className="justify-content-between mt-4">
               <Col xs="12" md="6">
@@ -323,7 +323,10 @@ const PlasticInput = () => {
         if (knowWeight === true) {
           return (
             <div className="content-center">
-              <h4>Please enter the weight for each plastic item :)</h4>
+              <h4>
+                <GiSeaTurtle size={35} /> Please enter the weight for each
+                plastic item
+              </h4>
 
               <Row>
                 {items.map((item, index) => (
@@ -433,7 +436,10 @@ const PlasticInput = () => {
           // Confirm Weight per Item
           return (
             <div className="content-center">
-              <h4>Please confirm the weight per item here</h4>
+              <h4>
+                <GiSeaTurtle size={35} /> Please confirm the weight per item
+                here
+              </h4>
               <p style={{ paddingBottom: "1.0rem" }}>
                 as you will <strong>not be able to change it anymore</strong>{" "}
                 once you submit the weight entered here :)
@@ -514,7 +520,7 @@ const PlasticInput = () => {
                             date: date,
                             type: plasticType,
                             weight: plasticItems[plasticType].weight,
-                            count: plasticItems[plasticType].approximateCount
+                            count: plasticItems[plasticType].approximateCount,
                           };
                           await addDataToDB(newData);
                         }
@@ -555,7 +561,10 @@ const PlasticInput = () => {
             // Enter Item Counts
             return (
               <div>
-                <h4>Please enter the count for each plastic item :)</h4>
+                <h4>
+                  <GiSeaTurtle size={35} /> Please enter the count for each
+                  plastic item
+                </h4>
                 <Row>
                   {items.map((item, index) => (
                     <Col xs="6" md="4" key={index} className="text-center mb-4">
@@ -636,7 +645,9 @@ const PlasticInput = () => {
                   </strong>
                   .
                 </p>
-                <p>Please upload your image here: </p>
+                <p>
+                  <GiSeaTurtle size={35} /> Upload your image here:{" "}
+                </p>
                 <FormGroup>
                   <Input type="file" name="file" id="uploadPhoto" />
                 </FormGroup>
@@ -687,7 +698,7 @@ const PlasticInput = () => {
           return (
             <div className="content-center">
               <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
-                Thank you, for your contribution to saving marine reptiles!
+                Thank you for your contribution on saving marine reptiles!
               </h2>
               <p>
                 You have recycled approximately{" "}
@@ -762,10 +773,13 @@ const PlasticInput = () => {
           if (knowCount === true) {
             return (
               <div className="content-center">
-                <h4>Please confirm the count for each item here</h4>
+                <h4>
+                  <GiSeaTurtle size={35} /> Please confirm the count for each
+                  item here
+                </h4>
                 <p style={{ paddingBottom: "1.0rem" }}>
                   as you will <strong>not be able to change it anymore</strong>{" "}
-                  once you submit the count entered here :)
+                  once you submit the count entered here
                 </p>
                 <FormGroup>
                   {items.map((item, index) => (
@@ -854,7 +868,7 @@ const PlasticInput = () => {
                               date: date,
                               type: plasticType,
                               weight: plasticItems[plasticType].weight,
-                              count: plasticItems[plasticType].count
+                              count: plasticItems[plasticType].count,
                             };
                             await addDataToDB(newData);
                           }
@@ -885,7 +899,9 @@ const PlasticInput = () => {
           } else {
             return (
               <div className="content-center">
-                <h4>Please confirm the count here </h4>
+                <h4>
+                  <GiSeaTurtle size={35} /> Please confirm the count here{" "}
+                </h4>
                 <p style={{ paddingBottom: "0.5rem" }}>
                   as the count estimated <strong>give you a good start </strong>
                   but it is highly recommended to review and refine the final
@@ -986,7 +1002,7 @@ const PlasticInput = () => {
                               date: date,
                               type: plasticType,
                               weight: plasticItems[plasticType].weight,
-                              count: plasticItems[plasticType].count
+                              count: plasticItems[plasticType].count,
                             };
                             await addDataToDB(newData);
                           }
@@ -1022,7 +1038,7 @@ const PlasticInput = () => {
         return (
           <div className="content-center">
             <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
-              Thank you, for your contribution to saving marine reptiles!
+              Thank you for your contribution on saving marine reptiles!
             </h2>
             <p>
               You have recycled{" "}
