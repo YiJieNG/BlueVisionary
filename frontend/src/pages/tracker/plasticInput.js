@@ -146,7 +146,7 @@ const PlasticInput = () => {
                     <h2 style={{ paddingBottom: "1.2rem" }}>
                       Image uploaded:{" "}
                     </h2>
-                    {console.log(detectionImage)}
+                    {/* {console.log(detectionImage)} */}
                     <img
                       src={detectionImage}
                       alt="Detected objects with bounding boxes"
@@ -482,7 +482,7 @@ const PlasticInput = () => {
                         alert("Please enter a weight greater than 0.");
                       } else {
                         // Collect date
-                        const date = new Date();
+                        const date = new Date().getTime();
 
                         // Collect plastic items, their weights, and approximate counts
                         const plasticItems = {};
@@ -761,7 +761,7 @@ const PlasticInput = () => {
                           const seaTurtlesSaved = (totalItems / 14) * 0.5;
 
                           // Collect date
-                          const date = new Date();
+                          const date = new Date().getTime();
 
                           // Collect plastic items and their counts and weights
                           const plasticItems = {};
@@ -882,7 +882,7 @@ const PlasticInput = () => {
                           const seaTurtlesSaved = (totalItems / 14) * 0.5;
 
                           // Collect date
-                          const date = new Date();
+                          const date = new Date().getTime();
 
                           // Collect plastic items and their counts and weights
                           const plasticItems = {};
