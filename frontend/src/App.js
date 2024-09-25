@@ -26,7 +26,7 @@ import Quiz_2 from "./iter2/education/Quiz";
 import Pollution_2 from "./iter2/pollution/Pollution";
 import MiniGame_2 from "./iter2/seaTurtleGame/SeaTurtleGame";
 import BlueNavbar_2 from "./components/Navbar/BlueNavbar_2";
-import Dashboard from "./pages/tracker/dashboard";
+import Dashboard from "./pages/tracker/Dashboard";
 import PlasticInput from "./pages/tracker/plasticInput";
 import Facility from "./pages/plasticFacility/plasticFacility";
 
