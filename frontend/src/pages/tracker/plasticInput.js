@@ -17,6 +17,9 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// visual appealing
+import AnimatedTurtle from "../seaTurtleGame/AnimatedTurtle";
+
 const PlasticInput = () => {
   // State variables to manage the flow
   const [currentStep, setCurrentStep] = useState(1);
@@ -659,7 +662,23 @@ const PlasticInput = () => {
               <p>
                 This action potentially saved{" "}
                 <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea
-                turtles.
+                turtles.{" "}
+                {Math.floor(result.seaTurtlesSaved) >= 1 && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingTop: "35px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {Array.from({
+                      length: Math.floor(result.seaTurtlesSaved),
+                    }).map((_, index) => (
+                      <AnimatedTurtle key={index} height={50} width={50} />
+                    ))}
+                  </div>
+                )}
               </p>
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
