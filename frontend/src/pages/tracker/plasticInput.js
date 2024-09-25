@@ -25,6 +25,7 @@ const PlasticInput = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [knowWeight, setKnowWeight] = useState(null); // null, true, or false
   const [knowCount, setKnowCount] = useState(null); // null, true, or false
+  const [loading, setLoading] = useState(false); // Loading state for upload process
   const [quantities, setQuantities] = useState({
     "Plastic Bag": 0,
     "Plastic Bottle": 0,
@@ -90,6 +91,8 @@ const PlasticInput = () => {
     formData.append("image", fileInput);
 
     try {
+      setLoading(true); // Start loading
+
       // Make the API call to the Flask backend
       const response = await axios.post(
         "http://127.0.0.1:5000/api/plasticInput/plasticDetection",
@@ -101,7 +104,6 @@ const PlasticInput = () => {
         }
       );
 
-      // Assuming the response contains a "counter" object with the quantities of detected items
       const detectedQuantities = {
         "Plastic Bag": response.data.counter[0],
         "Plastic Bottle": response.data.counter[1],
@@ -116,12 +118,13 @@ const PlasticInput = () => {
         `data:image/${response.data.image_type};base64,${response.data.image}`
       );
 
-      // Update the quantities state with the actual detected values
       setQuantities(detectedQuantities);
       setCurrentStep(4); // Proceed to the next step
     } catch (error) {
       console.error("Error during image upload:", error);
       alert("There was an error processing your image. Please try again.");
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -631,13 +634,32 @@ const PlasticInput = () => {
                       color="secondary"
                       onClick={() => setCurrentStep(2)}
                       block
+                      disabled={loading} // Disable button while loading
                     >
                       Back
                     </Button>
                   </Col>
                   <Col xs="12" md="6">
-                    <Button color="primary" onClick={handlePhotoUpload} block>
-                      Next
+                    <Button
+                      color="primary"
+                      onClick={handlePhotoUpload}
+                      block
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <div className="d-flex align-items-center justify-content-center">
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          <span style={{ marginLeft: "5px" }}>
+                            Uploading...
+                          </span>
+                        </div>
+                      ) : (
+                        "Next"
+                      )}
                     </Button>
                   </Col>
                 </Row>
@@ -652,7 +674,7 @@ const PlasticInput = () => {
           return (
             <div className="content-center">
               <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
-                Thank you, for your contribution on saving marine reptiles!
+                Thank you, for your contribution to saving marine reptiles!
               </h2>
               <p>
                 You have recycled approximately{" "}
@@ -662,30 +684,47 @@ const PlasticInput = () => {
               <p>
                 This action potentially saved{" "}
                 <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea
-                turtles.{" "}
-                {Math.floor(result.seaTurtlesSaved) >= 1 && (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      paddingTop: "35px",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    {Array.from({
-                      length: Math.floor(result.seaTurtlesSaved),
-                    }).map((_, index) => (
-                      <AnimatedTurtle key={index} height={50} width={50} />
-                    ))}
-                  </div>
-                )}
+                turtles.
               </p>
+              {Math.floor(result.seaTurtlesSaved) >= 1 && (
+                <Card>
+                  <CardBody>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "15px 0 0",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {Array.from({
+                        length: Math.min(
+                          Math.floor(result.seaTurtlesSaved),
+                          15
+                        ),
+                      }).map((_, index) => (
+                        <AnimatedTurtle key={index} height={50} width={50} />
+                      ))}
+
+                      {Math.floor(result.seaTurtlesSaved) > 15 && (
+                        <span
+                          style={{
+                            marginLeft: "10px",
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ... and countless others saved!
+                        </span>
+                      )}
+                    </div>
+                  </CardBody>
+                </Card>
+              )}
               <Row className="justify-content-between mt-4">
                 <Col xs="12" md="6">
                   <Button
-                    style={{}}
                     onClick={() => {
-                      // Reset everything to start over
                       setCurrentStep(1);
                       setKnowWeight(null);
                       setKnowCount(null);
@@ -948,7 +987,7 @@ const PlasticInput = () => {
         return (
           <div className="content-center">
             <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
-              Thank you, for your contribution on saving marine reptiles!
+              Thank you, for your contribution to saving marine reptiles!
             </h2>
             <p>
               You have recycled{" "}
@@ -958,12 +997,42 @@ const PlasticInput = () => {
               This action potentially saved{" "}
               <strong>{result.seaTurtlesSaved.toFixed(2)}</strong> sea turtles.
             </p>
+            {Math.floor(result.seaTurtlesSaved) >= 1 && (
+              <Card>
+                <CardBody>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "15px 0 0",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {Array.from({
+                      length: Math.min(Math.floor(result.seaTurtlesSaved), 15),
+                    }).map((_, index) => (
+                      <AnimatedTurtle key={index} height={50} width={50} />
+                    ))}
+
+                    {Math.floor(result.seaTurtlesSaved) > 15 && (
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          fontSize: "1.2rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ... and countless others saved!
+                      </span>
+                    )}
+                  </div>
+                </CardBody>
+              </Card>
+            )}
             <Row className="justify-content-between mt-4">
-              <Col xs="12" md="6" className="d-flex">
+              <Col xs="12" md="6">
                 <Button
-                  style={{}}
                   onClick={() => {
-                    // Reset everything to start over
                     setCurrentStep(1);
                     setKnowWeight(null);
                     setKnowCount(null);
