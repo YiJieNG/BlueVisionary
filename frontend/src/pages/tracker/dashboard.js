@@ -9,6 +9,7 @@ import {
   getDataWithinDateRange,
 } from "../../util/db";
 import plasticData from "./plasticInputTest.json";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [data, setData] = useState([]);
@@ -58,6 +59,16 @@ function Dashboard() {
     // await getDataWithinDateRange(startDate, endDate);
     const results = await getDataWithinDateRange(startDate, endDate);
     setSelectedData(results);
+  };
+
+  const navigate = useNavigate();
+
+  const navigateToPlasticInput = () => {
+    navigate("/plasticInput");
+  };
+
+  const navigateToFacility = () => {
+    navigate("/facility");
   };
 
   useEffect(() => {
@@ -112,10 +123,16 @@ function Dashboard() {
             </Row>
             <Row style={{ marginTop: 20 }}>
               <Col className="d-flex justify-content-center align-items-center">
-                <Button color="primary"> Make contribution</Button>
+                <Button color="primary" onClick={navigateToPlasticInput}>
+                  {" "}
+                  Make contribution
+                </Button>
               </Col>
               <Col className="d-flex justify-content-center align-items-center">
-                <Button color="primary"> Find location</Button>
+                <Button color="primary" onClick={navigateToFacility}>
+                  {" "}
+                  Find location
+                </Button>
               </Col>
             </Row>
             <Row>
