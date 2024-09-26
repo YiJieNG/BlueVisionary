@@ -253,7 +253,12 @@ function HomeContent() {
                   }
                   // data-aos="fade-up"
                 >
-                  <div onClick={() => navigate(cardItem.link)}>
+                  <div
+                    onClick={() => {
+                      navigate(cardItem.link);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
                     <h3 className="vertical-timeline-element-title">
                       {cardItem.title}
                     </h3>

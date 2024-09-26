@@ -35,7 +35,7 @@ function MarineLife() {
   // Fetch state statistic from backend
   useEffect(() => {
     axios
-      .get("/api/get_state_stat")
+      .get("http://127.0.0.1:5000/api/get_state_stat")
       .then((res) => {
         let stateSpecies = {};
         for (let key in res.data) {
@@ -68,7 +68,7 @@ function MarineLife() {
   useEffect(() => {
     axios
       .get(
-        `/api/get_state_species/${stateSelected[1]}/${endangerType}`
+        `http://127.0.0.1:5000/api/get_state_species/${stateSelected[1]}/${endangerType}`
       )
       .then((res) => {
         let endangerSpecies = { data: [] };
@@ -91,6 +91,27 @@ function MarineLife() {
       <div className="section-with-space">
         <div className="section-marinelife marine-life-content">
           <Container fluid>
+            <Row>
+              <Col md="12" sm={{ size: "auto" }}>
+                <div
+                  style={{
+                    margin: "50px 40px 30px 40px",
+                    padding: "10px",
+                  }}
+                >
+                  <h2 className="feature-title">
+                    Wish to find out more about Endangered Marine Species?
+                  </h2>
+                  <h4
+                    className="feature-description"
+                    style={{ color: "#3f4447" }}
+                  >
+                    Discover the endangered marine species in Australia’s
+                    diverse ecosystems across different states.
+                  </h4>
+                </div>
+              </Col>
+            </Row>
             <Row>
               <Col md="6" sm={{ size: "auto" }}>
                 <StateMap
