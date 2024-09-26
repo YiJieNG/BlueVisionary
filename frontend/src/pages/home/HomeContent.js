@@ -114,7 +114,7 @@ function HomeContent() {
                 Discover. Learn. Protect
               </h2>
               <p className="presentation-descriptions text-center">
-                Safeguarding Marine Reptiles for Future Generations now !!!{" "}
+                Protect Marine Reptiles for Future Generations now !!!{" "}
               </p>
               <div
                 style={{
@@ -147,15 +147,19 @@ function HomeContent() {
             data-aos="fade-up"
           >
             <Col md="6" className="text-section">
-              <h1 className="hero-title">Your Vision in Action</h1>
+              <h1 className="hero-title">
+                Combatting Plastic Pollution to Protect Marine Reptiles
+              </h1>
               <p className="hero-subtitle">
-                Imagine a world where you, no matter where you are or how busy
-                your schedule, can make a meaningful contribution to the health
-                of our oceans and save marine life, especially reptiles.
-                BlueVisionary empowers you to take action, helping you
-                understand challenges faced by marine reptiles, explore the
-                scale of plastic pollution, and see the real impact you’re
-                making.
+                Every year, around 8 million metric tons of plastic enter the
+                oceans. It is estimated that 52% of all sea turtles have
+                ingested plastic debris. Marine reptiles including turtles are
+                particularly vulnerable to plastic pollution, mistaking plastic
+                items for food or becoming entangled in debris. BlueVisionary
+                empowers you to take action by helping you understand the
+                profound challenges faced by marine reptiles, exploring the
+                growing scale of plastic pollution, and tracking the real impact
+                your efforts can make.
               </p>
               <Button
                 className="dark-blue-button cta-button"
@@ -175,15 +179,16 @@ function HomeContent() {
             data-aos="fade-up"
           >
             <Col>
-              <h1 className="hero-title">What You Can Achieve</h1>
+              <h1 className="hero-title">
+                How You Can Protect Marine Reptiles
+              </h1>
               <p className="hero-subtitle information-margin">
-                With BlueVisionary, you have the power to actively engage in
-                marine conservation. Our platform helps you understand the
-                challenges our oceans face, reduce plastic pollution, and make a
-                real difference in protecting marine life, especially reptiles.
-                Through education, actionable insights, and community-driven
-                efforts, you can help create a lasting positive impact on the
-                health of our planet.
+                With BlueVisionary, you have the power to actively protect
+                marine reptiles and contribute to the health of our oceans. Our
+                platform equips you with the tools and knowledge to take
+                meaningful action. By reducing plastic pollution, raising
+                awareness, and driving conservation efforts, you can make a real
+                difference.
               </p>
             </Col>
             <Row className="icons-row text-center mb-5 justify-content-center">
