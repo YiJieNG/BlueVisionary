@@ -1,3 +1,5 @@
+@import "react-vertical-timeline-component/style.min.css";
+
 .landing-alert {
   margin-bottom: 0;
 }
@@ -1776,4 +1778,81 @@ span.span-card {
     background-color: #a8caed;
     border-color: #a8caed;
   }
+}
+
+///////// Visual design enhancement for homepage
+.vertical-timeline-element-content {
+  border-top: 5px solid #2776c5;
+  box-shadow: 0 4px 8px rgba(39, 118, 197, 0.1);
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(39, 118, 197, 0.2);
+  }
+}
+
+.vertical-timeline-element-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1rem;
+}
+
+.feature-description {
+  font-size: 1rem;
+  color: #3f4447;
+  margin-bottom: 1rem;
+}
+
+.vertical-timeline-element--work .vertical-timeline-element-icon {
+  box-shadow: 0 0 0 4px #ebfafd;
+}
+
+.vertical-timeline-element-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-timeline-element .custom-border {
+  border-radius: 5%;
+  margin-top: 1rem;
+}
+
+.vertical-timeline::before {
+  background: #2776c5;
+}
+
+/* Adjust spacing and margins */
+.vertical-timeline-element {
+  margin: 2rem 0;
+}
+
+.feature-header {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4e4c4c;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  text-align: center;
+}
+
+/* Ensure the icon is always moved left for odd elements */
+.custom-left-icon .vertical-timeline-element-icon {
+  transform: translateX(-60%) !important;
+}
+
+/* Initial state: icon is shifted left and scaled down */
+.custom-left-icon.vertical-timeline-element--animate
+  .vertical-timeline-element-icon {
+  opacity: 0;
+  transform: translateX(-60%) scale(0);
+  transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+}
+
+/* When the element becomes visible: icon scales up while staying shifted left */
+.custom-left-icon.vertical-timeline-element--animate.is-visible
+  .vertical-timeline-element-icon {
+  opacity: 1;
+  transform: translateX(-60%) scale(1);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
