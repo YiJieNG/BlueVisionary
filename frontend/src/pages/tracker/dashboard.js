@@ -8,8 +8,9 @@ import {
     deleteAllData,
     getDataWithinDateRange,
 } from "../../util/db";
-// import plasticData from "./plasticInputTest.json";
+import plasticDataTest from "./plasticInputTest.json";
 import { useNavigate } from "react-router-dom";
+import PlasticLineChart from "./PlasticLineChart";
 
 function Dashboard() {
     const [data, setData] = useState([]);
@@ -19,10 +20,28 @@ function Dashboard() {
     const [xLabels, setXLabels] = useState();
 
 
-    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const yesterday = new Date().setDate(new Date().getDate() - 1);
+    const yesterday = new Date().setDate(new Date().getDate() - 3);
+    // console.log(yesterday);
 
-
+    const handleAddData = async () => {
+        const currentDate = new Date().getTime();
+        for (var plasticType in plasticDataTest.plasticItems) {
+            console.log(plasticType);
+            const newData = {
+                // date: currentDate,
+                date: yesterday,
+                type: plasticType,
+                weight: plasticDataTest.plasticItems[plasticType].weight,
+                count:
+                    plasticDataTest.plasticItems[plasticType].approximateCount,
+            };
+            await addDataToDB(newData);
+        }
+        
+        // Update state to show new data
+        const updatedData = await getAllDataFromDB();
+        setData(updatedData);
+    };
 
     const handleDeleteData = async () => {
         await deleteAllData();
@@ -31,14 +50,14 @@ function Dashboard() {
         setData(updatedData);
     };
 
-    const handleSelectedData = async () => {
-        const startDate = new Date("2024-09-22T00:00:00"); // Example start date
-        console.log(new Date(startDate).toString());
-        const endDate = new Date(); // Example end date
-        // await getDataWithinDateRange(startDate, endDate);
-        const results = await getDataWithinDateRange(startDate, endDate);
-        setSelectedData(results);
-    };
+    // const handleSelectedData = async () => {
+    //     const startDate = new Date("2024-09-22T00:00:00"); // Example start date
+    //     console.log(new Date(startDate).toString());
+    //     const endDate = new Date(); // Example end date
+    //     // await getDataWithinDateRange(startDate, endDate);
+    //     const results = await getDataWithinDateRange(startDate, endDate);
+    //     setSelectedData(results);
+    // };
 
     const fetchSelectedData = async (startDate, endDate) => {
         const results = await getDataWithinDateRange(startDate, endDate);
@@ -61,8 +80,8 @@ function Dashboard() {
         const startDate = new Date();
         if (selectedShowType === "Past 7 days") {
             startDate.setDate(endDate.getDate() - 7);
-        } else if (selectedShowType === "This month") {
-            startDate.setDate(endDate.getDate() - 31);
+        } else if (selectedShowType === "Past 30 days") {
+            startDate.setDate(endDate.getDate() - 30);
         } else {
             startDate.setDate(endDate.getDate() - 365);
         }
@@ -76,16 +95,15 @@ function Dashboard() {
         // Assemble data for stacked bar chart
         if (selectedData.length <= 0) return;
         if (selectedShowType === "Past 7 days") {
+            const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             const todayIndex = new Date().getDay();
             // console.log(todayIndex);
 
-            const rearrangedDays = todayIndex == 6 ? dayNames : dayNames.slice(todayIndex + 1).concat(dayNames.slice(0, todayIndex + 1));
+            const rearrangedDays = todayIndex === 6 ? dayNames : dayNames.slice(todayIndex + 1).concat(dayNames.slice(0, todayIndex + 1));
             setXLabels(rearrangedDays);
             const plasticData = {};
-            selectedData.map((item) => {
-                const dateIndex = Math.abs(new Date(item.date).getDay() - todayIndex);
-                console.log(dateIndex);
-                // console.log(new Date(item.date).getDay())
+            selectedData.forEach((item) => {
+                const dayName = dayNames[new Date(item.date).getDay()];
                 if (!(item.type in plasticData)) {
                     plasticData[item.type] = {
                         label: item.type,
@@ -93,18 +111,74 @@ function Dashboard() {
                         stack: 'total'
                     }
                 }
-                plasticData[item.type].data[rearrangedDays.length - 1 - dateIndex] += item.weight;
+                plasticData[item.type].data[rearrangedDays.indexOf(dayName)] += item.weight;
             });
             const chartData = [];
             for (const key in plasticData) {
                 chartData.push(plasticData[key]);
             }
-            console.log(chartData);
-            console.log(rearrangedDays);
+            // console.log(chartData);
+            // console.log(rearrangedDays);
             setDataset(chartData);
-        } else if (selectedShowType === "This month") {
+        } else if (selectedShowType === "Past 30 days") { // scrollable for x axis
+            const dates = [];
+            const today = new Date();
+            for (let i = 29; i >= 0; i--) {
+                const pastDate = new Date();
+                pastDate.setDate(today.getDate() - i);
+                dates.push(pastDate.getDate()); // You can format the date as needed
+            }
+            setXLabels(dates);
+
+            const plasticData = {};
+            selectedData.forEach((item) => {
+                const dayName = new Date(item.date).getDate();
+                if (!(item.type in plasticData)) {
+                    plasticData[item.type] = {
+                        label: item.type,
+                        data: new Array(30).fill(0),
+                        stack: 'total'
+                    }
+                }
+                plasticData[item.type].data[dates.indexOf(dayName)] += item.weight;
+            });
+            const chartData = [];
+            for (const key in plasticData) {
+                chartData.push(plasticData[key]);
+            }
+            // console.log(chartData);
+            // console.log(dates);
+            setDataset(chartData);
+
 
         } else {
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            const todayIndex = new Date().getMonth();
+            // console.log(todayIndex);
+
+            const rearrangedMonths = todayIndex === 11 ? monthNames : monthNames.slice(todayIndex + 1).concat(monthNames.slice(0, todayIndex + 1));
+            setXLabels(rearrangedMonths);
+
+            const plasticData = {};
+            selectedData.forEach((item) => {
+                const monthName = monthNames[new Date(item.date).getMonth()];
+                if (!(item.type in plasticData)) {
+                    plasticData[item.type] = {
+                        label: item.type,
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        stack: 'total'
+                    }
+                }
+                plasticData[item.type].data[rearrangedMonths.indexOf(monthName)] += item.weight;
+            });
+            const chartData = [];
+            for (const key in plasticData) {
+                chartData.push(plasticData[key]);
+            }
+            // console.log(chartData);
+            // console.log(rearrangedMonths);
+            setDataset(chartData);
 
         }
     }, [selectedData]);
@@ -127,13 +201,14 @@ function Dashboard() {
                                             <Input
                                                 type="select"
                                                 value={selectedShowType}
+                                                style={{ width: 160 }}
                                                 onChange={(e) => setSelectedShowType(e.target.value)}
                                             >
                                                 <option>
                                                     Past 7 days
                                                 </option>
                                                 <option>
-                                                    This month
+                                                    Past 30 days
                                                 </option>
                                                 <option>
                                                     This year
@@ -149,7 +224,6 @@ function Dashboard() {
                                 </Card>
                             </Col>
                             <Col md="4">
-
                                 <Card style={{ height: "100%" }}>
                                     <CardContent>
                                         <Row
@@ -166,7 +240,9 @@ function Dashboard() {
                                         </Row>
                                         <Row>
                                             <Card>
-                                                <CardContent>test</CardContent>
+                                                <CardContent>
+                                                    <PlasticLineChart />
+                                                </CardContent>
                                             </Card>
                                         </Row>
                                     </CardContent>
@@ -187,10 +263,15 @@ function Dashboard() {
                                 </Button>
                             </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                             <h1>IndexedDB Example</h1>
                         </Row>
                         <Row>
+                            <Col>
+                                <Button color="dark" onClick={handleAddData}>
+                                    Add Data
+                                </Button>
+                            </Col>
                             <Col>
                                 <Button color="dark" onClick={handleDeleteData}>
                                     Delete All Data
@@ -212,8 +293,8 @@ function Dashboard() {
                                     </li>
                                 ))}
                             </ul>
-                        </Row>
-                        <Row>
+                        </Row> */}
+                        {/* <Row>
                             <h2>Selected Data:</h2>
                             <ul>
                                 {selectedData.map((item, index) => (
@@ -223,7 +304,7 @@ function Dashboard() {
                                     </li>
                                 ))}
                             </ul>
-                        </Row>
+                        </Row> */}
                     </Container>
                 </div>
             </div>
