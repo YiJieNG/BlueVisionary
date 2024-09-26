@@ -5,24 +5,20 @@
             "weight": 10,
             "approximateCount": 2
         },
-        "Plastic Bottle": {
-            "weight": 10,
-            "approximateCount": 2
-        },
         "Plastic Container": {
-            "weight": 10,
+            "weight": 3,
             "approximateCount": 2
         },
         "Plastic Cup": {
-            "weight": 10,
+            "weight": 1,
             "approximateCount": 2
         },
         "Plastic Straw": {
-            "weight": 10,
+            "weight": 7,
             "approximateCount": 2
         },
         "Plastic Utensil": {
-            "weight": 10,
+            "weight": 1,
             "approximateCount": 2
         } 
     },
