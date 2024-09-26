@@ -50,7 +50,9 @@ function Game() {
   const plasticsRef = useRef([]); // Use ref to persist plastics array across renders
   const foodsRef = useRef([]); // Use ref to persist foods array across renders
   const bubblesRef = useRef([]); // Use ref to persist bubbles array across renders
+  const [showInstructions, setShowInstructions] = useState(true);
   const [step, setStep] = useState("landing");
+  const [gameInitialized, setGameInitialized] = useState(false);
   const [score, setScore] = useState(0);
   const [player, setPlayer] = useState(null); // Use state for the player instance
   const [isPaused, setIsPaused] = useState(false); // State for pause control
@@ -245,6 +247,14 @@ function Game() {
     }
   };
 
+  const initializeGameObjects = () => {
+    setPlayer(new Player(5, 550 / 2, handleGameOver)); // Example initialization
+    plasticsRef.current = [];
+    foodsRef.current = [];
+    bubblesRef.current = [];
+    setGameInitialized(true); // Mark the game as initialized
+  };
+
   const initializeGame = (
     state,
     difficulty,
@@ -267,13 +277,20 @@ function Game() {
     foodsRef.current = [];
     bubblesRef.current = [];
     setStep("game");
+    setShowInstructions(true);
     setIsPaused(false); // Ensure the game starts unpaused
     setShowPopup(false); // Ensure the popup is hidden at the start
     lastItemSpawnAtRef.current = Date.now(); // Reset the item spawn time
   };
   const navigate = useNavigate();
 
+  const startGameAfterInstructions = () => {
+    setShowInstructions(false); // Hide instructions pop-up
+    initializeGameObjects();
+  };
+
   const restartGame = () => {
+    setGameInitialized(false);
     setStep("landing");
   };
 
@@ -325,7 +342,7 @@ function Game() {
     fetchStateData();
     fetchGeneralFact();
     fetchAndShuffleFacts();
-    if (step !== "game") return;
+    if (!gameInitialized || step !== "game") return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -461,6 +478,41 @@ function Game() {
     return (
       <div className="landing-page gametitle-section">
         <Container fluid>
+          {showInstructions && (
+            <div className="overlay">
+              <div
+                className="popup-window"
+                style={{
+                  backgroundSize: "cover",
+                  backgroundImage: `url(${popupBgrdImg})`,
+                  backgroundColor: "transparent",
+                  resizeMode: "stretch",
+                }}
+              >
+                <div className="popup-content">
+                  <h2 style={{ textAlign: "center", fontWeight: "bold" }}>
+                    Game Instructions
+                  </h2>
+                  <p>1. Your sea turtle starts with 30 HP.</p>
+                  <p>2. Collide with plastic to lose 10 HP.</p>
+                  <p>3. Collide with jellyfish to gain 5 points.</p>
+                  <p>
+                    4. Collide with a bubble to earn 10 points and view
+                    educational information. Close the pop-up using the button
+                    provided / SPACE key.
+                  </p>
+                  <p>5. Move up and down using the UP and DOWN arrow keys.</p>
+                  <p>
+                    6. Objective: Avoid plastic and collect as many points as
+                    possible to survive!
+                  </p>
+                </div>
+                <button onClick={startGameAfterInstructions}>
+                  Close Instructions and Start
+                </button>
+              </div>
+            </div>
+          )}
           <Row className="content">
             <h2>You are currently in {gameState.state}'s ocean area!!! </h2>
             <p>
