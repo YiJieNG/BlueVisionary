@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Container, Row, Col, Button, Card, CardBody } from "reactstrap";
 import { GiEarthAsiaOceania, GiSeaTurtle } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
@@ -5,15 +6,31 @@ import { TbBottleOff } from "react-icons/tb";
 import { BsSearchHeart } from "react-icons/bs";
 import SeaTurtle from "../../assets/img/SeaTurtle.jpg";
 import PlasticPollution from "../../assets/img/PlasticPollution.jpg";
-import CleanUp from "../../assets/img/CleanUp.jpg";
 import EndangeredSpecies from "../../assets/img/EndangeredSpecies.jpg";
 import Education from "../../assets/img/Education.jpg";
 import MiniGame from "../../assets/img/MiniGame.png";
-import { FaAnglesDown } from "react-icons/fa6";
+import Tracker from "../../assets/img/Tracker.jpg";
+import PlasticFacility from "../../assets/img/Facility.jpg";
 
+import { FaAnglesDown, FaCircleArrowRight } from "react-icons/fa6";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
 
 function HomeContent() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
+
   const scrollToFeatures = () => {
     document
       .getElementById("key-features-section")
@@ -26,39 +43,52 @@ function HomeContent() {
   };
   const cardItems = [
     {
-      title: "Endangered Marine Species",
-      description:
-        "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
-      image: EndangeredSpecies,
-      link: "/marinelife",
-    },
-    {
-      title: "Extent of plastic pollution",
-      description:
-        "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
-      image: PlasticPollution,
-      link: "/pollution",
-    },
-    // {
-    //   title: "Track Your Impact",
-    //   description:
-    //     "Log your conservation activities and visualize your progress over time, staying motivated by seeing the difference you’re making in protecting marine life.",
-    //   image: CleanUp,
-    //   link: "/",
-    // },
-    {
       title: "Sea Turtle Journey",
       description:
         "Step into the flippers of a sea turtle, experience the challenges they face and gain a deeper understanding of the effects of plastic pollution on marine reptiles.",
       image: MiniGame,
       link: "/seaturtlegame",
+      iconText: "DISCOVER",
     },
     {
-      title: "Educate yourself",
+      title: "Endangered Marine Species",
+      description:
+        "Discover the endangered marine species in Australia’s diverse ecosystems across different states. Learn how each state protects these vital creatures.",
+      image: EndangeredSpecies,
+      link: "/marinelife",
+      iconText: "DISCOVER",
+    },
+    {
+      title: "Extent of Plastic Pollution",
+      description:
+        "Explore detailed data that show how plastic pollution is affecting Australia’s oceans, helping you to focus conservation efforts where they’re needed most.",
+      image: PlasticPollution,
+      link: "/pollution",
+      iconText: "LEARN",
+    },
+    {
+      title: "Educate Yourself",
       description:
         "Dive into a variety of resources to expand and test your knowledge on marine conservation and become a more effective advocate to protect our oceans.",
       image: Education,
       link: "/quiz",
+      iconText: "LEARN",
+    },
+    {
+      title: "Track Your Impact",
+      description:
+        "Track your plastic waste recycling efforts, visualize your progress, and see the impact of your contributions on saving sea turtles and other marine life.",
+      image: Tracker,
+      link: "/tracker",
+      iconText: "PROTECT",
+    },
+    {
+      title: "Give Plastic a Second Life",
+      description:
+        "Find facilities near you that accept collected plastic waste. Get location details, contact information, and a list of accepted items to help repurpose your recyclables.",
+      image: PlasticFacility,
+      link: "/facility",
+      iconText: "PROTECT",
     },
   ];
 
@@ -69,55 +99,53 @@ function HomeContent() {
           className="page-header section-dark"
           style={{
             backgroundImage:
-              "url(" + require("../../assets/img/naja-bertolt-jensen-Uu1CtKngEXY-unsplash.jpg") + ")",
+              "url(" +
+              require("../../assets/img/naja-bertolt-jensen-Uu1CtKngEXY-unsplash.jpg") +
+              ")",
           }}
         >
           <div className="filter" />
           <div className="content-center">
-          <Container>
-            <div className="title-brand">
-              <h1 className="presentation-title">BlueVisionary</h1>
-            </div>
-            <h2 className="presentation-subtitle text-center">
-              Discover. Learn. Protect
-            </h2>
-            <p className="presentation-descriptions text-center">
-              Safeguarding Marine Reptiles for Future Generations now !!!{" "}
-            </p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            >
-              <Button
-                onClick={scrollDown}
+            <Container>
+              <div className="title-brand">
+                <h1 className="presentation-title">BlueVisionary</h1>
+              </div>
+              <h2 className="presentation-subtitle text-center">
+                Discover. Learn. Protect
+              </h2>
+              <p className="presentation-descriptions text-center">
+                Safeguarding Marine Reptiles for Future Generations now !!!{" "}
+              </p>
+              <div
                 style={{
-                  background: "transparent",
-                  border: "1px solid transparent", // Transparent border
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
+                  marginTop: "20px",
                 }}
               >
-                <FaAnglesDown />
-              </Button>
-            </div>
-          </Container>
-        </div>
-          {/* <div
-                    className="moving-clouds"
-                    style={{
-                        backgroundImage: "url(" + require("../../assets/img/clouds.png") + ")",
-                    }}
-                /> */}
+                <Button
+                  onClick={scrollDown}
+                  style={{
+                    background: "transparent",
+                    border: "1px solid transparent",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FaAnglesDown />
+                </Button>
+              </div>
+            </Container>
+          </div>
         </div>
         <Container fluid className="homepage-container">
           {/* Hero Section */}
-          <Row 
-          id="vision-in-action-section"
-          className="hero-section align-items-center no-margin">
+          <Row
+            id="vision-in-action-section"
+            className="hero-section align-items-center no-margin"
+            data-aos="fade-up"
+          >
             <Col md="6" className="text-section">
               <h1 className="hero-title">Your Vision in Action</h1>
               <p className="hero-subtitle">
@@ -126,8 +154,8 @@ function HomeContent() {
                 of our oceans and save marine life, especially reptiles.
                 BlueVisionary empowers you to take action, helping you
                 understand challenges faced by marine reptiles, explore the
-                scale of plastic pollution, track your cleanup efforts, and see
-                the real impact you’re making.
+                scale of plastic pollution, and see the real impact you’re
+                making.
               </p>
               <Button
                 className="dark-blue-button cta-button"
@@ -141,8 +169,11 @@ function HomeContent() {
             </Col>
           </Row>
 
-          {/* Header Section */}
-          <Row className="information-section text-center no-margin">
+          {/* Information Section */}
+          <Row
+            className="information-section text-center no-margin"
+            data-aos="fade-up"
+          >
             <Col>
               <h1 className="hero-title">What You Can Achieve</h1>
               <p className="hero-subtitle information-margin">
@@ -174,23 +205,53 @@ function HomeContent() {
               </Col>
             </Row>
           </Row>
-          {/* Icons Row */}
 
           {/* Features Section */}
-          <Row
+          <div
             id="key-features-section"
             className="card-feature-section card-margin no-margin"
+            data-aos="fade-up"
+            style={{ background: "linear-gradient(45deg, #9cd8fd, #eff9ff)" }}
           >
-            <h2 className="feature-header">Key Features</h2>
-            {cardItems.map((cardItem, index) => (
-              <Col md="3" sm="6" xs="12" key={index} className="mb-4 d-flex">
-                <Card
-                  className="feature-card features-row custom-border"
-                  style={{ padding: "1rem 1.5rem", cursor: "pointer" }}
-                  onClick={() => navigate(cardItem.link)}
+            <h2 className="feature-header">
+              {" "}
+              <GiSeaTurtle size={45} /> Start Your Journey Here
+            </h2>
+            <VerticalTimeline>
+              {cardItems.map((cardItem, index) => (
+                <VerticalTimelineElement
+                  key={index}
+                  className={`vertical-timeline-element--work ${
+                    index % 2 !== 0 ? "custom-left-icon" : ""
+                  }`}
+                  contentStyle={{
+                    background: "#ebfafd",
+                    color: "#000",
+                    cursor: "pointer",
+                  }}
+                  contentArrowStyle={{
+                    borderRight: "7px solid  #ebfafd",
+                  }}
+                  iconStyle={{
+                    background: "#2776c5",
+                    color: "#fff",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "60px",
+                    width: "150px",
+                    fontSize: "20px",
+                    borderRadius: "5px",
+                  }}
+                  icon={
+                    <div style={{ color: "#fff" }}>{cardItem.iconText}</div>
+                  }
+                  // data-aos="fade-up"
                 >
-                  <CardBody className="d-flex flex-column">
-                    <h5 className="feature-title">{cardItem.title}</h5>
+                  <div onClick={() => navigate(cardItem.link)}>
+                    <h3 className="vertical-timeline-element-title">
+                      {cardItem.title}
+                    </h3>
                     <p className="feature-description">
                       {cardItem.description}
                     </p>
@@ -198,12 +259,13 @@ function HomeContent() {
                       src={cardItem.image}
                       alt="Small Icon"
                       className="img-fluid custom-border mt-auto"
+                      style={{ paddingTop: "0.8rem" }}
                     />
-                  </CardBody>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+                  </div>
+                </VerticalTimelineElement>
+              ))}
+            </VerticalTimeline>
+          </div>
         </Container>
       </div>
     </>
