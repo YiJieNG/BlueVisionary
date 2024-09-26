@@ -74,7 +74,7 @@ function Dashboard() {
 
     useEffect(() => {
         // Assemble data for stacked bar chart
-        if(selectedData.length <= 0) return;
+        if (selectedData.length <= 0) return;
         if (selectedShowType === "Past 7 days") {
             const todayIndex = new Date().getDay();
             // console.log(todayIndex);
@@ -86,10 +86,10 @@ function Dashboard() {
                 const dateIndex = Math.abs(new Date(item.date).getDay() - todayIndex);
                 console.log(dateIndex);
                 // console.log(new Date(item.date).getDay())
-                if(!(item.type in plasticData)) {
+                if (!(item.type in plasticData)) {
                     plasticData[item.type] = {
                         label: item.type,
-                        data: [0,0,0,0,0,0,0],
+                        data: [0, 0, 0, 0, 0, 0, 0],
                         stack: 'total'
                     }
                 }
@@ -141,10 +141,9 @@ function Dashboard() {
                                             </Input>
                                         </Row>
                                         <Row>
-                                            {xLabels && xLabels.length > 0 && dataset &&
-                                            <PlasticStackBarChart xLabels={xLabels} dataset={dataset} />
+                                            {xLabels && xLabels.length > 0 && dataset && dataset.length > 0 &&
+                                                <PlasticStackBarChart xLabels={xLabels} dataset={dataset} />
                                             }
-
                                         </Row>
                                     </CardContent>
                                 </Card>
