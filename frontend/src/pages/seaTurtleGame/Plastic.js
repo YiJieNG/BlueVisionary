@@ -3,7 +3,10 @@ import img from "../../assets/img/minigame/plastic.png";
 export class Plastic {
   dead = false;
   collisionWidth = 70;
-  collisionHeight = 60;
+  // collisionHeight = 60;
+  collisionHeightTop = 30;
+  collisionHeightBottom = 60;
+
   width = 40;
   height = 60;
   damageCaused = 10;
@@ -26,17 +29,21 @@ export class Plastic {
       this.dead = true; // update plastic dead status
     }
 
+    // Calculate relative positions
+    let deltaX = player.posX - this.xPos;
+    let deltaY = player.posY - this.yPos;
+
     // Check for collision with player
-    if (
-      !this.dead &&
-      Math.abs(player.posX - this.xPos) < this.collisionWidth &&
-      Math.abs(player.posY - this.yPos) < this.collisionHeight
-    ) {
-      this.dead = true; // Mark plastic as dead immediately
-      player.deductHealth(this.damageCaused);
-      // console.log("collide at:", this.xPos, this.yPos);
-      // console.log("player at:", player.posX, player.posY);
-      // console.log("collide: ", this.xPos, this.yPos);
+    if (!this.dead && Math.abs(deltaX) < this.collisionWidth) {
+      if (deltaY < 0 && Math.abs(deltaY) < this.collisionHeightTop) {
+        // Collision detected when plastic is above the sea turtle
+        this.dead = true;
+        player.deductHealth(this.damageCaused);
+      } else if (deltaY >= 0 && deltaY < this.collisionHeightBottom) {
+        // Collision detected when plastic is below the sea turtle
+        this.dead = true;
+        player.deductHealth(this.damageCaused);
+      }
     }
   };
 
