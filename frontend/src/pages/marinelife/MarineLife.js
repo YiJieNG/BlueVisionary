@@ -5,6 +5,7 @@ import BluePieChart from "./BluePieChart";
 import BlueBarChart from "./BlueBarChart";
 import axios from "axios";
 import BlueModal from "./BlueModal";
+// import HomeFooter from "../home/HomeFooter";
 
 function MarineLife() {
   const [stateSelected, setStateSelected] = useState(["Victoria", "VIC"]);
@@ -242,6 +243,7 @@ function MarineLife() {
       {/* <div>
                 <BlueModal isOpen={isOpen} speciesType={speciesSelected} stateName={stateSelected} threatStatus={endangerType} updateIsOpen={updateIsOpen} />
             </div> */}
+      {/* <HomeFooter /> */}
     </>
   );
 }

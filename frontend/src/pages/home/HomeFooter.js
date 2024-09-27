@@ -33,9 +33,9 @@ function HomeFooter() {
                 </Row> */}
           {/* <Row className="footer-bottom-row"> */}
           <Col md="12" className="text-center">
-            <p>
-              &copy; 2024, made with love by BlueVisionary &copy;
-              {/* <a href="/">&copy; Copyright</a> |{" "} */}
+            <p style={{ margin: "0" }}>
+              &copy; 2024, made with love by BlueVisionary &copy; |{" "}
+              <a href="/references">References</a>
             </p>
           </Col>
           {/* </Row> */}

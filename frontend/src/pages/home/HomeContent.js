@@ -12,7 +12,7 @@ import MiniGame from "../../assets/img/MiniGame.png";
 import Tracker from "../../assets/img/Tracker.jpg";
 import PlasticFacility from "../../assets/img/Facility.jpg";
 
-import { FaAnglesDown, FaCircleArrowRight } from "react-icons/fa6";
+import { FaAnglesDown } from "react-icons/fa6";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {
@@ -139,10 +139,13 @@ function HomeContent() {
             </Container>
           </div>
         </div>
-        <Container fluid className="homepage-container">
+        <Container
+          fluid
+          className="homepage-container"
+          id="vision-in-action-section"
+        >
           {/* Hero Section */}
           <Row
-            id="vision-in-action-section"
             className="hero-section align-items-center no-margin"
             data-aos="fade-up"
           >
