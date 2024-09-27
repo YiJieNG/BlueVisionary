@@ -20,6 +20,7 @@ import MarineLife_1 from "./iter1/marinelife/MarineLife_1";
 import Quiz_1 from "./iter1/education/Quiz_1";
 import BlueNavbar_1 from "./components/Navbar/BlueNavbar_1";
 import NotFound from "./pages/NotFound";
+import References from "./pages/References";
 import Home_2 from "./iter2/home/Home";
 import MarineLife_2 from "./iter2/marinelife/MarineLife";
 import Quiz_2 from "./iter2/education/Quiz";
@@ -61,6 +62,7 @@ function App() {
         <Route path="/plasticInput" element={<PlasticInput />} />
         <Route path="/facility" element={<Facility />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/references" element={<References />} />
         <Route path="/iter1" element={<Home_1 />} />
         <Route path="/iter1/marinelife" element={<MarineLife_1 />} />
         <Route path="/iter1/quiz" element={<Quiz_1 />} />

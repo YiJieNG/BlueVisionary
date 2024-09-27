@@ -12,7 +12,7 @@ import MiniGame from "../../assets/img/MiniGame.png";
 import Tracker from "../../assets/img/Tracker.jpg";
 import PlasticFacility from "../../assets/img/Facility.jpg";
 
-import { FaAnglesDown, FaCircleArrowRight } from "react-icons/fa6";
+import { FaAnglesDown } from "react-icons/fa6";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {
