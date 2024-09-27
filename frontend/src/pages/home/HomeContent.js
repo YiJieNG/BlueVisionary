@@ -139,10 +139,13 @@ function HomeContent() {
             </Container>
           </div>
         </div>
-        <Container fluid className="homepage-container">
+        <Container
+          fluid
+          className="homepage-container"
+          id="vision-in-action-section"
+        >
           {/* Hero Section */}
           <Row
-            id="vision-in-action-section"
             className="hero-section align-items-center no-margin"
             data-aos="fade-up"
           >
