@@ -3,7 +3,9 @@ import img from "../../assets/img/minigame/food.png";
 export class Food {
   dead = false;
   collisionWidth = 70;
-  collisionHeight = 60;
+  // collisionHeight = 60;
+  collisionHeightTop = 30;
+  collisionHeightBottom = 60;
   width = 90; // Set the width of each frame
   height = 90; // Set the height of each frame
   pointAdd = 5;
@@ -47,14 +49,30 @@ export class Food {
       this.dead = true;
     }
 
-    if (
-      !this.dead &&
-      Math.abs(player.posX - this.xPos) < this.collisionWidth &&
-      Math.abs(player.posY - this.yPos) < this.collisionHeight
-    ) {
-      this.dead = true;
-      player.increaseScore(this.pointAdd);
+    let deltaX = player.posX - this.xPos;
+    let deltaY = player.posY - this.yPos;
+
+    // Check for collision with player
+    if (!this.dead && Math.abs(deltaX) < this.collisionWidth) {
+      if (deltaY < 0 && Math.abs(deltaY) < this.collisionHeightTop) {
+        // Collision detected when plastic is above the sea turtle
+        this.dead = true;
+        player.increaseScore(this.pointAdd);
+      } else if (deltaY >= 0 && deltaY < this.collisionHeightBottom) {
+        // Collision detected when plastic is below the sea turtle
+        this.dead = true;
+        player.increaseScore(this.pointAdd);
+      }
     }
+
+    // if (
+    //   !this.dead &&
+    //   Math.abs(player.posX - this.xPos) < this.collisionWidth &&
+    //   Math.abs(player.posY - this.yPos) < this.collisionHeight
+    // ) {
+    //   this.dead = true;
+    //   player.increaseScore(this.pointAdd);
+    // }
 
     // Update the frame index for animation
     this.tickCount += 1;
