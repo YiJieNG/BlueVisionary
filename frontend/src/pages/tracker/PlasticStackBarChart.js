@@ -1,5 +1,5 @@
 // import { useState, useEffect } from "react";
-// import { BarChart } from '@mui/x-charts/BarChart';
+import { BarChart } from '@mui/x-charts/BarChart';
 import { Row } from "reactstrap";
 // import trackData from "./plastic.json"
 import { Bar } from "react-chartjs-2";
@@ -12,16 +12,30 @@ function PlasticStackBarChart({dataset, xLabels}) {
             position: "top",
           },
           title: {
-            display: true,
+            display: false,
             text: "Stacked Bar Chart Example",
           },
         },
         scales: {
           x: {
             stacked: true,
+            title: {
+                display: true,
+                text: "Time"
+            },
+            grid: {
+                display: false
+            }
           },
           y: {
             stacked: true,
+            title: {
+                display: true,
+                text: "Plastic recycle"
+            },
+            // grid: {
+            //     display: false
+            // }
           },
         },
       };
@@ -29,13 +43,13 @@ function PlasticStackBarChart({dataset, xLabels}) {
         <>
             <div style={{ padding: "13px" }}>
                 <Row>
-                    {/* {dataset &&
+                    {dataset &&
                         <BarChart
                             width={700}
                             height={400}
                             series={dataset}
                             xAxis={[{ data: xLabels, scaleType: 'band' }]}
-                            borderRadius={8}
+                            borderRadius={6}
                             slotProps={{
                                 legend: {
                                   labelStyle: {
@@ -45,14 +59,14 @@ function PlasticStackBarChart({dataset, xLabels}) {
                                 },
                               }}
                         />
-                    } */}
-                    <Bar 
+                    }
+                    {/* <Bar 
                     data={{
                         labels: xLabels,
                         datasets: dataset
                     }}
                     options={options}
-                    />
+                    /> */}
                 </Row>
 
             </div>
