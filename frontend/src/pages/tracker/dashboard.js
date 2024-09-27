@@ -13,42 +13,49 @@ import { useNavigate } from "react-router-dom";
 import PlasticLineChart from "./PlasticLineChart";
 
 function Dashboard() {
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [selectedData, setSelectedData] = useState([]);
     const [selectedShowType, setSelectedShowType] = useState("Past 7 days");//past 7 days, this month, this year(start at month has data)
     const [dataset, setDataset] = useState();
     const [xLabels, setXLabels] = useState();
 
 
-    const yesterday = new Date().setDate(new Date().getDate() - 3);
     // console.log(yesterday);
+    // function getRandomArbitrary(min, max) {
+    //     return Math.random() * (max - min) + min;
+    //   }
 
-    const handleAddData = async () => {
-        const currentDate = new Date().getTime();
-        for (var plasticType in plasticDataTest.plasticItems) {
-            console.log(plasticType);
-            const newData = {
-                // date: currentDate,
-                date: yesterday,
-                type: plasticType,
-                weight: plasticDataTest.plasticItems[plasticType].weight,
-                count:
-                    plasticDataTest.plasticItems[plasticType].approximateCount,
-            };
-            await addDataToDB(newData);
-        }
+    // const handleAddData = async () => {
+    //     const currentDate = new Date().getTime();
+    //     for(let i = 1; i < 30; i += 1) {
+    //         const yesterday = new Date().setDate(new Date().getDate() - i);
+
+    //         for (var plasticType in plasticDataTest.plasticItems) {
+    //             console.log(plasticType);
+    //             const newData = {
+    //                 // date: currentDate,
+    //                 date: yesterday,
+    //                 type: plasticType,
+    //                 weight: getRandomArbitrary(0,15),
+    //                 count:
+    //                     plasticDataTest.plasticItems[plasticType].approximateCount,
+    //             };
+    //             await addDataToDB(newData);
+    //         }
+            
+    //         // Update state to show new data
+    //         const updatedData = await getAllDataFromDB();
+    //         setData(updatedData);
+    //     }
         
-        // Update state to show new data
-        const updatedData = await getAllDataFromDB();
-        setData(updatedData);
-    };
+    // };
 
-    const handleDeleteData = async () => {
-        await deleteAllData();
-        // Update state to show new data
-        const updatedData = await getAllDataFromDB();
-        setData(updatedData);
-    };
+    // const handleDeleteData = async () => {
+    //     await deleteAllData();
+    //     // Update state to show new data
+    //     const updatedData = await getAllDataFromDB();
+    //     setData(updatedData);
+    // };
 
     // const handleSelectedData = async () => {
     //     const startDate = new Date("2024-09-22T00:00:00"); // Example start date
