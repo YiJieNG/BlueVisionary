@@ -190,7 +190,7 @@ function MarineLife() {
                 >
                   <Row>
                     <h4>
-                      <b>Information session</b>
+                      <b>More about {speciesSelected} under </b>
                     </h4>
                     <p>
                       <strong>
