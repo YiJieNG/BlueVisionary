@@ -34,9 +34,7 @@ function PollutionDistribution({ data, selectedState }) {
 
   useEffect(() => {
     axios
-      .get(
-        `/api/get_pollution_type_suggestions/${selectedPollutionType}`
-      )
+      .get(`/api/get_pollution_type_suggestions/${selectedPollutionType}`)
       .then((res) => {
         setPollutionSuggestion(res.data);
       })
@@ -52,10 +50,10 @@ function PollutionDistribution({ data, selectedState }) {
           <Row>
             <div>
               <h3>Distribution of Plastic Types by Material</h3>
-              <h5 style={{ fontWeight: "bold", color: "#3f4447" }}>
-                This chart visualizes the distribution of various plastic types,
+              {/* <h5 style={{ fontWeight: "bold", color: "#3f4447" }}>
+                This chart shows the distribution of various plastic types,
                 highlighting the prevalence of materials.
-              </h5>
+              </h5> */}
             </div>
             <div
               style={{
