@@ -326,6 +326,13 @@ const PlasticInput = () => {
                 </Button>
               </Col>
             </Row>
+            <Row className="justify-content-between mt-4">
+              <Col xs="12" md="12" className="d-flex">
+                <Button color="primary" onClick={navigateToPollution} block>
+                  Return to Dashboard
+                </Button>
+              </Col>
+            </Row>
           </div>
         );
       case 2:
