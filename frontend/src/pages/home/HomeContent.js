@@ -133,7 +133,7 @@ function HomeContent() {
                     justifyContent: "center",
                   }}
                 >
-                  <FaAnglesDown />
+                  <FaAnglesDown className="animated-arrow" />
                 </Button>
               </div>
             </Container>

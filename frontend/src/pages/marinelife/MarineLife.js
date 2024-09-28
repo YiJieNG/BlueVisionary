@@ -99,7 +99,7 @@ function MarineLife() {
                   }}
                 >
                   <h2 className="feature-title">
-                    Wish to find out more about Endangered Marine Species?
+                    Find out more about the Endangered Marine Species here!
                   </h2>
                   <h4
                     className="feature-description"
@@ -190,7 +190,21 @@ function MarineLife() {
                 >
                   <Row>
                     <h4>
-                      <b>Information session</b>
+                      {speciesSelected ? (
+                        <b>
+                          More about{" "}
+                          <b className={endangerType.replace(/\s+/g, "")}>
+                            {speciesSelected}
+                          </b>{" "}
+                          under{" "}
+                          <b className={endangerType.replace(/\s+/g, "")}>
+                            {endangerType}
+                          </b>{" "}
+                          status
+                        </b>
+                      ) : (
+                        <b>Wish to know more about the species?</b>
+                      )}
                     </h4>
                     <p>
                       <strong>
