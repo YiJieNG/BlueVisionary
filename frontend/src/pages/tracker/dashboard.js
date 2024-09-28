@@ -436,9 +436,16 @@ function Dashboard() {
                           display: "flex",
                           alignItems: "center",
                           flexWrap: "wrap",
+                          justifyContent: "center",
                         }}
                       >
-                        <h4 style={{ margin: 0, fontSize: "1.3rem" }}>
+                        <h4
+                          style={{
+                            margin: 0,
+                            fontSize: "1.3rem",
+                            fontWeight: "bold",
+                          }}
+                        >
                           Total&nbsp;
                         </h4>
 
@@ -486,6 +493,7 @@ function Dashboard() {
                             margin: 0,
                             fontSize: "1.3rem",
                             marginLeft: "10px",
+                            fontWeight: "bold",
                           }}
                         >
                           of Plastic Waste Recycled in
@@ -546,6 +554,11 @@ function Dashboard() {
                           <PlasticStackBarChart
                             xLabels={xLabels}
                             dataset={dataset}
+                            yLabel={
+                              selectedCountType === "weight"
+                                ? "Weight in g"
+                                : "Total Count"
+                            }
                           />
                         )}
                     </Row>

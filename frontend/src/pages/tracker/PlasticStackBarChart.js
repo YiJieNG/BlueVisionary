@@ -4,7 +4,7 @@ import { Row } from "reactstrap";
 // import trackData from "./plastic.json"
 // import { Bar } from "react-chartjs-2";
 
-function PlasticStackBarChart({ dataset, xLabels }) {
+function PlasticStackBarChart({ dataset, xLabels, yLabel }) {
   // const options = {
   //   responsive: true,
   //   plugins: {
@@ -41,8 +41,20 @@ function PlasticStackBarChart({ dataset, xLabels }) {
   // };
   return (
     <>
-      <div style={{ padding: "13px" }}>
-        <Row style={{ height: "400px", width: "100%" }}>
+      <div
+        style={{
+          padding: "13px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Row
+          style={{
+            height: "500px",
+            width: "90%",
+          }}
+        >
           {dataset && (
             <BarChart
               series={dataset}
@@ -51,21 +63,38 @@ function PlasticStackBarChart({ dataset, xLabels }) {
                   data: xLabels,
                   scaleType: "band",
                   // label: "Time", // X-axis label
+                  tickLabelProps: () => ({
+                    fontSize: 14, // Font size of x-axis labels
+                    fontWeight: "bold",
+                  }),
+                  labelStyle: {
+                    fontSize: 16, // Font size of x-axis title
+                    fontWeight: "bold",
+                  },
                 },
               ]}
-              // yAxis={[
-              //   {
-              //     label: "Plastic recycled", // Y-axis label
-              //   },
-              // ]}
+              yAxis={[
+                {
+                  label: yLabel, // Y-axis label
+                  labelStyle: {
+                    fontSize: 16, // Font size of x-axis title
+                    fontWeight: "bold",
+                    transform: "translate(35px, -190px)",
+                  },
+                },
+              ]}
               borderRadius={6}
               slotProps={{
                 legend: {
                   labelStyle: {
-                    fontSize: 10,
+                    fontSize: 16,
+                    fill: "#1c3c58",
+                    fontWeight: "bold",
                   },
+                  // position: "right",
                 },
               }}
+              margin={{ top: 100 }}
             />
           )}
         </Row>
