@@ -1856,3 +1856,25 @@ span.span-card {
   transform: translateX(-60%) scale(1);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.animated-arrow {
+  animation: bounce 2s infinite;
+  font-size: 2rem; /* Adjust the size as needed */
+  color: #ffffff; /* Adjust the color as needed */
+}
