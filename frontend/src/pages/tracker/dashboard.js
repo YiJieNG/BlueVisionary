@@ -430,7 +430,7 @@ function Dashboard() {
               <Col md="8">
                 <Card style={{ height: "100%" }}>
                   <CardBody>
-                    <Row>
+                    <Row style={{ paddingTop: "1rem" }}>
                       <div
                         style={{
                           display: "flex",
@@ -504,7 +504,7 @@ function Dashboard() {
                           value={selectedShowType}
                           onChange={(e) => setSelectedShowType(e.target.value)}
                           style={{
-                            width: 180,
+                            width: 150,
                             color: "#1c3c58",
                             fontWeight: "bold",
                             fontSize: "1.0rem",
