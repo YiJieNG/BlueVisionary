@@ -347,7 +347,7 @@ function Dashboard() {
                 <div
                   style={{
                     margin: "0px 40px 0px 40px",
-                    padding: "10px",
+                    padding: "20px 20px 5px",
                   }}
                   className="marine-life-content"
                 >
@@ -364,9 +364,9 @@ function Dashboard() {
 
             <Row
               style={{
-                margin: "10px 40px 30px 40px",
+                margin: "10px 20px 30px 20px",
               }}
-              className="card-margin no-margin"
+              // className="card-margin no-margin"
             >
               <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
                 <Card
@@ -612,7 +612,7 @@ function Dashboard() {
               <Col md="4" style={{ display: "flex" }}>
                 <Card style={{ height: "100%", flex: 1 }}>
                   <CardBody>
-                    <Row style={{ paddingTop: "1rem" }}>
+                    <Row style={{ paddingTop: "2rem" }}>
                       <div
                         style={{
                           display: "flex",
@@ -637,11 +637,13 @@ function Dashboard() {
                     </Row>
                     <Row>
                       <p>
-                        If everyone in Australia follow your recycle impact, in
-                        2025 eghnjrtgnjr. If everyone in Australia follow your
-                        recycle impact, in 2025 eghnjrtgnjr.If everyone in
-                        Australia follow your recycle impact, in 2025
-                        eghnjrtgnjr.
+                        <strong>
+                          If everyone in Australia follow your recycle impact,
+                          in 2025 eghnjrtgnjr. If everyone in Australia follow
+                          your recycle impact, in 2025 eghnjrtgnjr.If everyone
+                          in Australia follow your recycle impact, in 2025
+                          eghnjrtgnjr.
+                        </strong>
                       </p>
                     </Row>
                   </CardBody>
@@ -652,10 +654,10 @@ function Dashboard() {
               className="justify-content-between mt-4"
               style={{
                 padding: "20px 20px 50px 20px",
-                margin: "10px 40px 0px 40px",
+                margin: "10px 20px 0px 20px",
               }}
             >
-              <Col xs="12" md="4" style={{ display: "flex" }}>
+              <Col xs="12" md="6" style={{ display: "flex" }}>
                 <Button
                   className="yes-btn"
                   onClick={navigateToPlasticInput}
@@ -666,7 +668,7 @@ function Dashboard() {
                 </Button>
               </Col>
 
-              <Col xs="12" md="4" style={{ display: "flex" }}>
+              <Col xs="12" md="6" style={{ display: "flex" }}>
                 <Button
                   className="dash-button"
                   onClick={navigateToFacility}
@@ -676,12 +678,12 @@ function Dashboard() {
                   Handle plastic waste collected
                 </Button>
               </Col>
-              <Col xs="12" md="4" style={{ display: "flex" }}>
+              {/* <Col xs="12" md="4">
                 <Button className="no-btn" onClick={handleDeleteData} block>
                   Reset all contribution
                 </Button>
               </Col>
-              {/* <Col>
+              <Col>
                 <Button color="dark" onClick={handleAddData}>
                   Add Data
                 </Button>
