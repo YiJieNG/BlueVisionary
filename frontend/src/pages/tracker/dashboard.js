@@ -488,6 +488,7 @@ function Dashboard() {
                             margin: 0,
                             fontSize: "1.3rem",
                             fontWeight: "bold",
+                            paddingRight: "5px",
                           }}
                         >
                           Total&nbsp;
@@ -556,7 +557,7 @@ function Dashboard() {
                             backgroundColor: "#f0f0f0",
                             border: "2px solid #1c3c58",
                             outline: "none",
-                            marginTop: "5px", // Adjust margin for wrapping
+                            // marginTop: "5px",
                           }}
                         >
                           <option
