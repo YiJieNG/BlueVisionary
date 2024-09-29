@@ -488,6 +488,7 @@ function Dashboard() {
                             margin: 0,
                             fontSize: "1.3rem",
                             fontWeight: "bold",
+                            paddingRight: "5px",
                           }}
                         >
                           Total&nbsp;
