@@ -15,6 +15,8 @@ import {
 import plasticDataTest from "./plasticInputTest.json";
 import { useNavigate } from "react-router-dom";
 import PlasticLineChart from "./PlasticLineChart";
+import { FaRecycle, FaWeight } from "react-icons/fa";
+import { GiSeaTurtle } from "react-icons/gi";
 
 function Dashboard() {
   //   const [data, setData] = useState([]);
@@ -338,7 +340,7 @@ function Dashboard() {
   return (
     <>
       <div className="section-with-space">
-        <div className="section-marinelife">
+        <div className="section-dashboard">
           <Container fluid>
             <Row>
               <Col md="12" sm={{ size: "auto" }}>
@@ -368,58 +370,100 @@ function Dashboard() {
             >
               <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
                 <Card
-                  className="feature-card features-row custom-border"
-                  style={{ padding: "1rem 1.5rem" }}
+                  className="weight-feature-card dash-features-row custom-border"
+                  style={{ padding: "2rem" }}
                 >
-                  <CardBody className="d-flex flex-column">
-                    <h1>ICON</h1>
-                    <h4>{totalWeight.toFixed(2)} gram</h4>
-                    <p>
+                  <CardBody
+                    className="d-flex flex-column align-items-center"
+                    style={{ justifyContent: "center" }}
+                  >
+                    <FaWeight
+                      size={"30%"}
+                      style={{ color: "#d1a400", marginBottom: "20px" }}
+                    />{" "}
+                    <h4
+                      style={{
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                        color: "#d1a400",
+                      }}
+                    >
+                      {totalWeight.toFixed(2)} gram
+                    </h4>
+                    <p
+                      style={{
+                        fontSize: "1.0rem",
+                        color: "#d1a400",
+                      }}
+                    >
                       <strong>Total weight of Plastic Items Recycled</strong>
                     </p>
                   </CardBody>
                 </Card>
               </Col>
+
               <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
                 <Card
-                  className="feature-card features-row custom-border"
-                  style={{ padding: "1rem 1.5rem" }}
+                  className="count-feature-card dash-features-row custom-border"
+                  style={{ padding: "2rem" }}
                 >
-                  <CardBody className="d-flex flex-column">
-                    <h1>ICON</h1>
-                    <h4>{totalCount}</h4>
-                    <p>
+                  <CardBody
+                    className="d-flex flex-column align-items-center"
+                    style={{ justifyContent: "center" }}
+                  >
+                    <FaRecycle
+                      size={"30%"}
+                      style={{ color: "#0e9f7d", marginBottom: "20px" }}
+                    />{" "}
+                    <h4
+                      style={{
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                        color: "#0e9f7d",
+                      }}
+                    >
+                      {totalCount}
+                    </h4>
+                    <p
+                      style={{
+                        fontSize: "1.0rem",
+                        color: "#0e9f7d",
+                      }}
+                    >
                       <strong>Total number of Plastic Items Recycled</strong>
                     </p>
                   </CardBody>
                 </Card>
               </Col>
+
               <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
                 <Card
-                  className="feature-card features-row custom-border"
-                  style={{ padding: "1rem 1.5rem" }}
+                  className="seaturtle-feature-card dash-features-row custom-border"
+                  style={{ padding: "2rem" }}
                 >
-                  <CardBody className="d-flex flex-column">
-                    <h1>ICON</h1>
-                    <h4>{((totalCount / 14) * 0.5).toFixed(0)}</h4>
-                    <p>
+                  <CardBody
+                    className="d-flex flex-column align-items-center"
+                    style={{ justifyContent: "center" }}
+                  >
+                    <GiSeaTurtle
+                      size={"30%"}
+                      style={{ color: "#003366", marginBottom: "20px" }}
+                    />{" "}
+                    <h4
+                      style={{
+                        fontSize: "1.8rem",
+                        fontWeight: "bold",
+                        color: "#003366",
+                      }}
+                    >
+                      {((totalCount / 14) * 0.5).toFixed(0)}
+                    </h4>
+                    <p style={{ fontSize: "1.0rem", color: "#003366" }}>
                       <strong>Total Sea turtles potentially saved</strong>
                     </p>
                   </CardBody>
                 </Card>
               </Col>
-              {/* <Col md="3" sm="6" xs="12" className="mb-4 d-flex">
-                <Card
-                  className="feature-card features-row custom-border"
-                  style={{ padding: "1rem 1.5rem" }}
-                >
-                  <CardBody className="d-flex flex-column">
-                    <h1>ICON</h1>
-                    <h4>{totalWeight}</h4>
-                    <div>Total weight</div>
-                  </CardBody>
-                </Card>
-              </Col> */}
             </Row>
 
             <Row
@@ -427,8 +471,8 @@ function Dashboard() {
                 margin: "10px 40px 30px 40px",
               }}
             >
-              <Col md="8">
-                <Card style={{ height: "100%" }}>
+              <Col md="8" style={{ display: "flex" }}>
+                <Card style={{ height: "100%", flex: 1 }}>
                   <CardBody>
                     <Row style={{ paddingTop: "1rem" }}>
                       <div
@@ -565,82 +609,84 @@ function Dashboard() {
                   </CardBody>
                 </Card>
               </Col>
-              <Col md="4">
-                <Card>
+              <Col md="4" style={{ display: "flex" }}>
+                <Card style={{ height: "100%", flex: 1 }}>
                   <CardBody>
-                    <PlasticLineChart />
+                    <Row style={{ paddingTop: "1rem" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexWrap: "wrap",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <h4
+                          style={{
+                            margin: 0,
+                            fontSize: "1.3rem",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          What if others follow your effort?
+                        </h4>
+                      </div>
+                    </Row>
+                    <Row>
+                      <PlasticLineChart />
+                    </Row>
+                    <Row>
+                      <p>
+                        If everyone in Australia follow your recycle impact, in
+                        2025 eghnjrtgnjr. If everyone in Australia follow your
+                        recycle impact, in 2025 eghnjrtgnjr.If everyone in
+                        Australia follow your recycle impact, in 2025
+                        eghnjrtgnjr.
+                      </p>
+                    </Row>
                   </CardBody>
                 </Card>
               </Col>
             </Row>
-            <Row style={{ marginTop: 20 }}>
-              <Col className="d-flex justify-content-center align-items-center">
-                <Button color="primary" onClick={navigateToPlasticInput}>
+            <Row
+              className="justify-content-between mt-4"
+              style={{
+                padding: "20px 20px 50px 20px",
+                margin: "10px 40px 0px 40px",
+              }}
+            >
+              <Col xs="12" md="4" style={{ display: "flex" }}>
+                <Button
+                  className="yes-btn"
+                  onClick={navigateToPlasticInput}
+                  block
+                >
                   {" "}
-                  Make contribution
+                  Record Your Impact
                 </Button>
               </Col>
-              <Col className="d-flex justify-content-center align-items-center">
-                <Button color="primary" onClick={navigateToFacility}>
+
+              <Col xs="12" md="4" style={{ display: "flex" }}>
+                <Button
+                  className="dash-button"
+                  onClick={navigateToFacility}
+                  block
+                >
                   {" "}
-                  Find location
+                  Handle plastic waste collected
                 </Button>
               </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Button color="dark" onClick={handleDeleteData}>
-                  Delete All Data
+              <Col xs="12" md="4" style={{ display: "flex" }}>
+                <Button className="no-btn" onClick={handleDeleteData} block>
+                  Reset all contribution
                 </Button>
               </Col>
-              <Col>
+              {/* <Col>
                 <Button color="dark" onClick={handleAddData}>
                   Add Data
                 </Button>
-              </Col>
+              </Col> */}
             </Row>
-            {/* <Row>
-                            <h1>IndexedDB Example</h1>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Button color="dark" onClick={handleAddData}>
-                                    Add Data
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button color="dark" onClick={handleDeleteData}>
-                                    Delete All Data
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button color="dark" onClick={handleSelectedData}>
-                                    Get Selected Data
-                                </Button>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <h2>Stored Data:</h2>
-                            <ul>
-                                {data.map((item, index) => (
-                                    <li key={index}>
-                                        {new Date(item.date).toString()}-{item.date}-{item.type}-
-                                        {item.weight}
-                                    </li>
-                                ))}
-                            </ul>
-                        </Row> */}
-            {/* <Row>
-                            <h2>Selected Data:</h2>
-                            <ul>
-                                {selectedData.map((item, index) => (
-                                    <li key={index}>
-                                        {new Date(item.date).toString()}-{item.date}-{item.type}-
-                                        {item.weight}
-                                    </li>
-                                ))}
-                            </ul>
-                        </Row> */}
           </Container>
         </div>
       </div>

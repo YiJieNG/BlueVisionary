@@ -1878,3 +1878,111 @@ span.span-card {
   font-size: 2rem; /* Adjust the size as needed */
   color: #ffffff; /* Adjust the color as needed */
 }
+
+//////Dashboard
+.section-dashboard {
+  padding-top: 20px;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  background: linear-gradient(45deg, #e2edf4, #f4f9fb);
+  min-height: 100vh;
+}
+
+.dash-features-row {
+  width: 90%; /* Adjust this percentage as needed */
+  margin: 0 auto; /* Center the row */
+}
+.weight-feature-card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for cards */
+  text-align: center;
+  margin: 1.5rem;
+  background-color: #fcfdeb;
+  border-radius: "16px"; // Rounded corners
+  text-align: "center";
+}
+.weight-feature-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(230, 208, 39, 0.2);
+}
+
+.count-feature-card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for cards */
+  text-align: center;
+  margin: 1.5rem;
+  background-color: #ebfafd; // Light green background
+  border-radius: "16px"; // Rounded corners
+  text-align: "center";
+}
+.count-feature-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(39, 230, 144, 0.2);
+}
+
+.seaturtle-feature-card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for cards */
+  text-align: center;
+  margin: 1.5rem;
+  background-color: #ddeefd; // Light green background
+  border-radius: "16px"; // Rounded corners
+  text-align: "center";
+}
+.seaturtle-feature-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(39, 74, 230, 0.2);
+}
+
+.dash-button {
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #2776c5;
+  border-color: #2776c5;
+  padding: 0.75rem 2rem;
+  text-align: center;
+  font-weight: bold;
+
+  &:hover {
+    color: #003366;
+    background-color: #a8caed;
+    border-color: #a8caed;
+  }
+
+  &.quantity-btn {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+  }
+}
+.no-btn {
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #eb999c;
+  border-color: #eb999c;
+  padding: 0.75rem 2rem;
+  text-align: center;
+  font-weight: bold;
+
+  &:hover {
+    color: #003366;
+    background-color: #fcdee1;
+    border-color: #fcdee1;
+  }
+}
+
+.yes-btn {
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #4cddbb;
+  border-color: #73e2c8;
+  padding: 0.75rem 2rem;
+  text-align: center;
+  font-weight: bold;
+
+  &:hover {
+    color: #003366;
+    background-color: #99ebe8;
+    border-color: #99ebe8;
+  }
+}
