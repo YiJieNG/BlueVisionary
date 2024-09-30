@@ -560,7 +560,7 @@ function Dashboard() {
                               backgroundColor: "#f0f0f0",
                               border: "2px solid #1c3c58",
                               outline: "none",
-                              // marginTop: "5px",
+                              padding: "9px",
                             }}
                           >
                             <option
