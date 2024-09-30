@@ -364,7 +364,7 @@ function Dashboard() {
 
             <Row
               style={{
-                margin: "10px 20px 30px 20px",
+                margin: "30px 20px 30px 20px",
               }}
               // className="card-margin no-margin"
             >
