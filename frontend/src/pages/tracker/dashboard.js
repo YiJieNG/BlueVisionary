@@ -466,191 +466,196 @@ function Dashboard() {
               </Col>
             </Row>
 
-            <Row
-              style={{
-                margin: "10px 40px 30px 40px",
-              }}
-            >
-              <Col md="8" style={{ display: "flex" }}>
-                <Card style={{ height: "100%", flex: 1 }}>
-                  <CardBody>
-                    <Row style={{ paddingTop: "1rem" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          flexWrap: "wrap",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <h4
-                          style={{
-                            margin: 0,
-                            fontSize: "1.3rem",
-                            fontWeight: "bold",
-                            paddingRight: "5px",
-                          }}
-                        >
-                          Total&nbsp;
-                        </h4>
-
+            {xLabels && xLabels.length > 0 && dataset && dataset.length > 0 && (
+              <Row
+                style={{
+                  margin: "10px 40px 30px 40px",
+                }}
+              >
+                <Col md="8" style={{ display: "flex" }}>
+                  <Card style={{ height: "100%", flex: 1 }}>
+                    <CardBody>
+                      <Row style={{ paddingTop: "1rem" }}>
                         <div
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            backgroundColor: "#f0f0f0",
-                            border: "2px solid #1c3c58",
-                            padding: "5px 10px",
-                            margin: "5px 0",
-                            borderRadius: "10px",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
                           }}
                         >
-                          <Typography
-                            variant="body1"
+                          <h4
                             style={{
-                              fontSize: "1.0rem",
-                              color: "#1c3c58",
+                              margin: 0,
+                              fontSize: "1.3rem",
                               fontWeight: "bold",
-                              marginRight: "5px",
+                              paddingRight: "5px",
                             }}
                           >
-                            Weight
-                          </Typography>
-                          <MaterialUISwitch
-                            checked={checked}
-                            onChange={handleChange}
-                          />
-                          <Typography
-                            variant="body1"
-                            style={{
-                              fontSize: "1.0rem",
-                              color: "#1c3c58",
-                              fontWeight: "bold",
-                              marginLeft: "5px",
-                            }}
-                          >
-                            Count
-                          </Typography>
-                        </div>
+                            Total&nbsp;
+                          </h4>
 
-                        <h4
-                          style={{
-                            margin: 0,
-                            fontSize: "1.3rem",
-                            marginLeft: "10px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          of Plastic Waste Recycled in
-                        </h4>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              backgroundColor: "#f0f0f0",
+                              border: "2px solid #1c3c58",
+                              padding: "5px 10px",
+                              margin: "5px 0",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            <Typography
+                              variant="body1"
+                              style={{
+                                fontSize: "1.0rem",
+                                color: "#1c3c58",
+                                fontWeight: "bold",
+                                marginRight: "5px",
+                              }}
+                            >
+                              Weight
+                            </Typography>
+                            <MaterialUISwitch
+                              checked={checked}
+                              onChange={handleChange}
+                            />
+                            <Typography
+                              variant="body1"
+                              style={{
+                                fontSize: "1.0rem",
+                                color: "#1c3c58",
+                                fontWeight: "bold",
+                                marginLeft: "5px",
+                              }}
+                            >
+                              Count
+                            </Typography>
+                          </div>
 
-                        <Input
-                          type="select"
-                          value={selectedShowType}
-                          onChange={(e) => setSelectedShowType(e.target.value)}
-                          style={{
-                            width: 150,
-                            color: "#1c3c58",
-                            fontWeight: "bold",
-                            fontSize: "1.0rem",
-                            marginLeft: "10px",
-                            backgroundColor: "#f0f0f0",
-                            border: "2px solid #1c3c58",
-                            outline: "none",
-                            // marginTop: "5px",
-                          }}
-                        >
-                          <option
+                          <h4
                             style={{
-                              color: "#1c3c58",
+                              margin: 0,
+                              fontSize: "1.3rem",
+                              marginLeft: "10px",
                               fontWeight: "bold",
-                              fontSize: "1.0rem",
                             }}
                           >
-                            Past 7 days
-                          </option>
-                          <option
-                            style={{
-                              color: "#1c3c58",
-                              fontWeight: "bold",
-                              fontSize: "1.0rem",
-                            }}
-                          >
-                            Past 30 days
-                          </option>
-                          <option
-                            style={{
-                              color: "#1c3c58",
-                              fontWeight: "bold",
-                              fontSize: "1.0rem",
-                            }}
-                          >
-                            This year
-                          </option>
-                        </Input>
-                      </div>
-                    </Row>
+                            of Plastic Waste Recycled in
+                          </h4>
 
-                    <Row>
-                      {xLabels &&
-                        xLabels.length > 0 &&
-                        dataset &&
-                        dataset.length > 0 && (
-                          <PlasticStackBarChart
-                            xLabels={xLabels}
-                            dataset={dataset}
-                            yLabel={
-                              selectedCountType === "weight"
-                                ? "Weight in g"
-                                : "Total Count"
+                          <Input
+                            type="select"
+                            value={selectedShowType}
+                            onChange={(e) =>
+                              setSelectedShowType(e.target.value)
                             }
-                          />
-                        )}
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col md="4" style={{ display: "flex" }}>
-                <Card style={{ height: "100%", flex: 1 }}>
-                  <CardBody>
-                    <Row style={{ paddingTop: "2rem" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          flexWrap: "wrap",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <h4
+                            style={{
+                              width: 150,
+                              color: "#1c3c58",
+                              fontWeight: "bold",
+                              fontSize: "1.0rem",
+                              marginLeft: "10px",
+                              backgroundColor: "#f0f0f0",
+                              border: "2px solid #1c3c58",
+                              outline: "none",
+                              // marginTop: "5px",
+                            }}
+                          >
+                            <option
+                              style={{
+                                color: "#1c3c58",
+                                fontWeight: "bold",
+                                fontSize: "1.0rem",
+                              }}
+                            >
+                              Past 7 days
+                            </option>
+                            <option
+                              style={{
+                                color: "#1c3c58",
+                                fontWeight: "bold",
+                                fontSize: "1.0rem",
+                              }}
+                            >
+                              Past 30 days
+                            </option>
+                            <option
+                              style={{
+                                color: "#1c3c58",
+                                fontWeight: "bold",
+                                fontSize: "1.0rem",
+                              }}
+                            >
+                              This year
+                            </option>
+                          </Input>
+                        </div>
+                      </Row>
+
+                      <Row>
+                        {/* {xLabels &&
+                          xLabels.length > 0 &&
+                          dataset &&
+                          dataset.length > 0 && ( */}
+                        <PlasticStackBarChart
+                          xLabels={xLabels}
+                          dataset={dataset}
+                          yLabel={
+                            selectedCountType === "weight"
+                              ? "Weight in g"
+                              : "Total Count"
+                          }
+                        />
+                        {/* )} */}
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col md="4" style={{ display: "flex" }}>
+                  <Card style={{ height: "100%", flex: 1 }}>
+                    <CardBody>
+                      <Row style={{ paddingTop: "2rem" }}>
+                        <div
                           style={{
-                            margin: 0,
-                            fontSize: "1.3rem",
-                            fontWeight: "bold",
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
                           }}
                         >
-                          What if others follow your effort?
-                        </h4>
-                      </div>
-                    </Row>
-                    <Row>
-                      <PlasticLineChart />
-                    </Row>
-                    <Row>
-                      <p>
-                        <strong>
-                          If everyone in Australia follow your recycle impact,
-                          in 2025 eghnjrtgnjr. If everyone in Australia follow
-                          your recycle impact, in 2025 eghnjrtgnjr.If everyone
-                          in Australia follow your recycle impact, in 2025
-                          eghnjrtgnjr.
-                        </strong>
-                      </p>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
+                          <h4
+                            style={{
+                              margin: 0,
+                              fontSize: "1.3rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            What if others follow your effort?
+                          </h4>
+                        </div>
+                      </Row>
+                      <Row>
+                        <PlasticLineChart />
+                      </Row>
+                      <Row>
+                        <p>
+                          <strong>
+                            If everyone in Australia follow your recycle impact,
+                            in 2025 eghnjrtgnjr. If everyone in Australia follow
+                            your recycle impact, in 2025 eghnjrtgnjr.If everyone
+                            in Australia follow your recycle impact, in 2025
+                            eghnjrtgnjr.
+                          </strong>
+                        </p>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            )}
+
             <Row
               className="justify-content-between mt-4"
               style={{
@@ -665,7 +670,7 @@ function Dashboard() {
                   block
                 >
                   {" "}
-                  Record Your Impact
+                  Record Your Contribution here
                 </Button>
               </Col>
 
@@ -676,7 +681,7 @@ function Dashboard() {
                   block
                 >
                   {" "}
-                  Handle plastic waste collected
+                  Handle Plastic Waste collected
                 </Button>
               </Col>
               {/* <Col xs="12" md="4">
