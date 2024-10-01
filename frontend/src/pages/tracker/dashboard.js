@@ -378,7 +378,7 @@ function Dashboard() {
                     style={{ justifyContent: "center" }}
                   >
                     <FaWeight
-                      size={"30%"}
+                      size={"40%"}
                       style={{ color: "#d1a400", marginBottom: "20px" }}
                     />{" "}
                     <h4
@@ -412,7 +412,7 @@ function Dashboard() {
                     style={{ justifyContent: "center" }}
                   >
                     <FaRecycle
-                      size={"30%"}
+                      size={"40%"}
                       style={{ color: "#0e9f7d", marginBottom: "20px" }}
                     />{" "}
                     <h4
@@ -446,7 +446,7 @@ function Dashboard() {
                     style={{ justifyContent: "center" }}
                   >
                     <GiSeaTurtle
-                      size={"30%"}
+                      size={"40%"}
                       style={{ color: "#003366", marginBottom: "20px" }}
                     />{" "}
                     <h4
