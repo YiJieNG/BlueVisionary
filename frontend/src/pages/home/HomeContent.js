@@ -114,7 +114,7 @@ function HomeContent() {
                 Discover. Learn. Protect
               </h2>
               <p className="presentation-descriptions text-center">
-                Protect Marine Reptiles for Future Generations now !!!{" "}
+                Protect Marine Reptiles for Future Generations now{" "}
               </p>
               <div
                 style={{
@@ -159,10 +159,9 @@ function HomeContent() {
                 ingested plastic debris. Marine reptiles including turtles are
                 particularly vulnerable to plastic pollution, mistaking plastic
                 items for food or becoming entangled in debris. BlueVisionary
-                empowers you to take action by helping you understand the
-                profound challenges faced by marine reptiles, exploring the
-                growing scale of plastic pollution, and tracking the real impact
-                your efforts can make.
+                helps you take action by raising awareness of these challenges,
+                exploring the scale of plastic pollution, and tracking your
+                impact.
               </p>
               <Button
                 className="dark-blue-button cta-button"

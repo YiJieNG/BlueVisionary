@@ -356,7 +356,7 @@ function Dashboard() {
                   </h2>
                   <h4 style={{ color: "#3f4447" }}>
                     Track your plastic waste recycling effort, visualize your
-                    progress and see how much sea turtles you have saved!!!
+                    progress and see how much sea turtles you have saved
                   </h4>
                 </div>
               </Col>
