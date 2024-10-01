@@ -601,10 +601,11 @@ function Dashboard() {
                           dataset.length > 0 && ( */}
                         <PlasticStackBarChart
                           xLabels={xLabels}
+                          xlabel={selectedShowType}
                           dataset={dataset}
                           yLabel={
                             selectedCountType === "weight"
-                              ? "Weight in g"
+                              ? "Weight in gram"
                               : "Total Count"
                           }
                         />

@@ -4,7 +4,7 @@ import { Row } from "reactstrap";
 // import trackData from "./plastic.json"
 // import { Bar } from "react-chartjs-2";
 
-function PlasticStackBarChart({ dataset, xLabels, yLabel }) {
+function PlasticStackBarChart({ dataset, xLabels, xlabel, yLabel }) {
   // const options = {
   //   responsive: true,
   //   plugins: {
@@ -62,7 +62,7 @@ function PlasticStackBarChart({ dataset, xLabels, yLabel }) {
                 {
                   data: xLabels,
                   scaleType: "band",
-                  // label: "Time", // X-axis label
+                  label: xlabel, // X-axis label
                   tickLabelProps: () => ({
                     fontSize: 14, // Font size of x-axis labels
                     fontWeight: "bold",
@@ -70,6 +70,7 @@ function PlasticStackBarChart({ dataset, xLabels, yLabel }) {
                   labelStyle: {
                     fontSize: 16, // Font size of x-axis title
                     fontWeight: "bold",
+                    transform: "translate(0px, 10px)",
                   },
                 },
               ]}
@@ -79,7 +80,8 @@ function PlasticStackBarChart({ dataset, xLabels, yLabel }) {
                   labelStyle: {
                     fontSize: 16, // Font size of x-axis title
                     fontWeight: "bold",
-                    transform: "translate(35px, -190px)",
+                    // transform: "translate(35px, -190px)",
+                    transform: "rotate(-90deg) translate(-250px, -300px)",
                   },
                 },
               ]}
@@ -91,10 +93,9 @@ function PlasticStackBarChart({ dataset, xLabels, yLabel }) {
                     fill: "#1c3c58",
                     fontWeight: "bold",
                   },
-                  // position: "right",
                 },
               }}
-              margin={{ top: 100 }}
+              margin={{ top: 80 }}
             />
           )}
         </Row>
