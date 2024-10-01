@@ -355,7 +355,7 @@ function Dashboard() {
                     Plastic Waste Recycling Efforts Tracker
                   </h2>
                   <h4 style={{ color: "#3f4447" }}>
-                    Track your plastic waste recycling effort, visualize your
+                    Track your plastic waste recycling effort, checkout your
                     progress and see how much sea turtles you have saved
                   </h4>
                 </div>
@@ -632,11 +632,46 @@ function Dashboard() {
                               fontWeight: "bold",
                             }}
                           >
-                            What if others follow your effort?
+                            Your Monthly Contribution
+                          </h4>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <h4
+                            style={{
+                              margin: 0,
+                              fontSize: "1.3rem",
+                            }}
+                          >
+                            vs
+                          </h4>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <h4
+                            style={{
+                              margin: 0,
+                              fontSize: "1.3rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Average Individuals'
                           </h4>
                         </div>
                       </Row>
-                      <Row>
+                      {/* <Row>
                         <PlasticLineChart />
                       </Row>
                       <Row>
@@ -644,12 +679,12 @@ function Dashboard() {
                           <strong>
                             If everyone in Australia follow your recycle impact,
                             in 2025 eghnjrtgnjr. If everyone in Australia follow
-                            your recycle impact, in 2025 eghnjrtgnjr.If everyone
-                            in Australia follow your recycle impact, in 2025
-                            eghnjrtgnjr.
+                            your recycle impact, in 2025 eghnjrtgnjr. If
+                            everyone in Australia follow your recycle impact, in
+                            2025 eghnjrtgnjr.
                           </strong>
                         </p>
-                      </Row>
+                      </Row> */}
                     </CardBody>
                   </Card>
                 </Col>
