@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import PlasticLineChart from "./PlasticLineChart";
 import { FaRecycle, FaWeight } from "react-icons/fa";
 import { GiSeaTurtle } from "react-icons/gi";
+import GaugeChart from "react-gauge-chart";
 
 function Dashboard() {
   //   const [data, setData] = useState([]);
@@ -30,6 +31,9 @@ function Dashboard() {
   const [totalCount, setTotalCount] = useState(0);
   const [xTooltip, setXTooltip] = useState();
 
+  const [currentMonthWeight, setCurrentMonthWeight] = useState(0);
+  const [populationAverage, setPopulationAverage] = useState(500);
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
     if (event.target.checked) {
@@ -38,6 +42,42 @@ function Dashboard() {
       setSelectedCountType("weight");
     }
   };
+
+  useEffect(() => {
+    const fetchCurrentMonthWeight = async () => {
+      const startDate = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        1
+      );
+      const endDate = new Date();
+      const results = await getDataWithinDateRange(startDate, endDate);
+      let totalWeight = 0;
+      results.forEach((item) => {
+        totalWeight += item.weight;
+      });
+      setCurrentMonthWeight(totalWeight);
+    };
+
+    fetchCurrentMonthWeight();
+  }, []);
+
+  useEffect(() => {
+    const fetchPopulationAverage = async () => {
+      // Replace this with actual data fetching logic
+      const average = 500; // Example value in grams
+      setPopulationAverage(average);
+    };
+
+    fetchPopulationAverage();
+  }, []);
+
+  // const userContributionPercentage = populationAverage
+  //   ? Math.min(currentMonthWeight / (2 * populationAverage), 1)
+  //   : 0;
+  const userContributionPercentage = populationAverage
+    ? Math.min(currentMonthWeight / (2 * populationAverage), 1)
+    : 0;
 
   // console.log(yesterday);
   function getRandomArbitrary(min, max) {
@@ -388,7 +428,7 @@ function Dashboard() {
                         color: "#d1a400",
                       }}
                     >
-                      {totalWeight.toFixed(2)} gram
+                      {totalWeight.toFixed(2)} grams
                     </h4>
                     <p
                       style={{
@@ -672,20 +712,79 @@ function Dashboard() {
                           </h4>
                         </div>
                       </Row>
-                      {/* <Row>
-                        <PlasticLineChart />
+                      <Row>
+                        <div
+                          style={{
+                            position: "relative",
+                            width: "100%",
+                            height: "auto",
+                            paddingTop: "35px",
+                          }}
+                        >
+                          <GaugeChart
+                            id="contribution-gauge"
+                            nrOfLevels={30}
+                            arcsLength={[0.5, 0.5]}
+                            colors={["#FF5F6D", "#24CBE5"]}
+                            percent={userContributionPercentage}
+                            arcPadding={0.02}
+                            cornerRadius={3}
+                            needleColor="#cbd2ff"
+                            needleScale={0.35}
+                            needleBaseColor="#2754c5"
+                            textColor="#000"
+                            style={{ width: "100%", fontSize: "12px" }}
+                          />
+                          <div
+                            style={{
+                              position: "absolute",
+                              left: "50%",
+                              bottom: "10%",
+                              transform: "translateX(-50%)",
+                              textAlign: "center",
+                            }}
+                          ></div>
+                        </div>
+                        <div style={{ marginTop: "20px", textAlign: "center" }}>
+                          <p>
+                            <strong>Your Contribution:</strong>{" "}
+                            {currentMonthWeight.toFixed(2)} grams
+                          </p>
+                          <p>
+                            <strong>Average Contribution:</strong>{" "}
+                            {populationAverage.toFixed(2)} grams
+                          </p>
+                        </div>
                       </Row>
                       <Row>
-                        <p>
-                          <strong>
-                            If everyone in Australia follow your recycle impact,
-                            in 2025 eghnjrtgnjr. If everyone in Australia follow
-                            your recycle impact, in 2025 eghnjrtgnjr. If
-                            everyone in Australia follow your recycle impact, in
-                            2025 eghnjrtgnjr.
-                          </strong>
-                        </p>
-                      </Row> */}
+                        <div
+                          style={{
+                            position: "relative",
+                            width: "100%",
+                            height: "auto",
+                            padding: "15px 20px 0px",
+                          }}
+                        >
+                          <p>
+                            You are just <strong>545 grams away</strong> from
+                            matching the average recycling effort of individuals
+                            in Australia this month! Keep up the amazing work —
+                            every gram makes a difference in protecting our
+                            oceans and wildlife. Stay committed, and you will
+                            hit the average in no time! Let’s push forward and
+                            surpass that goal!
+                          </p>
+                        </div>
+                        {/* Amazing work! You are <strong>545 grams above</strong> the average recycling 
+                        effort of individuals in Australia this month! Your dedication 
+                        is making a real impact—keep going strong! Every bit of plastic 
+                        you recycle brings us one step closer to a cleaner planet. Let’s 
+                        continue setting the bar higher and inspire others to follow your lead! */}
+                        {/* Great job! You have <strong>matched</strong> the average recycling effort of individuals 
+                        in Australia this month! Your commitment is making a real difference—keep 
+                        it up, and let’s see how far you can go beyond the average. Every 
+                        action counts in protecting our environment! */}
+                      </Row>
                     </CardBody>
                   </Card>
                 </Col>
