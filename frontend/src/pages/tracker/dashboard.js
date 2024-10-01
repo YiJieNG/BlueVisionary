@@ -747,11 +747,15 @@ function Dashboard() {
                         </div>
                         <div style={{ marginTop: "20px", textAlign: "center" }}>
                           <h5>
-                            <strong>Your Contribution:</strong>{" "}
+                            <strong style={{ color: "#003366" }}>
+                              Your Contribution:
+                            </strong>{" "}
                             {currentMonthWeight.toFixed(2)} grams
                           </h5>
                           <h5>
-                            <strong>Average Contribution:</strong>{" "}
+                            <strong style={{ color: "#003366" }}>
+                              Average Contribution:
+                            </strong>{" "}
                             {populationAverage.toFixed(2)} grams
                           </h5>
                         </div>
@@ -766,13 +770,16 @@ function Dashboard() {
                           }}
                         >
                           <p>
-                            You are just <strong>545 grams away</strong> from
-                            matching the average recycling effort of individuals
-                            in Australia this month! Keep up the amazing work —
-                            every gram makes a difference in protecting our
-                            oceans and wildlife. Stay committed, and you will
-                            hit the average in no time! Let’s push forward and
-                            surpass that goal!
+                            You are just{" "}
+                            <strong style={{ color: "#003366" }}>
+                              545 grams away
+                            </strong>{" "}
+                            from matching the average recycling effort of
+                            individuals in Australia this month! Keep up the
+                            amazing work — every gram makes a difference in
+                            protecting our oceans and wildlife. Stay committed,
+                            and you will hit the average in no time! Let’s push
+                            forward and surpass that goal!
                           </p>
                         </div>
                         {/* Amazing work! You are <strong>545 grams above</strong> the average recycling 
