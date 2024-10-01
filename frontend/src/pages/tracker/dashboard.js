@@ -352,10 +352,10 @@ function Dashboard() {
                   className="marine-life-content"
                 >
                   <h2 style={{ paddingTop: "30px" }}>
-                    Plastic Waste Recycling Efforts Tracker
+                    Sea Turtle Hero Tracker
                   </h2>
                   <h4 style={{ color: "#3f4447" }}>
-                    Track your plastic waste recycling effort, checkout your
+                    Measure your plastic recycling efforts, checkout your
                     progress and see how much sea turtles you have saved
                   </h4>
                 </div>
