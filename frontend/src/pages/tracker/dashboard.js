@@ -746,14 +746,14 @@ function Dashboard() {
                           ></div>
                         </div>
                         <div style={{ marginTop: "20px", textAlign: "center" }}>
-                          <p>
+                          <h5>
                             <strong>Your Contribution:</strong>{" "}
                             {currentMonthWeight.toFixed(2)} grams
-                          </p>
-                          <p>
+                          </h5>
+                          <h5>
                             <strong>Average Contribution:</strong>{" "}
                             {populationAverage.toFixed(2)} grams
-                          </p>
+                          </h5>
                         </div>
                       </Row>
                       <Row>
