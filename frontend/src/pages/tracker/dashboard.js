@@ -725,48 +725,66 @@ function Dashboard() {
                             id="contribution-gauge"
                             nrOfLevels={30}
                             arcsLength={[0.5, 0.5]}
+                            animate={false}
                             colors={["#FF5F6D", "#24CBE5"]}
                             percent={userContributionPercentage}
                             arcPadding={0.02}
                             cornerRadius={3}
                             needleColor="#cbd2ff"
-                            needleScale={0.35}
+                            needleScale={0.95}
                             needleBaseColor="#2754c5"
                             textColor="#000"
                             style={{ width: "100%", fontSize: "12px" }}
                           />
                           <div
                             style={{
-                              position: "absolute",
-                              left: "50%",
-                              bottom: "10%",
-                              transform: "translateX(-50%)",
-                              textAlign: "center",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              paddingTop: "10px",
+                              paddingLeft: "15px",
                             }}
-                          ></div>
-                        </div>
-                        <div style={{ marginTop: "20px", textAlign: "center" }}>
-                          <h5>
-                            <strong style={{ color: "#003366" }}>
-                              Your Contribution:
-                            </strong>{" "}
-                            {currentMonthWeight.toFixed(2)} grams
-                          </h5>
-                          <h5>
-                            <strong style={{ color: "#003366" }}>
-                              Average Contribution:
-                            </strong>{" "}
-                            {populationAverage.toFixed(2)} grams
-                          </h5>
+                          >
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <div
+                                style={{
+                                  width: "15px",
+                                  height: "15px",
+                                  backgroundColor: "#FF5F6D",
+                                  marginRight: "5px",
+                                }}
+                              ></div>
+                              <p style={{ margin: 0 }}>Below Average</p>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                paddingRight: "15px",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: "15px",
+                                  height: "15px",
+                                  backgroundColor: "#24CBE5",
+                                  marginRight: "5px",
+                                }}
+                              ></div>
+                              <p style={{ margin: 0 }}>Above Average</p>
+                            </div>
+                          </div>
                         </div>
                       </Row>
+
                       <Row>
                         <div
                           style={{
                             position: "relative",
                             width: "100%",
                             height: "auto",
-                            padding: "15px 20px 0px",
+                            padding: "30px 20px 0px",
                           }}
                         >
                           <p>
