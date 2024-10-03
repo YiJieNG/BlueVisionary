@@ -686,6 +686,36 @@ def get_plastic_detection():
 
     return jsonify({"error": "Unsupported file type"}), 400
 
+@app.route('/api/facilities/', methods=['GET'])
+def get_facilities():
+    db = get_db_connection()
+    cur = db.cursor()
+    query = '''
+            SELECT facility_name, state, suburb, address, postcode, X, Y 
+            from Waste_Management_Facilities 
+            where facility_management_type = 'RECYCLING'
+            and address != ''
+            '''
+    cur.execute(query)
+    data = cur.fetchall()
+    cur.close()
+    db.close()
+
+    facilities = []
+    for item in data:
+        facility = {
+            'name': item[0].strip(),
+            'state': item[1].strip(),
+            'suburb': item[2].strip(),
+            'address': item[3].strip(),
+            'postcode': item[4],
+            'longitude': item[5],
+            'latitude': item[6]
+        }
+        facilities.append(facility)
+    
+
+    return jsonify(facilities)
 
 if __name__ == '__main__':
     app.run(debug=True)
