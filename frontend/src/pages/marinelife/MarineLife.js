@@ -99,7 +99,7 @@ function MarineLife() {
                   }}
                 >
                   <h2 className="feature-title">
-                    Find out more about the Endangered Marine Species here!
+                    Find out more about the Endangered Marine Species here
                   </h2>
                   <h4
                     className="feature-description"
