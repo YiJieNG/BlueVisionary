@@ -74,6 +74,18 @@ function BlueNavbar() {
           <Nav navbar className="ml-auto">
             <NavItem>
               <NavLink
+                href="/seaturtlegame"
+                className={
+                  normalizePath(location.pathname) === "/seaturtlegame"
+                    ? "active"
+                    : ""
+                }
+              >
+                Role-Play Game
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
                 href="/marinelife"
                 className={
                   normalizePath(location.pathname) === "/marinelife"
@@ -96,18 +108,7 @@ function BlueNavbar() {
                 Pollution Insights
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink
-                href="/seaturtlegame"
-                className={
-                  normalizePath(location.pathname) === "/seaturtlegame"
-                    ? "active"
-                    : ""
-                }
-              >
-                Mini Game
-              </NavLink>
-            </NavItem>
+
             <NavItem>
               <NavLink
                 href="/quiz"
@@ -122,17 +123,22 @@ function BlueNavbar() {
               <NavLink
                 href="/tracker"
                 className={
-                  normalizePath(location.pathname) === "/tracker" ? "active" : ""
+                  normalizePath(location.pathname) === "/tracker" ||
+                  normalizePath(location.pathname) === "/plasticInput"
+                    ? "active"
+                    : ""
                 }
               >
-                Tracker
+                Impact Snapshot
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
                 href="/facility"
                 className={
-                  normalizePath(location.pathname) === "/facility" ? "active" : ""
+                  normalizePath(location.pathname) === "/facility"
+                    ? "active"
+                    : ""
                 }
               >
                 Plastic Facility

@@ -329,7 +329,7 @@ const PlasticInput = () => {
             <Row className="justify-content-between mt-4">
               <Col xs="12" md="12" className="d-flex">
                 <Button color="primary" onClick={navigateToPollution} block>
-                  Return to Dashboard
+                  Impact Snapshot
                 </Button>
               </Col>
             </Row>
@@ -780,7 +780,7 @@ const PlasticInput = () => {
                 </Col>
                 <Col xs="12" md="6" className="d-flex">
                   <Button color="primary" onClick={navigateToPollution} block>
-                    Return to Dashboard
+                    Impact Snapshot
                   </Button>
                 </Col>
               </Row>
@@ -1115,7 +1115,7 @@ const PlasticInput = () => {
               </Col>
               <Col xs="12" md="6" className="d-flex">
                 <Button color="primary" onClick={navigateToPollution} block>
-                  Return to Dashboard
+                  Impact Snapshot
                 </Button>
               </Col>
             </Row>

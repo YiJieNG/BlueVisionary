@@ -117,7 +117,7 @@ function Quiz() {
                 </h1>
                 <p className="feature-description">
                   Challenge yourself and discover how well you understand these
-                  fascinating creatures and their habitats!
+                  fascinating creatures and their habitats
                 </p>
                 <Button
                   onClick={startQuiz}

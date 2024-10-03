@@ -6,6 +6,7 @@ import { Switch, Typography, Grid } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Button, Col, Container, Row, Input, Card, CardBody } from "reactstrap";
 import PlasticStackBarChart from "./PlasticStackBarChart";
+import ContributionGaugeChart from "./ContributionGaugeChart";
 import {
   addDataToDB,
   getAllDataFromDB,
@@ -14,7 +15,7 @@ import {
 } from "../../util/db";
 import plasticDataTest from "./plasticInputTest.json";
 import { useNavigate } from "react-router-dom";
-import PlasticLineChart from "./PlasticLineChart";
+import PlasticLineChart from "./ContributionGaugeChart";
 import { FaRecycle, FaWeight } from "react-icons/fa";
 import { GiSeaTurtle } from "react-icons/gi";
 
@@ -30,6 +31,9 @@ function Dashboard() {
   const [totalCount, setTotalCount] = useState(0);
   const [xTooltip, setXTooltip] = useState();
 
+  const [past30DaysWeight, setPast30DaysWeight] = useState(0);
+  const populationAverage = 500;
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
     if (event.target.checked) {
@@ -38,6 +42,29 @@ function Dashboard() {
       setSelectedCountType("weight");
     }
   };
+
+  useEffect(() => {
+    const fetchPast30DaysWeight = async () => {
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(endDate.getDate() - 30);
+      const results = await getDataWithinDateRange(startDate, endDate);
+      let totalWeight = 0;
+      results.forEach((item) => {
+        totalWeight += item.weight;
+      });
+      setPast30DaysWeight(totalWeight);
+    };
+
+    fetchPast30DaysWeight();
+  }, []);
+
+  // const userContributionPercentage = populationAverage
+  //   ? Math.min(currentMonthWeight / (2 * populationAverage), 1)
+  //   : 0;
+  const userContributionPercentage = populationAverage
+    ? Math.min(past30DaysWeight / (2 * populationAverage), 1)
+    : 0;
 
   // console.log(yesterday);
   function getRandomArbitrary(min, max) {
@@ -50,7 +77,7 @@ function Dashboard() {
       const yesterday = new Date().setDate(new Date().getDate() - i);
 
       for (var plasticType in plasticDataTest.plasticItems) {
-        console.log(plasticType);
+        // console.log(plasticType);
         const newData = {
           // date: currentDate,
           date: yesterday,
@@ -210,7 +237,7 @@ function Dashboard() {
         pastDate.setDate(today.getDate() - i);
         tooltipText.push(pastDate.toLocaleDateString("en-GB"));
       }
-      console.log(tooltipText);
+      // console.log(tooltipText);
       setXTooltip(tooltipText);
 
       const rearrangedDays =
@@ -352,11 +379,11 @@ function Dashboard() {
                   className="marine-life-content"
                 >
                   <h2 style={{ paddingTop: "30px" }}>
-                    Plastic Waste Recycling Efforts Tracker
+                    Sea Turtle Hero Tracker
                   </h2>
                   <h4 style={{ color: "#3f4447" }}>
-                    Track your plastic waste recycling effort, visualize your
-                    progress and see how much sea turtles you have saved!!!
+                    Measure your plastic recycling efforts, checkout your
+                    progress and see how much sea turtles you have saved
                   </h4>
                 </div>
               </Col>
@@ -378,7 +405,7 @@ function Dashboard() {
                     style={{ justifyContent: "center" }}
                   >
                     <FaWeight
-                      size={"30%"}
+                      size={"40%"}
                       style={{ color: "#d1a400", marginBottom: "20px" }}
                     />{" "}
                     <h4
@@ -388,7 +415,7 @@ function Dashboard() {
                         color: "#d1a400",
                       }}
                     >
-                      {totalWeight.toFixed(2)} gram
+                      {totalWeight.toFixed(2)} grams
                     </h4>
                     <p
                       style={{
@@ -412,7 +439,7 @@ function Dashboard() {
                     style={{ justifyContent: "center" }}
                   >
                     <FaRecycle
-                      size={"30%"}
+                      size={"40%"}
                       style={{ color: "#0e9f7d", marginBottom: "20px" }}
                     />{" "}
                     <h4
@@ -422,7 +449,7 @@ function Dashboard() {
                         color: "#0e9f7d",
                       }}
                     >
-                      {totalCount}
+                      {totalCount.toFixed(0)}
                     </h4>
                     <p
                       style={{
@@ -446,7 +473,7 @@ function Dashboard() {
                     style={{ justifyContent: "center" }}
                   >
                     <GiSeaTurtle
-                      size={"30%"}
+                      size={"40%"}
                       style={{ color: "#003366", marginBottom: "20px" }}
                     />{" "}
                     <h4
@@ -601,10 +628,11 @@ function Dashboard() {
                           dataset.length > 0 && ( */}
                         <PlasticStackBarChart
                           xLabels={xLabels}
+                          xlabel={selectedShowType}
                           dataset={dataset}
                           yLabel={
                             selectedCountType === "weight"
-                              ? "Weight in g"
+                              ? "Weight in grams"
                               : "Total Count"
                           }
                         />
@@ -614,44 +642,11 @@ function Dashboard() {
                   </Card>
                 </Col>
                 <Col md="4" style={{ display: "flex" }}>
-                  <Card style={{ height: "100%", flex: 1 }}>
-                    <CardBody>
-                      <Row style={{ paddingTop: "2rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <h4
-                            style={{
-                              margin: 0,
-                              fontSize: "1.3rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            What if others follow your effort?
-                          </h4>
-                        </div>
-                      </Row>
-                      <Row>
-                        <PlasticLineChart />
-                      </Row>
-                      <Row>
-                        <p>
-                          <strong>
-                            If everyone in Australia follow your recycle impact,
-                            in 2025 eghnjrtgnjr. If everyone in Australia follow
-                            your recycle impact, in 2025 eghnjrtgnjr.If everyone
-                            in Australia follow your recycle impact, in 2025
-                            eghnjrtgnjr.
-                          </strong>
-                        </p>
-                      </Row>
-                    </CardBody>
-                  </Card>
+                  <ContributionGaugeChart
+                    userContributionPercentage={userContributionPercentage}
+                    past30DaysWeight={past30DaysWeight}
+                    populationAverage={populationAverage}
+                  />
                 </Col>
               </Row>
             )}
