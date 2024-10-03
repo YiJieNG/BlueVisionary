@@ -449,7 +449,7 @@ function Dashboard() {
                         color: "#0e9f7d",
                       }}
                     >
-                      {totalCount}
+                      {totalCount.toFixed(0)}
                     </h4>
                     <p
                       style={{
