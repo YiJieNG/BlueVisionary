@@ -123,7 +123,8 @@ function BlueNavbar() {
               <NavLink
                 href="/tracker"
                 className={
-                  normalizePath(location.pathname) === "/tracker"
+                  normalizePath(location.pathname) === "/tracker" ||
+                  normalizePath(location.pathname) === "/plasticInput"
                     ? "active"
                     : ""
                 }
