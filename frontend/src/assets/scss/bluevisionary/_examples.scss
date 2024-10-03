@@ -1991,3 +1991,53 @@ span.span-card {
   font-size: 24px !important;
   font-weight: bold;
 }
+
+// facility map
+.section-facility {
+  padding-top: 50px;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  background: linear-gradient(45deg, #e2edf4, #f4f9fb);
+  min-height: 100vh;
+}
+
+#map-container {
+  height: 100%;
+  width: 100%;
+  /* temporarily set the background color so we can tell where the map container is positioned */
+  background-color: lightgrey;
+}
+
+.sidebar {
+  background-color: rgb(35 55 75 / 90%);
+  color: #fff;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+}
+
+.reset-button {
+  position: absolute;
+  top: 50px;
+  z-index: 1;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.placeList {
+  height: 68vh;
+  overflow-y: auto;
+}
+
+.btn-facility-info {
+  width: 100;
+  font-size: 12px;
+}
+
