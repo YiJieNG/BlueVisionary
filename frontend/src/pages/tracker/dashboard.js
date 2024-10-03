@@ -32,7 +32,7 @@ function Dashboard() {
   const [xTooltip, setXTooltip] = useState();
 
   const [past30DaysWeight, setPast30DaysWeight] = useState(0);
-  const populationAverage = 500;
+  const populationAverage = 581;
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -628,7 +628,13 @@ function Dashboard() {
                           dataset.length > 0 && ( */}
                         <PlasticStackBarChart
                           xLabels={xLabels}
-                          xlabel={selectedShowType}
+                          xlabel={
+                            selectedShowType === "Past 7 days"
+                              ? "Day"
+                              : selectedShowType === "Past 30 days"
+                              ? "Date"
+                              : "Month"
+                          }
                           dataset={dataset}
                           yLabel={
                             selectedCountType === "weight"
