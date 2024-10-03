@@ -691,10 +691,8 @@ def get_facilities():
     db = get_db_connection()
     cur = db.cursor()
     query = '''
-            SELECT facility_name, state, suburb, address, postcode, X, Y 
-            from Waste_Management_Facilities 
-            where facility_management_type = 'RECYCLING'
-            and address != ''
+            select Facility_name, Facility_infrastructure_type, Full_address, Suburb, Latitude, Longitude, Phone_number, Website 
+            from processing_facilities
             '''
     cur.execute(query)
     data = cur.fetchall()
@@ -705,12 +703,14 @@ def get_facilities():
     for item in data:
         facility = {
             'name': item[0].strip(),
-            'state': item[1].strip(),
-            'suburb': item[2].strip(),
-            'address': item[3].strip(),
-            'postcode': item[4],
+            'type': item[1].strip(),
+            'address': item[2].strip(),
+            'state': item[2].strip().split(',')[-1].strip().split()[0],
+            'suburb': item[3].strip(),
+            'latitude': item[4],
             'longitude': item[5],
-            'latitude': item[6]
+            'phone': item[6],
+            'website': item[7]
         }
         facilities.append(facility)
     
