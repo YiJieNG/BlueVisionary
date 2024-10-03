@@ -632,7 +632,7 @@ function Dashboard() {
                           dataset={dataset}
                           yLabel={
                             selectedCountType === "weight"
-                              ? "Weight in gram"
+                              ? "Weight in grams"
                               : "Total Count"
                           }
                         />

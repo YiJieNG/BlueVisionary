@@ -1,10 +1,20 @@
 // ContributionGaugeChart.js
-import React from "react";
+import React, { useState } from "react";
 import GaugeChart from "react-gauge-chart";
-import { Card, CardBody, Row } from "reactstrap";
+import { FaInfoCircle } from "react-icons/fa";
+import { Card, CardBody, Row, Tooltip } from "reactstrap";
 
 const ContributionGaugeChart = React.memo(
   ({ userContributionPercentage, past30DaysWeight, populationAverage }) => {
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+
+    const toggleTooltip = () => {
+      setTooltipOpen((prevState) => !prevState);
+    };
+
+    const resetTooltip = () => {
+      setTooltipOpen(false);
+    };
     return (
       <Card style={{ height: "100%", flex: 1 }}>
         <CardBody>
@@ -78,7 +88,7 @@ const ContributionGaugeChart = React.memo(
                 id="contribution-gauge"
                 nrOfLevels={30}
                 arcsLength={[0.5, 0.5]}
-                animate={true} // You can set this to true or false as desired
+                animate={false}
                 colors={["#FF5F6D", "#24CBE5"]}
                 percent={userContributionPercentage}
                 arcPadding={0.02}
@@ -137,10 +147,10 @@ const ContributionGaugeChart = React.memo(
                 justifyContent: "center",
               }}
             >
-              <h5>
+              <h6 style={{ fontSize: "1.1rem" }}>
                 <strong>Your Contribution: </strong>
                 {past30DaysWeight.toFixed(2)} grams
-              </h5>
+              </h6>
             </div>
             <div
               style={{
@@ -150,10 +160,39 @@ const ContributionGaugeChart = React.memo(
                 justifyContent: "center",
               }}
             >
-              <h5>
-                <strong>Average Individuals: </strong>
+              <h6 style={{ fontSize: "1.1rem" }}>
+                <strong>
+                  Average Individuals
+                  <span
+                    style={{ cursor: "pointer", padding: "0 3px" }}
+                    id="turtleClassInfo"
+                    onMouseLeave={resetTooltip}
+                  >
+                    <FaInfoCircle />
+                  </span>
+                  <Tooltip
+                    isOpen={tooltipOpen}
+                    target="turtleClassInfo"
+                    toggle={toggleTooltip}
+                    placement="right"
+                  >
+                    <div className="custom-tooltip">
+                      <h3>How do we calculate the average recycling effort?</h3>
+                      <p>
+                        We use historical data from 2006 to 2019 to determine
+                        the total weight of plastic recycling efforts in
+                        Australia. By factoring in the country's population
+                        during that period, we calculate the per-person
+                        contribution. Finally, we divide the total by 12 to
+                        estimate the average monthly recycling effort per
+                        individual.
+                      </p>
+                    </div>
+                  </Tooltip>
+                  :{" "}
+                </strong>
                 {populationAverage} grams
-              </h5>
+              </h6>
             </div>
           </Row>
           {/* Motivational Message */}
