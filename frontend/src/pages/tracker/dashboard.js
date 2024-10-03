@@ -366,326 +366,321 @@ function Dashboard() {
 
   return (
     <>
-      <div className="section-with-space">
-        <div className="section-dashboard">
-          <Container fluid>
-            <Row>
-              <Col md="12" sm={{ size: "auto" }}>
-                <div
-                  style={{
-                    margin: "0px 40px 0px 40px",
-                    padding: "20px 20px 5px",
-                  }}
-                  className="marine-life-content"
-                >
-                  <h2 style={{ paddingTop: "30px" }}>
-                    Sea Turtle Hero Tracker
-                  </h2>
-                  <h4 style={{ color: "#3f4447" }}>
-                    Measure your plastic recycling efforts, checkout your
-                    progress and see how much sea turtles you have saved
-                  </h4>
-                </div>
-              </Col>
-            </Row>
+      <div className="section-dashboard" style={{ paddingTop: "5rem" }}>
+        <Container fluid>
+          <Row>
+            <Col md="12" sm={{ size: "auto" }}>
+              <div
+                style={{
+                  margin: "0px 40px 0px 40px",
+                  padding: "20px 20px 5px",
+                }}
+                className="marine-life-content"
+              >
+                <h2 style={{ paddingTop: "30px" }}>Sea Turtle Hero Tracker</h2>
+                <h4 style={{ color: "#3f4447" }}>
+                  Measure your plastic recycling efforts, checkout your progress
+                  and see how much sea turtles you have saved
+                </h4>
+              </div>
+            </Col>
+          </Row>
 
+          <Row
+            style={{
+              margin: "30px 20px 30px 20px",
+            }}
+            // className="card-margin no-margin"
+          >
+            <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
+              <Card
+                className="weight-feature-card dash-features-row custom-border"
+                style={{ padding: "2rem" }}
+              >
+                <CardBody
+                  className="d-flex flex-column align-items-center"
+                  style={{ justifyContent: "center" }}
+                >
+                  <FaWeight
+                    size={"40%"}
+                    style={{ color: "#d1a400", marginBottom: "20px" }}
+                  />{" "}
+                  <h4
+                    style={{
+                      fontSize: "1.8rem",
+                      fontWeight: "bold",
+                      color: "#d1a400",
+                    }}
+                  >
+                    {totalWeight.toFixed(2)} grams
+                  </h4>
+                  <p
+                    style={{
+                      fontSize: "1.0rem",
+                      color: "#d1a400",
+                    }}
+                  >
+                    <strong>Total weight of Plastic Items Recycled</strong>
+                  </p>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
+              <Card
+                className="count-feature-card dash-features-row custom-border"
+                style={{ padding: "2rem" }}
+              >
+                <CardBody
+                  className="d-flex flex-column align-items-center"
+                  style={{ justifyContent: "center" }}
+                >
+                  <FaRecycle
+                    size={"40%"}
+                    style={{ color: "#0e9f7d", marginBottom: "20px" }}
+                  />{" "}
+                  <h4
+                    style={{
+                      fontSize: "1.8rem",
+                      fontWeight: "bold",
+                      color: "#0e9f7d",
+                    }}
+                  >
+                    {totalCount.toFixed(0)}
+                  </h4>
+                  <p
+                    style={{
+                      fontSize: "1.0rem",
+                      color: "#0e9f7d",
+                    }}
+                  >
+                    <strong>Total number of Plastic Items Recycled</strong>
+                  </p>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
+              <Card
+                className="seaturtle-feature-card dash-features-row custom-border"
+                style={{ padding: "2rem" }}
+              >
+                <CardBody
+                  className="d-flex flex-column align-items-center"
+                  style={{ justifyContent: "center" }}
+                >
+                  <GiSeaTurtle
+                    size={"40%"}
+                    style={{ color: "#003366", marginBottom: "20px" }}
+                  />{" "}
+                  <h4
+                    style={{
+                      fontSize: "1.8rem",
+                      fontWeight: "bold",
+                      color: "#003366",
+                    }}
+                  >
+                    {((totalCount / 14) * 0.5).toFixed(0)}
+                  </h4>
+                  <p style={{ fontSize: "1.0rem", color: "#003366" }}>
+                    <strong>Total Sea turtles potentially saved</strong>
+                  </p>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+
+          {xLabels && xLabels.length > 0 && dataset && dataset.length > 0 && (
             <Row
               style={{
-                margin: "30px 20px 30px 20px",
+                margin: "10px 40px 30px 40px",
               }}
-              // className="card-margin no-margin"
             >
-              <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
-                <Card
-                  className="weight-feature-card dash-features-row custom-border"
-                  style={{ padding: "2rem" }}
-                >
-                  <CardBody
-                    className="d-flex flex-column align-items-center"
-                    style={{ justifyContent: "center" }}
-                  >
-                    <FaWeight
-                      size={"40%"}
-                      style={{ color: "#d1a400", marginBottom: "20px" }}
-                    />{" "}
-                    <h4
-                      style={{
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
-                        color: "#d1a400",
-                      }}
-                    >
-                      {totalWeight.toFixed(2)} grams
-                    </h4>
-                    <p
-                      style={{
-                        fontSize: "1.0rem",
-                        color: "#d1a400",
-                      }}
-                    >
-                      <strong>Total weight of Plastic Items Recycled</strong>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
+              <Col md="8" style={{ display: "flex" }}>
+                <Card style={{ height: "100%", flex: 1 }}>
+                  <CardBody>
+                    <Row style={{ paddingTop: "1rem" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexWrap: "wrap",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <h4
+                          style={{
+                            margin: 0,
+                            fontSize: "1.3rem",
+                            fontWeight: "bold",
+                            paddingRight: "5px",
+                          }}
+                        >
+                          Total&nbsp;
+                        </h4>
 
-              <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
-                <Card
-                  className="count-feature-card dash-features-row custom-border"
-                  style={{ padding: "2rem" }}
-                >
-                  <CardBody
-                    className="d-flex flex-column align-items-center"
-                    style={{ justifyContent: "center" }}
-                  >
-                    <FaRecycle
-                      size={"40%"}
-                      style={{ color: "#0e9f7d", marginBottom: "20px" }}
-                    />{" "}
-                    <h4
-                      style={{
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
-                        color: "#0e9f7d",
-                      }}
-                    >
-                      {totalCount.toFixed(0)}
-                    </h4>
-                    <p
-                      style={{
-                        fontSize: "1.0rem",
-                        color: "#0e9f7d",
-                      }}
-                    >
-                      <strong>Total number of Plastic Items Recycled</strong>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-
-              <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
-                <Card
-                  className="seaturtle-feature-card dash-features-row custom-border"
-                  style={{ padding: "2rem" }}
-                >
-                  <CardBody
-                    className="d-flex flex-column align-items-center"
-                    style={{ justifyContent: "center" }}
-                  >
-                    <GiSeaTurtle
-                      size={"40%"}
-                      style={{ color: "#003366", marginBottom: "20px" }}
-                    />{" "}
-                    <h4
-                      style={{
-                        fontSize: "1.8rem",
-                        fontWeight: "bold",
-                        color: "#003366",
-                      }}
-                    >
-                      {((totalCount / 14) * 0.5).toFixed(0)}
-                    </h4>
-                    <p style={{ fontSize: "1.0rem", color: "#003366" }}>
-                      <strong>Total Sea turtles potentially saved</strong>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-
-            {xLabels && xLabels.length > 0 && dataset && dataset.length > 0 && (
-              <Row
-                style={{
-                  margin: "10px 40px 30px 40px",
-                }}
-              >
-                <Col md="8" style={{ display: "flex" }}>
-                  <Card style={{ height: "100%", flex: 1 }}>
-                    <CardBody>
-                      <Row style={{ paddingTop: "1rem" }}>
                         <div
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            flexWrap: "wrap",
-                            justifyContent: "center",
+                            backgroundColor: "#f0f0f0",
+                            border: "2px solid #1c3c58",
+                            padding: "5px 10px",
+                            margin: "5px 0",
+                            borderRadius: "10px",
                           }}
                         >
-                          <h4
+                          <Typography
+                            variant="body1"
                             style={{
-                              margin: 0,
-                              fontSize: "1.3rem",
+                              fontSize: "1.0rem",
+                              color: "#1c3c58",
                               fontWeight: "bold",
-                              paddingRight: "5px",
+                              marginRight: "5px",
                             }}
                           >
-                            Total&nbsp;
-                          </h4>
-
-                          <div
+                            Weight
+                          </Typography>
+                          <MaterialUISwitch
+                            checked={checked}
+                            onChange={handleChange}
+                          />
+                          <Typography
+                            variant="body1"
                             style={{
-                              display: "flex",
-                              alignItems: "center",
-                              backgroundColor: "#f0f0f0",
-                              border: "2px solid #1c3c58",
-                              padding: "5px 10px",
-                              margin: "5px 0",
-                              borderRadius: "10px",
-                            }}
-                          >
-                            <Typography
-                              variant="body1"
-                              style={{
-                                fontSize: "1.0rem",
-                                color: "#1c3c58",
-                                fontWeight: "bold",
-                                marginRight: "5px",
-                              }}
-                            >
-                              Weight
-                            </Typography>
-                            <MaterialUISwitch
-                              checked={checked}
-                              onChange={handleChange}
-                            />
-                            <Typography
-                              variant="body1"
-                              style={{
-                                fontSize: "1.0rem",
-                                color: "#1c3c58",
-                                fontWeight: "bold",
-                                marginLeft: "5px",
-                              }}
-                            >
-                              Count
-                            </Typography>
-                          </div>
-
-                          <h4
-                            style={{
-                              margin: 0,
-                              fontSize: "1.3rem",
-                              marginLeft: "10px",
+                              fontSize: "1.0rem",
+                              color: "#1c3c58",
                               fontWeight: "bold",
+                              marginLeft: "5px",
                             }}
                           >
-                            of Plastic Waste Recycled in
-                          </h4>
+                            Count
+                          </Typography>
+                        </div>
 
-                          <Input
-                            type="select"
-                            value={selectedShowType}
-                            onChange={(e) =>
-                              setSelectedShowType(e.target.value)
-                            }
+                        <h4
+                          style={{
+                            margin: 0,
+                            fontSize: "1.3rem",
+                            marginLeft: "10px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          of Plastic Waste Recycled in
+                        </h4>
+
+                        <Input
+                          type="select"
+                          value={selectedShowType}
+                          onChange={(e) => setSelectedShowType(e.target.value)}
+                          style={{
+                            width: 150,
+                            color: "#1c3c58",
+                            fontWeight: "bold",
+                            fontSize: "1.0rem",
+                            marginLeft: "10px",
+                            backgroundColor: "#f0f0f0",
+                            border: "2px solid #1c3c58",
+                            outline: "none",
+                            padding: "9px",
+                          }}
+                        >
+                          <option
                             style={{
-                              width: 150,
                               color: "#1c3c58",
                               fontWeight: "bold",
                               fontSize: "1.0rem",
-                              marginLeft: "10px",
-                              backgroundColor: "#f0f0f0",
-                              border: "2px solid #1c3c58",
-                              outline: "none",
-                              padding: "9px",
                             }}
                           >
-                            <option
-                              style={{
-                                color: "#1c3c58",
-                                fontWeight: "bold",
-                                fontSize: "1.0rem",
-                              }}
-                            >
-                              Past 7 days
-                            </option>
-                            <option
-                              style={{
-                                color: "#1c3c58",
-                                fontWeight: "bold",
-                                fontSize: "1.0rem",
-                              }}
-                            >
-                              Past 30 days
-                            </option>
-                            <option
-                              style={{
-                                color: "#1c3c58",
-                                fontWeight: "bold",
-                                fontSize: "1.0rem",
-                              }}
-                            >
-                              This year
-                            </option>
-                          </Input>
-                        </div>
-                      </Row>
+                            Past 7 days
+                          </option>
+                          <option
+                            style={{
+                              color: "#1c3c58",
+                              fontWeight: "bold",
+                              fontSize: "1.0rem",
+                            }}
+                          >
+                            Past 30 days
+                          </option>
+                          <option
+                            style={{
+                              color: "#1c3c58",
+                              fontWeight: "bold",
+                              fontSize: "1.0rem",
+                            }}
+                          >
+                            This year
+                          </option>
+                        </Input>
+                      </div>
+                    </Row>
 
-                      <Row>
-                        {/* {xLabels &&
+                    <Row>
+                      {/* {xLabels &&
                           xLabels.length > 0 &&
                           dataset &&
                           dataset.length > 0 && ( */}
-                        <PlasticStackBarChart
-                          xLabels={xLabels}
-                          xlabel={
-                            selectedShowType === "Past 7 days"
-                              ? "Day"
-                              : selectedShowType === "Past 30 days"
-                              ? "Date"
-                              : "Month"
-                          }
-                          dataset={dataset}
-                          yLabel={
-                            selectedCountType === "weight"
-                              ? "Weight in grams"
-                              : "Total Count"
-                          }
-                        />
-                        {/* )} */}
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-                <Col md="4" style={{ display: "flex" }}>
-                  <ContributionGaugeChart
-                    userContributionPercentage={userContributionPercentage}
-                    past30DaysWeight={past30DaysWeight}
-                    populationAverage={populationAverage}
-                  />
-                </Col>
-              </Row>
-            )}
-
-            <Row
-              className="justify-content-between mt-4"
-              style={{
-                padding: "20px 20px 50px 20px",
-                margin: "10px 20px 0px 20px",
-              }}
-            >
-              <Col xs="12" md="6" style={{ display: "flex" }}>
-                <Button
-                  className="yes-btn"
-                  onClick={navigateToPlasticInput}
-                  block
-                >
-                  {" "}
-                  Record Your Contribution here
-                </Button>
+                      <PlasticStackBarChart
+                        xLabels={xLabels}
+                        xlabel={
+                          selectedShowType === "Past 7 days"
+                            ? "Day"
+                            : selectedShowType === "Past 30 days"
+                            ? "Date"
+                            : "Month"
+                        }
+                        dataset={dataset}
+                        yLabel={
+                          selectedCountType === "weight"
+                            ? "Weight in grams"
+                            : "Total Count"
+                        }
+                      />
+                      {/* )} */}
+                    </Row>
+                  </CardBody>
+                </Card>
               </Col>
-
-              <Col xs="12" md="6" style={{ display: "flex" }}>
-                <Button
-                  className="dash-button"
-                  onClick={navigateToFacility}
-                  block
-                >
-                  {" "}
-                  Handle Plastic Waste collected
-                </Button>
+              <Col md="4" style={{ display: "flex" }}>
+                <ContributionGaugeChart
+                  userContributionPercentage={userContributionPercentage}
+                  past30DaysWeight={past30DaysWeight}
+                  populationAverage={populationAverage}
+                />
               </Col>
-              {/* <Col xs="12" md="4">
+            </Row>
+          )}
+
+          <Row
+            className="justify-content-between mt-4"
+            style={{
+              padding: "20px 20px 50px 20px",
+              margin: "10px 20px 0px 20px",
+            }}
+          >
+            <Col xs="12" md="6" style={{ display: "flex" }}>
+              <Button
+                className="yes-btn"
+                onClick={navigateToPlasticInput}
+                block
+              >
+                {" "}
+                Record Your Contribution here
+              </Button>
+            </Col>
+
+            <Col xs="12" md="6" style={{ display: "flex" }}>
+              <Button
+                className="dash-button"
+                onClick={navigateToFacility}
+                block
+              >
+                {" "}
+                Handle Plastic Waste collected
+              </Button>
+            </Col>
+            {/* <Col xs="12" md="4">
                 <Button className="no-btn" onClick={handleDeleteData} block>
                   Reset all contribution
                 </Button>
@@ -695,9 +690,8 @@ function Dashboard() {
                   Add Data
                 </Button>
               </Col> */}
-            </Row>
-          </Container>
-        </div>
+          </Row>
+        </Container>
       </div>
     </>
   );
