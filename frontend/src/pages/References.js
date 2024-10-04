@@ -54,19 +54,19 @@ function References() {
                 <h4>
                   <b>Marine Life</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://fed.dcceew.gov.au/datasets/erin::species-of-national-environmental-significance-and-selected-marine-and-cetacean-species/explore?location=-19.690183%2C-73.460000%2C2.72&showTable=true">
                     Species Dataset
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   2.{" "}
                   <a href="https://data.gov.au/data/dataset/ae652011-f39e-4c6c-91b8-1dc2d2dfee8f/resource/78401dce-1f40-49d3-92c4-3713d6e34974/download/20240716spcs.csv">
                     Species state
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   3.{" "}
                   <a href="https://apiv3.iucnredlist.org/api/v3/docs#version">
                     Species API narrative
@@ -85,7 +85,7 @@ function References() {
                 <h4>
                   <b>Pollution Insights</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://portal.aodn.org.au/search?uuid=fd3d74b0-0234-4864-bbc6-751c44e41f5e">
                     MicroPlastic distribution dataset
@@ -104,13 +104,13 @@ function References() {
                 <h4>
                   <b>Minigame</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://portal.aodn.org.au/search?uuid=fd3d74b0-0234-4864-bbc6-751c44e41f5e">
                     MicroPlastic distribution dataset
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   2.{" "}
                   <a href="https://www.researchgate.net/figure/List-of-environmental-legislation-and-policy-reviewed_tbl1_331023282">
                     MarineLaw dataset
@@ -129,13 +129,13 @@ function References() {
                 <h4>
                   <b>Tracker</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://universe.roboflow.com/asia-pacific-university-msg4d/plastic-detection-o3dr4">
                     Plastic object detection dataset 1
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   2.{" "}
                   <a href="https://universe.roboflow.com/yolov5-6agzx/plastic-waste-management-6p8kw">
                     Plastic object detection dataset 2
@@ -154,7 +154,7 @@ function References() {
                 <h4>
                   <b>Plastic Facility</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://universe.roboflow.com/asia-pacific-university-msg4d/plastic-detection-o3dr4">
                     Facility dataset
@@ -188,7 +188,7 @@ function References() {
                 <h4>
                   <b>Home page</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1. Sea turtle under feature 2: Photo by{" "}
                   <a href="https://unsplash.com/@dustinhaney?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
                     Dustin Haney
@@ -198,7 +198,7 @@ function References() {
                     Unsplash
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   2. Plastic under feature 3: Photo by{" "}
                   <a href="https://unsplash.com/@naja_bertolt_jensen?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
                     Naja Bertolt Jensen
@@ -208,7 +208,7 @@ function References() {
                     Unsplash
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   3. Education under feature 4: Photo by{" "}
                   <a href="https://unsplash.com/@comparefibre?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
                     Compare Fibre
@@ -218,7 +218,7 @@ function References() {
                     Unsplash
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   4. Tracker under feature 5: Photo by{" "}
                   <a href="https://unsplash.com/@tobiastu?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
                     Tobias Tullius{" "}
@@ -228,7 +228,7 @@ function References() {
                     Unsplash
                   </a>
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   5. Facility under feature 6: Photo by{" "}
                   <a href="https://unsplash.com/@jon_chng?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
                     Jonathan Chng
@@ -241,7 +241,7 @@ function References() {
                 <h4>
                   <b>Quiz</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1. Sea turtle under landing page: Photo by{" "}
                   <a href="https://unsplash.com/@rayyu?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
                     Rayyu Maldives
@@ -254,25 +254,25 @@ function References() {
                 <h4>
                   <b>Minigame</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://craftpix.net/freebies/octopus-jellyfish-shark-and-turtle-free-sprite-pixel-art/?num=1&count=13&sq=turtle&pos=5">
                     Sprite Pixel
                   </a>{" "}
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   2.{" "}
                   <a href="https://opengameart.org/content/underwater-fantasy">
                     Background Image
                   </a>{" "}
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   3.{" "}
                   <a href="https://opengameart.org/content/bubble-0">
                     Bubble Image
                   </a>{" "}
                 </h6>
-                <h6>
+                <h6 className="facility-caption">
                   4.{" "}
                   <a href="https://craftpix.net/freebies/island-game-gui/">
                     Board Image
@@ -281,7 +281,7 @@ function References() {
                 <h4>
                   <b>Icon used</b>
                 </h4>
-                <h6>
+                <h6 className="facility-caption">
                   1. Icons used in Bluevisionary are from{" "}
                   <a href="https://react-icons.github.io/react-icons/">
                     React Icon

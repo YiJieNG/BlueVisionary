@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { Col, Row, Card, CardBody, Container } from "reactstrap";
+import { FaFilter } from "react-icons/fa";
 import mapboxgl from "mapbox-gl";
 
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -100,7 +101,7 @@ function PlasticFacility() {
         setSelectedCardIndex(null);
     };
 
-    const handleCardClick = (index) => {
+    const handleCardClick = (index, item) => {
         if (selectedCardIndex) {
             const oldMarker = markersRef.current.find(
                 (m) => m.index === selectedCardIndex
@@ -120,6 +121,13 @@ function PlasticFacility() {
             .setAttribute("fill", "#7cf573");
         marker._color = "#7cf573";
         setSelectedCardIndex(index);
+        mapRef.current.flyTo({
+            center: [item.longitude, item.latitude], // Target location
+            zoom: 12, // Target zoom level
+            // speed: 1.5, // Animation speed
+            // curve: 1, // Adjust "smoothness" of the animation
+            essential: true, // This animation is considered essential with respect to user accessibility
+        });
     };
 
     const handleMarkerHover = (index, isHovering) => {
@@ -291,13 +299,13 @@ function PlasticFacility() {
         markersRef.current = [];
 
         facility.forEach((item, index) => {
-            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
+            const popup = new mapboxgl.Popup({ offset: 10 }).setHTML(`
                     <div style="padding-right: 20px">
                     <h6>${item.name}</h6>
                     <p><strong>Address:</strong> ${item.address}</p>
-                    <p><strong>Type:</strong> ${item.type}</p>
-                    <p><strong>Phone:</strong> ${item.phone}</p>
-                    <p><strong>Website:</strong> <a href="${item.website}">${item.website}</a></p>
+                    <p><strong>Facility Type:</strong> ${item.type}</p>
+                    <p><strong>Contact No:</strong> ${item.phone}</p>
+                    <p class="facility-caption"><strong>Website:</strong> <a href="${item.website}">${item.website}</a></p>
                     </div>`);
             const marker = new mapboxgl.Marker({ color: "#07bbf7" }) //
                 .setLngLat([item.longitude, item.latitude])
@@ -314,7 +322,7 @@ function PlasticFacility() {
         <>
             <div className="section-facility" style={{ paddingTop: "5rem" }}>
                 <Container fluid>
-                    <Row>
+                    <Row className="justify-content-center">
                         <Col md="12" sm={{ size: "auto" }}>
                             <div
                                 style={{
@@ -334,12 +342,12 @@ function PlasticFacility() {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
+                    <Row className="justify-content-center">
+                        <Col md="12" sm={{ size: "auto" }}>
                             <div
                                 style={{
                                     margin: "0px 40px 0px 40px",
-                                    padding: "20px 20px 5px",
+                                    padding: "5px 20px 5px",
                                 }}
                             >
                                 <Card>
@@ -347,7 +355,9 @@ function PlasticFacility() {
                                         <Row>
                                             <Col md="4">
                                                 <Row>
+                                                    {/* <Col md="1" className="d-flex justify-content-center align-items-center"><FaFilter /></Col> */}
                                                     <Col md="4">
+
                                                         <Box sx={{ minWidth: 120 }}>
                                                             <FormControl fullWidth>
                                                                 <InputLabel id="demo-simple-select-label">
@@ -417,7 +427,7 @@ function PlasticFacility() {
                                                                                 : "#d1d1d1",
                                                                     }}
                                                                     className="facility-card"
-                                                                    onClick={() => handleCardClick(i)}
+                                                                    onClick={() => handleCardClick(i, item)}
                                                                     onMouseEnter={() =>
                                                                         handleMarkerHover(i, true)
                                                                     }
@@ -431,8 +441,8 @@ function PlasticFacility() {
                                                                                 {/* <Typography variant="h5">
                                                                 {i + 1}. {item.name}
                                                                 </Typography> */}
-                                                                                <h5>
-                                                                                    {i + 1}. {item.name}
+                                                                                <h5 className="facility-caption">
+                                                                                    <strong>{i + 1}. {item.name}</strong>
                                                                                 </h5>
                                                                             </Col>
                                                                             <Col md="3">
@@ -451,8 +461,9 @@ function PlasticFacility() {
                                                                             variant="caption"
                                                                             gutterBottom
                                                                             sx={{ display: "block" }}
+                                                                            className="facility-caption"
                                                                         >
-                                                                            Address: {item.address}, {item.suburb},{" "}
+                                                                            <strong>Address:</strong> {item.address}, {item.suburb},{" "}
                                                                             {item.state}
                                                                         </Typography>
                                                                         {/* <FacilityInfo content={item} /> */}
@@ -463,23 +474,26 @@ function PlasticFacility() {
                                                                             variant="caption"
                                                                             gutterBottom
                                                                             sx={{ display: "block" }}
+                                                                            className="facility-caption"
                                                                         >
-                                                                            Phone: {item.phone}
+                                                                            <strong>Contact No:</strong> {item.phone}
                                                                         </Typography>
                                                                         <Typography
                                                                             variant="caption"
                                                                             gutterBottom
                                                                             sx={{ display: "block" }}
+                                                                            className="facility-caption"
                                                                         >
-                                                                            Facility type: {item.type}
+                                                                            <strong>Facility Type:</strong> {item.type}
                                                                         </Typography>
                                                                         <Typography
                                                                             variant="caption"
                                                                             gutterBottom
                                                                             sx={{ display: "block" }}
+                                                                            className="facility-caption"
                                                                         >
                                                                             {/* Website: {item.website} */}
-                                                                            Website:{" "}
+                                                                            <strong>Website:</strong>{" "}
                                                                             <a href={item.website}>{item.website}</a>
                                                                         </Typography>
                                                                         {/* {item.distance &&
