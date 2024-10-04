@@ -1,0 +1,17 @@
+names:
+  - plastic bag
+  - plastic bottle
+  - plastic container
+  - plastic cup
+  - plastic straw
+  - plastic utensil
+nc: 6
+roboflow:
+  license: CC BY 4.0
+  project: plastic-detection-o3dr4
+  url: https://universe.roboflow.com/asia-pacific-university-msg4d/plastic-detection-o3dr4/dataset/3
+  version: 3
+  workspace: asia-pacific-university-msg4d
+test: your_test_data_file_path\Plastic-detection\test\images # change to your path location
+train: your_train_data_file_path\Plastic-detection\train\images # change to your path location
+val: your_valid_data_file_path\Plastic-detection\valid\images # change to your path location
