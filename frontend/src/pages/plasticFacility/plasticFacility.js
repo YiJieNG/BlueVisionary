@@ -287,6 +287,7 @@ function PlasticFacility() {
         <>
             <div className="section-facility" style={{ paddingTop: "7rem" }}>
                 <Container fluid>
+                    {/* <h3>test</h3> */}
                     <Card>
                         <CardBody>
                             <Row>
@@ -346,6 +347,7 @@ function PlasticFacility() {
                                                             marginTop: 10,
                                                             cursor: "pointer",
                                                             backgroundColor: selectedCardIndex === i ? "#d2e7fa" : "white", 
+                                                            borderColor: selectedCardIndex === i ? "#003366": "#d1d1d1",
                                                         }}
                                                         className="facility-card"
                                                         onClick={() => handleCardClick(i)}
