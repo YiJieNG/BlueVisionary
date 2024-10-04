@@ -421,12 +421,13 @@ function PlasticFacility() {
                                                 >
                                                     {facility &&
                                                         facility.map((item, i) => (
-                                                            <Row key={i} style={{ marginRight: 5 }}>
+                                                            <Row key={i} style={{ marginRight: 5, marginBottom: 10 }}>
                                                                 <Card
                                                                     key={i}
                                                                     style={{
                                                                         width: "100%",
-                                                                        marginTop: 10,
+                                                                        // marginTop: 5,
+                                                                        // marginBottom: 5,
                                                                         // marginRight: 10,
                                                                         cursor: "pointer",
                                                                         backgroundColor:

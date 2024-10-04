@@ -152,12 +152,18 @@ function References() {
                 }}
               >
                 <h4>
-                  <b>Plastic Waste Management Facility</b>
+                  <b>Plastic Facility</b>
                 </h4>
                 <h6 className="facility-caption">
                   1.{" "}
                   <a href="https://data.gov.au/dataset/ds-ga-495820b9-4a56-4409-9d1b-950589b50936/details?q=waste-management-facilities">
-                    Facility dataset
+                    Plastic waste management facilities dataset
+                  </a>
+                </h6>
+                <h6 className="facility-caption">
+                  2.{" "}
+                  <a href="https://www.dcceew.gov.au/sites/default/files/documents/national-waste-database-2022.xlsx">
+                  Plastic waste dataset
                   </a>
                 </h6>
               </Card>
