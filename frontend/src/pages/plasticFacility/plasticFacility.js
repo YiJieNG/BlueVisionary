@@ -156,7 +156,7 @@ function PlasticFacility() {
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(success, error);
-        } 
+        }
         // else {
         //     console.log("Geolocation not supported");
         // }
@@ -300,14 +300,26 @@ function PlasticFacility() {
         markersRef.current = [];
 
         facility.forEach((item, index) => {
-            const popup = new mapboxgl.Popup({ offset: 10 }).setHTML(`
+            let htmlText = "";
+            if (item.website === "No Website Available") {
+                htmlText = `
+                    <div style="padding-right: 20px">
+                    <h6>${item.name}</h6>
+                    <p><strong>Address:</strong> ${item.address}</p>
+                    <p><strong>Facility Type:</strong> ${item.type}</p>
+                    <p><strong>Contact No:</strong> ${item.phone}</p>
+                    `
+            } else {
+                htmlText = `
                     <div style="padding-right: 20px">
                     <h6>${item.name}</h6>
                     <p><strong>Address:</strong> ${item.address}</p>
                     <p><strong>Facility Type:</strong> ${item.type}</p>
                     <p><strong>Contact No:</strong> ${item.phone}</p>
                     <p class="facility-caption"><strong>Website:</strong> <a href="${item.website}">${item.website}</a></p>
-                    </div>`);
+                    </div>`
+            }
+            const popup = new mapboxgl.Popup({ offset: 10 }).setHTML(htmlText);
             const marker = new mapboxgl.Marker({ color: "#07bbf7" }) //
                 .setLngLat([item.longitude, item.latitude])
                 .setPopup(popup)
@@ -385,7 +397,7 @@ function PlasticFacility() {
                                                             disablePortal
                                                             options={availableSuburb}
                                                             // getOptionLabel={(option) => option.label}
-                                                            sx={{ width: "100%", color: "#1c3c58" }}
+                                                            sx={{ width: "93%", color: "#1c3c58" }}
                                                             renderInput={(params) => (
                                                                 <TextField {...params} label="Suburb" />
                                                             )}
@@ -409,12 +421,13 @@ function PlasticFacility() {
                                                 >
                                                     {facility &&
                                                         facility.map((item, i) => (
-                                                            <Row key={i}>
+                                                            <Row key={i} style={{ marginRight: 5 }}>
                                                                 <Card
                                                                     key={i}
                                                                     style={{
                                                                         width: "100%",
                                                                         marginTop: 10,
+                                                                        // marginRight: 10,
                                                                         cursor: "pointer",
                                                                         backgroundColor:
                                                                             selectedCardIndex === i
@@ -437,13 +450,13 @@ function PlasticFacility() {
                                                                     <CardBody>
                                                                         <Row>
                                                                             {/* <Col md="9"> */}
-                                                                                {/* <Typography variant="h5">
+                                                                            {/* <Typography variant="h5">
                                                                 {i + 1}. {item.name}
                                                                 </Typography> */}
-                                                                                {/* <h5 className="facility-caption"> */}
-                                                                                <h6>
-                                                                                    <strong>{i + 1}. {item.name}</strong>
-                                                                                </h6>
+                                                                            {/* <h5 className="facility-caption"> */}
+                                                                            <h6>
+                                                                                <strong>{i + 1}. {item.name}</strong>
+                                                                            </h6>
                                                                             {/* </Col> */}
                                                                             {/* <Col md="3">
                                                                                 {item.distance && (
@@ -485,16 +498,20 @@ function PlasticFacility() {
                                                                         >
                                                                             <strong>Facility Type:</strong> {item.type}
                                                                         </Typography>
-                                                                        <Typography
-                                                                            variant="caption"
-                                                                            gutterBottom
-                                                                            sx={{ display: "block" }}
-                                                                            className="facility-caption"
-                                                                        >
-                                                                            {/* Website: {item.website} */}
-                                                                            <strong>Website:</strong>{" "}
-                                                                            <a href={item.website}>{item.website}</a>
-                                                                        </Typography>
+                                                                        {item.website !== "No Website Available" &&
+                                                                            <Typography
+                                                                                variant="caption"
+                                                                                gutterBottom
+                                                                                sx={{ display: "block" }}
+                                                                                className="facility-caption"
+                                                                            >
+                                                                                {/* Website: {item.website} */}
+
+                                                                                <strong>Website:</strong>{" "}
+                                                                                <a href={item.website}>{item.website}</a>
+                                                                            </Typography>
+                                                                        }
+
                                                                         {item.distance &&
                                                                             <Typography variant="caption" className="facility-caption" gutterBottom sx={{ display: 'block' }}>
                                                                                 <strong>Distance to you: </strong>{item.distance.toFixed(2)} km
