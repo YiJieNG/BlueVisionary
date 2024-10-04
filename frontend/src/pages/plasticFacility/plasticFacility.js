@@ -13,7 +13,7 @@ function PlasticFacility() {
     const markersRef = useRef([]);
 
     const [location, setLocation] = useState(null);
-    const [selectedState, setSelectedState] = useState("NSW");
+    const [selectedState, setSelectedState] = useState("VIC");
     const [inputSuburb, setInputSuburb] = useState(null);
     const [availableFacilities, setAvailableFacilities] = useState([]); // all available facilities
     const [distanceFacilities, setDistanceFacilities] = useState([]); // facilities used for filter
@@ -22,17 +22,18 @@ function PlasticFacility() {
     const [availableSuburb, setAvailableSuburb] = useState([]);
     const [userSuburb, setUserSuburb] = useState(null);
     const [userState, setUserState] = useState(null);
+    const [selectedCardIndex, setSelectedCardIndex] = useState(null);
 
     const availableState = ["VIC", "NSW", "QLD", "TAS", "WA", "SA", "NT"];
 
 
-    function handleLocationClick() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(success, error);
-        } else {
-            console.log("Geolocation not supported");
-        }
-    }
+    // function handleLocationClick() {
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(success, error);
+    //     } else {
+    //         console.log("Geolocation not supported");
+    //     }
+    // }
 
     function success(position) {
         const latitude = position.coords.latitude;
@@ -44,6 +45,7 @@ function PlasticFacility() {
                 setUserState(res.data.features[0].properties.context.region.region_code);
                 setUserSuburb(res.data.features[0].properties.context.place.name);
                 setSelectedState(res.data.features[0].properties.context.region.region_code);
+                console.log(res.data.features[0].properties.context.place.name)
             })
             .catch((err) => {
                 console.log(err);
@@ -81,11 +83,59 @@ function PlasticFacility() {
     const handleSuburb = (e, newValue) => {
         // console.log(newValue);
         setInputSuburb(newValue);
+        setSelectedCardIndex(null);
+    };
+
+    const handleCardClick = (index) => {
+        if (selectedCardIndex) {
+            const oldMarker = markersRef.current.find(m => m.index === selectedCardIndex).marker;
+            let markerElement = oldMarker.getElement();
+            markerElement.style.zIndex = "0";
+            markerElement
+                .querySelectorAll('svg path[fill="' + oldMarker._color + '"]')[0]
+                .setAttribute('fill', "#07bbf7")
+            oldMarker._color = "#07bbf7";
+        }
+        const marker = markersRef.current.find(m => m.index === index).marker;
+        let markerElement = marker.getElement();
+            markerElement.style.zIndex = "0";
+            markerElement
+                .querySelectorAll('svg path[fill="' + marker._color + '"]')[0]
+                .setAttribute('fill', "#7cf573")
+            marker._color = "#7cf573";
+        setSelectedCardIndex(index);
+    };
+
+    const handleMarkerHover = (index, isHovering) => {
+        const marker = markersRef.current.find(m => m.index === index).marker;
+        if (isHovering) {
+            let markerElement = marker.getElement();
+            markerElement.style.zIndex = "1000";
+            markerElement
+                .querySelectorAll('svg path[fill="' + marker._color + '"]')[0]
+                .setAttribute('fill', "#f72f07")
+            marker._color = "#f72f07";
+        } else {
+            console.log(selectedCardIndex)
+            console.log(index)
+            const color = index === selectedCardIndex ? "#7cf573" : "#07bbf7";
+            console.log(color)
+            let markerElement = marker.getElement();
+            markerElement.style.zIndex = "0";
+            markerElement
+                .querySelectorAll('svg path[fill="' + marker._color + '"]')[0]
+                .setAttribute('fill', color)
+            marker._color = color;
+        }
     };
 
     // get user location & initialize map & get all facilities
     useEffect(() => {
-        handleLocationClick();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+            console.log("Geolocation not supported");
+        }
         axios
             .get('http://127.0.0.1:5000/api/facilities/')
             .then((res) => {
@@ -111,7 +161,9 @@ function PlasticFacility() {
         mapRef.current.addControl(new mapboxgl.NavigationControl());
 
         return () => {
-            markersRef.current.forEach(marker => marker.remove());
+            markersRef.current.forEach(marker => {
+                marker.marker.remove();
+            });
             mapRef.current.remove();
         };
 
@@ -204,10 +256,10 @@ function PlasticFacility() {
         });
 
 
-        markersRef.current.forEach(marker => marker.remove());
+        markersRef.current.forEach(marker => marker.marker.remove());
         markersRef.current = [];
 
-        facility.forEach((item) => {
+        facility.forEach((item, index) => {
             const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
                 <div style="padding-right: 20px">
                 <h6>${item.name}</h6>
@@ -216,22 +268,25 @@ function PlasticFacility() {
                 <p><strong>Phone:</strong> ${item.phone}</p>
                 <p><strong>Website:</strong> <a href="${item.website}">${item.website}</a></p>
                 </div>`);
-            const marker = new mapboxgl.Marker()
+            const marker = new mapboxgl.Marker({color: "#07bbf7"}) //
                 .setLngLat([item.longitude, item.latitude])
                 .setPopup(popup)
                 .addTo(mapRef.current);
-            markersRef.current.push(marker);
+            markersRef.current.push({ marker, index });
+            // const markerElement = marker.getElement();
+            // markerElement.classList.add(`marker-${item.id}`);
+            // markersRef.current.push(marker);
         });
 
 
     }, [facility]);
 
-    
+
 
     return (
         <>
-            <div className="section-with-space">
-                <div className="section-facility">
+            <div className="section-facility" style={{ paddingTop: "7rem" }}>
+                <Container fluid>
                     <Card>
                         <CardBody>
                             <Row>
@@ -280,13 +335,40 @@ function PlasticFacility() {
                                     {/* <Row>
                                         {!location ? <button onClick={handleLocationClick}>Get Location</button> : null}
                                     </Row> */}
-                                    <Container fluid className="placeList" style={{marginTop: 20}}>
+                                    <Container fluid className="placeList" style={{ marginTop: 20 }}>
                                         {facility &&
                                             facility.map((item, i) => (
                                                 <Row key={i}>
-                                                    <Card style={{ width: "100%", marginTop: 10 }}>
+                                                    <Card
+                                                        key={i}
+                                                        style={{ 
+                                                            width: "100%", 
+                                                            marginTop: 10,
+                                                            cursor: "pointer",
+                                                            backgroundColor: selectedCardIndex === i ? "#d2e7fa" : "white", 
+                                                        }}
+                                                        className="facility-card"
+                                                        onClick={() => handleCardClick(i)}
+                                                        onMouseEnter={() => handleMarkerHover(i, true)}
+                                                        onMouseLeave={() => handleMarkerHover(i, false)}
+                                                    >
                                                         <CardBody>
-                                                            <h5>{i + 1}. {item.name}</h5>
+                                                            <Row>
+                                                                <Col md="9">
+                                                                    {/* <Typography variant="h5">
+                                                                {i + 1}. {item.name}
+                                                                </Typography> */}
+                                                                    <h5>{i + 1}. {item.name}</h5>
+                                                                </Col>
+                                                                <Col md="3">
+                                                                    {item.distance &&
+                                                                        <Typography variant="caption" sx={{ display: 'block' }}>
+                                                                            {item.distance.toFixed(2)} km
+                                                                        </Typography>
+                                                                    }
+                                                                </Col>
+                                                            </Row>
+
                                                             <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>Address: {item.address}, {item.suburb}, {item.state}</Typography>
                                                             {/* <FacilityInfo content={item} /> */}
                                                             {/* <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
@@ -302,11 +384,11 @@ function PlasticFacility() {
                                                                 {/* Website: {item.website} */}
                                                                 Website: <a href={item.website}>{item.website}</a>
                                                             </Typography>
-                                                            {item.distance &&
+                                                            {/* {item.distance &&
                                                                 <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
                                                                     {item.distance.toFixed(2)} km
                                                                 </Typography>
-                                                            }
+                                                            } */}
                                                         </CardBody>
                                                     </Card>
                                                 </Row>
@@ -321,7 +403,7 @@ function PlasticFacility() {
                             </Row>
                         </CardBody>
                     </Card>
-                </div>
+                </Container>
             </div>
         </>
     );
