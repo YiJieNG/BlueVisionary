@@ -6,6 +6,7 @@ import PlasticStackBarChart from "./PlasticStackBarChart";
 import ContributionGaugeChart from "./ContributionGaugeChart";
 import {
   addDataToDB,
+  getAllDataFromDB,
   // deleteAllData,
   getDataWithinDateRange,
 } from "../../util/db";
@@ -25,6 +26,7 @@ function Dashboard() {
   const [totalWeight, setTotalWeight] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [xTooltip, setXTooltip] = useState();
+  const [hasDataInDB, setHasDataInDB] = useState(false);
 
   const [past30DaysWeight, setPast30DaysWeight] = useState(0);
   const populationAverage = 581;
@@ -88,6 +90,11 @@ function Dashboard() {
       //   setData(updatedData);
     }
   };
+
+  const hasData = async () => {
+    const updatedData = await getAllDataFromDB();
+    setHasDataInDB(updatedData.length > 0);
+  }
 
   // const handleDeleteData = async () => {
   //   await deleteAllData();
@@ -199,6 +206,7 @@ function Dashboard() {
   useEffect(() => {
     const startOfYear = new Date(new Date().getFullYear(), 0, 1);
     fetchYearWeight(startOfYear, new Date());
+    hasData();
   }, []);
 
   useEffect(() => {
@@ -485,7 +493,7 @@ function Dashboard() {
             </Col>
           </Row>
 
-          {xLabels && xLabels.length > 0 && dataset && dataset.length > 0 && (
+          {hasDataInDB && (
             <Row
               style={{
                 margin: "10px 40px 30px 40px",
