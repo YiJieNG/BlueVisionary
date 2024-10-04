@@ -22,7 +22,7 @@ export async function addDataToDB(data) {
     const store = tx.objectStore(STORE_NAME);
     await store.add(data);
     await tx.done;
-    console.log('Data added to IndexedDB', data);
+    // console.log('Data added to IndexedDB', data);
 }
 
 // Function to get all data from IndexedDB
@@ -54,15 +54,15 @@ export function deleteDB() {
     const deleteRequest = indexedDB.deleteDatabase(DB_NAME);
 
     deleteRequest.onsuccess = () => {
-        console.log(`Database ${DB_NAME} deleted successfully.`);
+        // console.log(`Database ${DB_NAME} deleted successfully.`);
     };
 
     deleteRequest.onerror = () => {
-        console.error(`Failed to delete the database ${DB_NAME}.`);
+        // console.error(`Failed to delete the database ${DB_NAME}.`);
     };
 
     deleteRequest.onblocked = () => {
-        console.warn(`Deletion of ${DB_NAME} was blocked.`);
+        // console.warn(`Deletion of ${DB_NAME} was blocked.`);
     };
 }
 
@@ -76,11 +76,11 @@ export async function deleteAllData() {
     const clearRequest = store.clear();
 
     clearRequest.onsuccess = () => {
-        console.log('All data deleted successfully.');
+        // console.log('All data deleted successfully.');
     };
 
     clearRequest.onerror = (event) => {
-        console.error('Error deleting data:', event.target.error);
+        // console.error('Error deleting data:', event.target.error);
     };
 
     // Wait for the transaction to complete

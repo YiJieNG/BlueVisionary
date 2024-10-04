@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { Switch, Typography, Grid } from "@mui/material";
-// import Switch, { SwitchProps } from '@mui/material/Switch';
-import Stack from "@mui/material/Stack";
+import { Switch, Typography } from "@mui/material";
 import { Button, Col, Container, Row, Input, Card, CardBody } from "reactstrap";
 import PlasticStackBarChart from "./PlasticStackBarChart";
 import ContributionGaugeChart from "./ContributionGaugeChart";
 import {
   addDataToDB,
-  getAllDataFromDB,
-  deleteAllData,
+  // deleteAllData,
   getDataWithinDateRange,
 } from "../../util/db";
 import plasticDataTest from "./plasticInputTest.json";
 import { useNavigate } from "react-router-dom";
-import PlasticLineChart from "./ContributionGaugeChart";
 import { FaRecycle, FaWeight } from "react-icons/fa";
 import { GiSeaTurtle } from "react-icons/gi";
 
@@ -94,12 +89,12 @@ function Dashboard() {
     }
   };
 
-  const handleDeleteData = async () => {
-    await deleteAllData();
-    // Update state to show new data
-    // const updatedData = await getAllDataFromDB();
-    // setData(updatedData);
-  };
+  // const handleDeleteData = async () => {
+  //   await deleteAllData();
+  //   // Update state to show new data
+  //   // const updatedData = await getAllDataFromDB();
+  //   // setData(updatedData);
+  // };
 
   // const handleSelectedData = async () => {
   //     const startDate = new Date("2024-09-22T00:00:00"); // Example start date

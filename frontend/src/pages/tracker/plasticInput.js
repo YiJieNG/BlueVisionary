@@ -711,7 +711,7 @@ const PlasticInput = () => {
       case 4:
         if (knowWeight === true) {
           // Display Results and log data
-          console.log("Submission Data:", submissionData);
+          // console.log("Submission Data:", submissionData);
           return (
             <div className="content-center">
               <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>
@@ -1051,7 +1051,7 @@ const PlasticInput = () => {
         }
       case 5:
         // Display Results and log data
-        console.log("Submission Data:", submissionData);
+        // console.log("Submission Data:", submissionData);
         return (
           <div className="content-center">
             <h2 style={{ fontWeight: "bold", paddingBottom: "0.8rem" }}>

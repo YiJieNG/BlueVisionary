@@ -17,7 +17,7 @@ function BlueModal_1({ isOpen, speciesType, stateName, threatStatus, updateIsOpe
         axios
             .get(`/api/get_description/${stateName[1]}/${threatStatus}/${speciesType}`)
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 setDescriptions(res.data)
             })
             .catch(err => {
