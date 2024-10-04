@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from "react";
 import { Col, Row, Card, CardBody, Container } from "reactstrap";
-import { FaFilter } from "react-icons/fa";
 import mapboxgl from "mapbox-gl";
 
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -59,7 +58,7 @@ function PlasticFacility() {
                 setSelectedState(
                     res.data.features[0].properties.context.region.region_code
                 );
-                console.log(res.data.features[0].properties.context.place.name);
+                // console.log(res.data.features[0].properties.context.place.name);
             })
             .catch((err) => {
                 console.log(err);
@@ -67,11 +66,11 @@ function PlasticFacility() {
         // setUserState("VIC");
         // setUserSuburb("Moolap");
         // setSelectedState("VIC");
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        // console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
     }
 
     function error() {
-        console.log("Unable to retrieve your location");
+        // console.log("Unable to retrieve your location");
     }
 
     //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
@@ -140,10 +139,10 @@ function PlasticFacility() {
                 .setAttribute("fill", "#f72f07");
             marker._color = "#f72f07";
         } else {
-            console.log(selectedCardIndex);
-            console.log(index);
+            // console.log(selectedCardIndex);
+            // console.log(index);
             const color = index === selectedCardIndex ? "#7cf573" : "#07bbf7";
-            console.log(color);
+            // console.log(color);
             let markerElement = marker.getElement();
             markerElement.style.zIndex = "0";
             markerElement
@@ -157,18 +156,19 @@ function PlasticFacility() {
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(success, error);
-        } else {
-            console.log("Geolocation not supported");
-        }
+        } 
+        // else {
+        //     console.log("Geolocation not supported");
+        // }
         axios
-            .get("http://127.0.0.1:5000/api/facilities/")
+            .get("/api/facilities/")
             .then((res) => {
                 const facilities = res.data;
                 setAvailableFacilities(facilities);
                 setDistanceFacilities(facilities);
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
             });
 
         // initialize map
@@ -227,21 +227,22 @@ function PlasticFacility() {
         setStateFacility(selectedFacility);
         setAvailableSuburb([...new Set(availableSuburbs)].sort());
         setInputSuburb(null);
-        if (
-            (userState && userState !== selectedState) ||
-            (userSuburb && !availableSuburbs.includes(userSuburb))
-        ) {
-            console.log("not found user suburb");
-        }
+        // if (
+        //     (userState && userState !== selectedState) ||
+        //     (userSuburb && !availableSuburbs.includes(userSuburb))
+        // ) {
+        //     console.log("not found user suburb");
+        // }
         if (
             userState &&
             userState === selectedState &&
             userSuburb &&
             availableSuburbs.includes(userSuburb)
         ) {
-            console.log("found user suburb");
+            // console.log("found user suburb");
             setInputSuburb(userSuburb);
         }
+        setSelectedCardIndex(null);
         // console.log(selectedFacility)
     }, [distanceFacilities, selectedState, userSuburb]);
 
@@ -355,9 +356,7 @@ function PlasticFacility() {
                                         <Row>
                                             <Col md="4">
                                                 <Row>
-                                                    {/* <Col md="1" className="d-flex justify-content-center align-items-center"><FaFilter /></Col> */}
                                                     <Col md="4">
-
                                                         <Box sx={{ minWidth: 120 }}>
                                                             <FormControl fullWidth>
                                                                 <InputLabel id="demo-simple-select-label">
@@ -437,15 +436,16 @@ function PlasticFacility() {
                                                                 >
                                                                     <CardBody>
                                                                         <Row>
-                                                                            <Col md="9">
+                                                                            {/* <Col md="9"> */}
                                                                                 {/* <Typography variant="h5">
                                                                 {i + 1}. {item.name}
                                                                 </Typography> */}
-                                                                                <h5 className="facility-caption">
+                                                                                {/* <h5 className="facility-caption"> */}
+                                                                                <h6>
                                                                                     <strong>{i + 1}. {item.name}</strong>
-                                                                                </h5>
-                                                                            </Col>
-                                                                            <Col md="3">
+                                                                                </h6>
+                                                                            {/* </Col> */}
+                                                                            {/* <Col md="3">
                                                                                 {item.distance && (
                                                                                     <Typography
                                                                                         variant="caption"
@@ -454,7 +454,7 @@ function PlasticFacility() {
                                                                                         {item.distance.toFixed(2)} km
                                                                                     </Typography>
                                                                                 )}
-                                                                            </Col>
+                                                                            </Col> */}
                                                                         </Row>
 
                                                                         <Typography
@@ -463,8 +463,7 @@ function PlasticFacility() {
                                                                             sx={{ display: "block" }}
                                                                             className="facility-caption"
                                                                         >
-                                                                            <strong>Address:</strong> {item.address}, {item.suburb},{" "}
-                                                                            {item.state}
+                                                                            <strong>Address:</strong> {item.address}
                                                                         </Typography>
                                                                         {/* <FacilityInfo content={item} /> */}
                                                                         {/* <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
@@ -496,11 +495,11 @@ function PlasticFacility() {
                                                                             <strong>Website:</strong>{" "}
                                                                             <a href={item.website}>{item.website}</a>
                                                                         </Typography>
-                                                                        {/* {item.distance &&
-                                                                <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
-                                                                    {item.distance.toFixed(2)} km
-                                                                </Typography>
-                                                            } */}
+                                                                        {item.distance &&
+                                                                            <Typography variant="caption" className="facility-caption" gutterBottom sx={{ display: 'block' }}>
+                                                                                <strong>Distance to you: </strong>{item.distance.toFixed(2)} km
+                                                                            </Typography>
+                                                                        }
                                                                     </CardBody>
                                                                 </Card>
                                                             </Row>

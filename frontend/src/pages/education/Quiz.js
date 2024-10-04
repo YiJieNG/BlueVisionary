@@ -77,7 +77,7 @@ function Quiz() {
         optionIndex: optionIndex,
       };
 
-      console.log(data);
+      // console.log(data);
 
       // Send the data to the backend using POST request
       // await axios.post("https://www.bluevisionary.studio/api/update_option_count", data);
