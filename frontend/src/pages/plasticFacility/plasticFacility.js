@@ -45,19 +45,19 @@ function PlasticFacility() {
                 setUserState(res.data.features[0].properties.context.region.region_code);
                 setUserSuburb(res.data.features[0].properties.context.place.name);
                 setSelectedState(res.data.features[0].properties.context.region.region_code);
-                console.log(res.data.features[0].properties.context.place.name)
+                // console.log(res.data.features[0].properties.context.place.name)
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
             });
         // setUserState("VIC");
         // setUserSuburb("Moolap");
         // setSelectedState("VIC");
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        // console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
     }
 
     function error() {
-        console.log("Unable to retrieve your location");
+        // console.log("Unable to retrieve your location");
     }
 
     //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
@@ -98,7 +98,7 @@ function PlasticFacility() {
         }
         const marker = markersRef.current.find(m => m.index === index).marker;
         let markerElement = marker.getElement();
-            markerElement.style.zIndex = "0";
+            markerElement.style.zIndex = "1000";
             markerElement
                 .querySelectorAll('svg path[fill="' + marker._color + '"]')[0]
                 .setAttribute('fill', "#7cf573")
@@ -116,12 +116,13 @@ function PlasticFacility() {
                 .setAttribute('fill', "#f72f07")
             marker._color = "#f72f07";
         } else {
-            console.log(selectedCardIndex)
-            console.log(index)
+            // console.log(selectedCardIndex)
+            // console.log(index)
             const color = index === selectedCardIndex ? "#7cf573" : "#07bbf7";
-            console.log(color)
+            const zIndex = index === selectedCardIndex ? "1000" : "0";
+            // console.log(color)
             let markerElement = marker.getElement();
-            markerElement.style.zIndex = "0";
+            markerElement.style.zIndex = zIndex;
             markerElement
                 .querySelectorAll('svg path[fill="' + marker._color + '"]')[0]
                 .setAttribute('fill', color)
@@ -134,7 +135,7 @@ function PlasticFacility() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(success, error);
         } else {
-            console.log("Geolocation not supported");
+            // console.log("Geolocation not supported");
         }
         axios
             .get('http://127.0.0.1:5000/api/facilities/')
@@ -144,7 +145,7 @@ function PlasticFacility() {
                 setDistanceFacilities(facilities);
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
             });
 
         // initialize map
@@ -360,7 +361,7 @@ function PlasticFacility() {
                                                                     {/* <Typography variant="h5">
                                                                 {i + 1}. {item.name}
                                                                 </Typography> */}
-                                                                    <h5>{i + 1}. {item.name}</h5>
+                                                                    <h5 className="facility-caption"><strong>{i + 1}. {item.name}</strong></h5>
                                                                 </Col>
                                                                 <Col md="3">
                                                                     {item.distance &&
@@ -371,20 +372,20 @@ function PlasticFacility() {
                                                                 </Col>
                                                             </Row>
 
-                                                            <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>Address: {item.address}, {item.suburb}, {item.state}</Typography>
+                                                            <Typography variant="caption" className="facility-caption" gutterBottom sx={{ display: 'block' }}><strong>Address:</strong> {item.address}, {item.suburb}, {item.state}</Typography>
                                                             {/* <FacilityInfo content={item} /> */}
                                                             {/* <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
                                                                 Address: {item.address}
                                                             </Typography> */}
-                                                            <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
-                                                                Phone: {item.phone}
+                                                            <Typography variant="caption" className="facility-caption" gutterBottom sx={{ display: 'block' }}>
+                                                                <strong>Phone:</strong> {item.phone}
                                                             </Typography>
-                                                            <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
-                                                                Facility type: {item.type}
+                                                            <Typography variant="caption" className="facility-caption" gutterBottom sx={{ display: 'block' }}>
+                                                                <strong>Facility type:</strong> {item.type}
                                                             </Typography>
-                                                            <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
+                                                            <Typography variant="caption" className="facility-caption" gutterBottom sx={{ display: 'block' }}>
                                                                 {/* Website: {item.website} */}
-                                                                Website: <a href={item.website}>{item.website}</a>
+                                                                <strong>Website:</strong> <a href={item.website}>{item.website}</a>
                                                             </Typography>
                                                             {/* {item.distance &&
                                                                 <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
