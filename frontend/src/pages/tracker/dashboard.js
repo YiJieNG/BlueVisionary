@@ -19,8 +19,8 @@ function Dashboard() {
   //   const [data, setData] = useState([]);
   const [selectedData, setSelectedData] = useState([]);
   const [selectedShowType, setSelectedShowType] = useState("Past 7 days"); //past 7 days, this month, this year(start at month has data)
-  const [dataset, setDataset] = useState();
-  const [xLabels, setXLabels] = useState();
+  const [dataset, setDataset] = useState([]);
+  const [xLabels, setXLabels] = useState([]);
   const [checked, setChecked] = useState(false);
   const [selectedCountType, setSelectedCountType] = useState("weight");
   const [totalWeight, setTotalWeight] = useState(0);
@@ -232,7 +232,9 @@ function Dashboard() {
     } else if (selectedShowType === "Past 30 days") {
       startDate.setDate(endDate.getDate() - 29);
     } else {
-      startDate.setDate(endDate.getDate() - 364);
+      // startDate.setDate(endDate.getDate() - 364);
+      startDate.setMonth(0);
+      startDate.setDate(1);
     }
     startDate.setHours(0, 0, 0, 0);
 
@@ -344,12 +346,15 @@ function Dashboard() {
       const todayIndex = new Date().getMonth();
       // console.log(todayIndex);
 
+      // const rearrangedMonths =
+      //   todayIndex === 11
+      //     ? monthNames
+      //     : monthNames
+      //       .slice(todayIndex + 1)
+      //       .concat(monthNames.slice(0, todayIndex + 1));
       const rearrangedMonths =
-        todayIndex === 11
-          ? monthNames
-          : monthNames
-            .slice(todayIndex + 1)
-            .concat(monthNames.slice(0, todayIndex + 1));
+        monthNames
+          .slice(0, todayIndex + 1);
       setXLabels(rearrangedMonths);
 
       const plasticData = {};
@@ -358,7 +363,7 @@ function Dashboard() {
         if (!(item.type in plasticData)) {
           plasticData[item.type] = {
             label: item.type,
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            data: new Array(rearrangedMonths.length).fill(0),
             stack: "total",
             color: barColor[item.type],
           };
@@ -627,35 +632,42 @@ function Dashboard() {
                               fontSize: "1.0rem",
                             }}
                           >
-                            Past a year
+                            This year
                           </option>
                         </Input>
                       </div>
                     </Row>
 
-                    <Row>
-                      {/* {xLabels &&
-                          xLabels.length > 0 &&
-                          dataset &&
-                          dataset.length > 0 && ( */}
-                      <PlasticStackBarChart
-                        xLabels={xLabels}
-                        xlabel={
-                          selectedShowType === "Past 7 days"
-                            ? "Day"
-                            : selectedShowType === "Past 30 days"
-                              ? "Date"
-                              : "Month"
-                        }
-                        dataset={dataset}
-                        yLabel={
-                          selectedCountType === "weight"
-                            ? "Weight in grams"
-                            : "Total Count"
-                        }
-                      />
-                      {/* )} */}
-                    </Row>
+
+                    {
+                      (xLabels.length > 0 &&
+                        dataset.length > 0) ? (
+                        <Row>
+                          <PlasticStackBarChart
+                            xLabels={xLabels}
+                            xlabel={
+                              selectedShowType === "Past 7 days"
+                                ? "Day"
+                                : selectedShowType === "Past 30 days"
+                                  ? "Date"
+                                  : "Month"
+                            }
+                            dataset={dataset}
+                            yLabel={
+                              selectedCountType === "weight"
+                                ? "Weight in grams"
+                                : "Total Count"
+                            }
+                          />
+                        </Row>
+                      ) : (
+                        <Row className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
+                          <div style={{ textAlign: 'center' }}>No data to display in {selectedShowType.toLowerCase()}</div>
+                        </Row>
+                        
+                      )}
+
+
                   </CardBody>
                 </Card>
               </Col>
