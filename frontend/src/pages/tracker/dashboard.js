@@ -64,32 +64,46 @@ function Dashboard() {
     : 0;
 
   // console.log(yesterday);
-  function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
+  function getRandomArbitrary(max) {
+    const randomNum = Math.floor(Math.random() * max)
+    return randomNum === 0 ? 2 : randomNum;
   }
 
-  const handleAddData = async () => {
-    const currentDate = new Date().getTime();
-    for (let i = 1; i < 30; i += 1) {
-      const yesterday = new Date().setDate(new Date().getDate() - i);
+  // const handleAddData = async () => {
+  //   const currentDate = new Date().getTime();
+  //   // for (let i = 1; i < 30; i += 1) {
+  //   //   const yesterday = new Date().setDate(new Date().getDate() - i);
 
-      for (var plasticType in plasticDataTest.plasticItems) {
-        // console.log(plasticType);
-        const newData = {
-          // date: currentDate,
-          date: yesterday,
-          type: plasticType,
-          weight: getRandomArbitrary(0, 15),
-          count: plasticDataTest.plasticItems[plasticType].approximateCount,
-        };
-        await addDataToDB(newData);
-      }
+  //   //   for (var plasticType in plasticDataTest.plasticItems) {
+  //   //     // console.log(plasticType);
+  //   //     const newData = {
+  //   //       // date: currentDate,
+  //   //       date: yesterday,
+  //   //       type: plasticType,
+  //   //       weight: getRandomArbitrary(0, 15),
+  //   //       count: plasticDataTest.plasticItems[plasticType].approximateCount,
+  //   //     };
+  //   //     await addDataToDB(newData);
+  //   //   }
 
-      // Update state to show new data
-      //   const updatedData = await getAllDataFromDB();
-      //   setData(updatedData);
-    }
-  };
+  //   //   // Update state to show new data
+  //   //   //   const updatedData = await getAllDataFromDB();
+  //   //   //   setData(updatedData);
+  //   // }
+  //   const dateDiff = [7, 30, 31, 365, 366];
+  //   for (let i = 0; i < dateDiff.length; i++) {
+  //     const yesterday = new Date().setDate(new Date().getDate() - dateDiff[i]);
+  //     const newData = {
+  //       // date: currentDate,
+  //       date: yesterday,
+  //       type: "Plastic Container",
+  //       weight: getRandomArbitrary(15),
+  //       count: 3,
+  //     };
+  //     await addDataToDB(newData);
+  //   }
+
+  // };
 
   const hasData = async () => {
     const updatedData = await getAllDataFromDB();
@@ -214,11 +228,11 @@ function Dashboard() {
     const endDate = new Date();
     const startDate = new Date();
     if (selectedShowType === "Past 7 days") {
-      startDate.setDate(endDate.getDate() - 7);
+      startDate.setDate(endDate.getDate() - 6);
     } else if (selectedShowType === "Past 30 days") {
-      startDate.setDate(endDate.getDate() - 30);
+      startDate.setDate(endDate.getDate() - 29);
     } else {
-      startDate.setDate(endDate.getDate() - 365);
+      startDate.setDate(endDate.getDate() - 364);
     }
     startDate.setHours(0, 0, 0, 0);
 
@@ -228,7 +242,7 @@ function Dashboard() {
 
   useEffect(() => {
     // Assemble data for stacked bar chart
-    if (selectedData.length <= 0) return;
+    // if (selectedData.length <= 0) return;
     if (selectedShowType === "Past 7 days") {
       const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       const todayIndex = new Date().getDay();
@@ -247,8 +261,8 @@ function Dashboard() {
         todayIndex === 6
           ? dayNames
           : dayNames
-              .slice(todayIndex + 1)
-              .concat(dayNames.slice(0, todayIndex + 1));
+            .slice(todayIndex + 1)
+            .concat(dayNames.slice(0, todayIndex + 1));
       setXLabels(rearrangedDays);
       const plasticData = {};
       selectedData.forEach((item) => {
@@ -334,8 +348,8 @@ function Dashboard() {
         todayIndex === 11
           ? monthNames
           : monthNames
-              .slice(todayIndex + 1)
-              .concat(monthNames.slice(0, todayIndex + 1));
+            .slice(todayIndex + 1)
+            .concat(monthNames.slice(0, todayIndex + 1));
       setXLabels(rearrangedMonths);
 
       const plasticData = {};
@@ -393,7 +407,7 @@ function Dashboard() {
             style={{
               margin: "30px 20px 30px 20px",
             }}
-            // className="card-margin no-margin"
+          // className="card-margin no-margin"
           >
             <Col md="4" sm="6" xs="12" className="mb-4 d-flex">
               <Card
@@ -613,7 +627,7 @@ function Dashboard() {
                               fontSize: "1.0rem",
                             }}
                           >
-                            This year
+                            Past a year
                           </option>
                         </Input>
                       </div>
@@ -630,8 +644,8 @@ function Dashboard() {
                           selectedShowType === "Past 7 days"
                             ? "Day"
                             : selectedShowType === "Past 30 days"
-                            ? "Date"
-                            : "Month"
+                              ? "Date"
+                              : "Month"
                         }
                         dataset={dataset}
                         yLabel={
@@ -684,15 +698,15 @@ function Dashboard() {
               </Button>
             </Col>
             {/* <Col xs="12" md="4">
-                <Button className="no-btn" onClick={handleDeleteData} block>
-                  Reset all contribution
-                </Button>
-              </Col>
-              <Col>
-                <Button color="dark" onClick={handleAddData}>
-                  Add Data
-                </Button>
-              </Col> */}
+              <Button className="no-btn" onClick={handleDeleteData} block>
+                Reset all contribution
+              </Button>
+            </Col>
+            <Col>
+              <Button color="dark" onClick={handleAddData}>
+                Add Data
+              </Button>
+            </Col> */}
           </Row>
         </Container>
       </div>
