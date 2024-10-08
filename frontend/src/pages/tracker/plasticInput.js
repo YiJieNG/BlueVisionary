@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -129,6 +129,10 @@ const PlasticInput = () => {
       setLoading(false); // End loading
     }
   };
+
+  useEffect(() => {
+    document.title = "Plastic Recycled Input";
+  }, []);
 
   const [detectionDetails, setDetectionDetails] = useState([]); // To store detection data
   const [detectionImage, setDetectionImage] = useState(null); // For storing boundary image

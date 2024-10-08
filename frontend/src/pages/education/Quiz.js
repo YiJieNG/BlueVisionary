@@ -4,8 +4,12 @@ import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
 import SeaTurtle from "../../assets/img/SeaTurtle_v2.jpg";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 function Quiz() {
+  const navigate = useNavigate();
+
   const [step, setStep] = useState("landing"); // 'landing', 'question', 'feedback', 'result'
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -33,6 +37,10 @@ function Quiz() {
 
   useEffect(() => {
     fetchAndShuffleQuestions(); // Fetch questions on initial component mount
+  }, []);
+
+  useEffect(() => {
+    document.title = "Educate Yourself";
   }, []);
 
   const shuffleArray = (array) => {
@@ -144,7 +152,7 @@ function Quiz() {
     return (
       <div className="question-page">
         <h2>
-          Q{currentQuestionNumber}: {question.questionText}
+          Q{currentQuestionNumber}/5: {question.questionText}
         </h2>
         <div className="options-grid">
           {question.options.map((option, index) => (
@@ -245,9 +253,23 @@ function Quiz() {
         <h2>
           You scored {score}/{questions.length}!
         </h2>
-        <Button onClick={restartQuiz} color="primary">
-          Let's go again
-        </Button>
+        <Row
+        className="justify-content-between mt-4"
+        >
+          <Col xs="12" md="6" style={{ display: "flex" }}>
+          <Button onClick={restartQuiz} color="primary" block>
+            Reattempt
+          </Button>
+          </Col>
+          <Col xs="12" md="6" style={{ display: "flex" }}>
+          <Button className="yes-btn"
+            onClick={() => navigate('/tracker')}
+            block
+          >Save Endangered Marine Species Here</Button>
+          </Col>
+          
+        </Row>
+
       </div>
     );
   }

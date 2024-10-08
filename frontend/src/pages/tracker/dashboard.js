@@ -41,6 +41,10 @@ function Dashboard() {
   };
 
   useEffect(() => {
+    document.title = "Impact Snapshot";
+  }, []);
+
+  useEffect(() => {
     const fetchPast30DaysWeight = async () => {
       const endDate = new Date();
       const startDate = new Date();
@@ -128,6 +132,9 @@ function Dashboard() {
 
   const fetchSelectedData = async (startDate, endDate) => {
     const results = await getDataWithinDateRange(startDate, endDate);
+    results.forEach((item) => {
+      item.count = Math.ceil(item.count)
+    })
     setSelectedData(results);
   };
 
@@ -214,7 +221,7 @@ function Dashboard() {
       totalCount += item.count;
     });
     setTotalWeight(totalWeight);
-    setTotalCount(totalCount);
+    setTotalCount(Math.ceil(totalCount));
   };
 
   useEffect(() => {
@@ -402,7 +409,7 @@ function Dashboard() {
                 <h2 style={{ paddingTop: "30px" }}>Sea Turtle Hero Tracker</h2>
                 <h4 style={{ color: "#3f4447" }}>
                   Measure your plastic recycling efforts, checkout your progress
-                  and see how much sea turtles you have saved
+                  and see how many sea turtles you have saved
                 </h4>
               </div>
             </Col>

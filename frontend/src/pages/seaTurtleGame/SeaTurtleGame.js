@@ -102,6 +102,10 @@ function Game() {
   }, [factArray, gameState.state]);
 
   useEffect(() => {
+    document.title = "Role-Play Journey";
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
         const containerWidth = containerRef.current.offsetWidth;
