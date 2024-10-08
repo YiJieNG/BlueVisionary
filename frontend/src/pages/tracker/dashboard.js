@@ -218,7 +218,7 @@ function Dashboard() {
     let totalCount = 0;
     results.forEach((item) => {
       totalWeight += item.weight;
-      totalCount += item.count;
+      totalCount += Math.ceil(item.count);
     });
     setTotalWeight(totalWeight);
     setTotalCount(Math.ceil(totalCount));
