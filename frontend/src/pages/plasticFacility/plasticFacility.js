@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { Col, Row, Card, CardBody, Container } from "reactstrap";
+import { Col, Row, Card, CardBody, Container, Button } from "reactstrap";
 import mapboxgl from "mapbox-gl";
 
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -129,6 +129,9 @@ function PlasticFacility() {
         });
     };
 
+    const handleNavigate = (item) => {
+        window.open(`https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}`,'_blank')
+    }
     const handleMarkerHover = (index, isHovering) => {
         const marker = markersRef.current.find((m) => m.index === index).marker;
         if (isHovering) {
@@ -151,6 +154,10 @@ function PlasticFacility() {
             marker._color = color;
         }
     };
+
+    useEffect(() => {
+        document.title = "Plastic Facility";
+      }, []);
 
     // get user location & initialize map & get all facilities
     useEffect(() => {
@@ -518,6 +525,7 @@ function PlasticFacility() {
                                                                                 <strong>Distance to you: </strong>{item.distance.toFixed(2)} km
                                                                             </Typography>
                                                                         }
+                                                                        <Button color="primary" className="navigate-button" onClick={() => handleNavigate(item)} style={{marginTop: 5}} size="sm" block>Get Direction</Button>
                                                                     </CardBody>
                                                                 </Card>
                                                             </Row>

@@ -81,7 +81,7 @@ function BlueNavbar() {
                     : ""
                 }
               >
-                Role-Play Game
+                Role-Play Journey
               </NavLink>
             </NavItem>
             <NavItem>

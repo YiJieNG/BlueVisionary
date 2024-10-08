@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, CardBody, Tooltip } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Tooltip, Button } from "reactstrap";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
@@ -13,6 +13,7 @@ import PollutionLineChart from "./PollutionLineChart";
 import PollutionDistribution from "./PollutionDistribution";
 import PollutionDataInsights from "./PollutionDataInsights";
 import { FaInfoCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const marks = [
   {
@@ -38,6 +39,8 @@ const marks = [
 ];
 
 function Pollution() {
+  const navigate = useNavigate();
+
   const [selectedState, setSelectedState] = useState("ALL");
   const [selectedYear, setSelectedYear] = useState("2024");
   const [pollutionData, setPollutionData] = useState(); // Pollution data from backend
@@ -91,6 +94,11 @@ function Pollution() {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    document.title = "Pollution Insights";
+  }, []);
+
   useEffect(() => {
     // get heatmap data
     axios
@@ -218,10 +226,10 @@ function Pollution() {
                                     },
                                   },
                                   "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                    {
-                                      borderColor: "#284567", // Focus border color
-                                      borderWidth: "2px",
-                                    },
+                                  {
+                                    borderColor: "#284567", // Focus border color
+                                    borderWidth: "2px",
+                                  },
                                   "& .MuiSelect-select": {
                                     padding: "16px", // Increase padding to make it look better without the label
                                   },
@@ -335,6 +343,14 @@ function Pollution() {
                         <PollutionDataInsights selectedState={selectedState} />
                       </CardBody>
                     </Card>
+                  </Row>
+                  <Row className="polytype-padding">
+                    <Button className="yes-btn" style={{
+                        width: "95%",
+                        margin: "0 auto",
+                      }}
+                      onClick={() => navigate('/tracker')}
+                      >Reduce Plastic Pollution Here</Button>
                   </Row>
                   {/* <hr className="solid" />
                   <Row className="polytype-padding">

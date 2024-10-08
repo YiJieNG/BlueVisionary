@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Button } from "reactstrap";
 import StateMap from "./StateMap";
 import BluePieChart from "./BluePieChart";
 import BlueBarChart from "./BlueBarChart";
 import axios from "axios";
 import BlueModal from "./BlueModal";
+import { useNavigate } from "react-router-dom";
+
 // import HomeFooter from "../home/HomeFooter";
 
 function MarineLife() {
+  const navigate = useNavigate();
+
   const [stateSelected, setStateSelected] = useState(["Victoria", "VIC"]);
   const [endangerType, setEndangerType] = useState("Endangered");
   const [stateStat, setStateStat] = useState();
@@ -32,6 +36,10 @@ function MarineLife() {
   const updateIsOpen = (openStatus) => {
     setIsOpen(openStatus);
   };
+
+  useEffect(() => {
+    document.title = "Marine Life";
+  }, []);
 
   // Fetch state statistic from backend
   useEffect(() => {
@@ -138,7 +146,7 @@ function MarineLife() {
                       </Row>
                       <Row>
                         <h4>Threatened status</h4>
-                        <p>
+                        <p style={{marginBottom: 5}}>
                           <strong>
                             Please click the pie chart below to select different
                             status
@@ -172,6 +180,14 @@ function MarineLife() {
                             updateIsOpen={updateIsOpen}
                           />
                         )}
+                      </Row>
+                      <Row className="justify-content-between"
+                      style={{
+                        padding: "5px 10px 0px 10px",
+                        margin: "10px 20px 0px 20px",
+                      }}
+                      >
+                        <Button color="primary" size="sm" onClick={() => navigate('/quiz')} className="navigate-button">Test Your Knowledge</Button>
                       </Row>
                     </CardBody>
                   </Card>

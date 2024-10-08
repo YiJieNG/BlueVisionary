@@ -44,6 +44,10 @@ const LandingPage = ({ onStartGame, gameStateData }) => {
     setFilteredStateData(gameStateData);
   }, [gameStateData]);
 
+  useEffect(() => {
+    document.title = "Role-Play Journey";
+  }, []);
+
   const filteredData = useCallback(
     (myData) => {
       return myData.filter(
