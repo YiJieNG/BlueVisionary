@@ -44,7 +44,7 @@ function MarineLife() {
   // Fetch state statistic from backend
   useEffect(() => {
     axios
-      .get("/api/get_state_stat")
+      .get("http://localhost:5000/api/get_state_stat")
       .then((res) => {
         let stateSpecies = {};
         for (let key in res.data) {
@@ -76,7 +76,9 @@ function MarineLife() {
   // fetch state species threat status data from backend
   useEffect(() => {
     axios
-      .get(`/api/get_state_species/${stateSelected[1]}/${endangerType}`)
+      .get(
+        `http://localhost:5000/api/get_state_species/${stateSelected[1]}/${endangerType}`
+      )
       .then((res) => {
         let endangerSpecies = { data: [] };
         let x = { scaleType: "band", data: [] };
@@ -146,7 +148,7 @@ function MarineLife() {
                       </Row>
                       <Row>
                         <h4>Threatened status</h4>
-                        <p style={{marginBottom: 5}}>
+                        <p style={{ marginBottom: 5 }}>
                           <strong>
                             Please click the pie chart below to select different
                             status
@@ -181,13 +183,21 @@ function MarineLife() {
                           />
                         )}
                       </Row>
-                      <Row className="justify-content-between"
-                      style={{
-                        padding: "5px 10px 0px 10px",
-                        margin: "10px 20px 0px 20px",
-                      }}
+                      <Row
+                        className="justify-content-between"
+                        style={{
+                          padding: "5px 10px 0px 10px",
+                          margin: "10px 20px 0px 20px",
+                        }}
                       >
-                        <Button color="primary" size="sm" onClick={() => navigate('/quiz')} className="navigate-button">Test Your Knowledge</Button>
+                        <Button
+                          color="primary"
+                          size="sm"
+                          onClick={() => navigate("/quiz")}
+                          className="navigate-button"
+                        >
+                          Test Your Knowledge
+                        </Button>
                       </Row>
                     </CardBody>
                   </Card>

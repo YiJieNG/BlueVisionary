@@ -1,4 +1,12 @@
-import { Container, Row, Col, Card, CardBody, Tooltip, Button } from "reactstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Tooltip,
+  Button,
+} from "reactstrap";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
@@ -86,7 +94,7 @@ function Pollution() {
 
   useEffect(() => {
     axios
-      .get("/api/get_pollution_type_all")
+      .get("http://localhost:5000/api/get_pollution_type_all")
       .then((res) => {
         setPollutionLine(res.data);
       })
@@ -102,7 +110,7 @@ function Pollution() {
   useEffect(() => {
     // get heatmap data
     axios
-      .get(`/api/get_pollution_intensity/${selectedYear}`)
+      .get(`http://localhost:5000/api/get_pollution_intensity/${selectedYear}`)
       .then((res) => {
         setPollutionData(res.data);
         const statesForYear = res.data.map((p) => p.state);
@@ -116,7 +124,7 @@ function Pollution() {
       });
     // get radar data
     axios
-      .get(`/api/get_pollution_type/${selectedYear}`)
+      .get(`http://localhost:5000/api/get_pollution_type/${selectedYear}`)
       .then((res) => {
         setPollutionRadar(res.data);
       })
@@ -226,10 +234,10 @@ function Pollution() {
                                     },
                                   },
                                   "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                  {
-                                    borderColor: "#284567", // Focus border color
-                                    borderWidth: "2px",
-                                  },
+                                    {
+                                      borderColor: "#284567", // Focus border color
+                                      borderWidth: "2px",
+                                    },
                                   "& .MuiSelect-select": {
                                     padding: "16px", // Increase padding to make it look better without the label
                                   },
@@ -345,12 +353,16 @@ function Pollution() {
                     </Card>
                   </Row>
                   <Row className="polytype-padding">
-                    <Button className="yes-btn" style={{
+                    <Button
+                      className="yes-btn"
+                      style={{
                         width: "95%",
                         margin: "0 auto",
                       }}
-                      onClick={() => navigate('/tracker')}
-                      >Reduce Plastic Pollution Here</Button>
+                      onClick={() => navigate("/tracker")}
+                    >
+                      Reduce Plastic Pollution Here
+                    </Button>
                   </Row>
                   {/* <hr className="solid" />
                   <Row className="polytype-padding">

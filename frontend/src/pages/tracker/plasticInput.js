@@ -97,7 +97,7 @@ const PlasticInput = () => {
 
       // Make the API call to the Flask backend
       const response = await axios.post(
-        "/api/plasticInput/plasticDetection",
+        "http://localhost:5000/api/plasticInput/plasticDetection",
         formData,
         {
           headers: {

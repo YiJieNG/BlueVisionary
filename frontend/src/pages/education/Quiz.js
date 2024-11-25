@@ -6,7 +6,6 @@ import SeaTurtle from "../../assets/img/SeaTurtle_v2.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 function Quiz() {
   const navigate = useNavigate();
 
@@ -22,7 +21,7 @@ function Quiz() {
   const fetchAndShuffleQuestions = async () => {
     try {
       // const response = await axios.get("https://www.bluevisionary.studio/api/questions");
-      const response = await axios.get("/api/questions");
+      const response = await axios.get("http://localhost:5000/api/questions");
       const formattedQuestions = response.data.map((q) => ({
         ...q,
         options: [q.option1, q.option2, q.option3, q.option4],
@@ -89,7 +88,7 @@ function Quiz() {
 
       // Send the data to the backend using POST request
       // await axios.post("https://www.bluevisionary.studio/api/update_option_count", data);
-      await axios.post("/api/update_option_count", data);
+      await axios.post("http://localhost:5000/api/update_option_count", data);
     } catch (error) {
       console.error("Error updating option count:", error);
     }
@@ -253,23 +252,22 @@ function Quiz() {
         <h2>
           You scored {score}/{questions.length}!
         </h2>
-        <Row
-        className="justify-content-between mt-4"
-        >
+        <Row className="justify-content-between mt-4">
           <Col xs="12" md="6" style={{ display: "flex" }}>
-          <Button onClick={restartQuiz} color="primary" block>
-            Reattempt
-          </Button>
+            <Button onClick={restartQuiz} color="primary" block>
+              Reattempt
+            </Button>
           </Col>
           <Col xs="12" md="6" style={{ display: "flex" }}>
-          <Button className="yes-btn"
-            onClick={() => navigate('/tracker')}
-            block
-          >Save Endangered Marine Species Here</Button>
+            <Button
+              className="yes-btn"
+              onClick={() => navigate("/tracker")}
+              block
+            >
+              Save Endangered Marine Species Here
+            </Button>
           </Col>
-          
         </Row>
-
       </div>
     );
   }
